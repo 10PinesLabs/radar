@@ -10,7 +10,11 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
-//= require jquery_ujs
-//= require turbolinks
+//= require angular
 //= require_tree .
+
+angular.module('ruben-radar', [])
+    .controller('MainController', function($scope) {
+        $scope.content = 'bleh';
+    })
+;
