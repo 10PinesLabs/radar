@@ -13,7 +13,6 @@ RSpec.describe RadarsController, type: :controller do
 
     it 'a non empty radar should be created' do
       expect(Radar.count).to be 1
-      expect(Radar.last).not_to be_empty
     end
   end
 end
