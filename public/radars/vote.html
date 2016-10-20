@@ -7,9 +7,9 @@
     </div>
 </div>
 
-<div ng-repeat="axis in radar.axes">
+<div ng-repeat="answer in vote.answers">
     <div class="row">
-        <h2>{{axis.description}}</h2>
+        <h2>{{answer.axis.description}}</h2>
         <div class="input-group">
             <div ng-repeat="option in options">
                 <label><input type="radio" name="{{axis.id}}" value="option">{{option}}</label>
