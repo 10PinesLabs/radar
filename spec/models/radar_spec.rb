@@ -18,4 +18,15 @@ RSpec.describe Radar, type: :model do
       end
     end
   end
+
+  context 'When creating a new radar' do
+    context 'with no axes' do
+      it 'should raise an error' do
+        expect{ Radar.create! }.to raise_error do |error|
+          expect(error).to be_a(ActiveRecord::RecordInvalid)
+          expect(error.record.errors[:axes]).to be_include Radar::ERROR_MESSAGE_FOR_NO_AXES
+        end
+      end
+    end
+  end
 end
