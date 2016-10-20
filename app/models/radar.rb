@@ -6,4 +6,12 @@ class Radar < ActiveRecord::Base
   def add(an_axis)
     axes.push(an_axis)
   end
+
+  def add_all(other_axes)
+    axes.concat(other_axes)
+  end
+
+  def amount_of_axis
+    axes.count
+  end
 end

@@ -14,5 +14,9 @@ RSpec.describe RadarsController, type: :controller do
     it 'a non empty radar should be created' do
       expect(Radar.count).to be 1
     end
+
+    it 'the radar should have the 2 axes' do
+      expect(Radar.last.amount_of_axis).to eq 2
+    end
   end
 end
