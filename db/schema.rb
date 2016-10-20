@@ -11,7 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161019144520) do
+ActiveRecord::Schema.define(version: 20161020201553) do
+
+  create_table "answers", force: :cascade do |t|
+    t.integer  "points"
+    t.integer  "vote_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "question_id"
+  end
 
   create_table "axes", force: :cascade do |t|
     t.string   "description"
@@ -19,12 +27,17 @@ ActiveRecord::Schema.define(version: 20161019144520) do
     t.datetime "updated_at",  null: false
   end
 
-  create_table "axes_radars", force: :cascade do |t|
+  create_table "questions", force: :cascade do |t|
     t.integer "axis_id"
     t.integer "radar_id"
   end
 
   create_table "radars", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "votes", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -19,7 +19,7 @@ RSpec.describe RadarsController, type: :controller do
       end
 
       it 'the radar should have the 2 axes' do
-        expect(Radar.last.amount_of_axis).to eq 2
+        expect(Radar.last.amount_of_questions).to eq 2
       end
 
     end

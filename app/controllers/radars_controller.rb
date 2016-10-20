@@ -2,7 +2,7 @@ class RadarsController < ApplicationController
 
   def create
     axes = params.require(:axes).map { |axis| find_or_create_axis(axis) }
-    radar = Radar.create!(axes: axes)
+    radar = Radar.create_with_axes(axes)
     render json: radar, status: :ok
   end
 
