@@ -10,11 +10,11 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require lodash/dist/lodash
 //= require angular
+//= require angular-material
+//= require angular-animate
+//= require angular-aria
+//= require angular-route
 //= require_tree .
 
-angular.module('ruben-radar', [])
-    .controller('MainController', function($scope) {
-        $scope.content = 'bleh';
-    })
-;

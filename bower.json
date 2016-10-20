@@ -12,11 +12,11 @@
     "angular-sanitize": "^1.4.0",
     "angular-touch": "^1.4.0",
     "lodash": "^4.16.2",
-    "ngToast": "ngtoast#^2.0.0"
+    "angular-material": "^1.1.1"
   },
   "authors": [
     "Lucas David Traverso <lucas6246@gmail.com>",
-    "Gustavo Crespi <?????????????>"
+    "Gustavo Crespi <crespi.gustavo@gmail.com>"
   ],
   "description": "",
   "main": "",

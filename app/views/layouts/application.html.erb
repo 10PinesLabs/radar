@@ -6,7 +6,9 @@
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
 </head>
-<body ng-app="ruben-radar" ng-controller="MainController">
-  <strong>{{content}}</strong>
+<body ng-app="ruben-radar">
+  <div class="container">
+      <div ng-view=""></div>
+  </div>
 </body>
 </html>

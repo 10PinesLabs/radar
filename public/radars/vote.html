@@ -1,0 +1,25 @@
+<div class="row">
+    <div class="col-md-6">
+        <h1>Radar</h1>
+    </div>
+    <div class="col-md-6 pull-right">
+        <p>{{radar.date}}</p>
+    </div>
+</div>
+
+<div ng-repeat="axis in radar.axes">
+    <div class="row">
+        <h2>{{axis.description}}</h2>
+        <div class="input-group">
+            <div ng-repeat="option in options">
+                <label><input type="radio" name="{{axis.id}}" value="option">{{option}}</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <button type="submit" class="form-group form-control btn btn-primary" ng-click="submit()">
+        Submit
+    </button>
+</div>
