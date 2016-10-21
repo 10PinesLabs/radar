@@ -7,7 +7,6 @@ class VotesController < ApplicationController
 
   private
   def create_answers(answer_params)
-    #We should ensure somehow that all the questions answers are from the same radar
     answer_params.map { |answer| Answer.new(answer.permit(:axis_id, :points)) }
   end
 end
