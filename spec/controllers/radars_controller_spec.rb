@@ -29,7 +29,8 @@ RSpec.describe RadarsController, type: :controller do
   context 'When requesting to show a radar' do
     let(:axes) { [Axis.new(description: 'ble'), Axis.new(description: 'bla')] }
     let(:a_radar) { Radar.create_with_axes(axes) }
-    let(:expected_radar) { a_radar.to_json }
+    let(:serialized_axes) { axes.map { |axis| {'id' => axis.id, 'description' => axis.description} } }
+    let(:serialized_radar) { {'id' => a_radar.id, 'axes' => serialized_axes} }
     before do
       get :index, {id: a_radar.id}
     end
@@ -39,7 +40,7 @@ RSpec.describe RadarsController, type: :controller do
     end
 
     it 'should return the radar' do
-      expect(JSON.parse(response.body)).to eq JSON.parse(expected_radar)
+      expect(JSON.parse(response.body)).to eq serialized_radar
     end
   end
 end
