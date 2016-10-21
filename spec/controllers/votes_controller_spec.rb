@@ -9,7 +9,7 @@ RSpec.describe VotesController, type: :controller do
       }
     end
     context 'for a certain radar with axes' do
-      let(:axes) { [Axis.create!(description: 'ble'), Axis.create!(description: 'bla')] }
+      let(:axes) { [Axis.new(description: 'ble'), Axis.new(description: 'bla')] }
       let(:a_radar) { Radar.create_with_axes(axes) }
 
       it 'a new vote should be created' do
