@@ -1,6 +1,13 @@
 class VotesController < ApplicationController
   def create
+    answers = create_answers_from_params(params.require(:answers))
+    vote = Vote.create!(answers: answers)
+    render json: vote, status: :ok
+  end
 
-    render json: {}, status: :ok
+  private
+  def create_answers_from_params(answer_params)
+    #We should ensure somehow that all the questions answers are from the same radar
+    answer_params.map { |answer| Answer.create!(answer.permit(:question_id, :points)) }
   end
 end

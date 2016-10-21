@@ -7,8 +7,9 @@ RSpec.describe RadarsController, type: :controller do
     end
 
     context 'with axes' do
-      let(:an_axis) { Axis.create!(description: 'Una Arista guardada') }
-      let(:radar_params) { {axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {id: an_axis.id}]} }
+      let(:radar_params) {
+        {axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {description: 'Una Arista guardada'}]}
+      }
 
       it 'the request should succeed' do
         expect(response).to have_http_status :ok
