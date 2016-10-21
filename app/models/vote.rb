@@ -13,7 +13,7 @@ class Vote < ActiveRecord::Base
   end
 
   def answers_from_same_radar
-    radar = answers.first.axis.radar
+    radar = answers.first.radar
     axes.all?{ | axis | axis.radar == radar }
   end
 end
