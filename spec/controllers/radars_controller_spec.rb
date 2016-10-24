@@ -7,11 +7,12 @@ RSpec.describe RadarsController, type: :controller do
     end
 
     context 'with axes' do
-      let(:an_axis) { Axis.create!(description: 'Una Arista guardada') }
-      let(:radar_params) { {axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {id: an_axis.id}]} }
+      let(:radar_params) {
+        {axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {description: 'Una Arista guardada'}]}
+      }
 
       it 'the request should succeed' do
-        expect(response).to have_http_status :ok
+        expect(response).to have_http_status :created
       end
 
       it 'a non empty radar should be created' do
@@ -19,9 +20,27 @@ RSpec.describe RadarsController, type: :controller do
       end
 
       it 'the radar should have the 2 axes' do
-        expect(Radar.last.amount_of_axis).to eq 2
+        expect(Radar.last.amount_of_questions).to eq 2
       end
 
+    end
+  end
+
+  context 'When requesting to show a radar' do
+    let(:axes) { [Axis.new(description: 'ble'), Axis.new(description: 'bla')] }
+    let(:a_radar) { Radar.create_with_axes(axes) }
+    let(:serialized_axes) { axes.map { |axis| {'id' => axis.id, 'description' => axis.description} } }
+    let(:serialized_radar) { {'id' => a_radar.id, 'axes' => serialized_axes} }
+    before do
+      get :index, {id: a_radar.id}
+    end
+
+    it 'should return an ok status' do
+      expect(response).to have_http_status :ok
+    end
+
+    it 'should return the radar' do
+      expect(JSON.parse(response.body)).to eq serialized_radar
     end
   end
 end
