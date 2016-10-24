@@ -3,5 +3,5 @@
  */
 angular.module('ruben-radar')
     .factory('Vote', function Vote(backendUrl, $resource) {
-        return $resource(backendUrl + '/radars/:id_radar/votes/:id', {id: '@id'});
+        return $resource(backendUrl + '/radars/:radar_id/votes/:id', {id: '@id', radar_id: '@radar_id'});
     });

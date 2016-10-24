@@ -3,14 +3,16 @@
  */
 angular.module('ruben-radar')
     .service('VoteService', function (Vote) {
-        this.newVote = function newVote(axes) {
+        this.newVote = function newVote(radar) {
             var vote = new Vote();
-            vote.answers = _.map(axes, function (axis) {
+            vote.radar_id = radar.id;
+            vote.answers = _.map(radar.axes, function (axis) {
                 return {axis: axis, points: undefined};
             });
             return vote;
         };
         this.createVote = function createVote(vote) {
+            console.log(vote);
             return vote.$save();
         };
     });

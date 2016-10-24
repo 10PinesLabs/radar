@@ -12,6 +12,7 @@
 //
 //= require lodash/dist/lodash
 //= require angular
+//= require angular-resource
 //= require angular-material
 //= require angular-animate
 //= require angular-aria

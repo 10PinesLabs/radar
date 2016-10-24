@@ -3,20 +3,24 @@ angular
         'ngRoute',
         'ngMaterial',
         'ngAnimate',
-        'ngAria'
+        'ngAria',
+        'ngResource'
     ])
-    .config(function ($routeProvider, VoteService) {
+    .config(function ($routeProvider) {
         $routeProvider
             .when('/radars/:radar_id/vote', {
                 templateUrl: 'radars/vote.html',
                 controller: 'VoteController',
-                controllerAs: 'vote',
                 resolve: {
-                    radar: function ($routeParams) {
-                        return VoteService.getRadar($routeParams.radar_id);
+                    radar: function ($route, RadarService) {
+                        return RadarService.getRadar($route.current.params.radar_id);
                     }
                 }
-            }).otherwise({
-            redirectTo: '/radars/1/vote'
-        });
+            })
+            .when('/successfulVote', {
+                templateUrl: 'radars/successfulVote.html'
+            })
+            .otherwise({
+                redirectTo: '/radars/1/vote'
+            });
     });
