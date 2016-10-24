@@ -11,6 +11,7 @@
 // about supported directives.
 //
 //= require lodash/dist/lodash
+//= require d3/d3
 //= require angular
 //= require angular-resource
 //= require angular-material

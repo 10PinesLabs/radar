@@ -12,7 +12,8 @@
     "angular-sanitize": "^1.4.0",
     "angular-touch": "^1.4.0",
     "lodash": "^4.16.2",
-    "angular-material": "^1.1.1"
+    "angular-material": "^1.1.1",
+    "d3": "^3.5.17"
   },
   "authors": [
     "Lucas David Traverso <lucas6246@gmail.com>",
