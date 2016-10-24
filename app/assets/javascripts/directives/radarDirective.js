@@ -302,7 +302,7 @@ angular.module('ruben-radar')
 
                 //Call function to draw the Radar chart
                 //Will expect that data is in %'s
-                RadarChart.draw("#chart", d, mycfg);
+                RadarChart.draw(element[0], d, mycfg);
 
                 ////////////////////////////////////////////
                 /////////// Initiate legend ////////////////
