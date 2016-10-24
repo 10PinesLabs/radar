@@ -10,7 +10,7 @@ angular.module('ruben-radar')
             //in the HTML mark-up
             replace: false,
             scope: {
-                radar: '=radar'
+                answers: '=answers'
             },
             link: function (scope, element, attrs) {
                 // var data = [12,45,23,14,11,0];
@@ -151,7 +151,9 @@ angular.module('ruben-radar')
                                     }
                                     return str;
                                 })
-                                .style("fill", function(j, i){return cfg.color(series)})
+                                .style("fill", function(j, i){
+                                    return cfg.color(series);
+                                })
                                 .style("fill-opacity", cfg.opacityArea)
                                 .on('mouseover', function (d){
                                     z = "polygon."+d3.select(this).attr("class");
@@ -178,7 +180,9 @@ angular.module('ruben-radar')
                                 .append("svg:circle")
                                 .attr("class", "radar-chart-serie"+series)
                                 .attr('r', cfg.radius)
-                                .attr("alt", function(j){return Math.max(j.value, 0)})
+                                .attr("alt", function(j){
+                                    return Math.max(j.value, 0);
+                                })
                                 .attr("cx", function(j, i){
                                     dataValues.push([
                                         cfg.w/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.sin(i*cfg.radians/total)),
@@ -189,7 +193,9 @@ angular.module('ruben-radar')
                                 .attr("cy", function(j, i){
                                     return cfg.h/2*(1-(Math.max(j.value, 0)/cfg.maxValue)*cfg.factor*Math.cos(i*cfg.radians/total));
                                 })
-                                .attr("data-id", function(j){return j.axis})
+                                .attr("data-id", function(j){
+                                    return j.axis;
+                                })
                                 .style("fill", cfg.color(series)).style("fill-opacity", .9)
                                 .on('mouseover', function (d){
                                     newX =  parseFloat(d3.select(this).attr('cx')) - 10;
@@ -219,7 +225,9 @@ angular.module('ruben-radar')
                                         .style("fill-opacity", cfg.opacityArea);
                                 })
                                 .append("svg:title")
-                                .text(function(j){return Math.max(j.value, 0)});
+                                .text(function(j){
+                                    return Math.max(j.value, 0);
+                                });
 
                             series++;
                         });
@@ -240,56 +248,17 @@ angular.module('ruben-radar')
                 //Legend titles
                 var LegendOptions = ['Smartphone','Tablet'];
 
-                //Data
-                var d = [
-                    [
-                        {axis:"Email",value:0.59},
-                        {axis:"Social Networks",value:0.56},
-                        {axis:"Internet Banking",value:0.42},
-                        {axis:"News Sportsites",value:0.34},
-                        {axis:"Search Engine",value:0.48},
-                        {axis:"View Shopping sites",value:0.14},
-                        {axis:"Paying Online",value:0.11},
-                        {axis:"Buy Online",value:0.05},
-                        {axis:"Stream Music",value:0.07},
-                        {axis:"Online Gaming",value:0.12},
-                        {axis:"Navigation",value:0.27},
-                        {axis:"App connected to TV program",value:0.03},
-                        {axis:"Offline Gaming",value:0.12},
-                        {axis:"Photo Video",value:0.4},
-                        {axis:"Reading",value:0.03},
-                        {axis:"Listen Music",value:0.22},
-                        {axis:"Watch TV",value:0.03},
-                        {axis:"TV Movies Streaming",value:0.03},
-                        {axis:"Listen Radio",value:0.07},
-                        {axis:"Sending Money",value:0.18},
-                        {axis:"Other",value:0.07},
-                        {axis:"Use less Once week",value:0.08}
-                    ],[
-                        {axis:"Email",value:0.48},
-                        {axis:"Social Networks",value:0.41},
-                        {axis:"Internet Banking",value:0.27},
-                        {axis:"News Sportsites",value:0.28},
-                        {axis:"Search Engine",value:0.46},
-                        {axis:"View Shopping sites",value:0.29},
-                        {axis:"Paying Online",value:0.11},
-                        {axis:"Buy Online",value:0.14},
-                        {axis:"Stream Music",value:0.05},
-                        {axis:"Online Gaming",value:0.19},
-                        {axis:"Navigation",value:0.14},
-                        {axis:"App connected to TV program",value:0.06},
-                        {axis:"Offline Gaming",value:0.24},
-                        {axis:"Photo Video",value:0.17},
-                        {axis:"Reading",value:0.15},
-                        {axis:"Listen Music",value:0.12},
-                        {axis:"Watch TV",value:0.1},
-                        {axis:"TV Movies Streaming",value:0.14},
-                        {axis:"Listen Radio",value:0.06},
-                        {axis:"Sending Money",value:0.16},
-                        {axis:"Other",value:0.07},
-                        {axis:"Use less Once week",value:0.17}
-                    ]
-                ];
+                // Data
+                // This data should appear as a double array of each graph
+                // TODO this is evil
+                var d = [];
+                d = _.groupBy(scope.answers, 'axis.description');
+                d = _.mapValues(d, function (answers) {
+                    return _.sumBy(answers, 'points') / answers.length;
+                });
+                d = [_.map(_.toPairs(d), function (o) {
+                    return {axis: o[0], value: o[1]};
+                })];
 
                 //Options for the Radar chart, other than default
                 var mycfg = {

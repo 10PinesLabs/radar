@@ -26,6 +26,15 @@ angular
                 resolve: {
                     radar: function ($route, RadarService) {
                         return RadarService.getRadar($route.current.params.radar_id);
+                    },
+                    answers: function ($route, $http) {
+                        return $http.get(
+                            '/radars/' +
+                            $route.current.params.radar_id +
+                            '/answers'
+                        ).then(function (response) {
+                            return response.data;
+                        });
                     }
                 }
             })
