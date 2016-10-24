@@ -12,7 +12,6 @@ angular.module('ruben-radar')
             return vote;
         };
         this.createVote = function createVote(vote) {
-            console.log(vote);
             return vote.$save();
         };
     });
