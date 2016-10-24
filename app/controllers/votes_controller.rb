@@ -7,6 +7,10 @@ class VotesController < ApplicationController
 
   private
   def create_answers(answer_params)
-    answer_params.map { |answer| Answer.new(answer.permit(:axis_id, :points)) }
+    answer_params.map do |answer|
+      axis_id = answer.require(:axis).require(:id)
+      points = answer.require(:points)
+      Answer.new(axis_id: axis_id, points: points)
+    end
   end
 end

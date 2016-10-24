@@ -32,7 +32,7 @@ RSpec.describe RadarsController, type: :controller do
     let(:serialized_axes) { axes.map { |axis| {'id' => axis.id, 'description' => axis.description} } }
     let(:serialized_radar) { {'id' => a_radar.id, 'axes' => serialized_axes} }
     before do
-      get :index, {id: a_radar.id}
+      get :show, {id: a_radar.id}
     end
 
     it 'should return an ok status' do

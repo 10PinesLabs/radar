@@ -5,7 +5,7 @@ RSpec.describe VotesController, type: :controller do
   def request_to_create_vote
     post :create, {
         radar_id: a_radar.id,
-        answers: a_radar.axes.map { |axis| {axis_id: axis.id, points: 3} }
+        answers: a_radar.axes.map { |axis| {axis: {id: axis.id}, points: 3} }
     }
   end
 
