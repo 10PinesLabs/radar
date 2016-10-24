@@ -36,6 +36,6 @@ class Radar < ActiveRecord::Base
   private
 
   def assert_active_radar
-    raise ERROR_MESSAGE_FOR_ALREADY_CLOSED unless active?
+    raise AlreadyClosedRadarException, ERROR_MESSAGE_FOR_ALREADY_CLOSED unless active?
   end
 end

@@ -31,7 +31,7 @@ RSpec.describe Radar, type: :model do
         end
         context 'and you try to close it again' do
           it 'should err' do
-            expect{subject.close}.to raise_error Radar::ERROR_MESSAGE_FOR_ALREADY_CLOSED
+            expect{subject.close}.to raise_error AlreadyClosedRadarException, Radar::ERROR_MESSAGE_FOR_ALREADY_CLOSED
           end
         end
       end

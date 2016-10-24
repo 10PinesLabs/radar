@@ -23,9 +23,23 @@ RSpec.describe RadarsController, type: :controller do
         expect(Radar.last.amount_of_questions).to eq 2
       end
     end
+
+    context 'with no axes' do
+      let(:radar_params) { {axes: []} }
+      it 'should return bad request' do
+        expect(response).to have_http_status :bad_request
+      end
+    end
   end
 
   context 'When requesting to show a radar' do
+    context 'that does not exists' do
+      it 'should return a not found response' do
+        get :show, {id: -1}
+        expect(response).to have_http_status :not_found
+      end
+    end
+
     let(:axes) { [Axis.new(description: 'ble'), Axis.new(description: 'bla')] }
     let(:a_radar) { Radar.create_with_axes(axes) }
     let(:serialized_axes) { axes.map { |axis| {'id' => axis.id, 'description' => axis.description} } }
@@ -63,6 +77,13 @@ RSpec.describe RadarsController, type: :controller do
       end
       it 'the radar should not be active' do
         expect(a_radar).not_to be_active
+      end
+
+      context 'and you request to close it again' do
+        it 'should return unprocessable entity' do
+          request_close_radar
+          expect(response).to have_http_status :unprocessable_entity
+        end
       end
     end
   end
