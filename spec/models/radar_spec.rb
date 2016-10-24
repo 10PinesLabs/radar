@@ -29,6 +29,11 @@ RSpec.describe Radar, type: :model do
         it 'should be closed' do
           is_expected.not_to be_active
         end
+        context 'and you try to close it again' do
+          it 'should err' do
+            expect{subject.close}.to raise_error Radar::ERROR_MESSAGE_FOR_ALREADY_CLOSED
+          end
+        end
       end
     end
   end
