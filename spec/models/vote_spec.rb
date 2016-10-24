@@ -1,6 +1,23 @@
 require 'rails_helper'
 
 RSpec.describe Vote, type: :model do
+  context 'When having two different Radars' do
+    let!(:axes) { [Axis.new(description: 'ble')] }
+    let!(:another_axes) { [Axis.new(description: 'bla')] }
+    let!(:a_radar) { Radar.create!(axes: axes) }
+    let!(:another_radar) { Radar.create!(axes: another_axes) }
+    context 'and a vote have answers from both of them' do
+      let(:answers) do
+        (axes + another_axes).map { |axis| Answer.new(axis: axis, points: 3) }
+      end
+      it 'should err when creating the vote' do
+        expect { Vote.create!(answers: answers) }.to raise_error do |error|
+          expect(error).to be_a(ActiveRecord::RecordInvalid)
+          expect(error.record.errors[:answers]).to be_include Vote::ERROR_MESSAGE_FOR_ANSWERS_FROM_DIFFERENT_RADARS
+        end
+      end
+    end
+  end
   context 'With a new Radar' do
     let(:axes) { [Axis.new(description: 'ble'), Axis.new(description: 'bla')] }
     let(:a_radar) { Radar.create_with_axes(axes) }
