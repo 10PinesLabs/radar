@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161021144824) do
+ActiveRecord::Schema.define(version: 20161024183119) do
 
   create_table "answers", force: :cascade do |t|
     t.integer  "points"
@@ -29,8 +29,9 @@ ActiveRecord::Schema.define(version: 20161021144824) do
   end
 
   create_table "radars", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.boolean  "active",     default: true
   end
 
   create_table "votes", force: :cascade do |t|

@@ -22,7 +22,6 @@ RSpec.describe RadarsController, type: :controller do
       it 'the radar should have the 2 axes' do
         expect(Radar.last.amount_of_questions).to eq 2
       end
-
     end
   end
 
@@ -41,6 +40,30 @@ RSpec.describe RadarsController, type: :controller do
 
     it 'should return the radar' do
       expect(JSON.parse(response.body)).to eq serialized_radar
+    end
+  end
+
+  context 'When requesting to close a radar' do
+
+    def request_close_radar
+      post :close, {id: a_radar.id}
+    end
+
+    let(:axes) { [Axis.new(description: 'ble'), Axis.new(description: 'bla')] }
+    let!(:a_radar) { Radar.create_with_axes(axes) }
+
+    context 'and the radar is active' do
+      before :each do
+        request_close_radar
+        a_radar.reload
+      end
+
+      it 'should respond the request with an ok status' do
+        expect(response).to have_http_status :ok
+      end
+      it 'the radar should not be active' do
+        expect(a_radar).not_to be_active
+      end
     end
   end
 end
