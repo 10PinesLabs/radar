@@ -6,7 +6,7 @@ class RadarsController < ApplicationController
     render json: radar, status: :created
   end
 
-  def index
+  def show
     radar = Radar.find(params.require(:id))
     render json: radar, status: :ok
   end
