@@ -3,7 +3,7 @@
         <h1>Radar</h1>
     </div>
     <div class="col-md-6 pull-right">
-        <p>{{radar.date}}</p>
+        <h4>{{radar.date}}</h4>
     </div>
 </div>
 
@@ -12,7 +12,10 @@
         <h2>{{answer.axis.description}}</h2>
         <div class="input-group">
             <div ng-repeat="option in options">
-                <label><input type="radio" name="{{axis.id}}" value="option">{{option}}</label>
+                <label>
+                    <input type="radio" name="{{axis.id}}" ng-model="answer.points" value="{{option}}">
+                    {{option}}
+                </label>
             </div>
         </div>
     </div>
