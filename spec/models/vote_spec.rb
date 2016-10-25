@@ -40,6 +40,20 @@ RSpec.describe Vote, type: :model do
           end
         end
       end
+      context 'with an axis from a closed Radar' do
+        let(:axis) { Axis.new(description: 'ble') }
+        let(:a_radar) { Radar.create_with_axes([axis]) }
+        let(:answer) { Answer.new(axis: axis, points: 3) }
+        before :each do
+          a_radar.close
+        end
+        it 'should err' do
+          expect { Vote.create!(answers: [answer]) }.to raise_error do |error|
+            expect(error).to be_a(ActiveRecord::RecordInvalid)
+            expect(error.record.errors[:radar]).to be_include Vote::ERROR_MESSAGE_CANNOT_ANSWER_CLOSED_RADAR
+          end
+        end
+      end
     end
   end
 end

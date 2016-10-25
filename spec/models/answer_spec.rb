@@ -18,18 +18,5 @@ RSpec.describe Answer, type: :model do
         end
       end
     end
-    context 'with an axis from a closed Radar' do
-      let(:axis) { Axis.new(description: 'ble') }
-      let(:a_radar) { Radar.create_with_axes([axis]) }
-      before :each do
-        a_radar.close
-      end
-      it 'should err' do
-        expect { Answer.create!(axis: axis, points: 3) }.to raise_error do |error|
-          expect(error).to be_a(ActiveRecord::RecordInvalid)
-          expect(error.record.errors[:axis]).to be_include Answer::ERROR_MESSAGE_CANNOT_ANSWER_CLOSED_RADAR
-        end
-      end
-    end
   end
 end

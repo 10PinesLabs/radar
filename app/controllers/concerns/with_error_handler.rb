@@ -8,16 +8,19 @@ module WithErrorHandler
   def handle_domain_errors
     begin
       yield
-    rescue ActionController::ParameterMissing, ActiveRecord::RecordInvalid => error
-      render_error(error.message, :bad_request)
+    rescue ActionController::ParameterMissing => error
+      render_error([error.message], :bad_request)
+    rescue ActiveRecord::RecordInvalid => error
+      errors = error.record.errors.flat_map { |_, error_list| error_list }
+      render_error(errors, :bad_request)
     rescue ActiveRecord::RecordNotFound => error
-      render_error(error.message, :not_found)
+      render_error([error.message], :not_found)
     rescue AlreadyClosedRadarException => error
-      render_error(error.message, :unprocessable_entity)
+      render_error([error.message], :unprocessable_entity)
     end
   end
 
-  def render_error(error_message, status)
-    render json: {error: error_message}, status: status
+  def render_error(error_messages, status)
+    render json: {errors: error_messages}, status: status
   end
 end
