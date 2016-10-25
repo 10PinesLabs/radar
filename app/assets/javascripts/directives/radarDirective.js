@@ -43,7 +43,7 @@ angular.module('ruben-radar')
                         // that data cannot be smaller than 0
                         cfg.maxValue = Math.max(0, maxValueFromData);
 
-                        var allAxis = (data[0].map(function(i, j){return i.axis;}));
+                        var allAxis = _.map(data[0], 'axis');
                         var total = allAxis.length;
                         var radius = cfg.factor*Math.min(cfg.w/2, cfg.h/2);
                         var Format = d3.format('%');
