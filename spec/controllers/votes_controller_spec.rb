@@ -21,7 +21,9 @@ RSpec.describe VotesController, type: :controller do
         end
       end
       context 'and the answers are from different radars' do
-        let(:mixed_axis) {[axes.first, Axis.create!(description: 'blo')]}
+        let(:another_axis) { Axis.new(description: 'blo') }
+        let(:mixed_axis) {[axes.first, another_axis]}
+        let(:a_radar) { Radar.create_with_axes([another_axis]) }
         it 'should return a bad request' do
           request_to_create_vote(a_radar.id, mixed_axis)
           expect(response).to have_http_status :bad_request
