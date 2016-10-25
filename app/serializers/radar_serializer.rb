@@ -1,4 +1,4 @@
 class RadarSerializer < ActiveModel::Serializer
-  attributes :id
+  attributes :id, :active
   has_many :axes
 end
