@@ -34,7 +34,8 @@ angular
             .otherwise({
                 redirectTo: '/radars/1/vote'
             });
-    }).config(function (ngToastProvider) {
+    })
+    .config(function (ngToastProvider) {
         ngToastProvider.configure({
             verticalPosition: 'bottom',
             horizontalPosition: 'center',
