@@ -23,7 +23,6 @@ angular.module('ruben-radar')
                         factor: 1,
                         factorLegend: .85,
                         levels: 3,
-                        maxValue: 0,
                         radians: 2 * Math.PI,
                         opacityArea: 0.5,
                         ToRight: 5,
@@ -37,11 +36,12 @@ angular.module('ruben-radar')
                     var cfg = _.assign(defaultConfig, options);
 
                     this.draw = function(id, data){
-                        cfg.maxValue = Math.max(cfg.maxValue, d3.max(data, function(i){
-                            return d3.max(i.map(function(o){
-                                return o.value;
-                            }));
-                        }));
+                        // Get the maximum value from the data
+                        var maxValueFromData = d3.max(data, function(i){
+                            return d3.max(_.map(i, 'value'));
+                        });
+                        // that data cannot be smaller than 0
+                        cfg.maxValue = Math.max(0, maxValueFromData);
 
                         var allAxis = (data[0].map(function(i, j){return i.axis;}));
                         var total = allAxis.length;
