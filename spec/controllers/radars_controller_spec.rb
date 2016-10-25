@@ -43,7 +43,7 @@ RSpec.describe RadarsController, type: :controller do
     let(:axes) { [Axis.new(description: 'ble'), Axis.new(description: 'bla')] }
     let(:a_radar) { Radar.create_with_axes(axes) }
     let(:serialized_axes) { axes.map { |axis| {'id' => axis.id, 'description' => axis.description} } }
-    let(:serialized_radar) { {'id' => a_radar.id, 'axes' => serialized_axes} }
+    let(:serialized_radar) { {'id' => a_radar.id, 'axes' => serialized_axes, 'active' => true} }
     before do
       get :show, {id: a_radar.id}
     end
