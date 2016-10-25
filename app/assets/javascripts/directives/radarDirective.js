@@ -46,7 +46,6 @@ angular.module('ruben-radar')
                         var allAxis = _.map(data[0], 'axis');
                         var total = allAxis.length;
                         var radius = Math.min(cfg.w/2, cfg.h/2);
-                        var Format = d3.format('%');
 
                         // Add the main canvas
                         var g = d3.select(id)
@@ -103,7 +102,9 @@ angular.module('ruben-radar')
                                 .style("font-size", "10px")
                                 .attr("transform", "translate(" + (cfg.w/2-levelFactor + cfg.ToRight) + ", " + (cfg.h/2-levelFactor) + ")")
                                 .attr("fill", "#737373")
-                                .text(Format((j+1)*cfg.maxValue/cfg.levels));
+                                .text(function () {
+                                    return (j+1)*cfg.maxValue/cfg.levels;
+                                });
                         }
 
                         series = 0;
@@ -117,8 +118,12 @@ angular.module('ruben-radar')
                         axis.append("line")
                             .attr("x1", cfg.w/2)
                             .attr("y1", cfg.h/2)
-                            .attr("x2", function(data, i){return cfg.w/2*(1-Math.sin(i*radians/total));})
-                            .attr("y2", function(data, i){return cfg.h/2*(1-Math.cos(i*radians/total));})
+                            .attr("x2", function(data, i){
+                                return cfg.w/2*(1-Math.sin(i*radians/total));
+                            })
+                            .attr("y2", function(data, i){
+                                return cfg.h/2*(1-Math.cos(i*radians/total));
+                            })
                             .attr("class", "line")
                             .style("stroke", "grey")
                             .style("stroke-width", "1px");
@@ -132,7 +137,9 @@ angular.module('ruben-radar')
                             .attr("dy", "1.5em")
                             .attr("transform", function(data, i){return "translate(0, -10)";})
                             .attr("x", function(data, i){return cfg.w/2*(1-cfg.factorLegend*Math.sin(i*radians/total))-60*Math.sin(i*radians/total);})
-                            .attr("y", function(data, i){return cfg.h/2*(1-Math.cos(i*radians/total))-20*Math.cos(i*radians/total);});
+                            .attr("y", function(data, i){
+                                return cfg.h/2*(1-Math.cos(i*radians/total))-20*Math.cos(i*radians/total);
+                            });
 
 
                         data.forEach(function(y, x){
@@ -212,7 +219,7 @@ angular.module('ruben-radar')
                                     tooltip
                                         .attr('x', newX)
                                         .attr('y', newY)
-                                        .text(Format(data.value))
+                                        .text(function () {return data.value;})
                                         .transition(200)
                                         .style('opacity', 1);
 
@@ -273,7 +280,7 @@ angular.module('ruben-radar')
                     w: w,
                     h: h,
                     maxValue: 0.6,
-                    levels: 6,
+                    levels: 5,
                     ExtraWidthX: 300
                 };
 
