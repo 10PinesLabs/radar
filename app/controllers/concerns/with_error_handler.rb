@@ -1,6 +1,10 @@
 module WithErrorHandler
   extend ActiveSupport::Concern
 
+  def self.included(controller)
+    controller.around_action :handle_domain_errors
+  end
+
   def handle_domain_errors
     begin
       yield
