@@ -10,6 +10,14 @@ RSpec.describe Answer, type: :model do
         end
       end
     end
+    context 'with no vote' do
+      it 'should raise an error' do
+        expect { Answer.create! }.to raise_error do |error|
+          expect(error).to be_a(ActiveRecord::RecordInvalid)
+          expect(error.record.errors[:vote]).to be_include "can't be blank"
+        end
+      end
+    end
     context 'with an axis from a closed Radar' do
       let(:axis) { Axis.new(description: 'ble') }
       let(:a_radar) { Radar.create_with_axes([axis]) }
