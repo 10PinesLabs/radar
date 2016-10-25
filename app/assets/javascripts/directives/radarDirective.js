@@ -17,7 +17,7 @@ angular.module('ruben-radar')
                 // var chart = d3.select(element[0]);
                 var RadarChart = {
                     draw: function(id, d, options){
-                        var cfg = {
+                        var cfg = _.assign({
                             radius: 5,
                             w: 600,
                             h: 600,
@@ -33,15 +33,8 @@ angular.module('ruben-radar')
                             ExtraWidthX: 100,
                             ExtraWidthY: 100,
                             color: d3.scale.category10()
-                        };
+                        }, options);
 
-                        if('undefined' !== typeof options){
-                            for(var i in options){
-                                if('undefined' !== typeof options[i]){
-                                    cfg[i] = options[i];
-                                }
-                            }
-                        }
                         cfg.maxValue = Math.max(cfg.maxValue, d3.max(d, function(i){
                             return d3.max(i.map(function(o){
                                 return o.value;
