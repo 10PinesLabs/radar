@@ -15,31 +15,34 @@ angular.module('ruben-radar')
             link: function (scope, element, attrs) {
                 // var data = [12,45,23,14,11,0];
                 // var chart = d3.select(element[0]);
-                var RadarChart = {
-                    draw: function(id, data, options){
-                        var cfg = _.assign({
-                            radius: 5,
-                            w: 600,
-                            h: 600,
-                            factor: 1,
-                            factorLegend: .85,
-                            levels: 3,
-                            maxValue: 0,
-                            radians: 2 * Math.PI,
-                            opacityArea: 0.5,
-                            ToRight: 5,
-                            TranslateX: 80,
-                            TranslateY: 30,
-                            ExtraWidthX: 100,
-                            ExtraWidthY: 100,
-                            color: d3.scale.category10()
-                        }, options);
+                var RadarChart = function(options) {
+                    var defaultConfig = {
+                        radius: 5,
+                        w: 600,
+                        h: 600,
+                        factor: 1,
+                        factorLegend: .85,
+                        levels: 3,
+                        maxValue: 0,
+                        radians: 2 * Math.PI,
+                        opacityArea: 0.5,
+                        ToRight: 5,
+                        TranslateX: 80,
+                        TranslateY: 30,
+                        ExtraWidthX: 100,
+                        ExtraWidthY: 100,
+                        color: d3.scale.category10()
+                    };
 
+                    var cfg = _.assign(defaultConfig, options);
+
+                    this.draw = function(id, data){
                         cfg.maxValue = Math.max(cfg.maxValue, d3.max(data, function(i){
                             return d3.max(i.map(function(o){
                                 return o.value;
                             }));
                         }));
+
                         var allAxis = (data[0].map(function(i, j){return i.axis;}));
                         var total = allAxis.length;
                         var radius = cfg.factor*Math.min(cfg.w/2, cfg.h/2);
@@ -230,7 +233,7 @@ angular.module('ruben-radar')
                             .style('opacity', 0)
                             .style('font-family', 'sans-serif')
                             .style('font-size', '13px');
-                    }
+                    };
                 };
 
                 var w = 500,
@@ -264,7 +267,7 @@ angular.module('ruben-radar')
 
                 //Call function to draw the Radar chart
                 //Will expect that data is in %'s
-                RadarChart.draw(element[0], data, mycfg);
+                new RadarChart(mycfg).draw(element[0], data);
 
                 ////////////////////////////////////////////
                 /////////// Initiate legend ////////////////
