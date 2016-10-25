@@ -7,22 +7,32 @@
     </div>
 </div>
 
-<div ng-repeat="answer in vote.answers">
-    <div class="row">
-        <h2>{{answer.axis.description}}</h2>
-        <div class="input-group">
-            <div ng-repeat="option in options">
-                <label>
-                    <input type="radio" name="{{axis.id}}" ng-model="answer.points" value="{{option}}">
-                    {{option}}
-                </label>
+<div ng-if="radar.active">
+    <div ng-repeat="answer in vote.answers">
+        <div class="row">
+            <h2>{{answer.axis.description}}</h2>
+            <div class="input-group">
+                <div ng-repeat="option in options">
+                    <label>
+                        <input type="radio" name="{{axis.id}}" ng-model="answer.points" value="{{option}}">
+                        {{option}}
+                    </label>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="row">
-    <button type="submit" class="form-group form-control btn btn-primary" ng-click="submit()">
-        Submit
-    </button>
+    <div class="row">
+        <button type="submit" class="form-group form-control btn btn-primary" ng-click="submit()">
+            Submit
+        </button>
+    </div>
+</div>
+<div ng-if="!radar.active">
+    <div class="row">
+        <p>
+            Al parecer ya no podés votar en este radar, ya que el mismo está cerrado :(.
+            Sin embargo <a href="#/radars/{{radar.id}}/results">acá</a> podés acceder a los resultados.
+        </p>
+    </div>
 </div>
