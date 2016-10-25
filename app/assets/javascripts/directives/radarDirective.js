@@ -113,7 +113,7 @@ angular.module('ruben-radar')
 
                         axis.append("text")
                             .attr("class", "legend")
-                            .text(function(data){return data;})
+                            .text(_.identity)
                             .style("font-family", "sans-serif")
                             .style("font-size", "11px")
                             .attr("text-anchor", "middle")
@@ -316,7 +316,7 @@ angular.module('ruben-radar')
                     .attr("y", function(data, i){ return i * 20 + 9;})
                     .attr("font-size", "11px")
                     .attr("fill", "#737373")
-                    .text(function(data) { return data; })
+                    .text(_.identity)
                 ;
             }
         };
