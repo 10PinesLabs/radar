@@ -20,7 +20,6 @@ angular.module('ruben-radar')
                         radius: 5,
                         w: 600,
                         h: 600,
-                        factor: 1,
                         factorLegend: .85,
                         levels: 3,
                         radians: 2 * Math.PI,
@@ -45,10 +44,10 @@ angular.module('ruben-radar')
 
                         var allAxis = _.map(data[0], 'axis');
                         var total = allAxis.length;
-                        var radius = cfg.factor*Math.min(cfg.w/2, cfg.h/2);
+                        var radius = Math.min(cfg.w/2, cfg.h/2);
                         var Format = d3.format('%');
-                        d3.select(id).select("svg").remove();
 
+                        // Add the main canvas
                         var g = d3.select(id)
                                 .append("svg")
                                 .attr("width", cfg.w+cfg.ExtraWidthX)
@@ -61,15 +60,23 @@ angular.module('ruben-radar')
 
                         //Circular segments
                         for(var j=0; j<cfg.levels-1; j++){
-                            var levelFactor = cfg.factor*radius*((j+1)/cfg.levels);
+                            var levelFactor = radius*((j+1)/cfg.levels);
                             g.selectAll(".levels")
                                 .data(allAxis)
                                 .enter()
                                 .append("svg:line")
-                                .attr("x1", function(data, i){return levelFactor*(1-cfg.factor*Math.sin(i*cfg.radians/total));})
-                                .attr("y1", function(data, i){return levelFactor*(1-cfg.factor*Math.cos(i*cfg.radians/total));})
-                                .attr("x2", function(data, i){return levelFactor*(1-cfg.factor*Math.sin((i+1)*cfg.radians/total));})
-                                .attr("y2", function(data, i){return levelFactor*(1-cfg.factor*Math.cos((i+1)*cfg.radians/total));})
+                                .attr("x1", function(data, i){
+                                    return levelFactor*(1-Math.sin(i*cfg.radians/total));
+                                })
+                                .attr("y1", function(data, i){
+                                    return levelFactor*(1-Math.cos(i*cfg.radians/total));
+                                })
+                                .attr("x2", function(data, i){
+                                    return levelFactor*(1-Math.sin((i+1)*cfg.radians/total));
+                                })
+                                .attr("y2", function(data, i){
+                                    return levelFactor*(1-Math.cos((i+1)*cfg.radians/total));
+                                })
                                 .attr("class", "line")
                                 .style("stroke", "grey")
                                 .style("stroke-opacity", "0.75")
@@ -79,13 +86,13 @@ angular.module('ruben-radar')
 
                         //Text indicating at what % each level is
                         for(var j=0; j<cfg.levels; j++){
-                            var levelFactor = cfg.factor*radius*((j+1)/cfg.levels);
+                            var levelFactor = radius*((j+1)/cfg.levels);
                             g.selectAll(".levels")
                                 .data([1]) //dummy data
                                 .enter()
                                 .append("svg:text")
-                                .attr("x", function(data){return levelFactor*(1-cfg.factor*Math.sin(0));})
-                                .attr("y", function(data){return levelFactor*(1-cfg.factor*Math.cos(0));})
+                                .attr("x", function(data){return levelFactor*(1-Math.sin(0));})
+                                .attr("y", function(data){return levelFactor*(1-Math.cos(0));})
                                 .attr("class", "legend")
                                 .style("font-family", "sans-serif")
                                 .style("font-size", "10px")
@@ -105,8 +112,8 @@ angular.module('ruben-radar')
                         axis.append("line")
                             .attr("x1", cfg.w/2)
                             .attr("y1", cfg.h/2)
-                            .attr("x2", function(data, i){return cfg.w/2*(1-cfg.factor*Math.sin(i*cfg.radians/total));})
-                            .attr("y2", function(data, i){return cfg.h/2*(1-cfg.factor*Math.cos(i*cfg.radians/total));})
+                            .attr("x2", function(data, i){return cfg.w/2*(1-Math.sin(i*cfg.radians/total));})
+                            .attr("y2", function(data, i){return cfg.h/2*(1-Math.cos(i*cfg.radians/total));})
                             .attr("class", "line")
                             .style("stroke", "grey")
                             .style("stroke-width", "1px");
@@ -128,8 +135,8 @@ angular.module('ruben-radar')
                             g.selectAll(".nodes")
                                 .data(y, function(j, i){
                                     dataValues.push([
-                                        cfg.w/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.sin(i*cfg.radians/total)),
-                                        cfg.h/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.cos(i*cfg.radians/total))
+                                        cfg.w/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*Math.sin(i*cfg.radians/total)),
+                                        cfg.h/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*Math.cos(i*cfg.radians/total))
                                     ]);
                                 });
                             dataValues.push(dataValues[0]);
@@ -181,13 +188,13 @@ angular.module('ruben-radar')
                                 })
                                 .attr("cx", function(j, i){
                                     dataValues.push([
-                                        cfg.w/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.sin(i*cfg.radians/total)),
-                                        cfg.h/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*cfg.factor*Math.cos(i*cfg.radians/total))
+                                        cfg.w/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*Math.sin(i*cfg.radians/total)),
+                                        cfg.h/2*(1-(parseFloat(Math.max(j.value, 0))/cfg.maxValue)*Math.cos(i*cfg.radians/total))
                                     ]);
-                                    return cfg.w/2*(1-(Math.max(j.value, 0)/cfg.maxValue)*cfg.factor*Math.sin(i*cfg.radians/total));
+                                    return cfg.w/2*(1-(Math.max(j.value, 0)/cfg.maxValue)*Math.sin(i*cfg.radians/total));
                                 })
                                 .attr("cy", function(j, i){
-                                    return cfg.h/2*(1-(Math.max(j.value, 0)/cfg.maxValue)*cfg.factor*Math.cos(i*cfg.radians/total));
+                                    return cfg.h/2*(1-(Math.max(j.value, 0)/cfg.maxValue)*Math.cos(i*cfg.radians/total));
                                 })
                                 .attr("data-id", function(j){
                                     return j.axis;
