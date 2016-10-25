@@ -16,7 +16,7 @@ angular.module('ruben-radar')
                 // var data = [12,45,23,14,11,0];
                 // var chart = d3.select(element[0]);
                 var RadarChart = {
-                    draw: function(id, d, options){
+                    draw: function(id, data, options){
                         var cfg = _.assign({
                             radius: 5,
                             w: 600,
@@ -35,12 +35,12 @@ angular.module('ruben-radar')
                             color: d3.scale.category10()
                         }, options);
 
-                        cfg.maxValue = Math.max(cfg.maxValue, d3.max(d, function(i){
+                        cfg.maxValue = Math.max(cfg.maxValue, d3.max(data, function(i){
                             return d3.max(i.map(function(o){
                                 return o.value;
                             }));
                         }));
-                        var allAxis = (d[0].map(function(i, j){return i.axis;}));
+                        var allAxis = (data[0].map(function(i, j){return i.axis;}));
                         var total = allAxis.length;
                         var radius = cfg.factor*Math.min(cfg.w/2, cfg.h/2);
                         var Format = d3.format('%');
@@ -63,10 +63,10 @@ angular.module('ruben-radar')
                                 .data(allAxis)
                                 .enter()
                                 .append("svg:line")
-                                .attr("x1", function(d, i){return levelFactor*(1-cfg.factor*Math.sin(i*cfg.radians/total));})
-                                .attr("y1", function(d, i){return levelFactor*(1-cfg.factor*Math.cos(i*cfg.radians/total));})
-                                .attr("x2", function(d, i){return levelFactor*(1-cfg.factor*Math.sin((i+1)*cfg.radians/total));})
-                                .attr("y2", function(d, i){return levelFactor*(1-cfg.factor*Math.cos((i+1)*cfg.radians/total));})
+                                .attr("x1", function(data, i){return levelFactor*(1-cfg.factor*Math.sin(i*cfg.radians/total));})
+                                .attr("y1", function(data, i){return levelFactor*(1-cfg.factor*Math.cos(i*cfg.radians/total));})
+                                .attr("x2", function(data, i){return levelFactor*(1-cfg.factor*Math.sin((i+1)*cfg.radians/total));})
+                                .attr("y2", function(data, i){return levelFactor*(1-cfg.factor*Math.cos((i+1)*cfg.radians/total));})
                                 .attr("class", "line")
                                 .style("stroke", "grey")
                                 .style("stroke-opacity", "0.75")
@@ -81,8 +81,8 @@ angular.module('ruben-radar')
                                 .data([1]) //dummy data
                                 .enter()
                                 .append("svg:text")
-                                .attr("x", function(d){return levelFactor*(1-cfg.factor*Math.sin(0));})
-                                .attr("y", function(d){return levelFactor*(1-cfg.factor*Math.cos(0));})
+                                .attr("x", function(data){return levelFactor*(1-cfg.factor*Math.sin(0));})
+                                .attr("y", function(data){return levelFactor*(1-cfg.factor*Math.cos(0));})
                                 .attr("class", "legend")
                                 .style("font-family", "sans-serif")
                                 .style("font-size", "10px")
@@ -102,25 +102,25 @@ angular.module('ruben-radar')
                         axis.append("line")
                             .attr("x1", cfg.w/2)
                             .attr("y1", cfg.h/2)
-                            .attr("x2", function(d, i){return cfg.w/2*(1-cfg.factor*Math.sin(i*cfg.radians/total));})
-                            .attr("y2", function(d, i){return cfg.h/2*(1-cfg.factor*Math.cos(i*cfg.radians/total));})
+                            .attr("x2", function(data, i){return cfg.w/2*(1-cfg.factor*Math.sin(i*cfg.radians/total));})
+                            .attr("y2", function(data, i){return cfg.h/2*(1-cfg.factor*Math.cos(i*cfg.radians/total));})
                             .attr("class", "line")
                             .style("stroke", "grey")
                             .style("stroke-width", "1px");
 
                         axis.append("text")
                             .attr("class", "legend")
-                            .text(function(d){return d})
+                            .text(function(data){return data;})
                             .style("font-family", "sans-serif")
                             .style("font-size", "11px")
                             .attr("text-anchor", "middle")
                             .attr("dy", "1.5em")
-                            .attr("transform", function(d, i){return "translate(0, -10)"})
-                            .attr("x", function(d, i){return cfg.w/2*(1-cfg.factorLegend*Math.sin(i*cfg.radians/total))-60*Math.sin(i*cfg.radians/total);})
-                            .attr("y", function(d, i){return cfg.h/2*(1-Math.cos(i*cfg.radians/total))-20*Math.cos(i*cfg.radians/total);});
+                            .attr("transform", function(data, i){return "translate(0, -10)";})
+                            .attr("x", function(data, i){return cfg.w/2*(1-cfg.factorLegend*Math.sin(i*cfg.radians/total))-60*Math.sin(i*cfg.radians/total);})
+                            .attr("y", function(data, i){return cfg.h/2*(1-Math.cos(i*cfg.radians/total))-20*Math.cos(i*cfg.radians/total);});
 
 
-                        d.forEach(function(y, x){
+                        data.forEach(function(y, x){
                             dataValues = [];
                             g.selectAll(".nodes")
                                 .data(y, function(j, i){
@@ -137,10 +137,10 @@ angular.module('ruben-radar')
                                 .attr("class", "radar-chart-serie"+series)
                                 .style("stroke-width", "2px")
                                 .style("stroke", cfg.color(series))
-                                .attr("points",function(d) {
+                                .attr("points",function(data) {
                                     var str="";
-                                    for(var pti=0;pti<d.length;pti++){
-                                        str=str+d[pti][0]+","+d[pti][1]+" ";
+                                    for(var pti=0;pti<data.length;pti++){
+                                        str=str+data[pti][0]+","+data[pti][1]+" ";
                                     }
                                     return str;
                                 })
@@ -148,7 +148,7 @@ angular.module('ruben-radar')
                                     return cfg.color(series);
                                 })
                                 .style("fill-opacity", cfg.opacityArea)
-                                .on('mouseover', function (d){
+                                .on('mouseover', function (data){
                                     z = "polygon."+d3.select(this).attr("class");
                                     g.selectAll("polygon")
                                         .transition(200)
@@ -167,7 +167,7 @@ angular.module('ruben-radar')
                         series=0;
 
 
-                        d.forEach(function(y, x){
+                        data.forEach(function(y, x){
                             g.selectAll(".nodes")
                                 .data(y).enter()
                                 .append("svg:circle")
@@ -190,14 +190,14 @@ angular.module('ruben-radar')
                                     return j.axis;
                                 })
                                 .style("fill", cfg.color(series)).style("fill-opacity", .9)
-                                .on('mouseover', function (d){
+                                .on('mouseover', function (data){
                                     newX =  parseFloat(d3.select(this).attr('cx')) - 10;
                                     newY =  parseFloat(d3.select(this).attr('cy')) - 5;
 
                                     tooltip
                                         .attr('x', newX)
                                         .attr('y', newY)
-                                        .text(Format(d.value))
+                                        .text(Format(data.value))
                                         .transition(200)
                                         .style('opacity', 1);
 
@@ -244,12 +244,12 @@ angular.module('ruben-radar')
                 // Data
                 // This data should appear as a double array of each graph
                 // TODO this is evil
-                var d = [];
-                d = _.groupBy(scope.answers, 'axis.description');
-                d = _.mapValues(d, function (answers) {
+                var data = [];
+                data = _.groupBy(scope.answers, 'axis.description');
+                data = _.mapValues(data, function (answers) {
                     return _.sumBy(answers, 'points') / answers.length;
                 });
-                d = [_.map(_.toPairs(d), function (o) {
+                data = [_.map(_.toPairs(data), function (o) {
                     return {axis: o[0], value: o[1]};
                 })];
 
@@ -264,7 +264,7 @@ angular.module('ruben-radar')
 
                 //Call function to draw the Radar chart
                 //Will expect that data is in %'s
-                RadarChart.draw(element[0], d, mycfg);
+                RadarChart.draw(element[0], data, mycfg);
 
                 ////////////////////////////////////////////
                 /////////// Initiate legend ////////////////
@@ -299,10 +299,10 @@ angular.module('ruben-radar')
                     .enter()
                     .append("rect")
                     .attr("x", w - 65)
-                    .attr("y", function(d, i){ return i * 20;})
+                    .attr("y", function(data, i){ return i * 20;})
                     .attr("width", 10)
                     .attr("height", 10)
-                    .style("fill", function(d, i){ return colorscale(i);})
+                    .style("fill", function(data, i){ return colorscale(i);})
                 ;
                 //Create text next to squares
                 legend.selectAll('text')
@@ -310,10 +310,10 @@ angular.module('ruben-radar')
                     .enter()
                     .append("text")
                     .attr("x", w - 52)
-                    .attr("y", function(d, i){ return i * 20 + 9;})
+                    .attr("y", function(data, i){ return i * 20 + 9;})
                     .attr("font-size", "11px")
                     .attr("fill", "#737373")
-                    .text(function(d) { return d; })
+                    .text(function(data) { return data; })
                 ;
             }
         };
