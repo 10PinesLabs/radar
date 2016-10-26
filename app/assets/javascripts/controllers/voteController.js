@@ -7,8 +7,8 @@ angular.module('ruben-radar')
         $scope.submit = function submit() {
             VoteService.createVote($scope.vote).then(function () {
                 $location.path('/successfulVote');
-            }).catch(function (response) {
-                _.forEach(response.data.errors, function(error){
+            }).catch(function (errors) {
+                _.forEach(errors, function(error){
                     ngToast.danger(error);
                 });
             });
