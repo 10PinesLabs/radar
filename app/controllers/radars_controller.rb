@@ -20,6 +20,6 @@ class RadarsController < ApplicationController
 
   private
   def create_axis(axis)
-    Axis.create!(description: axis.require(:description))
+    Axis.new(description: axis.require(:description))
   end
 end
