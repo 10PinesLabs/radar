@@ -16,22 +16,51 @@ angular.module('ruben-radar')
                 // var data = [12,45,23,14,11,0];
                 // var chart = d3.select(element[0]);
                 var RadarChart = function(options) {
+                    var oneSpinAngle = function () {
+                        return 2 * Math.PI;
+                    };
+                    var rightAngle = function () {
+                        return oneSpinAngle() / 4;
+                    };
+                    //deprecated
+                    var radians = 2 * Math.PI;
+
                     var defaultConfig = {
+                        //radio de los puntos sobre los ejes
                         radius: 5,
-                        w: 600,
-                        h: 600,
+
+                        //tamaño del radar default
+                        w: 500,
+                        h: 500,
+
                         factorLegend: .85,
+
+                        //cantidad de grados sobre la recta
                         levels: 3,
+
                         opacityArea: 0.5,
                         ToRight: 5,
+
+                        //lo que esta adentro del main canvas se traslada
                         TranslateX: 80,
                         TranslateY: 30,
-                        ExtraWidthX: 100,
+                        ExtraWidthX: 500,
                         ExtraWidthY: 100,
                         color: d3.scale.category10()
                     };
 
-                    var radians = 2 * Math.PI;
+                    var distanceToCenter = function (radarRadius, stepInAxis, amountOfSteps) {
+                        return radarRadius * (stepInAxis+1) / amountOfSteps;
+                    };
+
+                    var pointFor = function (radarRadius, axisNumber, amountOfAxis, stepInAxis, amountOfSteps) {
+                        var angle = axisNumber / amountOfAxis * oneSpinAngle() - rightAngle();
+                        var module = distanceToCenter(radarRadius, stepInAxis, amountOfSteps);
+                        return {
+                            x: module * Math.cos(angle),
+                            y: module * Math.sin(angle)
+                        };
+                    };
 
                     var cfg = _.assign(defaultConfig, options);
 
@@ -54,34 +83,32 @@ angular.module('ruben-radar')
                                 .attr("height", cfg.h+cfg.ExtraWidthY)
                                 .append("g")
                                 .attr("transform", "translate(" + cfg.TranslateX + "," + cfg.TranslateY + ")");
-                        ;
 
                         var tooltip;
 
                         //Circular segments
                         for(var j=0; j<cfg.levels-1; j++){
-                            var levelFactor = radius*((j+1)/cfg.levels);
                             g.selectAll(".levels")
                                 .data(allAxis)
                                 .enter()
                                 .append("svg:line")
                                 .attr("x1", function(data, i){
-                                    return levelFactor*(1-Math.sin(i*radians/total));
+                                    return pointFor(radius, i, total, j, cfg.levels).x;
                                 })
                                 .attr("y1", function(data, i){
-                                    return levelFactor*(1-Math.cos(i*radians/total));
+                                    return pointFor(radius, i, total, j, cfg.levels).y;
                                 })
                                 .attr("x2", function(data, i){
-                                    return levelFactor*(1-Math.sin((i+1)*radians/total));
+                                    return pointFor(radius, i+1, total, j, cfg.levels).x;
                                 })
                                 .attr("y2", function(data, i){
-                                    return levelFactor*(1-Math.cos((i+1)*radians/total));
+                                    return pointFor(radius, i+1, total, j, cfg.levels).y;
                                 })
                                 .attr("class", "line")
                                 .style("stroke", "grey")
                                 .style("stroke-opacity", "0.75")
                                 .style("stroke-width", "0.3px")
-                                .attr("transform", "translate(" + (cfg.w/2-levelFactor) + ", " + (cfg.h/2-levelFactor) + ")");
+                                .attr("transform", "translate(" + (cfg.w/2) + ", " + (cfg.h/2) + ")");
                         }
 
                         //Text indicating at what % each level is
