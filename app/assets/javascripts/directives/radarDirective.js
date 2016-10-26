@@ -1,20 +1,12 @@
 angular.module('ruben-radar')
-    .directive('drawRadar', function (d3, Vector2D) {
+    .directive('drawRadar', function (d3) {
         return {
-            //We restrict its use to an element
-            //as usually  <bars-chart> is semantically
-            //more understandable
             restrict: 'E',
-            //this is important,
-            //we don't want to overwrite our directive declaration
-            //in the HTML mark-up
             replace: false,
             scope: {
                 answers: '=answers'
             },
-            link: function (scope, element, attrs) {
-                // var data = [12,45,23,14,11,0];
-                // var chart = d3.select(element[0]);
+            link: function (scope, element) {
                 var RadarChart = function (options) {
                     var oneSpinAngle = function () {
                         return 2 * Math.PI;
@@ -54,6 +46,198 @@ angular.module('ruben-radar')
                         };
                     };
 
+                    var drawMainCanvas = function (parentElement, size, offset) {
+                        return d3.select(parentElement)
+                            .append("svg")
+                            .attr("width", size.x)
+                            .attr("height", size.y)
+                            .append("g")
+                            .attr("transform", "translate(" + offset.x + "," + offset.y + ")");
+                    };
+
+                    var drawScaleText = function (gElement, center, maxValue, amountOfSteps, radius, size, scaleTextOffset) {
+                        var steps = _.range(0, amountOfSteps);
+                        gElement.selectAll(".levels")
+                            .data(steps)
+                            .enter()
+                            .append("svg:text")
+                            .attr("x", 0)
+                            .attr("y", function (step) {
+                                return -distanceToCenter(radius, step, amountOfSteps);
+                            })
+                            .attr("class", "legend")
+                            .style("font-family", "sans-serif")
+                            .style("font-size", "10px")
+                            .attr("transform", "translate(" +
+                                (center.x + scaleTextOffset.x) +
+                                ", " + (center.y + scaleTextOffset.y) + ")"
+                            )
+                            .attr("fill", "#737373")
+                            .text(function (step) {
+                                return (step + 1) * valuePerStep(maxValue, amountOfSteps);
+                            });
+                    };
+
+                    var drawStepUnionPolygons = function (gElement, radius, center, axesDescriptions, amountOfAxis, amountOfSteps) {
+                        for (var step = 0; step < amountOfSteps - 1; step++) {
+                            gElement.selectAll(".levels")
+                                .data(axesDescriptions)
+                                .enter()
+                                .append("svg:line")
+                                .attr("x1", function (data, axisNumber) {
+                                    return pointFor(radius, axisNumber, amountOfAxis, step, amountOfSteps).x;
+                                })
+                                .attr("y1", function (data, axisNumber) {
+                                    return pointFor(radius, axisNumber, amountOfAxis, step, amountOfSteps).y;
+                                })
+                                .attr("x2", function (data, axisNumber) {
+                                    return pointFor(radius, axisNumber + 1, amountOfAxis, step, amountOfSteps).x;
+                                })
+                                .attr("y2", function (data, axisNumber) {
+                                    return pointFor(radius, axisNumber + 1, amountOfAxis, step, amountOfSteps).y;
+                                })
+                                .attr("class", "line")
+                                .style("stroke", "grey")
+                                .style("stroke-opacity", "0.75")
+                                .style("stroke-width", "0.3px")
+                                .attr("transform", "translate(" + center.x + ", " + center.y + ")");
+                        }
+                    };
+
+                    var drawAxis = function (gElement, allAxis, radius, center, amountOfAxis) {
+                        var axis = gElement.selectAll(".axis")
+                            .data(allAxis)
+                            .enter()
+                            .append("g")
+                            .attr("class", "axis")
+                            .attr("transform", "translate(" + center.x + ", " + center.y + ")");
+
+                        axis.append("line")
+                            .attr("x1", 0)
+                            .attr("y1", 0)
+                            .attr("x2", function (data, i) {
+                                return radius * versorForAxis(i, amountOfAxis).x;
+                            })
+                            .attr("y2", function (data, i) {
+                                return radius * versorForAxis(i, amountOfAxis).y;
+                            })
+                            .attr("class", "line")
+                            .style("stroke", "grey")
+                            .style("stroke-width", "1px");
+
+                        axis.append("text")
+                            .attr("class", "legend")
+                            .text(_.identity)
+                            .style("font-family", "sans-serif")
+                            .style("font-size", "11px")
+                            .attr("text-anchor", "middle")
+                            .attr("dy", "1.5em")
+                            .attr("x", function (data, i) {
+                                return (radius + 20) * versorForAxis(i, amountOfAxis).x;
+                            })
+                            .attr("y", function (data, i) {
+                                return (radius + 20) * versorForAxis(i, amountOfAxis).y - 11;
+                            });
+                    };
+
+                    var distanceForValue = function (value, maxValue, radius) {
+                        return value / maxValue * radius;
+                    };
+
+                    var drawRadarsPolygons = function (gElement, radars, colorSet, amountOfAxis, maxValue, radius, polygonOpacity, center) {
+                        gElement.selectAll(".nodes")
+                            .data(radars)
+                            .enter()
+                            .append("polygon")
+                            .attr("class", function (_, series) {
+                                return "radar-chart-serie" + series;
+                            })
+                            .style("stroke-width", "2px")
+                            .style("stroke", function (_, series) {
+                                return colorSet(series);
+                            })
+                            .attr("points", function (answers) {
+                                var points = answers.map(function (answer, index) {
+                                    var module = distanceForValue(answer.value, maxValue, radius);
+                                    var pointX = versorForAxis(index, amountOfAxis).x * module;
+                                    var pointY = versorForAxis(index, amountOfAxis).y * module;
+                                    return _.join([pointX, pointY], ',');
+                                });
+                                return _.join(points, ' ');
+                            })
+                            .style("fill", function (_, series) {
+                                return colorSet(series);
+                            })
+                            .style("fill-opacity", polygonOpacity)
+                            .on('mouseover', function () {
+                                var selectedPolygon = "polygon." + d3.select(this).attr("class");
+                                gElement.selectAll("polygon").transition(200).style("fill-opacity", 0.1);
+                                gElement.selectAll(selectedPolygon).transition(200).style("fill-opacity", .7);
+                            })
+                            .on('mouseout', function () {
+                                gElement.selectAll("polygon").transition(200).style("fill-opacity", polygonOpacity);
+                            })
+                            .attr("transform", "translate(" + center.x + "," + center.y + ")");
+
+                    };
+
+                    var createTooltip = function (gElement, center) {
+                        return gElement.append('text')
+                            .style('opacity', 0)
+                            .style('font-family', 'sans-serif')
+                            .style('font-size', '13px')
+                            .attr("transform", "translate(" + center.x + "," + center.y + ")");
+                    };
+
+                    var drawPolygonsVertexes =
+                        function (radars, gElement, center, circleRadius, maxValue, radius,
+                                  amountOfAxis, colorSet, polygonOpacity, tooltip) {
+
+                        radars.forEach(function (answers, series) {
+                            gElement.selectAll(".nodes")
+                                .data(answers)
+                                .enter()
+                                .append("svg:circle")
+                                .attr("transform", "translate(" + center.x + "," + center.y + ")")
+                                .attr("class", "radar-chart-serie" + series)
+                                .attr('r', circleRadius)
+                                .attr("alt", function (answer) {
+                                    return answer.value;
+                                })
+                                .attr("cx", function (answer, axisNumber) {
+                                    var module = distanceForValue(answer.value, maxValue, radius);
+                                    return versorForAxis(axisNumber, amountOfAxis).x * module;
+                                })
+                                .attr("cy", function (answer, axisNumber) {
+                                    var module = distanceForValue(answer.value, maxValue, radius);
+                                    return versorForAxis(axisNumber, amountOfAxis).y * module;
+                                })
+                                .attr("data-id", function (answer) {
+                                    return answer.axis;
+                                })
+                                .style("fill", colorSet(series)).style("fill-opacity", .9)
+                                .on('mouseover', function (answer) {
+                                    var newX = parseFloat(d3.select(this).attr('cx')) - 10;
+                                    var newY = parseFloat(d3.select(this).attr('cy')) - 5;
+
+                                    tooltip.attr('x', newX)
+                                        .attr('y', newY)
+                                        .text(answer.value)
+                                        .transition(200)
+                                        .style('opacity', 1);
+
+                                    var selectedPolygon = "polygon." + d3.select(this).attr("class");
+                                    gElement.selectAll("polygon").transition(200).style("fill-opacity", 0.1);
+                                    gElement.selectAll(selectedPolygon).transition(200).style("fill-opacity", .7);
+                                })
+                                .on('mouseout', function () {
+                                    tooltip.transition(200).style('opacity', 0);
+                                    gElement.selectAll("polygon").transition(200).style("fill-opacity", polygonOpacity);
+                                });
+
+                        });
+                    };
+
                     //deprecated
                     var radians = 2 * Math.PI;
 
@@ -84,6 +268,7 @@ angular.module('ruben-radar')
 
 
                     var cfg = _.assign(defaultConfig, options);
+                    var center = {x: cfg.w / 2, y: cfg.h / 2};
 
                     this.draw = function (id, data) {
                         //TODO validate non negative data
@@ -100,213 +285,31 @@ angular.module('ruben-radar')
                         var total = allAxis.length;
                         var radius = Math.min(cfg.w / 2, cfg.h / 2);
 
-                        // Add the main canvas
-                        var g = d3.select(id)
-                            .append("svg")
-                            .attr("width", cfg.w + cfg.ExtraWidthX)
-                            .attr("height", cfg.h + cfg.ExtraWidthY)
-                            .append("g")
-                            .attr("transform", "translate(" + cfg.TranslateX + "," + cfg.TranslateY + ")");
+                        var g = drawMainCanvas(id,
+                            {x: cfg.w + cfg.ExtraWidthX, y: cfg.h + cfg.ExtraWidthY},
+                            {x: cfg.TranslateX, y: cfg.TranslateY}
+                        );
 
-                        var tooltip;
+                        drawStepUnionPolygons(g, radius,
+                            center,
+                            allAxis, total, cfg.levels
+                        );
 
-                        //Circular segments
-                        for (var j = 0; j < cfg.levels - 1; j++) {
-                            g.selectAll(".levels")
-                                .data(allAxis)
-                                .enter()
-                                .append("svg:line")
-                                .attr("x1", function (data, i) {
-                                    return pointFor(radius, i, total, j, cfg.levels).x;
-                                })
-                                .attr("y1", function (data, i) {
-                                    return pointFor(radius, i, total, j, cfg.levels).y;
-                                })
-                                .attr("x2", function (data, i) {
-                                    return pointFor(radius, i + 1, total, j, cfg.levels).x;
-                                })
-                                .attr("y2", function (data, i) {
-                                    return pointFor(radius, i + 1, total, j, cfg.levels).y;
-                                })
-                                .attr("class", "line")
-                                .style("stroke", "grey")
-                                .style("stroke-opacity", "0.75")
-                                .style("stroke-width", "0.3px")
-                                .attr("transform", "translate(" + (cfg.w / 2) + ", " + (cfg.h / 2) + ")");
-                        }
+                        drawScaleText(g, center,
+                            cfg.maxValue, cfg.levels, radius,
+                            {x: cfg.w, y: cfg.h}, { x:cfg.ToRight, y:0}
+                        );
 
-                        //Text indicating at what % each level is
-                        for (var j = 0; j < cfg.levels; j++) {
-                            g.selectAll(".levels")
-                                .data([1]) //dummy data
-                                .enter()
-                                .append("svg:text")
-                                .attr("x", function (data) {
-                                    return 0;
-                                })
-                                .attr("y", function (data) {
-                                    return -distanceToCenter(radius, j, cfg.levels);
-                                })
-                                .attr("class", "legend")
-                                .style("font-family", "sans-serif")
-                                .style("font-size", "10px")
-                                .attr("transform", "translate(" + (cfg.w / 2 + cfg.ToRight) + ", " + (cfg.h / 2) + ")")
-                                .attr("fill", "#737373")
-                                .text(function () {
-                                    return (j + 1) * valuePerStep(cfg.maxValue, cfg.levels);
-                                });
-                        }
+                        drawAxis(g, allAxis, radius, center, total);
 
-                        series = 0;
-
-                        var axis = g.selectAll(".axis")
-                            .data(allAxis)
-                            .enter()
-                            .append("g")
-                            .attr("class", "axis")
-                            .attr("transform", "translate(" + (cfg.w / 2) + ", " + (cfg.h / 2) + ")");
-
-                        axis.append("line")
-                            .attr("x1", 0)
-                            .attr("y1", 0)
-                            .attr("x2", function (data, i) {
-                                return radius * versorForAxis(i, total).x;
-                            })
-                            .attr("y2", function (data, i) {
-                                return radius * versorForAxis(i, total).y;
-                            })
-                            .attr("class", "line")
-                            .style("stroke", "grey")
-                            .style("stroke-width", "1px");
-
-                        axis.append("text")
-                            .attr("class", "legend")
-                            .text(_.identity)
-                            .style("font-family", "sans-serif")
-                            .style("font-size", "11px")
-                            .attr("text-anchor", "middle")
-                            .attr("dy", "1.5em")
-                            .attr("x", function (data, i) {
-                                return (radius + 20) * versorForAxis(i, total).x;
-                            })
-                            .attr("y", function (data, i) {
-                                return (radius + 20) * versorForAxis(i, total).y - 11;
-                            });
+                        drawRadarsPolygons(g, data, cfg.color, total, cfg.maxValue, radius,
+                            cfg.opacityArea, center);
 
 
+                        var tooltip = createTooltip(g, center);
 
-                        data.forEach(function (y, x) {
-                            var dataValues = [];
-                            g.selectAll(".nodes")
-                                .data(y, function (j, i) {
-                                    dataValues.push([
-                                        cfg.w / 2 * (1 - (parseFloat(Math.max(j.value, 0)) / cfg.maxValue) * Math.sin(i * radians / total)),
-                                        cfg.h / 2 * (1 - (parseFloat(Math.max(j.value, 0)) / cfg.maxValue) * Math.cos(i * radians / total))
-                                    ]);
-                                });
-                            dataValues.push(dataValues[0]);
-                            g.selectAll(".area")
-                                .data([dataValues])
-                                .enter()
-                                .append("polygon")
-                                .attr("class", "radar-chart-serie" + series)
-                                .style("stroke-width", "2px")
-                                .style("stroke", cfg.color(series))
-                                .attr("points", function (data) {
-                                    var str = "";
-                                    for (var pti = 0; pti < data.length; pti++) {
-                                        str = str + data[pti][0] + "," + data[pti][1] + " ";
-                                    }
-                                    return str;
-                                })
-                                .style("fill", function (j, i) {
-                                    return cfg.color(series);
-                                })
-                                .style("fill-opacity", cfg.opacityArea)
-                                .on('mouseover', function (data) {
-                                    z = "polygon." + d3.select(this).attr("class");
-                                    g.selectAll("polygon")
-                                        .transition(200)
-                                        .style("fill-opacity", 0.1);
-                                    g.selectAll(z)
-                                        .transition(200)
-                                        .style("fill-opacity", .7);
-                                })
-                                .on('mouseout', function () {
-                                    g.selectAll("polygon")
-                                        .transition(200)
-                                        .style("fill-opacity", cfg.opacityArea);
-                                });
-                            series++;
-                        });
-                        series = 0;
-
-
-                        data.forEach(function (y, x) {
-                            g.selectAll(".nodes")
-                                .data(y).enter()
-                                .append("svg:circle")
-                                .attr("class", "radar-chart-serie" + series)
-                                .attr('r', cfg.radius)
-                                .attr("alt", function (j) {
-                                    return Math.max(j.value, 0);
-                                })
-                                .attr("cx", function (j, i) {
-                                    dataValues.push([
-                                        cfg.w / 2 * (1 - (parseFloat(Math.max(j.value, 0)) / cfg.maxValue) * Math.sin(i * radians / total)),
-                                        cfg.h / 2 * (1 - (parseFloat(Math.max(j.value, 0)) / cfg.maxValue) * Math.cos(i * radians / total))
-                                    ]);
-                                    return cfg.w / 2 * (1 - (Math.max(j.value, 0) / cfg.maxValue) * Math.sin(i * radians / total));
-                                })
-                                .attr("cy", function (j, i) {
-                                    return cfg.h / 2 * (1 - (Math.max(j.value, 0) / cfg.maxValue) * Math.cos(i * radians / total));
-                                })
-                                .attr("data-id", function (j) {
-                                    return j.axis;
-                                })
-                                .style("fill", cfg.color(series)).style("fill-opacity", .9)
-                                .on('mouseover', function (data) {
-                                    newX = parseFloat(d3.select(this).attr('cx')) - 10;
-                                    newY = parseFloat(d3.select(this).attr('cy')) - 5;
-
-                                    tooltip
-                                        .attr('x', newX)
-                                        .attr('y', newY)
-                                        .text(function () {
-                                            return data.value;
-                                        })
-                                        .transition(200)
-                                        .style('opacity', 1);
-
-                                    z = "polygon." + d3.select(this).attr("class");
-                                    g.selectAll("polygon")
-                                        .transition(200)
-                                        .style("fill-opacity", 0.1);
-                                    g.selectAll(z)
-                                        .transition(200)
-                                        .style("fill-opacity", .7);
-                                })
-                                .on('mouseout', function () {
-                                    tooltip
-                                        .transition(200)
-                                        .style('opacity', 0);
-                                    g.selectAll("polygon")
-                                        .transition(200)
-                                        .style("fill-opacity", cfg.opacityArea);
-                                })
-                                .append("svg:title")
-                                .text(function (j) {
-                                    return Math.max(j.value, 0);
-                                });
-
-                            series++;
-                        });
-
-                        //Tooltip
-                        tooltip = g.append('text')
-                            .style('opacity', 0)
-                            .style('font-family', 'sans-serif')
-                            .style('font-size', '13px');
+                        drawPolygonsVertexes(data, g, center, cfg.radius, cfg.maxValue,
+                            radius, total, cfg.color, cfg.opacityArea, tooltip);
                     };
                 };
 
@@ -329,6 +332,13 @@ angular.module('ruben-radar')
                 data = [_.map(_.toPairs(data), function (o) {
                     return {axis: o[0], value: o[1]};
                 })];
+                data.push(_.map(data[0], function (answer) {
+                    return {
+                        axis: answer.axis,
+                        value: 4
+                    };
+                    })
+                );
 
                 //Options for the Radar chart, other than default
                 var mycfg = {
@@ -347,7 +357,7 @@ angular.module('ruben-radar')
                 /////////// Initiate legend ////////////////
                 ////////////////////////////////////////////
 
-                var svg = d3.select('#body')
+                var svg = d3.select(element[0])
                     .selectAll('svg')
                     .append('svg')
                     .attr("width", w + 300)
