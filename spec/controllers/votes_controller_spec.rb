@@ -11,8 +11,7 @@ RSpec.describe VotesController, type: :controller do
 
   context 'When requesting to create a vote' do
     context 'for a certain radar with axes' do
-      let(:axes) { [Axis.new(description: 'ble'), Axis.new(description: 'bla')] }
-      let(:a_radar) { Radar.create_with_axes(axes) }
+      let(:a_radar) { create :radar }
 
       context 'and the answers are all from that radar' do
         it 'a new vote should be created' do
@@ -20,12 +19,12 @@ RSpec.describe VotesController, type: :controller do
           expect(Vote.count).to be 1
         end
       end
+
       context 'and the answers are from different radars' do
-        let(:another_axis) { Axis.new(description: 'blo') }
-        let(:mixed_axis) {[axes.first, another_axis]}
-        let(:a_radar) { Radar.create_with_axes([another_axis]) }
+        let(:another_radar) { create :radar }
+
         it 'should return a bad request' do
-          request_to_create_vote(a_radar.id, mixed_axis)
+          request_to_create_vote(a_radar.id, a_radar.axes + another_radar.axes)
           expect(response).to have_http_status :bad_request
         end
       end
