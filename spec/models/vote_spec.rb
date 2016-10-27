@@ -2,13 +2,11 @@ require 'rails_helper'
 
 RSpec.describe Vote, type: :model do
   context 'When having two different Radars' do
-    let!(:axes) { [Axis.new(description: 'ble')] }
-    let!(:another_axes) { [Axis.new(description: 'bla')] }
-    let!(:a_radar) { Radar.create!(axes: axes) }
-    let!(:another_radar) { Radar.create!(axes: another_axes) }
+    let!(:a_radar) { create :radar }
+    let!(:another_radar) { create :radar }
     context 'and a vote have answers from both of them' do
       let(:answers) do
-        (axes + another_axes).map { |axis| Answer.new(axis: axis, points: 3) }
+        (a_radar.axes + another_radar.axes).map { |axis| Answer.new(axis: axis, points: 3) }
       end
       it 'should err when creating the vote' do
         expect { Vote.create!(answers: answers) }.to raise_error do |error|
