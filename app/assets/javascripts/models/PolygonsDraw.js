@@ -3,13 +3,19 @@
  */
 angular.module('ruben-radar')
     .factory('PolygonsDraw', function PolygonsDraw() {
-        return function (radars, polygonOpacity, circleRadius) {
+        return function (radars) {
             var self = this;
             //[[{axis: 0, value: 5}]]
             self.radars = radars;
-            self.polygonOpacity = polygonOpacity;
-            self.circleRadius = circleRadius;
             self.colorSet = d3.scale.category10();
+
+            self.polygonOpacity = function () {
+                return 0.5;
+            };
+
+            self.circleRadius = function (radarDraw) {
+                return radarDraw.radius / 50;
+            };
 
             self.vertexesForAnswers = function (answers, radarDraw) {
                 return answers.map(function (answer, index) {
@@ -24,11 +30,13 @@ angular.module('ruben-radar')
 
             self.stringPointsForAnswers = function (answers, radarDraw) {
                 var points = self.vertexesForAnswers(answers, radarDraw)
-                    .map(function (vertex) { return vertex.stringJoin(); });
+                    .map(function (vertex) {
+                        return vertex.stringJoin();
+                    });
                 return _.join(points, ' ');
             };
 
-            self.addHoverLogic = function(mainCanvasSvg, polygonsSvg) {
+            self.addHoverLogic = function (mainCanvasSvg, polygonsSvg) {
                 polygonsSvg
                     .on('mouseover', function () {
                         var selectedPolygon = "polygon." + d3.select(this).attr("class");
@@ -36,11 +44,11 @@ angular.module('ruben-radar')
                         mainCanvasSvg.selectAll(selectedPolygon).transition(200).style("fill-opacity", .7);
                     })
                     .on('mouseout', function () {
-                        mainCanvasSvg.selectAll("polygon").transition(200).style("fill-opacity", self.polygonOpacity);
+                        mainCanvasSvg.selectAll("polygon").transition(200).style("fill-opacity", self.polygonOpacity());
                     });
             };
 
-            self.addCirclesHoverLogic = function(mainCanvasSvg, vertexesSvg, tooltip) {
+            self.addCirclesHoverLogic = function (mainCanvasSvg, vertexesSvg, tooltip) {
                 vertexesSvg
                     .on('mouseover', function (answer) {
                         var newX = parseFloat(d3.select(this).attr('cx')) - 10;
@@ -53,7 +61,7 @@ angular.module('ruben-radar')
                     })
                     .on('mouseout', function () {
                         tooltip.transition(200).style('opacity', 0);
-                        mainCanvasSvg.selectAll("polygon").transition(200).style("fill-opacity", self.polygonOpacity);
+                        mainCanvasSvg.selectAll("polygon").transition(200).style("fill-opacity", self.polygonOpacity());
                     });
             };
 
@@ -70,24 +78,24 @@ angular.module('ruben-radar')
                     self.radars.forEach(function (answers, series) {
                         var vertexesSvg =
                             mainCanvas.selectAll(".nodes")
-                            .data(answers).enter()
-                            .append("svg:circle")
-                            .attr("transform", "translate" + radarDraw.center.stringOrderedPair())
-                            .attr("class", "radar-chart-serie" + series)
-                            .attr('r', self.circleRadius)
-                            .attr("alt", function (answer) {
-                                return answer.value;
-                            })
-                            .attr("cx", function (answer, axisNumber) {
-                                return self.vertexForAnswer(answer, axisNumber, radarDraw).x;
-                            })
-                            .attr("cy", function (answer, axisNumber) {
-                                return self.vertexForAnswer(answer, axisNumber, radarDraw).y;
-                            })
-                            .attr("data-id", function (answer) {
-                                return answer.axis;
-                            })
-                            .style("fill", self.colorSet(series)).style("fill-opacity", .9);
+                                .data(answers).enter()
+                                .append("svg:circle")
+                                .attr("transform", "translate" + radarDraw.center.stringOrderedPair())
+                                .attr("class", "radar-chart-serie" + series)
+                                .attr('r', self.circleRadius(radarDraw))
+                                .attr("alt", function (answer) {
+                                    return answer.value;
+                                })
+                                .attr("cx", function (answer, axisNumber) {
+                                    return self.vertexForAnswer(answer, axisNumber, radarDraw).x;
+                                })
+                                .attr("cy", function (answer, axisNumber) {
+                                    return self.vertexForAnswer(answer, axisNumber, radarDraw).y;
+                                })
+                                .attr("data-id", function (answer) {
+                                    return answer.axis;
+                                })
+                                .style("fill", self.colorSet(series)).style("fill-opacity", .9);
                         self.addCirclesHoverLogic(mainCanvas, vertexesSvg, tooltip);
                     });
                 };
@@ -110,7 +118,7 @@ angular.module('ruben-radar')
                         .style("fill", function (_, series) {
                             return self.colorSet(series);
                         })
-                        .style("fill-opacity", self.polygonOpacity)
+                        .style("fill-opacity", self.polygonOpacity())
                         .attr("transform", "translate" + radarDraw.center.stringOrderedPair());
                 self.addHoverLogic(mainCanvasSvg, polygonsSvg);
                 var tooltip = self.createTooltip(mainCanvasSvg, radarDraw);

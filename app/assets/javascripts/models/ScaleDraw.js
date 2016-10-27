@@ -1,10 +1,10 @@
 /**
  * Created by pino on 27/10/16.
- */angular.module('ruben-radar')
-    .factory('ScaleDraw', function ScaleDraw() {
-        return function (textOffset, amountOfSteps, maxValue) {
+ */
+angular.module('ruben-radar')
+    .factory('ScaleDraw', function ScaleDraw(Vector2D) {
+        return function (amountOfSteps, maxValue) {
             var self = this;
-            self.textOffset = textOffset;
             self.amountOfSteps = amountOfSteps;
             self.maxValue = maxValue;
 
@@ -20,6 +20,10 @@
                 return (step + 1) / self.amountOfSteps;
             };
 
+            self.textOffset = function (radarDraw) {
+                return new Vector2D(radarDraw.radius / 50, 0);
+            };
+
             self.drawScaleText = function (mainCanvasSvg, radarDraw) {
                 var steps = _.range(0, self.amountOfSteps);
                 mainCanvasSvg.selectAll(".levels")
@@ -32,7 +36,8 @@
                     .attr("class", "legend")
                     .style("font-family", "sans-serif")
                     .style("font-size", "10px")
-                    .attr("transform", "translate" + radarDraw.center.plus(self.textOffset).stringOrderedPair())
+                    .attr("transform", "translate" +
+                        radarDraw.center.plus(self.textOffset(radarDraw)).stringOrderedPair())
                     .attr("fill", "#737373")
                     .text(function (step) {
                         return (step + 1) * self.valuePerStep();

@@ -1,119 +1,62 @@
 angular.module('ruben-radar')
-    .directive('drawRadar', function (d3, ScaleDraw, RadarDraw, PolygonsDraw, AxesDraw, Vector2D) {
+    .directive('drawRadar', function (d3, RadarChart, Vector2D) {
         return {
             restrict: 'E',
             replace: false,
             scope: {
-                answers: '=answers'
+                answers: '=answers',
+                radius: '=radius',
+                steps: '=steps',
+                offsetInParentX: '=offsetInParentX',
+                offsetInParentY: '=offsetInParentY',
+                widthOfCanvas: '=widthOfCanvas',
+                heightOfCanvas: '=heightOfCanvas'
             },
             link: function (scope, element) {
-                var RadarChart = function (options) {
+                var defaultConfig = {
+                    radius: 250,
+                    steps: 5,
 
-                    var drawMainCanvas = function (parentElement, size, offset) {
-                        return d3.select(parentElement)
-                            .append("svg").attr("width", size.x).attr("height", size.y)
-                            .append("g").attr("transform", "translate" + offset.stringOrderedPair());
-                    };
+                    offsetInParentX: 80,
+                    offsetInParentY: 30,
 
-
-                    var defaultConfig = {
-                        //radio de los puntos sobre los ejes
-                        radius: 5,
-
-                        //tamaño del radar default
-                        w: 500,
-                        h: 500,
-
-                        factorLegend: .85,
-
-                        //cantidad de grados sobre la recta
-                        levels: 3,
-
-                        opacityArea: 0.5,
-                        //corrimiento en x al texto de los steps
-                        ToRight: 5,
-
-                        //lo que esta adentro del main canvas se traslada
-                        TranslateX: 80,
-                        TranslateY: 30,
-                        ExtraWidthX: 500,
-                        ExtraWidthY: 100,
-                        colorSet: d3.scale.category10()
-                    };
-
-
-                    var cfg = _.assign(defaultConfig, options);
-                    var size = new Vector2D(cfg.w, cfg.h);
-                    var canvasOverSize = new Vector2D(cfg.ExtraWidthX, cfg.ExtraWidthY);
-                    var canvasSize = size.plus(canvasOverSize);
-                    var offsetInParent = new Vector2D(cfg.TranslateX, cfg.TranslateY);
-                    var scaleTextOffset = new Vector2D(cfg.ToRight, 0);
-
-
-                    this.draw = function (id, data) {
-                        //TODO validate non negative data
-                        //TODO validate 1 or more axis
-
-                        // Get the maximum value from the data
-                        var maxValueFromData = d3.max(data, function (i) {
-                            return d3.max(_.map(i, 'value'));
-                        });
-
-                        var allAxis = _.map(data[0], 'axis');
-
-                        var scale = new ScaleDraw(scaleTextOffset, cfg.levels, maxValueFromData);
-                        var axes = new AxesDraw(allAxis);
-                        var polygons = new PolygonsDraw(data, cfg.opacityArea, cfg.radius);
-                        var radarDraw = new RadarDraw(size, scale, axes, polygons);
-
-                        var MainCanvasSvg = drawMainCanvas(id, canvasSize, offsetInParent);
-                        radarDraw.draw(MainCanvasSvg);
-                    };
+                    widthOfCanvas: 1000,
+                    heightOfCanvas: 600
                 };
 
-                var w = 500,
-                    h = 500;
+                var config = _.merge(defaultConfig, scope);
+                var radarSize = new Vector2D(config.radius * 2, config.radius * 2);
+                var canvasSize = new Vector2D(config.widthOfCanvas, config.heightOfCanvas);
+                var offsetInParent = new Vector2D(config.offsetInParentX, config.offsetInParentY);
 
-                var colorscale = d3.scale.category10();
+                //TODO validate non negative data
+                //TODO validate 1 or more axis
 
-                //Legend titles
-                var LegendOptions = ['Smartphone', 'Tablet'];
-
-                // Data
+                // The radars -> [[{axis: description, value: points}]]
                 // This data should appear as a double array of each graph
                 // TODO this is evil
-                var data = [];
-                data = _.groupBy(scope.answers, 'axis.description');
-                data = _.mapValues(data, function (answers) {
+                var answersByDescription = _.groupBy(scope.answers, 'axis.description');
+                var pointsByDescription = _.mapValues(answersByDescription, function (answers) {
                     return _.sumBy(answers, 'points') / answers.length;
                 });
-                data = [_.map(_.toPairs(data), function (o) {
+                var radars = [_.map(_.toPairs(pointsByDescription), function (o) {
                     return {axis: o[0], value: o[1]};
                 })];
-                data.push(_.map(data[0], function (answer) {
-                    return {
-                        axis: answer.axis,
-                        value: 4
-                    };
+                // FIXME SOLO PARA TESTEAR
+                radars.push(_.map(radars[0], function (answer) {
+                        return {axis: answer.axis, value: 4};
                     })
                 );
-
-                //Options for the Radar chart, other than default
-                var mycfg = {
-                    w: w,
-                    h: h,
-                    maxValue: 0.6,
-                    levels: 5,
-                    ExtraWidthX: 300
-                };
-
-                //Call function to draw the Radar chart
-                //Will expect that data is in %'s
-                new RadarChart(mycfg).draw(element[0], data);
+                new RadarChart(radarSize, canvasSize, offsetInParent, config.steps).draw(element[0], radars);
 
                 ////////////////////////////////////////////
                 /////////// Initiate legend ////////////////
                 ////////////////////////////////////////////
+                //Legend titles
+                var LegendOptions = ['Smartphone', 'Tablet'];
+
+                var w = config.radius * 2;
+                var h = config.radius * 2;
 
                 var svg = d3.select(element[0])
                     .selectAll('svg')
@@ -139,6 +82,7 @@ angular.module('ruben-radar')
                         .attr('transform', 'translate(90,20)')
                     ;
                 //Create colour squares
+                var colorSet = d3.scale.category10();
                 legend.selectAll('rect')
                     .data(LegendOptions)
                     .enter()
@@ -150,7 +94,7 @@ angular.module('ruben-radar')
                     .attr("width", 10)
                     .attr("height", 10)
                     .style("fill", function (data, i) {
-                        return colorscale(i);
+                        return colorSet(i);
                     })
                 ;
                 //Create text next to squares
