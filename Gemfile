@@ -33,6 +33,8 @@ gem 'pg'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem 'bower'
+
 gem 'rails_12factor', group: :production
 
 group :development, :test do
