@@ -1,0 +1,2 @@
+class AlreadyClosedRadarException < Exception
+end

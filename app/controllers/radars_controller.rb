@@ -16,8 +16,15 @@ class RadarsController < ApplicationController
     render json: radar, status: :ok
   end
 
+  def close
+    radar = Radar.find(params.require(:id))
+    radar.close
+    radar.save
+    render json: radar, status: :ok
+  end
+
   private
   def create_axis(axis)
-    Axis.create!(description: axis.require(:description))
+    Axis.new(description: axis.require(:description))
   end
 end

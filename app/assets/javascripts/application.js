@@ -18,5 +18,7 @@
 //= require angular-animate
 //= require angular-aria
 //= require angular-route
+//= require angular-sanitize
+//= require ngToast
 //= require_tree .
 

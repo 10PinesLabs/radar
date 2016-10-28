@@ -7,4 +7,5 @@ class Answer < ActiveRecord::Base
   delegate :radar, to: :axis
 
   validates :axis, presence: {message: ERROR_MESSAGE_FOR_NO_AXIS}
+  validates :vote, presence: true
 end

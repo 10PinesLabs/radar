@@ -10,4 +10,8 @@ angular.module('ruben-radar')
         this.getResult = function getResults (radar_id) {
             return Radar.result({id: radar_id}).$promise;
         };
+
+        this.closeRadar = function closeRadar(radar) {
+            return radar.$close();
+        };
     });
