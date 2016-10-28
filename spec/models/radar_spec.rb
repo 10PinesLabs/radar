@@ -3,9 +3,6 @@ require 'rails_helper'
 RSpec.describe Radar, type: :model do
   context 'When having a new radar' do
     subject { Radar.new }
-    it 'should be empty' do
-      is_expected.to be_empty
-    end
 
     context 'and you add an axis to that radar' do
       let(:an_axis) { Axis.new }
@@ -17,7 +14,7 @@ RSpec.describe Radar, type: :model do
         is_expected.not_to be_empty
       end
 
-      it 'should not be empty' do
+      it 'should be active' do
         is_expected.to be_active
       end
 
