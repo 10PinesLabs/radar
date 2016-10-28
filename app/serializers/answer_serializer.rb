@@ -1,4 +1,3 @@
 class AnswerSerializer < ActiveModel::Serializer
-  attributes :id, :points
-  has_one :axis
+  attributes :points, :axis_id
 end

@@ -6,10 +6,9 @@ class RadarsController < ApplicationController
     render json: radar, status: :created
   end
 
-  def answers
+  def result
     radar = Radar.find(params.require(:id))
-    # TODO evil evil evil evil
-    render json: radar.axes.flat_map { |axis| axis.answers } , status: :ok
+    render json: RadarResultSerializer.new(radar, {}).to_json , status: :ok
   end
 
   def show
