@@ -1,4 +1,4 @@
-== README
+# README
 
 [![CircleCI](https://circleci.com/gh/10PinesLabs/ruben-radar.svg?style=svg)](https://circleci.com/gh/10PinesLabs/ruben-radar)
 
@@ -27,4 +27,7 @@ Things you may want to cover:
 
 
 Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+
+```shell
+rake doc:app
+```
