@@ -16,7 +16,7 @@ class Radar < ActiveRecord::Base
     axes.push(an_axis)
   end
 
-  def amount_of_questions
+  def amount_of_axes
     axes.count
   end
 
