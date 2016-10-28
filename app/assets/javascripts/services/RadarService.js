@@ -7,7 +7,7 @@ angular.module('ruben-radar')
             return Radar.get({id: radar_id}).$promise;
         };
 
-        this.getResults = function getResults (radar_id) {
-            return Radar.results({id: radar_id}).$promise;
+        this.getResult = function getResults (radar_id) {
+            return Radar.result({id: radar_id}).$promise;
         };
     });

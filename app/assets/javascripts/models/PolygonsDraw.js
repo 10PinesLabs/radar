@@ -3,10 +3,9 @@
  */
 angular.module('ruben-radar')
     .factory('PolygonsDraw', function PolygonsDraw() {
-        return function (radars) {
+        return function (results) {
             var self = this;
-            //[[{axis: 0, value: 5}]]
-            self.radars = radars;
+            self.results = results;
             self.colorSet = d3.scale.category10();
 
             self.polygonOpacity = function () {
@@ -17,19 +16,19 @@ angular.module('ruben-radar')
                 return radarDraw.radius / 50;
             };
 
-            self.vertexesForAnswers = function (answers, radarDraw) {
-                return answers.map(function (answer, index) {
-                    return self.vertexForAnswer(answer, index, radarDraw);
+            self.vertexesForAnswers = function (axes_results, radarDraw) {
+                return axes_results.map(function (axis_result, index) {
+                    return self.vertexForAnswer(axis_result, index, radarDraw);
                 });
             };
 
-            self.vertexForAnswer = function (answer, numberOfAxis, radarDraw) {
+            self.vertexForAnswer = function (axis_result, numberOfAxis, radarDraw) {
                 return radarDraw.versorForAxis(numberOfAxis)
-                    .scale(radarDraw.distanceForValue(answer.value));
+                    .scale(radarDraw.distanceForValue(axis_result.value));
             };
 
-            self.stringPointsForAnswers = function (answers, radarDraw) {
-                var points = self.vertexesForAnswers(answers, radarDraw)
+            self.stringPointsForAnswers = function (axes_results, radarDraw) {
+                var points = self.vertexesForAnswers(axes_results, radarDraw)
                     .map(function (vertex) {
                         return vertex.stringJoin();
                     });
@@ -50,10 +49,10 @@ angular.module('ruben-radar')
 
             self.addCirclesHoverLogic = function (mainCanvasSvg, vertexesSvg, tooltip) {
                 vertexesSvg
-                    .on('mouseover', function (answer) {
+                    .on('mouseover', function (axis_result) {
                         var newX = parseFloat(d3.select(this).attr('cx')) - 10;
                         var newY = parseFloat(d3.select(this).attr('cy')) - 5;
-                        tooltip.attr('x', newX).attr('y', newY).text(answer.value).transition(200).style('opacity', 1);
+                        tooltip.attr('x', newX).attr('y', newY).text(axis_result.value).transition(200).style('opacity', 1);
 
                         var selectedPolygon = "polygon." + d3.select(this).attr("class");
                         mainCanvasSvg.selectAll("polygon").transition(200).style("fill-opacity", 0.1);
@@ -75,25 +74,25 @@ angular.module('ruben-radar')
 
             self.drawPolygonsVertexes =
                 function (mainCanvas, radarDraw, tooltip) {
-                    self.radars.forEach(function (answers, series) {
+                    self.results.forEach(function (result, series) {
                         var vertexesSvg =
                             mainCanvas.selectAll(".nodes")
-                                .data(answers).enter()
+                                .data(result.axes_results).enter()
                                 .append("svg:circle")
                                 .attr("transform", "translate" + radarDraw.center.stringOrderedPair())
                                 .attr("class", "radar-chart-serie" + series)
                                 .attr('r', self.circleRadius(radarDraw))
-                                .attr("alt", function (answer) {
-                                    return answer.value;
+                                .attr("alt", function (axis_result) {
+                                    return axis_result.value;
                                 })
-                                .attr("cx", function (answer, axisNumber) {
-                                    return self.vertexForAnswer(answer, axisNumber, radarDraw).x;
+                                .attr("cx", function (axis_result, axisNumber) {
+                                    return self.vertexForAnswer(axis_result, axisNumber, radarDraw).x;
                                 })
-                                .attr("cy", function (answer, axisNumber) {
-                                    return self.vertexForAnswer(answer, axisNumber, radarDraw).y;
+                                .attr("cy", function (axis_result, axisNumber) {
+                                    return self.vertexForAnswer(axis_result, axisNumber, radarDraw).y;
                                 })
-                                .attr("data-id", function (answer) {
-                                    return answer.axis;
+                                .attr("data-id", function (axis_result) {
+                                    return axis_result.axis_id;
                                 })
                                 .style("fill", self.colorSet(series)).style("fill-opacity", .9);
                         self.addCirclesHoverLogic(mainCanvas, vertexesSvg, tooltip);
@@ -103,7 +102,7 @@ angular.module('ruben-radar')
             self.draw = function (mainCanvasSvg, radarDraw) {
                 var polygonsSvg =
                     mainCanvasSvg.selectAll(".nodes")
-                        .data(self.radars).enter()
+                        .data(self.results).enter()
                         .append("polygon")
                         .attr("class", function (_, series) {
                             return "radar-chart-serie" + series;
@@ -112,8 +111,8 @@ angular.module('ruben-radar')
                         .style("stroke", function (_, series) {
                             return self.colorSet(series);
                         })
-                        .attr("points", function (answers) {
-                            return self.stringPointsForAnswers(answers, radarDraw);
+                        .attr("points", function (result) {
+                            return self.stringPointsForAnswers(result.axes_results, radarDraw);
                         })
                         .style("fill", function (_, series) {
                             return self.colorSet(series);

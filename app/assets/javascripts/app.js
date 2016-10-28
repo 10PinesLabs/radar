@@ -27,8 +27,8 @@ angular
                     radar: function ($route, RadarService) {
                         return RadarService.getRadar($route.current.params.radar_id);
                     },
-                    answers: function ($route, RadarService) {
-                        return RadarService.getResults($route.current.params.radar_id);
+                    result: function ($route, RadarService) {
+                        return RadarService.getResult($route.current.params.radar_id);
                     }
                 }
             })

@@ -3,12 +3,12 @@
  */
 angular.module('ruben-radar')
     .factory('AxesDraw', function AxesDraw(Vector2D) {
-        return function (axesDescriptions) {
+        return function (axes) {
             var self = this;
-            self.axesDescriptions = axesDescriptions;
+            self.axes = axes;
 
             self.count = function() {
-              return self.axesDescriptions.length;
+              return self.axes.length;
             };
 
             self.textPosition = function (radarDraw, axisNumber) {
@@ -18,16 +18,16 @@ angular.module('ruben-radar')
 
             self.draw = function (mainCanvasSvg, radarDraw) {
                 var axis = mainCanvasSvg.selectAll(".axis")
-                    .data(self.axesDescriptions).enter()
+                    .data(self.axes).enter()
                     .append("g").attr("class", "axis")
                     .attr("transform", "translate" + radarDraw.center.stringOrderedPair());
 
                 axis.append("line")
                     .attr("x1", 0).attr("y1", 0)
-                    .attr("x2", function (description, axisNumber) {
+                    .attr("x2", function (axis, axisNumber) {
                         return radarDraw.lastPointFor(axisNumber).x;
                     })
-                    .attr("y2", function (description, axisNumber) {
+                    .attr("y2", function (axis, axisNumber) {
                         return radarDraw.lastPointFor(axisNumber).y;
                     })
                     .attr("class", "line")
@@ -36,15 +36,17 @@ angular.module('ruben-radar')
 
                 axis.append("text")
                     .attr("class", "legend")
-                    .text(_.identity)
+                    .text(function (axis) {
+                        return axis.description;
+                    })
                     .style("font-family", "sans-serif")
                     .style("font-size", "11px")
                     .attr("text-anchor", "middle")
                     .attr("dy", "1.5em")
-                    .attr("x", function (description, axisNumber) {
+                    .attr("x", function (axis, axisNumber) {
                         return self.textPosition(radarDraw, axisNumber).x;
                     })
-                    .attr("y", function (description, axisNumber) {
+                    .attr("y", function (axis, axisNumber) {
                         return self.textPosition(radarDraw, axisNumber).y;
                     });
             };

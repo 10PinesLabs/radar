@@ -4,6 +4,6 @@
 angular.module('ruben-radar')
     .factory('Radar', function Radar(backendUrl, $resource) {
         return $resource(backendUrl + '/radars/:id', {id: '@id'}, {
-            'results': {method: 'GET', isArray: true, url: backendUrl + '/radars/:id/results'}
+            'result': {method: 'GET', url: backendUrl + '/radars/:id/result'}
         });
     });

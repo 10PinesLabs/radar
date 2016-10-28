@@ -11,16 +11,15 @@ angular.module('ruben-radar')
                         .append("g").attr("transform", "translate" + offset.stringOrderedPair());
                 };
 
-                this.draw = function (parentElement, radars) {
-                    var maxValueFromData = d3.max(radars, function (i) {
-                        return d3.max(_.map(i, 'value'));
+                this.draw = function (parentElement, results, axes) {
+                    var maxValueFromData = d3.max(results, function (result) {
+                        return d3.max(_.map(result.axes_results, 'value'));
                     });
-                    var axisDescription = _.map(radars[0], 'axis');
 
-                    var scale = new ScaleDraw(steps, maxValueFromData);
-                    var axes = new AxesDraw(axisDescription);
-                    var polygons = new PolygonsDraw(radars);
-                    var radarDraw = new RadarDraw(radarSize, scale, axes, polygons);
+                    var scaleDraw = new ScaleDraw(steps, maxValueFromData);
+                    var axesDraw = new AxesDraw(axes);
+                    var polygonsDraw = new PolygonsDraw(results);
+                    var radarDraw = new RadarDraw(radarSize, scaleDraw, axesDraw, polygonsDraw);
                     var mainCanvasSvg = drawMainCanvas(parentElement, canvasSize, offsetInParent);
                     radarDraw.draw(mainCanvasSvg);
                 };
