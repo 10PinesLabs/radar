@@ -31,6 +31,16 @@ angular
             .when('/successfulVote', {
                 templateUrl: 'radars/successfulVote.html'
             })
+            .when('/radars/:radar_id/results', {
+                templateUrl: 'radars/results.html',
+                controller: 'ResultsController',
+                resolve: {
+                    radar: getRadar,
+                    result: function ($route, RadarService) {
+                        return RadarService.getResult($route.current.params.radar_id);
+                    }
+                }
+            })
             .otherwise({
                 redirectTo: '/radars/1/vote'
             });

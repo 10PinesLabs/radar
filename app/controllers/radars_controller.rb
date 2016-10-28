@@ -6,6 +6,11 @@ class RadarsController < ApplicationController
     render json: radar, status: :created
   end
 
+  def result
+    radar = Radar.find(params.require(:id))
+    render json: RadarResultSerializer.new(radar, {}).to_json , status: :ok
+  end
+
   def show
     radar = Radar.find(params.require(:id))
     render json: radar, status: :ok
