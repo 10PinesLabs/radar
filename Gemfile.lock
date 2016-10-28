@@ -44,8 +44,7 @@ GEM
     arel (6.0.3)
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
-    bower (0.0.5)
-      multi_json
+    bower-rails (0.11.0)
     builder (3.2.2)
     byebug (9.0.6)
     concurrent-ruby (1.0.2)
@@ -173,7 +172,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
-  bower
+  bower-rails
   byebug
   factory_girl_rails
   jbuilder (~> 2.0)
