@@ -18,5 +18,13 @@ RSpec.describe Answer, type: :model do
         end
       end
     end
+    context 'with more than 5 points' do
+      it 'should raise an error' do
+        expect { Answer.create!(points: 6) }.to raise_error do |error|
+          expect(error).to be_a(ActiveRecord::RecordInvalid)
+          expect(error.record.errors[:points]).to be_include Answer::ERROR_MESSAGE_FOR_OUT_OF_RANGE_POINT
+        end
+      end
+    end
   end
 end
