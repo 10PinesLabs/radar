@@ -3,7 +3,7 @@
  */
 angular.module('ruben-radar')
     .factory('RadarChart', function RadarChart(ScaleDraw, RadarDraw, PolygonsDraw, AxesDraw) {
-           return function (radarSize, canvasSize, offsetInParent, steps) {
+           return function (radarSize, canvasSize, offsetInParent, steps, maxValue) {
 
                 var drawMainCanvas = function (parentElement, size, offset) {
                     return d3.select(parentElement)
@@ -12,11 +12,7 @@ angular.module('ruben-radar')
                 };
 
                 this.draw = function (parentElement, results, axes) {
-                    var maxValueFromData = d3.max(results, function (result) {
-                        return d3.max(_.map(result.axes_results, 'value'));
-                    });
-
-                    var scaleDraw = new ScaleDraw(steps, maxValueFromData);
+                    var scaleDraw = new ScaleDraw(steps, maxValue);
                     var axesDraw = new AxesDraw(axes);
                     var polygonsDraw = new PolygonsDraw(results);
                     var radarDraw = new RadarDraw(radarSize, scaleDraw, axesDraw, polygonsDraw);
