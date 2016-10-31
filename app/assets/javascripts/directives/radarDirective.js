@@ -8,6 +8,7 @@ angular.module('ruben-radar')
                 results: '=results',
                 radius: '=radius',
                 steps: '=steps',
+                maxValue: '=maxValue',
                 offsetInParentX: '=offsetInParentX',
                 offsetInParentY: '=offsetInParentY',
                 widthOfCanvas: '=widthOfCanvas',
@@ -17,6 +18,8 @@ angular.module('ruben-radar')
                 var defaultConfig = {
                     radius: 250,
                     steps: 5,
+
+                    maxValue: 5,
 
                     offsetInParentX: 80,
                     offsetInParentY: 30,
@@ -29,7 +32,8 @@ angular.module('ruben-radar')
                 var radarSize = new Vector2D(config.radius * 2, config.radius * 2);
                 var canvasSize = new Vector2D(config.widthOfCanvas, config.heightOfCanvas);
                 var offsetInParent = new Vector2D(config.offsetInParentX, config.offsetInParentY);
-                new RadarChart(radarSize, canvasSize, offsetInParent, config.steps).draw(element[0], scope.results, scope.axes);
+                new RadarChart(radarSize, canvasSize, offsetInParent, config.steps, config.maxValue)
+                    .draw(element[0], scope.results, scope.axes);
             }
         };
     })
