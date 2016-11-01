@@ -6,7 +6,7 @@ class Vote < ActiveRecord::Base
   has_many :answers
   has_many :axes, through: :answers
   validates :answers, presence: {message: ERROR_MESSAGE_FOR_NO_ANSWERS}
-  validate :assert_answers_from_same_radar, :assert_active_radar
+  before_create :assert_answers_from_same_radar, :assert_active_radar
 
   def self.count_for(a_radar)
     self.select{ |vote| vote.for?(a_radar) }.count
@@ -17,7 +17,7 @@ class Vote < ActiveRecord::Base
   end
 
   def answers_from_same_radar
-    answers.blank? || answers.all?{ | answer | answer.radar == self.radar }
+    answers.all?{ | answer | answer.radar == self.radar }
   end
 
   def radar
@@ -25,14 +25,14 @@ class Vote < ActiveRecord::Base
   end
 
   def radar_active?
-    answers.blank? || self.radar.active?
+    self.radar.active?
   end
 
   def assert_active_radar
-    errors.add(:radar, ERROR_MESSAGE_CANNOT_ANSWER_CLOSED_RADAR) unless radar_active?
+    raise CannotVoteAClosedRadar, ERROR_MESSAGE_CANNOT_ANSWER_CLOSED_RADAR unless radar_active?
   end
 
   def assert_answers_from_same_radar
-    errors.add(:answers, ERROR_MESSAGE_FOR_ANSWERS_FROM_DIFFERENT_RADARS) unless answers_from_same_radar
+    raise CannotVoteInDifferentRadars, ERROR_MESSAGE_FOR_ANSWERS_FROM_DIFFERENT_RADARS unless answers_from_same_radar
   end
 end

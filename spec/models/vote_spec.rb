@@ -9,10 +9,7 @@ RSpec.describe Vote, type: :model do
         (a_radar.axes + another_radar.axes).map { |axis| Answer.new(axis: axis, points: 3) }
       end
       it 'should err when creating the vote' do
-        expect { Vote.create!(answers: answers) }.to raise_error do |error|
-          expect(error).to be_a(ActiveRecord::RecordInvalid)
-          expect(error.record.errors[:answers]).to be_include Vote::ERROR_MESSAGE_FOR_ANSWERS_FROM_DIFFERENT_RADARS
-        end
+        expect { Vote.create!(answers: answers) }.to raise_error CannotVoteInDifferentRadars, Vote::ERROR_MESSAGE_FOR_ANSWERS_FROM_DIFFERENT_RADARS
       end
     end
   end
@@ -46,10 +43,7 @@ RSpec.describe Vote, type: :model do
           a_radar.close
         end
         it 'should err' do
-          expect { Vote.create!(answers: [answer]) }.to raise_error do |error|
-            expect(error).to be_a(ActiveRecord::RecordInvalid)
-            expect(error.record.errors[:radar]).to be_include Vote::ERROR_MESSAGE_CANNOT_ANSWER_CLOSED_RADAR
-          end
+          expect { Vote.create!(answers: [answer]) }.to raise_error CannotVoteAClosedRadar, Vote::ERROR_MESSAGE_CANNOT_ANSWER_CLOSED_RADAR
         end
       end
     end
