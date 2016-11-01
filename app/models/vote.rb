@@ -1,8 +1,8 @@
 class Vote < ActiveRecord::Base
-  ERROR_MESSAGE_FOR_NO_ANSWERS = 'The vote must have at least one answer'
-  ERROR_MESSAGE_FOR_ANSWERS_FROM_DIFFERENT_RADARS = 'The vote cannot have answers from different radars'
-  ERROR_MESSAGE_CANNOT_ANSWER_CLOSED_RADAR = 'You cannot answer a question from a closed radar'
-  ERROR_MESSAGE_FOR_INCOMPLETE_VOTE = 'The vote must have an answer for all of the radar axes'
+  ERROR_MESSAGE_FOR_NO_ANSWERS = 'El voto debe tener por lo menos una respuesta a un eje'
+  ERROR_MESSAGE_FOR_ANSWERS_FROM_DIFFERENT_RADARS = 'El voto no puede tener respuestas a diferentes radares'
+  ERROR_MESSAGE_CANNOT_ANSWER_CLOSED_RADAR = 'No se puede votar en un radar cerrado'
+  ERROR_MESSAGE_FOR_INCOMPLETE_VOTE = 'El voto debe tener una respuesta para cada uno de sus ejes'
 
   has_many :answers
   has_many :axes, through: :answers

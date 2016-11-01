@@ -1,5 +1,5 @@
 class Axis < ActiveRecord::Base
-  ERROR_MESSAGE_FOR_EMPTY_DESCRIPTION = "The Axis' description cannot be empty"
+  ERROR_MESSAGE_FOR_EMPTY_DESCRIPTION = 'La descripción del eje no puede estar vacía'
   validates :description, presence: { message: ERROR_MESSAGE_FOR_EMPTY_DESCRIPTION }
   validates :radar, presence: true
   belongs_to :radar
