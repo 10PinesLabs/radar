@@ -32,11 +32,13 @@ class Vote < ActiveRecord::Base
   end
 
   def has_one_answer_for_each_radar_axis?
-    self.radar.axes.all? do |axis|
-      self.answers.to_a.count { |answer|
-        answer.axis == axis
-      } == 1
-    end
+    self.radar.axes.all? { |axis| only_one_answer_for?(axis) }
+  end
+
+  def only_one_answer_for?(axis)
+    self.answers.to_a.count { |answer|
+      answer.axis == axis
+    } == 1
   end
 
   def assert_active_radar
