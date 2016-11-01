@@ -1,6 +1,6 @@
 class Answer < ActiveRecord::Base
-  ERROR_MESSAGE_FOR_NO_AXIS = 'The answer must be associated with a question'
-  ERROR_MESSAGE_FOR_OUT_OF_RANGE_POINT = 'The amount of points should be between 1 and 5'
+  ERROR_MESSAGE_FOR_NO_AXIS = 'La respuesta tiene que estar asociada a una pregunta'
+  ERROR_MESSAGE_FOR_OUT_OF_RANGE_POINT = 'La puntuación debe estar en el rango de 1 a 5'
 
   belongs_to :vote
   belongs_to :axis

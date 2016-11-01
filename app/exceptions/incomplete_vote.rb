@@ -1,0 +1,2 @@
+class IncompleteVote < Exception
+end

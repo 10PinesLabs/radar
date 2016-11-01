@@ -1,7 +1,7 @@
 class Radar < ActiveRecord::Base
 
-  ERROR_MESSAGE_FOR_ALREADY_CLOSED = 'The radar is already closed'
-  ERROR_MESSAGE_FOR_NO_QUESTIONS = 'The radar must have at least one question'
+  ERROR_MESSAGE_FOR_ALREADY_CLOSED = 'No se puede cerrar el radar, el mismo ya está cerrado'
+  ERROR_MESSAGE_FOR_NO_QUESTIONS = 'El radar debe tener por lo menos un eje asignado'
   has_many :axes
 
   validates :axes, presence: {message: ERROR_MESSAGE_FOR_NO_QUESTIONS}

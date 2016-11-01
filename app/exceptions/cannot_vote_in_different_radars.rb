@@ -1,0 +1,2 @@
+class CannotVoteInDifferentRadars < Exception
+end
