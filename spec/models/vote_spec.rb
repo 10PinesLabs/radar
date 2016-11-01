@@ -27,6 +27,13 @@ RSpec.describe Vote, type: :model do
           expect(a_radar.times_completed).to eq 1
         end
       end
+      context 'with only some answers for the radar' do
+        let(:answers) { [Answer.new(axis: a_radar.axes.first, points: 3)] }
+
+        it 'All the radar questions should have one answer' do
+          expect { Vote.create!(answers: answers) }.to raise_error IncompleteVote, Vote::ERROR_MESSAGE_FOR_INCOMPLETE_VOTE
+        end
+      end
       context 'with no answers' do
         it 'should err when creating the vote' do
           expect { Vote.create! }.to raise_error do |error|
