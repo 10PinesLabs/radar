@@ -16,7 +16,8 @@ module WithErrorHandler
     rescue ActiveRecord::RecordNotFound => error
       render_error([error.message], :not_found)
     rescue AlreadyClosedRadarException,
-        CannotVoteInDifferentRadars, CannotVoteAClosedRadar => error
+        CannotVoteInDifferentRadars, CannotVoteAClosedRadar,
+        IncompleteVote => error
       render_error([error.message], :unprocessable_entity)
     end
   end
