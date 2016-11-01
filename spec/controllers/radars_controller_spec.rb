@@ -49,8 +49,8 @@ RSpec.describe RadarsController, type: :controller do
     let!(:a_radar) { Radar.create_with_axes(axes) }
 
     before do
-      Vote.create!(answers: axes.map { |axis| Answer.new(axis: axis, points: 4) })
-      Vote.create!(answers: axes.map { |axis| Answer.new(axis: axis, points: 3) })
+      Vote.create!(answers: axes.map { |axis| build(:answer, axis: axis) })
+      Vote.create!(answers: axes.map { |axis| build(:answer, axis: axis) })
       get :result, {id: a_radar.id}
     end
 

@@ -2,12 +2,14 @@ class Vote < ActiveRecord::Base
   ERROR_MESSAGE_FOR_NO_ANSWERS = 'El voto debe tener por lo menos una respuesta a un eje'
   ERROR_MESSAGE_FOR_ANSWERS_FROM_DIFFERENT_RADARS = 'El voto no puede tener respuestas a diferentes radares'
   ERROR_MESSAGE_CANNOT_ANSWER_CLOSED_RADAR = 'No se puede votar en un radar cerrado'
-  ERROR_MESSAGE_FOR_INCOMPLETE_VOTE = 'El voto debe tener una respuesta para cada uno de sus ejes'
+  ERROR_MESSAGE_MISSING_AXES = 'Tenés que completar todos los ejes para poder finalizar tu votación'
 
   has_many :answers
   has_many :axes, through: :answers
   validates :answers, presence: {message: ERROR_MESSAGE_FOR_NO_ANSWERS}
-  before_create :assert_answers_from_same_radar, :assert_active_radar, :assert_has_answers_for_all_the_radar_axes
+  before_create :assert_answers_from_same_radar,
+                :assert_active_radar,
+                :assert_has_answers_for_all_the_radar_axes
 
   def self.count_for(a_radar)
     self.select { |vote| vote.for?(a_radar) }.count
@@ -29,10 +31,11 @@ class Vote < ActiveRecord::Base
     self.radar.active?
   end
 
-  def has_answers_for_all_radar_axes?
-    answered_axes = answers.map(&:axis)
+  def has_one_answer_for_each_radar_axis?
     self.radar.axes.all? do |axis|
-      answered_axes.include? axis
+      self.answers.to_a.count { |answer|
+        answer.axis == axis
+      } == 1
     end
   end
 
@@ -45,6 +48,6 @@ class Vote < ActiveRecord::Base
   end
 
   def assert_has_answers_for_all_the_radar_axes
-    raise IncompleteVote, ERROR_MESSAGE_FOR_INCOMPLETE_VOTE unless has_answers_for_all_radar_axes?
+    raise IncompleteVote, ERROR_MESSAGE_MISSING_AXES unless has_one_answer_for_each_radar_axis?
   end
 end
