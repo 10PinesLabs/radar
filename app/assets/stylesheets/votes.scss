@@ -8,8 +8,13 @@
   justify-content: center;
 }
 
+@media screen and (min-width: 600px) {
+  .main-box {
+    max-width: 75%;
+  }
+}
+
 .main-box {
-  max-width: 75%;
   flex-grow: 1;
 }
 
@@ -20,7 +25,7 @@
 
 .point-options-container {
   display: flex;
-  max-width: 300px;
+  max-width: 310px;
   flex-flow: row wrap;
   flex-shrink: 1;
   justify-content: flex-start;
@@ -34,8 +39,12 @@
   border-width: 3px;
 }
 
-.axis-description {
+.md-label {
   font-size: 20px;
+}
+
+.axis-description {
+  font-size: 23px;
   line-height: 135%;
   width: 100%;
   font-family: Roboto, Helvetica, sans-serif;
