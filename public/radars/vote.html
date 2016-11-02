@@ -22,9 +22,14 @@
                 </div>
             </div>
             <div ng-if="!radar.active">
-                <div>
+                <div layout-margin>
                     <p>
-                        Al parecer ya no podés votar en este radar, ya que el mismo está cerrado :(.
+                        Al parecer ya no podés votar en este radar, ya que el mismo está cerrado.
+                    </p>
+                    <div class="surprised-radar-container">
+                        <img layout-margin class="surprised-radar" src="http://worldmusicba.com/wp-content/uploads/2014/05/Contratar-a-Ruben-Rada-61.jpg">
+                    </div>
+                    <p>
                         Sin embargo <a href="#/radars/{{radar.id}}/results">acá</a> podés acceder a los resultados.
                     </p>
                 </div>
