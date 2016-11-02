@@ -51,4 +51,8 @@ angular
             horizontalPosition: 'center',
             maxNumber: 3
         });
+    }).config(function($mdThemingProvider) {
+        $mdThemingProvider.theme('pine-green')
+            .primaryPalette('green')
+            .accentPalette('deep-orange');
     });

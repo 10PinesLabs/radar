@@ -12,6 +12,7 @@
  *
  *= require bootstrap/dist/css/bootstrap
  *= require ngToast
+ *= require angular-material
  *= require_tree .
  *= require_self
  */

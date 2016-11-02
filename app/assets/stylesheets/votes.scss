@@ -1,3 +1,75 @@
 // Place all the styles related to the votes controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.box-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+@media screen and (min-width: 600px) {
+  .main-box {
+    max-width: 75%;
+  }
+}
+
+p {
+  font-size: 20px;
+  line-height: 135%;
+  width: 100%;
+  font-family: Roboto, Helvetica, sans-serif;
+}
+
+.md-toolbar-tools > span {
+  font-size: 30px;
+}
+
+.main-box {
+  flex-grow: 1;
+}
+
+.answer-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.point-options-container {
+  display: flex;
+  max-width: 270px;
+  flex-flow: row wrap;
+  flex-shrink: 1;
+  justify-content: flex-start;
+}
+
+.point-options {
+  flex-grow: 1;
+}
+
+.md-label {
+  font-size: 17px;
+}
+
+.axis-description {
+  font-size: 20px;
+  line-height: 135%;
+  width: 100%;
+  font-family: Roboto, Helvetica, sans-serif;
+}
+
+.button-row-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.surprised-radar-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.surprised-radar {
+  flex-grow: 1;
+  max-width: 550px;
+}
