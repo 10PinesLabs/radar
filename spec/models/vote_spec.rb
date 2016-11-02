@@ -9,7 +9,7 @@ RSpec.describe Vote, type: :model do
         (a_radar.axes + another_radar.axes).map { |axis| Answer.new(axis: axis, points: 3) }
       end
       it 'should err when creating the vote' do
-        expect { Vote.create!(answers: answers) }.to raise_error CannotVoteInDifferentRadars, Vote::ERROR_MESSAGE_FOR_ANSWERS_FROM_DIFFERENT_RADARS
+        expect { Vote.create!(answers: answers) }.to raise_error IncompleteVote, Vote::ERROR_MESSAGE_MISSING_AXES
       end
     end
   end

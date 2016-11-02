@@ -7,9 +7,9 @@ class Vote < ActiveRecord::Base
   has_many :answers
   has_many :axes, through: :answers
   validates :answers, presence: {message: ERROR_MESSAGE_FOR_NO_ANSWERS}
-  before_create :assert_answers_from_same_radar,
-                :assert_active_radar,
-                :assert_has_answers_for_all_the_radar_axes
+  before_create :assert_active_radar,
+                :assert_right_amount_of_answers,
+                :assert_has_answer_for_each_radar_axis
 
   def self.count_for(a_radar)
     self.select { |vote| vote.for?(a_radar) }.count
@@ -31,25 +31,27 @@ class Vote < ActiveRecord::Base
     self.radar.active?
   end
 
-  def has_one_answer_for_each_radar_axis?
-    self.radar.axes.all? { |axis| only_one_answer_for?(axis) }
+  def right_amount_of_answers?
+    radar.axes.length == answers.length
   end
 
-  def only_one_answer_for?(axis)
-    self.answers.to_a.count { |answer|
-      answer.axis == axis
-    } == 1
+  def has_one_answer_for_each_radar_axis?
+    self.radar.axes.all? { |axis| exists_answer_for_axis?(axis) }
+  end
+
+  def exists_answer_for_axis?(axis)
+    answers.any? { |answer| answer.is_for? axis}
   end
 
   def assert_active_radar
     raise CannotVoteAClosedRadar, ERROR_MESSAGE_CANNOT_ANSWER_CLOSED_RADAR unless radar_active?
   end
 
-  def assert_answers_from_same_radar
-    raise CannotVoteInDifferentRadars, ERROR_MESSAGE_FOR_ANSWERS_FROM_DIFFERENT_RADARS unless answers_from_same_radar
+  def assert_right_amount_of_answers
+    raise IncompleteVote, ERROR_MESSAGE_MISSING_AXES unless right_amount_of_answers?
   end
 
-  def assert_has_answers_for_all_the_radar_axes
+  def assert_has_answer_for_each_radar_axis
     raise IncompleteVote, ERROR_MESSAGE_MISSING_AXES unless has_one_answer_for_each_radar_axis?
   end
 end
