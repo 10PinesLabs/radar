@@ -5,7 +5,7 @@ angular.module('ruben-radar')
         $scope.options = _.range(1, 6);
 
         $scope.allAxesAnswered = function () {
-            return _($scope.vote.answers).every(function (answer) {
+            return _.every($scope.vote.answers, function (answer) {
                 return answer.points !== undefined;
             });
         };
