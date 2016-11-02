@@ -1,38 +1,36 @@
-<div class="row">
-    <div class="col-md-6">
-        <h1>Radar</h1>
-    </div>
-    <div class="col-md-6 pull-right">
-        <h4>{{radar.date}}</h4>
-    </div>
-</div>
+<div class="box-container">
+    <md-content class="main-box" layout-padding md-theme="pine-green">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <span>Radar: Retiro 10pines 2015</span>
+            </div>
+        </md-toolbar>
 
-<div ng-if="radar.active">
-    <div ng-repeat="answer in vote.answers">
-        <div class="row">
-            <h2>{{answer.axis.description}}</h2>
-            <div class="input-group">
-                <div ng-repeat="option in options">
-                    <label>
-                        <input type="radio" name="{{axis.id}}" ng-model="answer.points" value="{{option}}">
-                        {{option}}
-                    </label>
+        <div layout-padding layout="column" md-whiteframe="3">
+            <div ng-if="radar.active">
+                <div layout-margin class="answer-container" ng-repeat="answer in vote.answers">
+                    <h2 class="axis-description">{{answer.axis.description}}</h2>
+                    <md-radio-group class="input-group point-options-container" ng-model="answer.points">
+                        <md-radio-button class="point-options md-primary" ng-repeat="option in options"
+                                         name="{{axis.id}}" value="{{option}}">
+                            {{option}}
+                        </md-radio-button>
+                    </md-radio-group>
+                </div>
+                <div class="button-row-container">
+                    <md-button ng-click="submit()" class="md-raised md-accent">Votar</md-button>
+                </div>
+            </div>
+            <div ng-if="!radar.active">
+                <div>
+                    <p>
+                        Al parecer ya no podés votar en este radar, ya que el mismo está cerrado :(.
+                        Sin embargo <a href="#/radars/{{radar.id}}/results">acá</a> podés acceder a los resultados.
+                    </p>
                 </div>
             </div>
         </div>
-    </div>
+    </md-content>
+</div>
 
-    <div class="row">
-        <button type="submit" class="form-group form-control btn btn-primary" ng-click="submit()">
-            Submit
-        </button>
-    </div>
-</div>
-<div ng-if="!radar.active">
-    <div class="row">
-        <p>
-            Al parecer ya no podés votar en este radar, ya que el mismo está cerrado :(.
-            Sin embargo <a href="#/radars/{{radar.id}}/results">acá</a> podés acceder a los resultados.
-        </p>
-    </div>
-</div>
+
