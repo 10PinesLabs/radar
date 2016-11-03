@@ -1,4 +1,9 @@
 <div>
-    <h1>The radar:</h1>
+    <h1>{{radar.description}}:
+        <span ng-switch="radar.active">
+            <span ng-switch-when="true">(abierto)</span>
+            <span ng-switch-when="false">(cerrado)</span>
+        </span>
+    </h1>
     <draw-radar axes="axes" results="[result]"></draw-radar>
 </div>
