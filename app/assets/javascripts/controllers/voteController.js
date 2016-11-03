@@ -4,6 +4,12 @@ angular.module('ruben-radar')
         $scope.vote = VoteService.newVote(radar);
         $scope.options = _.range(1, 6);
 
+        $scope.allAxesAnswered = function () {
+            return _.every($scope.vote.answers, function (answer) {
+                return answer.points !== undefined;
+            });
+        };
+
         $scope.submit = function submit() {
             VoteService.createVote($scope.vote).then(function () {
                 $location.path('/successfulVote');
