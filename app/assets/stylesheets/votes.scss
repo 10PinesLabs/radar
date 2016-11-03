@@ -65,11 +65,11 @@ p {
 
 .surprised-radar-container {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .surprised-radar {
-  flex-grow: 1;
   max-width: 550px;
+  width: 100%;
 }
