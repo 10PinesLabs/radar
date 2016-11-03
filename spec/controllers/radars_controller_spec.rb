@@ -20,7 +20,7 @@ RSpec.describe RadarsController, type: :controller do
 
     context 'with axes' do
       let(:radar_params) {
-        {axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {description: 'Una Arista guardada'}]}
+        {description: 'Radar 2015',axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {description: 'Una Arista guardada'}]}
       }
 
       it 'the request should succeed' do
@@ -45,12 +45,11 @@ RSpec.describe RadarsController, type: :controller do
   end
 
   context 'When requesting to get the results of a radar' do
-    let!(:axes) { [Axis.new(description: 'ble'), Axis.new(description: 'bla')] }
-    let!(:a_radar) { Radar.create_with_axes(axes) }
+    let!(:a_radar) { create :radar }
 
     before do
-      Vote.create!(answers: axes.map { |axis| build(:answer, axis: axis) })
-      Vote.create!(answers: axes.map { |axis| build(:answer, axis: axis) })
+      Vote.create!(answers: a_radar.axes.map { |axis| Answer.new(axis: axis, points: 4) })
+      Vote.create!(answers: a_radar.axes.map { |axis| Answer.new(axis: axis, points: 3) })
       get :result, {id: a_radar.id}
     end
 
