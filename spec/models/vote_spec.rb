@@ -9,48 +9,63 @@ RSpec.describe Vote, type: :model do
         (a_radar.axes + another_radar.axes).map { |axis| Answer.new(axis: axis, points: 3) }
       end
       it 'should err when creating the vote' do
-        expect { Vote.create!(answers: answers) }.to raise_error CannotVoteInDifferentRadars, Vote::ERROR_MESSAGE_FOR_ANSWERS_FROM_DIFFERENT_RADARS
+        expect { Vote.create!(answers: answers) }.to raise_error IncompleteVote, Vote::ERROR_MESSAGE_MISSING_AXES
       end
     end
   end
   context 'With a new Radar' do
-    let(:axes) { [Axis.new(description: 'ble'), Axis.new(description: 'bla')] }
-    let(:a_radar) { Radar.create_with_axes(axes) }
+    let(:a_radar) { create :radar }
     context 'and after a vote' do
+
+      subject do
+        Vote.create!(answers: answers)
+      end
+
       context 'with answers for the radar' do
-        before :each do
-          answers = a_radar.axes.map { |axis| Answer.new(axis: axis, points: 3) }
-          Vote.create!(answers: answers)
-        end
+        let(:answers) { a_radar.axes.map { |axis| build :answer, axis: axis } }
 
         it 'All the radar questions should have one answer' do
+          subject
+
           expect(a_radar.times_completed).to eq 1
         end
       end
+
       context 'with only some answers for the radar' do
-        let(:answers) { [Answer.new(axis: a_radar.axes.first, points: 3)] }
+        let(:answers) { [build(:answer, axis: a_radar.axes.first)] }
 
         it 'All the radar questions should have one answer' do
-          expect { Vote.create!(answers: answers) }.to raise_error IncompleteVote, Vote::ERROR_MESSAGE_FOR_INCOMPLETE_VOTE
+          expect { subject }.to raise_error IncompleteVote, Vote::ERROR_MESSAGE_MISSING_AXES
         end
       end
+
       context 'with no answers' do
+        let(:answers) { [] }
+
         it 'should err when creating the vote' do
-          expect { Vote.create! }.to raise_error do |error|
+          expect { subject }.to raise_error do |error|
             expect(error).to be_a(ActiveRecord::RecordInvalid)
             expect(error.record.errors[:answers]).to be_include Vote::ERROR_MESSAGE_FOR_NO_ANSWERS
           end
         end
       end
+
       context 'with an axis from a closed Radar' do
-        let(:axis) { Axis.new(description: 'ble') }
-        let(:a_radar) { Radar.create_with_axes([axis]) }
-        let(:answer) { Answer.new(axis: axis, points: 3) }
-        before :each do
+        let(:answers) { a_radar.axes.map { |axis| build :answer, axis: axis } }
+
+        before do
           a_radar.close
         end
+
         it 'should err' do
-          expect { Vote.create!(answers: [answer]) }.to raise_error CannotVoteAClosedRadar, Vote::ERROR_MESSAGE_CANNOT_ANSWER_CLOSED_RADAR
+          expect { subject }.to raise_error CannotVoteAClosedRadar, Vote::ERROR_MESSAGE_CANNOT_ANSWER_CLOSED_RADAR
+        end
+      end
+      context 'with not all the axes from the radar' do
+        let(:answers) { a_radar.axes.map { |axis| build :answer, axis: axis }.drop 1 }
+
+        it 'should err' do
+          expect { subject }.to raise_error IncompleteVote, Vote::ERROR_MESSAGE_MISSING_AXES
         end
       end
     end
