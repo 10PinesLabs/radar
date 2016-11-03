@@ -1,5 +1,23 @@
-<div class="row">
-    <div class="col-md-offset-3 col-md-6">
-        <h3>Tu voto fué registrado con éxito</h3>
-    </div>
+<div class="box-container">
+    <md-content class="main-box" layout-padding md-theme="pine-green">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <span>Radar: {{radar.description}}</span>
+            </div>
+        </md-toolbar>
+
+        <div layout-padding layout="column" md-whiteframe="3">
+            <div layout-margin>
+                <p>
+                    Tu voto fué registrado con éxito.
+                </p>
+                <div class="surprised-radar-container">
+                    <img layout-margin class="surprised-radar" src="http://www.cronista.com/__export/1459470299384/sites/diarioelcronista/img/3dias/2016/03/31/ruben-rada.jpg">
+                </div>
+                <p>
+                    Podés ver los resultados de este radar <a href="#/radars/{{radar.id}}/results">acá</a>.
+                </p>
+            </div>
+        </div>
+    </md-content>
 </div>
