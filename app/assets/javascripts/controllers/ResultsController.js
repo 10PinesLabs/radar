@@ -1,7 +1,7 @@
 angular.module('ruben-radar')
     .controller('ResultsController', function ($scope, _, radar, result) {
         var pointsAverage = function (points) {
-            return _.sum(points) / points.length;
+            return parseFloat(_.sum(points) / points.length).toFixed(2);
         };
 
         $scope.radar = radar;
