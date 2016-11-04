@@ -20,28 +20,36 @@ angular.module('ruben-radar')
                 return (step + 1) / self.amountOfSteps;
             };
 
-            self.textOffset = function (radarDraw) {
-                return new Vector2D(radarDraw.radius / 50, 0);
+            self.textOffset = function (radarDraw, axis) {
+                return new radarDraw.versorForAxis(axis)
+                    .rotateByRightAngle().scale(radarDraw.radius / 25);
             };
 
             self.drawScaleText = function (mainCanvasSvg, radarDraw) {
                 var steps = _.range(0, self.amountOfSteps);
-                mainCanvasSvg.selectAll(".levels")
-                    .data(steps).enter()
-                    .append("svg:text")
-                    .attr("x", 0)
-                    .attr("y", function (step) {
-                        return - radarDraw.distanceToCenter(step);
-                    })
-                    .attr("class", "legend")
-                    .style("font-family", "sans-serif")
-                    .style("font-size", "10px")
-                    .attr("transform", "translate" +
-                        radarDraw.center.plus(self.textOffset(radarDraw)).stringOrderedPair())
-                    .attr("fill", "#737373")
-                    .text(function (step) {
-                        return (step + 1) * self.valuePerStep();
-                    });
+                var axes = _.range(0, radarDraw.amountOfAxis);
+                axes.forEach(function (axis) {
+                    mainCanvasSvg.selectAll(".levels")
+                        .data(steps).enter()
+                        .append("svg:text")
+                        .attr("x", function (step){
+                            return radarDraw.pointFor(axis, step).x;
+                        })
+                        .attr("y", function (step) {
+                            return radarDraw.pointFor(axis, step).y;
+                        })
+                        .attr("class", "legend")
+                        .style("font-family", "sans-serif")
+                        .style("font-size", "10px")
+                        .attr("transform", "translate" +
+                            radarDraw.center.plus(self.textOffset(radarDraw, axis)).stringOrderedPair())
+                        .attr("fill", "#737373")
+                        .text(function (step) {
+                            return (step + 1) * self.valuePerStep();
+                        });
+                });
+
+
             };
 
             self.drawStepUnionPolygons = function (mainCanvasSvg, radarDraw) {
