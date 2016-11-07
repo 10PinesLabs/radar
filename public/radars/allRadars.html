@@ -1,0 +1,6 @@
+<ul ng-repeat="radar in radars">
+    <li><input type="checkbox" ng-model="radar.selected">{{radar.id}} {{radar.description}}</li>
+</ul>
+<button ng-click="compareChosenRadars()">Comparar radares</button>
+
+

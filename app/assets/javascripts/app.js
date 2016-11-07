@@ -41,17 +41,10 @@ angular
                     }
                 }
             })
-            .when('/radar/compare', {
+            .when('/radars/compare', {
                 templateUrl: 'radars/compare.html',
                 controller: 'CompareRadarsController',
                 resolve: {
-                    // radars: function ($route, RadarService) {
-                    //     return Promise.all(
-                    //         _.map(
-                    //             $route.current.params.radars.split(','),
-                    //             RadarService.getResult
-                    //         ));
-                    // },
                     results: function ($route, RadarService) {
                         return Promise.all(
                             _.map(
@@ -62,10 +55,16 @@ angular
                     }
                 }
             })
-            .otherwise({
-                redirectTo: '/radars/1/vote'
+            .when('/radars', {
+                templateUrl: 'radars/allRadars.html',
+                controller: 'RadarsController',
+                resolve: {
+                    radars: function ($route, RadarService) {
+                        return RadarService.getAll();
+                    }
+                }
             });
-                 })
+    })
     .config(function (ngToastProvider) {
         ngToastProvider.configure({
             verticalPosition: 'bottom',

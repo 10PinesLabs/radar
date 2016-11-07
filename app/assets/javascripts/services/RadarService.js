@@ -1,6 +1,3 @@
-/**
- * Created by pino on 21/10/16.
- */
 angular.module('ruben-radar')
     .service('RadarService', function (Radar) {
         this.getRadar = function getRadar(radar_id) {
@@ -13,5 +10,9 @@ angular.module('ruben-radar')
 
         this.closeRadar = function closeRadar(radar) {
             return radar.$close();
+        };
+
+        this.getAll = function getAll() {
+            return Radar.all();
         };
     });
