@@ -41,10 +41,31 @@ angular
                     }
                 }
             })
+            .when('/radar/compare', {
+                templateUrl: 'radars/compare.html',
+                controller: 'CompareRadarsController',
+                resolve: {
+                    // radars: function ($route, RadarService) {
+                    //     return Promise.all(
+                    //         _.map(
+                    //             $route.current.params.radars.split(','),
+                    //             RadarService.getResult
+                    //         ));
+                    // },
+                    results: function ($route, RadarService) {
+                        return Promise.all(
+                            _.map(
+                                $route.current.params.radars.split(','),
+                                RadarService.getResult
+                            )
+                        );
+                    }
+                }
+            })
             .otherwise({
                 redirectTo: '/radars/1/vote'
             });
-    })
+                 })
     .config(function (ngToastProvider) {
         ngToastProvider.configure({
             verticalPosition: 'bottom',
