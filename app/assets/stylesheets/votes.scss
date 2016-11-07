@@ -21,6 +21,11 @@ p {
   font-family: Roboto, Helvetica, sans-serif;
 }
 
+.md-toolbar-tools {
+  height: auto;
+  max-height: none;
+}
+
 .md-toolbar-tools > span {
   font-size: 30px;
 }
