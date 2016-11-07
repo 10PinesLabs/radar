@@ -92,7 +92,7 @@ angular.module('ruben-radar')
                                     return self.vertexForAnswer(axis_result, axisNumber, radarDraw).y;
                                 })
                                 .attr("data-id", function (axis_result) {
-                                    return axis_result.axis_id;
+                                    return axis_result.axis.id;
                                 })
                                 .style("fill", self.colorSet(series)).style("fill-opacity", .9);
                         self.addCirclesHoverLogic(mainCanvas, vertexesSvg, tooltip);
