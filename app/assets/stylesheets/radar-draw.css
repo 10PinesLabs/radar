@@ -1,0 +1,11 @@
+.draw-radar-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+@media screen and (min-width: 600px) {
+    draw-radar {
+        max-width: 75%;
+    }
+}
