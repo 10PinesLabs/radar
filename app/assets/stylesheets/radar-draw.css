@@ -4,6 +4,10 @@
     justify-content: center;
 }
 
+draw-radar {
+    flex-grow: 1;
+}
+
 @media screen and (min-width: 600px) {
     draw-radar {
         max-width: 75%;
