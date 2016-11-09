@@ -1,6 +1,27 @@
-<ul ng-repeat="radar in radars">
-    <li><input type="checkbox" ng-model="radar.selected">{{radar.id}} {{radar.description}}</li>
-</ul>
-<button ng-click="compareChosenRadars()">Comparar radares</button>
+<div class="box-container">
+    <md-content class="main-box" layout-padding md-theme="pine-green">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <span>Selección de radares para comparar</span>
+            </div>
+        </md-toolbar>
 
-
+        <div layout-padding layout="column" md-whiteframe="3">
+            <fieldset class="standard" >
+                <div layout-wrap="" layout-gt-sm="row" ng-repeat="radar in radars">
+                    <div flex-gt-sm="50">
+                        <md-checkbox class="md-primary"
+                                     ng-model="radar.selected">
+                            {{radar.description}} ({{radar.created_at | date}})
+                        </md-checkbox>
+                    </div>
+                </div>
+                <md-button
+                    class="md-raised md-accent"
+                    ng-click="compareChosenRadars()">
+                    Comparar Radares
+                </md-button>
+            </fieldset>
+        </div>
+    </md-content>
+</div>

@@ -3,15 +3,12 @@ angular.module('ruben-radar')
         $scope.radars = radars;
 
         $scope.compareChosenRadars = function () {
-            var ids = _.map(_.filter(
-                _.filter(radars, function(radar) {
-                    return radar.active;
-                }), function(radar) {
-                    return radar.selected;
-                }
-            ), 'id');
+            var selectedIds = _(radars)
+                .filter('active')
+                .filter('selected')
+                .map('id');
 
-            $location.path('/radars/compare').search({'radars': ids.join(',')});
+            $location.path('/radars/compare').search({'radars': selectedIds.join(',')});
         };
     })
 ;
