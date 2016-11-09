@@ -24,6 +24,10 @@ class RadarsController < ApplicationController
     render json: radar, status: :ok
   end
 
+  def index
+    render json: Radar.all, status: :ok
+  end
+
   private
   def create_axis(axis)
     Axis.new(description: axis.require(:description))
