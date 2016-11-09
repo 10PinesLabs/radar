@@ -12,4 +12,13 @@ draw-radar {
     draw-radar {
         max-width: 75%;
     }
+    text.legend {
+        font-size: 1.2em;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    text.legend {
+        font-size: 2em;
+    }
 }
