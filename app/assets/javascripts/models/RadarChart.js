@@ -14,7 +14,11 @@ angular.module('ruben-radar')
 
                 this.draw = function (parentElement, results, axes_results) {
                     var scaleDraw = new ScaleDraw(steps, maxValue);
-                    var axesDraw = new AxesDraw(axes_results);
+                    var axesDraw = new AxesDraw(
+                        _.map(axes_results, function (axis_result) {
+                            return axis_result.axis.description + ": " + axis_result.value;
+                        })
+                    );
                     var polygonsDraw = new PolygonsDraw(results);
                     var radarDraw = new RadarDraw(radarSize, scaleDraw, axesDraw, polygonsDraw);
                     var mainCanvasSvg = drawMainCanvas(parentElement, canvasSize, offsetInParent);

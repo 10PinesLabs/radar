@@ -36,9 +36,7 @@ angular.module('ruben-radar')
 
                 axis.append("text")
                     .attr("class", "legend")
-                    .text(function (axis_result) {
-                        return axis_result.axis.description + ": " + axis_result.value;
-                    })
+                    .text(_.identity)
                     .style("font-family", "sans-serif")
                     .style("font-size", "15px")
                     .attr("text-anchor", "middle")
