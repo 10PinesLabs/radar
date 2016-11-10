@@ -5,6 +5,7 @@ angular.module('ruben-radar')
         };
 
         $scope.results = results;
+        $scope.axes = _.map(results[0].axes_results, 'axis');
         $scope.results.forEach(function (result) {
             result.axes_results.forEach(function (axis_result) {
                 axis_result.value = pointsAverage(axis_result.points);

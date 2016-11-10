@@ -42,6 +42,6 @@ angular.module('ruben-radar')
                 self.components.map(function (component) {
                     component.draw(mainCanvasSvg, self);
                 });
-            }
+            };
         };
     });

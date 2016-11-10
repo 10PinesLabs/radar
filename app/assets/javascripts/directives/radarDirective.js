@@ -7,6 +7,7 @@ angular.module('ruben-radar')
                 results: '=results',
                 radius: '=radius',
                 steps: '=steps',
+                axes: '=axes',
                 maxValue: '=maxValue',
                 offsetInParentX: '=offsetInParentX',
                 offsetInParentY: '=offsetInParentY',
@@ -32,7 +33,7 @@ angular.module('ruben-radar')
                 var canvasSize = new Vector2D(config.widthOfCanvas, config.heightOfCanvas);
                 var offsetInParent = new Vector2D(config.offsetInParentX, config.offsetInParentY);
                 new RadarChart(radarSize, canvasSize, offsetInParent, config.steps, config.maxValue)
-                    .draw(element[0], scope.results, scope.results[0].axes_results);
+                    .draw(element[0], scope.results, scope.axes);
             }
         };
     })
