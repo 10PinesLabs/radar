@@ -40,7 +40,6 @@ angular.module('ruben-radar')
                         return axis_result.axis.description + ": " + axis_result.value;
                     })
                     .style("font-family", "sans-serif")
-                    .style("font-size", "15px")
                     .attr("text-anchor", "middle")
                     .attr("dy", "1.5em")
                     .attr("x", function (axis_result, axisNumber) {

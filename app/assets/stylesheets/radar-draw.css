@@ -1,0 +1,24 @@
+.draw-radar-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+draw-radar {
+    flex-grow: 1;
+}
+
+@media screen and (min-width: 600px) {
+    draw-radar {
+        max-width: 75%;
+    }
+    text.legend {
+        font-size: 1.2em;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    text.legend {
+        font-size: 2em;
+    }
+}
