@@ -79,7 +79,13 @@ RSpec.describe RadarsController, type: :controller do
 
     it 'should return the radar' do
       serialized_axes = a_radar.axes.map { |axis| {'id' => axis.id, 'description' => axis.description} }
-      serialized_radar = {'id' => a_radar.id, 'axes' => serialized_axes, 'description' => a_radar.description, 'active' => true}
+      serialized_radar = {
+        'id' => a_radar.id,
+        'axes' => serialized_axes,
+        'description' => a_radar.description,
+        'active' => true,
+        'created_at' => a_radar.created_at.as_json
+      }
 
       expect(JSON.parse(response.body)).to eq serialized_radar
     end
