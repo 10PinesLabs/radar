@@ -46,12 +46,7 @@ angular
                 controller: 'CompareRadarsController',
                 resolve: {
                     results: function ($route, RadarService) {
-                        return Promise.all(
-                            _.map(
-                                $route.current.params.radars.split(','),
-                                RadarService.getResult
-                            )
-                        );
+                        return RadarService.getResultsForMany($route.current.params.radars.split(','));
                     }
                 }
             })
