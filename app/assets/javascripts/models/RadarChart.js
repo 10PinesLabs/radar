@@ -12,29 +12,38 @@ angular.module('ruben-radar')
                     .attr("transform", "translate" + offset.stringOrderedPair());
             };
 
-            this.draw = function (parentElement, results, axes_results) {
+            this.draw = function (parentElement, results, axes) {
                 var getDifferenceBetweenRadars = function (axis) {
-                    var eachRadarAverage =
-                        _.map(
+                    if (results.length === 1) {
+                        var result = _.find(
+                            results[0].axes_results, ['axis.description', axis.description]);
+
+                        return Number(_.sum(result.points) / result.points.length).toFixed(2);
+                    } else if (results.length === 2) {
+                        // TODO refactor in need
+                        // Some objects are in need here
+                        var eachRadarAverage =
                             _.map(
-                                _.map(results, function (result) {
-                                    return _.find(result.axes_results, ['axis.description', axis.description])
-                                }),
-                                'points'
-                            ), function (points) {
-                                return _.sum(points) / points.length;
-                            }
-                        );
+                                _.map(
+                                    _.map(results, function (result) {
+                                        return _.find(result.axes_results, ['axis.description', axis.description]);
+                                    }),
+                                    'points'
+                                ), function (points) {
+                                    return _.sum(points) / points.length;
+                                }
+                            );
 
-                    var differenceBetweenRadars = (eachRadarAverage[0] - eachRadarAverage[1]) / eachRadarAverage[1];
-
-                    return (differenceBetweenRadars * 100).toFixed(1) + "%";
+                        return Number((eachRadarAverage[0] - eachRadarAverage[1]) * 100 / eachRadarAverage[1]).toFixed(2);
+                    } else {
+                        return '';
+                    }
                 };
 
 
                 var scaleDraw = new ScaleDraw(steps, maxValue);
                 var axesDraw = new AxesDraw(
-                    _.map(axes_results, function (axis) {
+                    _.map(axes, function (axis) {
                         return axis.description + ": " + getDifferenceBetweenRadars(axis);
                     })
                 );
