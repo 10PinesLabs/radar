@@ -41,8 +41,23 @@ angular
                     }
                 }
             })
-            .otherwise({
-                redirectTo: '/radars/1/vote'
+            .when('/radars/compare', {
+                templateUrl: 'radars/compare.html',
+                controller: 'CompareRadarsController',
+                resolve: {
+                    results: function ($route, RadarService) {
+                        return RadarService.getResultsForMany($route.current.params.radars.split(','));
+                    }
+                }
+            })
+            .when('/radars', {
+                templateUrl: 'radars/allRadars.html',
+                controller: 'RadarsController',
+                resolve: {
+                    radars: function ($route, RadarService) {
+                        return RadarService.getAll();
+                    }
+                }
             });
     })
     .config(function (ngToastProvider) {
