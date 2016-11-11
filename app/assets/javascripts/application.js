@@ -20,5 +20,6 @@
 //= require angular-route
 //= require angular-sanitize
 //= require ngToast
+//= require angular-locale_es-es/angular-locale_es-es
 //= require_tree .
 
