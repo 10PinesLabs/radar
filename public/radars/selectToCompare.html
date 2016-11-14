@@ -7,21 +7,35 @@
         </md-toolbar>
 
         <div layout-padding layout="column" md-whiteframe="3">
-            <fieldset class="standard" >
-                <div layout-wrap="" layout-gt-sm="row" ng-repeat="radar in closedRadars">
-                    <div flex-gt-sm="50">
-                        <md-checkbox class="md-primary"
-                                     ng-model="radar.selected">
-                            {{radar.description}} ({{radar.created_at | date}})
-                        </md-checkbox>
-                    </div>
+            <div layout="row" layout-xs="column">
+                <div flex flex-gt-sm="50">
+                    <md-radio-group ng-model="beforeRadar">
+                        <md-radio-button class="md-primary"
+                                         ng-repeat="radar in closedRadars"
+                                         ng-value="radar"
+                                         ng-disabled="radar.id === afterRadar.id">
+                            {{radar.id}} {{radar.description}} ({{radar.created_at | date}})
+                        </md-radio-button>
+                    </md-radio-group>
                 </div>
-                <md-button
-                    class="md-raised md-accent"
-                    ng-click="compareChosenRadars()">
-                    Comparar Radares
-                </md-button>
-            </fieldset>
+                <div flex flex-gt-sm="50">
+                    <md-radio-group ng-model="afterRadar">
+                        <md-radio-button class="md-primary"
+                                         ng-repeat="radar in closedRadars"
+                                         ng-value="radar"
+                                         ng-disabled="radar.id === beforeRadar.id">
+                            {{radar.id}} {{radar.description}} ({{radar.created_at | date}})
+                        </md-radio-button>
+                    </md-radio-group>
+                </div>
+            </div>
+
+            <md-button
+                class="md-raised md-accent"
+                ng-click="compareChosenRadars()"
+                ng-disabled="afterRadar == undefined || beforeRadar == undefined">
+                Comparar Radares
+            </md-button>
         </div>
     </md-content>
 </div>

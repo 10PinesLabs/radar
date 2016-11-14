@@ -4,12 +4,13 @@ angular.module('ruben-radar')
             return !radar.active;
         });
 
+        $scope.beforeRadar = undefined;
+        $scope.afterRadar = undefined;
+
         $scope.compareChosenRadars = function () {
-            var selectedRadars = _.filter($scope.closedRadars, 'selected');
-            var selectedRadarIds = _.map(selectedRadars, 'id');
             $location.path('/radars/compare').search({
-                'beforeResult': selectedRadarIds[0],
-                'afterResult': selectedRadarIds[1]
+                'beforeResult': $scope.beforeRadar.id,
+                'afterResult': $scope.afterRadar.id
             });
         };
     });
