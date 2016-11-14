@@ -1,10 +1,11 @@
 angular.module('ruben-radar')
-    .directive('drawRadar', function (d3, RadarChart, Vector2D, ShowRadarStrategy) {
+    .directive('radarComparision', function (d3, RadarChart, Vector2D, CompareRadarsStrategy) {
         return {
             restrict: 'E',
             replace: false,
             scope: {
-                result: '=result',
+                beforeResult: '=beforeResult',
+                afterResult: '=afterResult',
                 steps: '=steps',
                 maxValue: '=maxValue'
             },
@@ -14,7 +15,7 @@ angular.module('ruben-radar')
                     maxValue: 5
                 };
 
-                var strategy = new ShowRadarStrategy(scope.result);
+                var strategy = new CompareRadarsStrategy(scope.beforeResult, scope.afterResult);
                 var config = _.merge(defaultConfig, scope);
                 var radarSize = new Vector2D(500, 500);
                 new RadarChart(radarSize, config.steps, config.maxValue)
