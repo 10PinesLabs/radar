@@ -58,7 +58,11 @@ angular
                         return RadarService.getAll();
                     }
                 }
-            });
+            })
+            .when('/404', {
+                templateUrl: '404.html'
+            })
+            .otherwise('/404');
     })
     .config(function (ngToastProvider) {
         ngToastProvider.configure({

@@ -5,11 +5,9 @@ angular.module('ruben-radar')
         });
 
         $scope.compareChosenRadars = function () {
-            var selectedIds = _($scope.closedRadars)
-                .filter('selected')
-                .map('id');
-
-            $location.path('/radars/compare').search({'radars': selectedIds.join(',')});
+            var selectedRadars = _.filter($scope.closedRadars, 'selected');
+            var selectedRadarIds = _.map(selectedRadars, 'id');
+            $location.path('/radars/compare').search({'radars': selectedRadarIds.join(',')});
         };
     })
 ;
