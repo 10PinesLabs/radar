@@ -14,7 +14,7 @@ angular.module('ruben-radar')
         };
 
         self.getAll = function getAll() {
-            return Radar.all();
+            return Radar.query().$promise;
         };
 
         self.getResultsForMany = function getResultsForMany(radarIds) {

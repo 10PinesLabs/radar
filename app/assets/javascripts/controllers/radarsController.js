@@ -1,10 +1,11 @@
 angular.module('ruben-radar')
     .controller('RadarsController', function ($scope, $location, _, radars) {
-        $scope.radars = radars;
+        $scope.closedRadars = _.filter(radars, function (radar) {
+            return !radar.active;
+        });
 
         $scope.compareChosenRadars = function () {
-            var selectedIds = _(radars)
-                .filter('active')
+            var selectedIds = _($scope.closedRadars)
                 .filter('selected')
                 .map('id');
 
