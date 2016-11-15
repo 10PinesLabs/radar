@@ -9,5 +9,4 @@ angular.module('ruben-radar')
             var selectedRadarIds = _.map(selectedRadars, 'id');
             $location.path('/radars/compare').search({'radars': selectedRadarIds.join(',')});
         };
-    })
-;
+    });

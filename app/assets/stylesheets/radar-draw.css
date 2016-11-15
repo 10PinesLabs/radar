@@ -4,12 +4,12 @@
     justify-content: center;
 }
 
-draw-radar {
+draw-radar, radar-comparision {
     flex-grow: 1;
 }
 
 @media screen and (min-width: 600px) {
-    draw-radar {
+    draw-radar, radar-comparision {
         max-width: 75%;
     }
     text.legend {

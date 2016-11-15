@@ -17,8 +17,7 @@ angular.module('ruben-radar')
                 var strategy = new ShowRadarStrategy(scope.result);
                 var config = _.merge(defaultConfig, scope);
                 var radarSize = new Vector2D(500, 500);
-                new RadarChart(radarSize, config.steps, config.maxValue)
-                    .draw(element[0], strategy);
+                new RadarChart(radarSize, config.steps, config.maxValue).draw(element[0], strategy);
             }
         };
     });
