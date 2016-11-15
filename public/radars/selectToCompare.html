@@ -6,33 +6,35 @@
             </div>
         </md-toolbar>
 
-        <div layout="column" md-whiteframe="3">
-            <div layout-margin class="comparision-container">
-                <div class="comparision-list">
-                    <md-toolbar class="comparision-title">
-                        <div class="md-toolbar-tools">Radar antes</div>
-                    </md-toolbar>
-                    <div class="comparision-item-list" md-whiteframe="3">
-                        <md-radio-group layout-margin class="options-container" ng-model="beforeRadar">
-                            <md-radio-button class="options md-primary" ng-repeat="radar in closedRadars"
-                                             ng-value="radar">
-                                {{radar.description}} ({{radar.created_at | date}})
-                            </md-radio-button>
-                        </md-radio-group>
+        <div layout-padding layout="column" md-whiteframe="3">
+            <div>
+                <div layout="row" class="comparision-container" md-whiteframe="2">
+                    <div class="comparision-list">
+                        <md-toolbar class="comparision-title md-primary md-hue-1">
+                            <div class="md-toolbar-tools">Radar antes</div>
+                        </md-toolbar>
+                        <md-content class="comparision-item-list">
+                            <md-radio-group layout-margin class="options-container" ng-model="beforeRadar">
+                                <md-radio-button class="options md-primary" ng-repeat="radar in closedRadars"
+                                                 ng-value="radar">
+                                    {{radar.description}} ({{radar.created_at | date}})
+                                </md-radio-button>
+                            </md-radio-group>
+                        </md-content>
                     </div>
-                </div>
-
-                <div class="comparision-list">
-                    <md-toolbar class="comparision-title">
-                        <div class="md-toolbar-tools"><span>Radar después</span></div>
-                    </md-toolbar>
-                    <div class="comparision-item-list" md-whiteframe="3">
-                        <md-radio-group layout-margin class="options-container" ng-model="afterRadar">
-                            <md-radio-button class="options md-primary" ng-repeat="radar in closedRadars"
-                                             ng-value="radar">
-                                {{radar.description}} ({{radar.created_at | date}})
-                            </md-radio-button>
-                        </md-radio-group>
+                    <md-divider></md-divider>
+                    <div class="comparision-list">
+                        <md-toolbar class="comparision-title md-primary md-hue-1">
+                            <div class="md-toolbar-tools"><span>Radar después</span></div>
+                        </md-toolbar>
+                        <md-content class="comparision-item-list">
+                            <md-radio-group layout-margin class="options-container" ng-model="afterRadar">
+                                <md-radio-button class="options md-primary" ng-repeat="radar in closedRadars"
+                                                 ng-value="radar">
+                                    {{radar.description}} ({{radar.created_at | date}})
+                                </md-radio-button>
+                            </md-radio-group>
+                        </md-content>
                     </div>
                 </div>
             </div>
