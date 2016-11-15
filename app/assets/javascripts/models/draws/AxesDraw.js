@@ -34,15 +34,11 @@ angular.module('ruben-radar')
                     .attr("y2", function (axis, axisNumber) {
                         return radarDraw.lastPointFor(axisNumber).y;
                     })
-                    .attr("class", "line")
-                    .style("stroke", "grey")
-                    .style("stroke-width", "1px");
+                    .attr("class", "line");
 
                 axis.append("text")
                     .attr("class", "legend")
                     .text(self.textFor)
-                    .style("font-family", "sans-serif")
-                    .attr("text-anchor", "middle")
                     .attr("dy", "1.5em")
                     .attr("x", function (axis, axisNumber) {
                         return self.textPosition(radarDraw, axisNumber).x;

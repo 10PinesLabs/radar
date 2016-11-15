@@ -39,9 +39,8 @@ angular.module('ruben-radar')
             self.addHoverLogic = function (mainCanvasSvg, polygonsSvg) {
                 polygonsSvg
                     .on('mouseover', function () {
-                        var selectedPolygon = "polygon." + d3.select(this).attr("class");
                         mainCanvasSvg.selectAll("polygon").transition(200).style("fill-opacity", 0.1);
-                        mainCanvasSvg.selectAll(selectedPolygon).transition(200).style("fill-opacity", .7);
+                        d3.select(this).transition(200).style("fill-opacity", .7);
                     })
                     .on('mouseout', function () {
                         mainCanvasSvg.selectAll("polygon").transition(200).style("fill-opacity", self.polygonOpacity());
@@ -50,16 +49,18 @@ angular.module('ruben-radar')
 
             self.addCirclesHoverLogic = function (mainCanvasSvg, vertexesSvg, tooltip) {
                 vertexesSvg
-                    .on('mouseover', function (axis_result) {
+                    .on('mouseover', function () {
                         var newX = parseFloat(d3.select(this).attr('cx')) - 10;
                         var newY = parseFloat(d3.select(this).attr('cy')) - 5;
                         tooltip.attr('x', newX).attr('y', newY)
                             .text(d3.select(this).attr('value'))
                             .transition(200).style('opacity', 1);
 
-                        var selectedPolygon = "polygon." + d3.select(this).attr("class");
-                        mainCanvasSvg.selectAll("polygon").transition(200).style("fill-opacity", 0.1);
-                        mainCanvasSvg.selectAll(selectedPolygon).transition(200).style("fill-opacity", .7);
+                        var seriesSelector = ".series-" + d3.select(this).attr("series");
+                        console.log(seriesSelector);
+                        mainCanvasSvg.selectAll(".radar-polygon").transition(200).style("fill-opacity", 0.1);
+                        mainCanvasSvg.selectAll(seriesSelector).selectAll(".radar-polygon")
+                            .transition(200).style("fill-opacity", .7);
                     })
                     .on('mouseout', function () {
                         tooltip.transition(200).style('opacity', 0);
@@ -69,9 +70,7 @@ angular.module('ruben-radar')
 
             self.createTooltip = function (gElement, radarDraw) {
                 return gElement.append('text')
-                    .style('opacity', 0)
-                    .style('font-family', 'sans-serif')
-                    .style('font-size', '13px')
+                    .attr("class", "vertex-tooltip")
                     .attr("transform", "translate" + radarDraw.center.stringOrderedPair());
             };
 
@@ -83,7 +82,8 @@ angular.module('ruben-radar')
                                 .data(self.axes).enter()
                                 .append("svg:circle")
                                 .attr("transform", "translate" + radarDraw.center.stringOrderedPair())
-                                .attr("class", "radar-chart-serie" + series)
+                                .attr("class", "radar-vertex")
+                                .attr("series", series)
                                 .attr('r', self.circleRadius(radarDraw))
                                 .attr("alt", function (axis) {
                                     return result.roundedValueFor(axis);
@@ -100,7 +100,7 @@ angular.module('ruben-radar')
                                 .attr("value", function (axis) {
                                     return result.roundedValueFor(axis);
                                 })
-                                .style("fill", self.colorSet(series)).style("fill-opacity", .9);
+                                .style("fill", self.colorSet(series));
                         self.addCirclesHoverLogic(mainCanvas, vertexesSvg, tooltip);
                     });
                 };
@@ -109,11 +109,11 @@ angular.module('ruben-radar')
                 var polygonsSvg =
                     mainCanvasSvg.selectAll(".nodes")
                         .data(self.results).enter()
-                        .append("polygon")
-                        .attr("class", function (_, series) {
-                            return "radar-chart-serie" + series;
+                        .append("g").attr("class", function (_, series) {
+                            return "series-" + series;
                         })
-                        .style("stroke-width", "2px")
+                        .append("polygon")
+                        .attr("class", "radar-polygon")
                         .style("stroke", function (_, series) {
                             return self.colorSet(series);
                         })

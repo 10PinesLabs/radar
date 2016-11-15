@@ -22,3 +22,39 @@ draw-radar, radar-comparision {
         font-size: 2em;
     }
 }
+
+.axis .line {
+    stroke: grey;
+    stroke-width: 1px;
+}
+
+.axis .legend {
+    font-family: sans-serif;
+    text-anchor: middle;
+}
+
+.radar-polygon {
+    stroke-width: 2px;
+}
+
+.vertex-tooltip {
+    font-family: sans-serif;
+    font-size: 13px;
+    opacity: 0;
+}
+
+.radar-vertex {
+    fill-opacity :.9;
+}
+
+.step-union-polygon {
+    stroke : grey;
+    stroke-opacity: 0.75;
+    stroke-width: 0.3px;
+}
+
+.scale .legend {
+    font-family: sans-serif;
+    font-size: 10px;
+    fill: #737373;
+}

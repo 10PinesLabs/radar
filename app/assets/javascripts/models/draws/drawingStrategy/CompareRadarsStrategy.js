@@ -15,7 +15,7 @@ angular.module('ruben-radar')
             };
 
             self.results = function () {
-                return [beforeResult, afterResult];
+                return [afterResult, beforeResult];
             };
         };
     });

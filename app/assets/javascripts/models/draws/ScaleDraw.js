@@ -2,7 +2,7 @@
  * Created by pino on 27/10/16.
  */
 angular.module('ruben-radar')
-    .factory('ScaleDraw', function ScaleDraw(Vector2D) {
+    .factory('ScaleDraw', function ScaleDraw() {
         return function (amountOfSteps, maxValue) {
             var self = this;
             self.amountOfSteps = amountOfSteps;
@@ -21,44 +21,41 @@ angular.module('ruben-radar')
             };
 
             self.textOffset = function (radarDraw, axis) {
-                return new radarDraw.versorForAxis(axis)
-                    .rotateByRightAngle().scale(radarDraw.radius / 25);
+                return new radarDraw.versorForAxis(axis).rotateByRightAngle().scale(radarDraw.radius / 25);
             };
 
-            self.drawScaleText = function (mainCanvasSvg, radarDraw) {
+            self.drawScaleText = function (scaleSvg, radarDraw) {
                 var steps = _.range(0, self.amountOfSteps);
                 var axes = _.range(0, radarDraw.amountOfAxis);
                 axes.forEach(function (axis) {
-                    mainCanvasSvg.selectAll(".levels")
+                    scaleSvg.selectAll(".levels")
                         .data(steps).enter()
                         .append("svg:text")
+                        .attr("class", "legend")
                         .attr("x", function (step){
                             return radarDraw.pointFor(axis, step).x;
                         })
                         .attr("y", function (step) {
                             return radarDraw.pointFor(axis, step).y;
                         })
-                        .attr("class", "legend")
-                        .style("font-family", "sans-serif")
-                        .style("font-size", "10px")
-                        .attr("transform", "translate" +
-                            radarDraw.center.plus(self.textOffset(radarDraw, axis)).stringOrderedPair())
-                        .attr("fill", "#737373")
                         .text(function (step) {
                             return (step + 1) * self.valuePerStep();
-                        });
+                        })
+                        .attr("transform", "translate" +
+                            radarDraw.center.plus(self.textOffset(radarDraw, axis)).stringOrderedPair());
                 });
 
 
             };
 
-            self.drawStepUnionPolygons = function (mainCanvasSvg, radarDraw) {
+            self.drawStepUnionPolygons = function (scaleSvg, radarDraw) {
                 var steps = _.range(0, self.amountOfSteps);
                 var axes = _.range(0, radarDraw.amountOfAxis);
                 steps.forEach(function (step) {
-                    mainCanvasSvg.selectAll(".levels")
+                    scaleSvg.selectAll(".levels")
                         .data(axes).enter()
                         .append("svg:line")
+                        .attr("class", "step-union-polygon")
                         .attr("x1", function (axisNumber) {
                             return radarDraw.pointFor(axisNumber, step).x;
                         })
@@ -71,18 +68,14 @@ angular.module('ruben-radar')
                         .attr("y2", function (axisNumber) {
                             return radarDraw.pointFor(axisNumber + 1, step).y;
                         })
-                        .attr("class", "line")
-                        .style("stroke", "grey")
-                        .style("stroke-opacity", "0.75")
-                        .style("stroke-width", "0.3px")
                         .attr("transform", "translate" + radarDraw.center.stringOrderedPair());
-
                 });
             };
 
             self.draw = function (mainCanvasSvg, radarDraw) {
-                self.drawStepUnionPolygons(mainCanvasSvg, radarDraw);
-                self.drawScaleText(mainCanvasSvg, radarDraw);
+                var scaleSvg = mainCanvasSvg.append("g").attr("class", "scale");
+                self.drawStepUnionPolygons(scaleSvg, radarDraw);
+                self.drawScaleText(scaleSvg, radarDraw);
             }
         };
     });
