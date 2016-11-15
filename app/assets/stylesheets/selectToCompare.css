@@ -1,0 +1,30 @@
+.comparision-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.comparision-list {
+    flex-grow: 1;
+}
+
+.comparision-item-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.options-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.comparision-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
