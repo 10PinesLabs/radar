@@ -113,13 +113,13 @@ angular.module('ruben-radar')
                         })
                         .append("polygon")
                         .attr("class", "radar-polygon")
-                        .style("stroke", function (_, index) {
+                        .style("stroke", function (result, index) {
                             return self.colorSet(index);
                         })
                         .attr("points", function (radarResult) {
                             return self.stringPointsForAnswers(radarResult, radarDraw);
                         })
-                        .style("fill", function (_, index) {
+                        .style("fill", function (result, index) {
                             return self.colorSet(index);
                         })
                         .style("fill-opacity", self.polygonOpacity())
