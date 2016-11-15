@@ -3,10 +3,6 @@ angular.module('ruben-radar')
         return function (radarResult) {
             var self = this;
 
-            self.textFor = function (axis) {
-                return "" + radarResult.roundedValueFor(axis);
-            };
-
             self.axes = function () {
                 return _.map(radarResult.axes_results, function (axis_result) {
                     return axis_result.axis;
@@ -15,6 +11,14 @@ angular.module('ruben-radar')
 
             self.results = function () {
                 return [radarResult];
+            };
+
+            self.fillAxisLegend = function (legend) {
+                legend.append("tspan")
+                    .attr("class", "value")
+                    .text(function (axis) {
+                        return radarResult.roundedValueFor(axis);
+                    });
             };
         };
     });
