@@ -42,7 +42,7 @@ angular
                 }
             })
             .when('/radars/compare', {
-                templateUrl: 'radars/compare.html',
+                templateUrl: 'radars/comparision.html',
                 controller: 'CompareRadarsController',
                 resolve: {
                     results: function ($route, RadarService) {
@@ -50,8 +50,8 @@ angular
                     }
                 }
             })
-            .when('/radars', {
-                templateUrl: 'radars/allRadars.html',
+            .when('/radars/selectToCompare', {
+                templateUrl: 'radars/selectToCompare.html',
                 controller: 'RadarsController',
                 resolve: {
                     radars: function ($route, RadarService) {
