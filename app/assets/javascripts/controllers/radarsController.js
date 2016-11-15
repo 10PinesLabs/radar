@@ -7,6 +7,9 @@ angular.module('ruben-radar')
         $scope.compareChosenRadars = function () {
             var selectedRadars = _.filter($scope.closedRadars, 'selected');
             var selectedRadarIds = _.map(selectedRadars, 'id');
-            $location.path('/radars/compare').search({'radars': selectedRadarIds.join(',')});
+            $location.path('/radars/compare').search({
+                'beforeResult': selectedRadarIds[0],
+                'afterResult': selectedRadarIds[1]
+            });
         };
     });

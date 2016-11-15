@@ -13,6 +13,12 @@ angular
             return RadarService.getRadar($route.current.params.radar_id);
         };
 
+        var getResultFromParam = function (paramName) {
+            return function ($route, RadarService) {
+                return RadarService.getResult($route.current.params[paramName]);
+            }
+        };
+
         $routeProvider
             .when('/radars/:radar_id/vote', {
                 templateUrl: 'radars/vote.html',
@@ -36,18 +42,15 @@ angular
                 controller: 'ResultsController',
                 resolve: {
                     radar: getRadar,
-                    result: function ($route, RadarService) {
-                        return RadarService.getResult($route.current.params.radar_id);
-                    }
+                    result: getResultFromParam('radar_id')
                 }
             })
             .when('/radars/compare', {
                 templateUrl: 'radars/comparision.html',
                 controller: 'CompareRadarsController',
                 resolve: {
-                    results: function ($route, RadarService) {
-                        return RadarService.getResultsForMany($route.current.params.radars.split(','));
-                    }
+                    afterResult: getResultFromParam('afterResult'),
+                    beforeResult: getResultFromParam('beforeResult')
                 }
             })
             .when('/radars/selectToCompare', {

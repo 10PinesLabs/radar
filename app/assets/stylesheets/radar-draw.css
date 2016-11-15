@@ -12,13 +12,13 @@ draw-radar, radar-comparision {
     draw-radar, radar-comparision {
         max-width: 75%;
     }
-    text.legend {
-        font-size: 1.2em;
+    .axis .legend {
+        font-size: 1.5em;
     }
 }
 
 @media screen and (max-width: 600px) {
-    text.legend {
+    .axis .legend {
         font-size: 2em;
     }
 }
@@ -29,7 +29,7 @@ draw-radar, radar-comparision {
 }
 
 .axis .legend {
-    font-family: sans-serif;
+    font-family: Roboto, sans-serif;
     text-anchor: middle;
 }
 
@@ -38,8 +38,8 @@ draw-radar, radar-comparision {
 }
 
 .vertex-tooltip {
-    font-family: sans-serif;
-    font-size: 13px;
+    font-family: Roboto, sans-serif;
+    font-size: 16px;
     opacity: 0;
 }
 
@@ -54,7 +54,7 @@ draw-radar, radar-comparision {
 }
 
 .scale .legend {
-    font-family: sans-serif;
-    font-size: 10px;
+    font-family: Roboto, sans-serif;
+    font-size: 13px;
     fill: #737373;
 }
