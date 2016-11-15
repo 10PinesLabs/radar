@@ -4,9 +4,9 @@ angular.module('ruben-radar')
             restrict: 'E',
             replace: false,
             scope: {
-                result: '=result',
-                steps: '=steps',
-                maxValue: '=maxValue'
+                result: '=',
+                steps: '=',
+                maxValue: '='
             },
             link: function (scope, element) {
                 var defaultConfig = {
