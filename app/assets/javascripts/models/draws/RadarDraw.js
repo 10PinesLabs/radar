@@ -39,9 +39,9 @@ angular.module('ruben-radar')
             };
 
             self.draw = function (mainCanvasSvg) {
-                self.components.map(function (component) {
+                self.components.forEach(function (component) {
                     component.draw(mainCanvasSvg, self);
                 });
-            }
+            };
         };
     });

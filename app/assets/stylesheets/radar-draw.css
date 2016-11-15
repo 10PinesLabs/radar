@@ -4,21 +4,57 @@
     justify-content: center;
 }
 
-draw-radar {
+draw-radar, radar-comparision {
     flex-grow: 1;
 }
 
 @media screen and (min-width: 600px) {
-    draw-radar {
+    draw-radar, radar-comparision {
         max-width: 75%;
     }
-    text.legend {
-        font-size: 1.2em;
+    .axis .legend {
+        font-size: 1.5em;
     }
 }
 
 @media screen and (max-width: 600px) {
-    text.legend {
+    .axis .legend {
         font-size: 2em;
     }
+}
+
+.axis .line {
+    stroke: grey;
+    stroke-width: 1px;
+}
+
+.axis .legend {
+    font-family: Roboto, sans-serif;
+    text-anchor: middle;
+}
+
+.radar-polygon {
+    stroke-width: 2px;
+}
+
+.vertex-tooltip {
+    font-family: Roboto, sans-serif;
+    font-size: 16px;
+    opacity: 0;
+}
+
+.radar-vertex {
+    fill-opacity :.9;
+}
+
+.step-union-polygon {
+    stroke : grey;
+    stroke-opacity: 0.75;
+    stroke-width: 0.3px;
+}
+
+.scale .legend {
+    font-family: Roboto, sans-serif;
+    font-size: 13px;
+    fill: #737373;
 }
