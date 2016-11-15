@@ -57,7 +57,6 @@ angular.module('ruben-radar')
                             .transition(200).style('opacity', 1);
 
                         var seriesSelector = ".series-" + d3.select(this).attr("series");
-                        console.log(seriesSelector);
                         mainCanvasSvg.selectAll(".radar-polygon").transition(200).style("fill-opacity", 0.1);
                         mainCanvasSvg.selectAll(seriesSelector).selectAll(".radar-polygon")
                             .transition(200).style("fill-opacity", .7);
