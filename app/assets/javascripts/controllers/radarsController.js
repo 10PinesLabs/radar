@@ -1,15 +1,61 @@
 angular.module('ruben-radar')
-    .controller('RadarsController', function ($scope, $location, _, radars) {
-        $scope.closedRadars = _.filter(radars, function (radar) {
+    .controller('RadarsController', function ($scope, $location, $filter, _, radars, ngToast) {
+        var closedRadars = _.filter(radars, function (radar) {
             return !radar.active;
         });
+        closedRadars = _.sortBy(closedRadars, 'created_at');
+
+        $scope.beforeRadar = undefined;
+        $scope.afterRadar = _.last(closedRadars);
 
         $scope.compareChosenRadars = function () {
-            var selectedRadars = _.filter($scope.closedRadars, 'selected');
-            var selectedRadarIds = _.map(selectedRadars, 'id');
-            $location.path('/radars/compare').search({
-                'beforeResult': selectedRadarIds[0],
-                'afterResult': selectedRadarIds[1]
+            if($scope.sameRadarSelected()) {
+                ngToast.danger('No se puede comparar contra el mismo radar');
+            } else {
+                $location.path('/radars/compare').search({
+                    'beforeResult': $scope.beforeRadar.id,
+                    'afterResult': $scope.afterRadar.id
+                });
+            }
+        };
+
+        var radarBeginsWith = function (searchText) {
+            var lowercaseText = angular.lowercase(searchText);
+            return function (radar) {
+                var lowercaseDescription = angular.lowercase($scope.formatRadar(radar));
+                return lowercaseDescription.indexOf(lowercaseText) === 0;
+            };
+        };
+
+        $scope.baseRadarOptions = function (searchText) {
+            return searchText ? _.filter(closedRadars, radarBeginsWith(searchText)) : closedRadars;
+        };
+
+        $scope.referenceRadarOptions = function (searchText) {
+            return _.filter($scope.baseRadarOptions(searchText), function (radar) {
+                return radar !== $scope.afterRadar;
             });
         };
+
+        $scope.removeReferenceIfEqualTo = function (radar) {
+            if(radar === $scope.beforeRadar) {
+                $scope.beforeRadar = undefined;
+            }
+        };
+
+        $scope.bothRadarsSelected = function () {
+            return _.includes(closedRadars, $scope.afterRadar) && _.includes(closedRadars, $scope.beforeRadar);
+        };
+
+        $scope.sameRadarSelected = function () {
+            return $scope.afterRadar === $scope.beforeRadar;
+        };
+
+        $scope.cannotCompareRadars = function () {
+            return !$scope.bothRadarsSelected();
+        };
+
+        $scope.formatRadar = function (radar) {
+            return radar.description + " (" + $filter('date')(radar.created_at) + ")";
+        }
     });
