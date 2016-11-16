@@ -1,6 +1,7 @@
 angular.module('ruben-radar')
     .controller('VoteController', function ($location, $scope, _, VoteService, radar, ngToast) {
         $scope.radar = radar;
+        $scope.alreadyVoted = false;
         $scope.answers = _.map(radar.axes, function (axis) {
             return {axis: axis, points: undefined};
         });
@@ -15,7 +16,7 @@ angular.module('ruben-radar')
         $scope.submit = function submit() {
             var vote = VoteService.newVote(radar, $scope.answers);
             VoteService.createVote(vote).then(function () {
-                $location.path('/successfulVote');
+                $scope.alreadyVoted = true;
             }).catch(function (errors) {
                 _.forEach(errors, function(error){
                     ngToast.danger(error);

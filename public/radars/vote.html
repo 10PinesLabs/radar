@@ -7,7 +7,7 @@
         </md-toolbar>
 
         <div layout-padding layout="column" md-whiteframe="3">
-            <div ng-if="radar.active">
+            <div ng-if="radar.active && !alreadyVoted">
                 <div layout-margin class="answer-container" ng-repeat="answer in answers">
                     <h2 class="axis-description">{{answer.axis.description}}</h2>
                     <md-radio-group class="input-group point-options-container" ng-model="answer.points">
@@ -21,6 +21,7 @@
                     <md-button ng-disabled="!allAxesAnswered()" ng-click="submit()" class="md-raised md-accent">Votar</md-button>
                 </div>
             </div>
+            <ng-include ng-if="alreadyVoted" src="'radars/successfulVote.html'"></ng-include>
             <div ng-if="!radar.active">
                 <div layout-margin>
                     <p>
