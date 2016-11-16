@@ -34,9 +34,6 @@ angular
                     radar: getRadar
                 }
             })
-            .when('/successfulVote', {
-                templateUrl: 'radars/successfulVote.html'
-            })
             .when('/radars/:radar_id/results', {
                 templateUrl: 'radars/results.html',
                 controller: 'ResultsController',
