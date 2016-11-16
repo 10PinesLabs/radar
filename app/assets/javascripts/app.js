@@ -77,5 +77,4 @@ angular
         $mdThemingProvider.theme('pine-green')
             .primaryPalette('green')
             .accentPalette('deep-orange');
-
     });
