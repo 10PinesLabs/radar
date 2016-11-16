@@ -25,8 +25,8 @@ angular.module('ruben-radar')
                 return (self.deltaValueFor(axis) >= 0) ? "positive-delta" : "negative-delta";
             };
 
-            self.glyphiconForDeltaValue = function (axis) {
-                return "glyphicon glyphicon-triangle-" + ((self.deltaValueFor(axis) >= 0) ? "top" : "bottom");
+            self.iconCodeForDeltaValue = function (axis) {
+                return (self.deltaValueFor(axis) >= 0) ? "&#xE5C7;" : "&#xE5C5;";
             };
 
             self.fillAxisLegend = function (legend) {
@@ -38,10 +38,11 @@ angular.module('ruben-radar')
                         return self.differenceFor(axis);
                     });
 
-                // legend.append("tspan")
-                //     .attr("class", function (axis) {
-                //         return self.glyphiconForDeltaValue(axis) + " " + self.classForDeltaValue(axis);
-                //     });
+                legend.append("tspan")
+                    .attr("class", function (axis) {
+                        return "material-icons " + self.classForDeltaValue(axis);
+                    })
+                    .html(self.iconCodeForDeltaValue);
             };
         };
     });
