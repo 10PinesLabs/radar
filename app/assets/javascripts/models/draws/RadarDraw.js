@@ -3,12 +3,12 @@
  */
 angular.module('ruben-radar')
     .factory('RadarDraw', function RadarDraw(Angle) {
-        return function (size, scale, axes, polygons) {
+        return function (size, scale, axes, representation) {
             var self = this;
             self.size = size;
             self.amountOfAxis = axes.count();
             self.scale = scale;
-            self.components = [scale, axes, polygons];
+            self.components = [scale, axes, representation];
 
             self.center = size.scale(1 / 2);
             self.radius = Math.min(self.center.x, self.center.y);
