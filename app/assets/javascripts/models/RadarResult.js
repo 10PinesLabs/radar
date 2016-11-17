@@ -2,7 +2,7 @@ angular.module('ruben-radar')
     .factory('RadarResult', function RadarResult(AxisResult) {
         return function (radarResultJson) {
             var self = this;
-            self.radar_id = radarResultJson.radar_id;
+            self.radar = radarResultJson.radar;
             self.axes_results = _.map(radarResultJson.axes_results, function (axis_result) {
                 return new AxisResult(axis_result);
             });

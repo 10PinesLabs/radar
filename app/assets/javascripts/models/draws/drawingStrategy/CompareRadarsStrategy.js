@@ -19,7 +19,7 @@ angular.module('ruben-radar')
 
             self.radars = function () {
                 var radars = _.map(self.results(), function (result) {
-                    return result.radar_id;
+                    return result.radar;
                 });
                 return radars;
             };
@@ -52,6 +52,10 @@ angular.module('ruben-radar')
                     .classed("positive-delta", self.hasPositiveDelta)
                     .classed("negative-delta", self.hasNegativeDelta)
                     .html(self.iconCodeForDeltaValue);
+            };
+
+            self.radarReferenceText = function (radar) {
+                return (afterResult.radar === radar) ? "Base: " : "Referencia: ";
             };
         };
     });

@@ -1,12 +1,12 @@
 angular.module('ruben-radar')
-    .factory('RadarReferenceLegend', function RadarReferenceLegend() {
+    .factory('RadarReferenceLegend', function RadarReferenceLegend($filter) {
         return function (drawingStrategy) {
             var self = this;
             self.radars = drawingStrategy.radars();
 
             var adjustSize = function (referenceSvg) {
                 var bbox = referenceSvg[0][0].getBBox();
-                var boxMeasures = (bbox.x - 10) + " " + (bbox.y - 10) + " " + (bbox.width + 220) + " " + (bbox.height + 20);
+                var boxMeasures = (bbox.x - 10) + " " + (bbox.y - 10) + " " + (bbox.width + 15) + " " + (bbox.height + 20);
                 referenceSvg.attr("viewBox", boxMeasures);
             };
 
@@ -28,24 +28,31 @@ angular.module('ruben-radar')
             };
 
             var drawTextLegend = function (referenceSvg) {
-                referenceSvg.selectAll('text')
+                var text = referenceSvg.selectAll('text')
                     .data(self.radars)
                     .enter()
                     .append("text")
+                    .classed("reference-legend", true)
                     .attr("x", 13)
                     .attr("y", function (radar, index) {
                         return index * 20 + 9;
-                    })
-                    .attr("font-size", "11px")
-                    .attr("fill", "#737373")
-                    .text(_.identity)
-                ;
+                    });
+
+                text.append("tspan")
+                    .classed("radar-reference-text", true)
+                    .text(drawingStrategy.radarReferenceText);
+
+                text.append("tspan")
+                    .classed("radar-reference-description", true)
+                    .text(function (radar) {
+                        return radar.description;
+                    });
             };
 
             self.draw = function (parentElement) {
                 var referenceSvg = d3.select(parentElement)
                     .append("svg")
-                    .classed("radar-reference-svg", true);
+                    .classed("radar-reference", true);
 
                 drawColorSquares(referenceSvg);
                 drawTextLegend(referenceSvg);

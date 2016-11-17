@@ -8,7 +8,7 @@ angular.module('ruben-radar')
             };
 
             self.radars = function () {
-                return [radarResult.radar_id];
+                return [radarResult.radar];
             };
 
             self.axes = function () {
@@ -23,6 +23,10 @@ angular.module('ruben-radar')
                 legend.append("tspan")
                     .classed("value", true)
                     .text(radarResult.roundedValueFor);
+            };
+
+            self.radarReferenceText = function (radar) {
+                return "";
             };
         };
     });
