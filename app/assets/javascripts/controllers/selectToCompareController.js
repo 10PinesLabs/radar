@@ -1,5 +1,5 @@
 angular.module('ruben-radar')
-    .controller('RadarsController', function ($scope, $location, $filter, _, radars, ngToast) {
+    .controller('selectToCompareController', function ($scope, $location, $filter, _, radars) {
         var closedRadars = _.filter(radars, function (radar) {
             return !radar.active;
         });
@@ -9,14 +9,10 @@ angular.module('ruben-radar')
         $scope.afterRadar = _.last(closedRadars);
 
         $scope.compareChosenRadars = function () {
-            if($scope.sameRadarSelected()) {
-                ngToast.danger('No se puede comparar contra el mismo radar');
-            } else {
-                $location.path('/radars/compare').search({
-                    'beforeResult': $scope.beforeRadar.id,
-                    'afterResult': $scope.afterRadar.id
-                });
-            }
+            $location.path('/radars/compare').search({
+                'beforeResult': $scope.beforeRadar.id,
+                'afterResult': $scope.afterRadar.id
+            });
         };
 
         var radarBeginsWith = function (searchText) {
@@ -45,10 +41,6 @@ angular.module('ruben-radar')
 
         $scope.bothRadarsSelected = function () {
             return _.includes(closedRadars, $scope.afterRadar) && _.includes(closedRadars, $scope.beforeRadar);
-        };
-
-        $scope.sameRadarSelected = function () {
-            return $scope.afterRadar === $scope.beforeRadar;
         };
 
         $scope.cannotCompareRadars = function () {
