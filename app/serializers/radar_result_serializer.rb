@@ -1,8 +1,9 @@
 class RadarResultSerializer < ActiveModel::Serializer
-  attributes :radar_id, :axes_results
+  has_one :radar
+  attributes :axes_results
 
-  def radar_id
-    object.id
+  def radar
+    object
   end
 
   def axes_results

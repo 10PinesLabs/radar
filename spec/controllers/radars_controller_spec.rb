@@ -10,7 +10,17 @@ RSpec.describe RadarsController, type: :controller do
   end
 
   def serialized_radar_result(radar)
-    {'radar_id' => radar.id, 'axes_results' => radar.axes.map { |axis| serialized_axis_result(axis) }}
+    {'radar' => serialized_radar(radar), 'axes_results' => radar.axes.map { |axis| serialized_axis_result(axis) }}
+  end
+
+  def serialized_radar(radar)
+    {
+        'id' => radar.id,
+        'axes' => radar.axes.map{ |axis| serialized_axis(axis)},
+        'description' => radar.description,
+        'active' => radar.active,
+        'created_at' => radar.created_at.as_json
+    }
   end
 
   context 'When requesting to create a new radar' do
@@ -78,16 +88,7 @@ RSpec.describe RadarsController, type: :controller do
     end
 
     it 'should return the radar' do
-      serialized_axes = a_radar.axes.map { |axis| {'id' => axis.id, 'description' => axis.description} }
-      serialized_radar = {
-        'id' => a_radar.id,
-        'axes' => serialized_axes,
-        'description' => a_radar.description,
-        'active' => true,
-        'created_at' => a_radar.created_at.as_json
-      }
-
-      expect(JSON.parse(response.body)).to eq serialized_radar
+      expect(JSON.parse(response.body)).to eq serialized_radar(a_radar)
     end
   end
 

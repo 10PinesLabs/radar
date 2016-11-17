@@ -18,10 +18,4 @@ angular.module('ruben-radar')
         self.getAll = function getAll() {
             return Radar.query().$promise;
         };
-
-        self.getResultsForMany = function getResultsForMany(radarIds) {
-            return Promise.all(
-                _.map(radarIds, self.getResult)
-            );
-        };
     });
