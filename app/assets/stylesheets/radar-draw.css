@@ -13,7 +13,7 @@ draw-radar, radar-comparision {
 
 @media screen and (min-width: 600px) {
     draw-radar, radar-comparision {
-        max-width: 60%;
+        max-width: 75%;
         align-items: flex-end;
     }
     .axis .legend {

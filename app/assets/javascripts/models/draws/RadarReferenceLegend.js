@@ -6,7 +6,7 @@ angular.module('ruben-radar')
 
             var adjustSize = function (referenceSvg) {
                 var bbox = referenceSvg[0][0].getBBox();
-                var boxMeasures = (bbox.x - 10) + " " + (bbox.y - 10) + " " + (bbox.width + 15) + " " + (bbox.height + 20);
+                var boxMeasures = (bbox.x - 10) + " " + (bbox.y - 10) + " " + 155 + " " + (bbox.height + 20);
                 referenceSvg.attr("viewBox", boxMeasures);
             };
 
