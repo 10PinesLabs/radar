@@ -1,5 +1,5 @@
 angular.module('ruben-radar')
-    .controller('selectToCompareController', function ($scope, $location, $filter, _, radars) {
+    .controller('SelectToCompareController', function ($scope, $location, $filter, _, radars) {
         var closedRadars = _.filter(radars, function (radar) {
             return !radar.active;
         });
