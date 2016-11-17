@@ -17,7 +17,7 @@ angular.module('ruben-radar')
             };
 
             self.textFor = function (axis) {
-                return axis.description + ": " + drawingStrategy.textFor(axis);
+                return axis.description + ": ";
             };
 
             self.draw = function (mainCanvasSvg, radarDraw) {
@@ -36,9 +36,8 @@ angular.module('ruben-radar')
                     })
                     .attr("class", "line");
 
-                axis.append("text")
+                var legend = axis.append("text")
                     .attr("class", "legend")
-                    .text(self.textFor)
                     .attr("dy", "1.5em")
                     .attr("x", function (axis, axisNumber) {
                         return self.textPosition(radarDraw, axisNumber).x;
@@ -46,6 +45,12 @@ angular.module('ruben-radar')
                     .attr("y", function (axis, axisNumber) {
                         return self.textPosition(radarDraw, axisNumber).y;
                     });
+
+                legend.append("tspan")
+                    .attr("class", "description")
+                    .text(self.textFor);
+
+                drawingStrategy.fillAxisLegend(legend);
             };
         };
     });

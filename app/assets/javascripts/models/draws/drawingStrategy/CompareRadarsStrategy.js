@@ -3,9 +3,12 @@ angular.module('ruben-radar')
         return function (beforeResult, afterResult) {
             var self = this;
 
-            self.textFor = function (axis) {
-                var valueDifference = afterResult.valueFor(axis) - beforeResult.valueFor(axis);
-                return parseFloat(valueDifference).toFixed(2);
+            self.deltaValueFor = function (axis) {
+                return afterResult.valueFor(axis) - beforeResult.valueFor(axis);
+            };
+
+            self.differenceFor = function (axis) {
+                return parseFloat(self.deltaValueFor(axis)).toFixed(2);
             };
 
             self.axes = function () {
@@ -16,6 +19,32 @@ angular.module('ruben-radar')
 
             self.results = function () {
                 return [afterResult, beforeResult];
+            };
+
+            self.hasPositiveDelta = function (axis) {
+                return (self.deltaValueFor(axis) >= 0);
+            };
+
+            self.hasNegativeDelta = function (axis) {
+                return !self.hasPositiveDelta(axis);
+            };
+
+            self.iconCodeForDeltaValue = function (axis) {
+                return self.hasPositiveDelta(axis) ? "&#xE5C7;" : "&#xE5C5;";
+            };
+
+            self.fillAxisLegend = function (legend) {
+                legend.append("tspan")
+                    .classed("value", true)
+                    .classed("positive-delta", self.hasPositiveDelta)
+                    .classed("negative-delta", self.hasNegativeDelta)
+                    .text(self.differenceFor);
+
+                legend.append("tspan")
+                    .classed("material-icons", true)
+                    .classed("positive-delta", self.hasPositiveDelta)
+                    .classed("negative-delta", self.hasNegativeDelta)
+                    .html(self.iconCodeForDeltaValue);
             };
         };
     });

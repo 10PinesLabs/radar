@@ -33,6 +33,14 @@ draw-radar, radar-comparision {
     text-anchor: middle;
 }
 
+.axis .legend .positive-delta {
+    fill: green;
+}
+
+.axis .legend .negative-delta {
+    fill: red;
+}
+
 .radar-polygon {
     stroke-width: 2px;
 }
