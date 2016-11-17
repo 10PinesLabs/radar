@@ -17,6 +17,13 @@ angular.module('ruben-radar')
                 });
             };
 
+            self.radars = function () {
+                var radars = _.map(self.results(), function (result) {
+                    return result.radar_id;
+                });
+                return radars;
+            };
+
             self.results = function () {
                 return [afterResult, beforeResult];
             };

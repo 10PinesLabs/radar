@@ -3,6 +3,14 @@ angular.module('ruben-radar')
         return function (radarResult) {
             var self = this;
 
+            self.textFor = function (axis) {
+                return "" + radarResult.roundedValueFor(axis);
+            };
+
+            self.radars = function () {
+                return [radarResult.radar_id];
+            };
+
             self.axes = function () {
                 return _.map(radarResult.axes_results, 'axis');
             };

@@ -1,5 +1,5 @@
 angular.module('ruben-radar')
-    .factory('RadarChart', function RadarChart(ScaleDraw, RadarDraw, PolygonsDraw, AxesDraw) {
+    .factory('RadarChart', function RadarChart(ScaleDraw, RadarDraw, PolygonsDraw, AxesDraw, RadarReferenceLegend) {
         return function (radarSize, steps, maxValue) {
             var drawMainCanvas = function (parentElement) {
                 return d3.select(parentElement)
@@ -17,7 +17,9 @@ angular.module('ruben-radar')
                 var scaleDraw = new ScaleDraw(steps, maxValue);
                 var axesDraw = new AxesDraw(strategy);
                 var polygonsDraw = new PolygonsDraw(strategy);
+                var radarReferenceLegend = new RadarReferenceLegend(strategy);
                 var radarDraw = new RadarDraw(radarSize, scaleDraw, axesDraw, polygonsDraw);
+                radarReferenceLegend.draw(parentElement);
                 var mainCanvasSvg = drawMainCanvas(parentElement);
                 radarDraw.draw(mainCanvasSvg);
                 adjustSize(mainCanvasSvg);
