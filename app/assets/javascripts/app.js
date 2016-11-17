@@ -52,7 +52,7 @@ angular
             })
             .when('/radars/selectToCompare', {
                 templateUrl: 'radars/selectToCompare.html',
-                controller: 'RadarsController',
+                controller: 'SelectToCompareController',
                 resolve: {
                     radars: function ($route, RadarService) {
                         return RadarService.getAll();
