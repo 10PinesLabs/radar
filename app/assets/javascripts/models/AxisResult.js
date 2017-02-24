@@ -12,5 +12,12 @@ angular.module('ruben-radar')
             self.isFor = function (axis) {
                 return self.axis.description === axis.description;
             };
+
+            self.concentrationPoints = function () {
+                var concentrationPoints = _.mapValues(_.groupBy(self.points, _.identity), _.size);
+                return _.map(_.toPairs(concentrationPoints), function (pair) {
+                    return { value: _.first(pair), quantity: _.last(pair) };
+                });
+            };
         };
     });

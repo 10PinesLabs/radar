@@ -14,8 +14,18 @@ angular.module('ruben-radar')
                 return axis_result ? axis_result.pointsAverage() : 0;
             };
 
+            self.concentrationPointsPerAxis = function () {
+                return _.map(self.axes_results, function (axis_result) {
+                    return axis_result.concentrationPoints();
+                });
+            };
+
             self.roundedValueFor = function (axis) {
                 return parseFloat(self.valueFor(axis)).toFixed(2);
-            }
+            };
+
+            self.maxConcentratedQuantity = function () {
+                return _(self.concentrationPointsPerAxis()).flatten().map('quantity').max();
+            };
         };
     });
