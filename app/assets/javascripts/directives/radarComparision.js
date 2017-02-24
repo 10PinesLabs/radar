@@ -1,5 +1,5 @@
 angular.module('ruben-radar')
-    .directive('radarComparision', function (d3, RadarChart, Vector2D, CompareRadarsStrategy, ConcentrationPoints) {
+    .directive('radarComparision', function (d3, RadarChart, Vector2D, CompareRadarsStrategy, PolygonsDraw) {
         return {
             restrict: 'E',
             replace: false,
@@ -16,7 +16,7 @@ angular.module('ruben-radar')
                     steps: 5,
                     maxValue: 5,
 
-                    Representation: ConcentrationPoints
+                    Representation: PolygonsDraw
                 };
 
                 var strategy = new CompareRadarsStrategy(scope.beforeResult, scope.afterResult);

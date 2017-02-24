@@ -14,7 +14,7 @@ angular.module('ruben-radar')
             };
 
             self.concentrationPoints = function () {
-                var concentrationPoints = _.mapValues(_.groupBy(self.points, _.identity()), _.size);
+                var concentrationPoints = _.mapValues(_.groupBy(self.points, _.identity), _.size);
                 return _.map(_.toPairs(concentrationPoints), function (pair) {
                     return { value: _.first(pair), quantity: _.last(pair) };
                 });

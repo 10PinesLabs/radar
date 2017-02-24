@@ -1,5 +1,5 @@
 angular.module('ruben-radar')
-    .directive('drawRadar', function (d3, RadarChart, Vector2D, ShowRadarStrategy, ConcentrationPoints) {
+    .directive('drawRadar', function (d3, RadarChart, Vector2D, ShowRadarStrategy, PolygonsDraw) {
         return {
             restrict: 'E',
             replace: false,
@@ -9,20 +9,20 @@ angular.module('ruben-radar')
                 steps: '=',
                 maxValue: '=',
 
-                Representation: '='
+                representation: '='
             },
             link: function (scope, element) {
                 var defaultConfig = {
                     steps: 5,
                     maxValue: 5,
 
-                    Representation: ConcentrationPoints
+                    representation: PolygonsDraw
                 };
 
                 var strategy = new ShowRadarStrategy(scope.result);
                 var config = _.merge(defaultConfig, scope);
                 var radarSize = new Vector2D(500, 500);
-                new RadarChart(radarSize, config.steps, config.maxValue, config.Representation).draw(element[0], strategy);
+                new RadarChart(radarSize, config.steps, config.maxValue, config.representation).draw(element[0], strategy);
             }
         };
     });

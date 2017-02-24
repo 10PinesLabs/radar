@@ -39,7 +39,10 @@ angular
                 controller: 'ResultsController',
                 resolve: {
                     radar: getRadar,
-                    result: getResultFromParam('radar_id')
+                    result: getResultFromParam('radar_id'),
+                    draw: function ($route) {
+                        return $route.current.params['draw'];
+                    }
                 }
             })
             .when('/radars/compare', {
