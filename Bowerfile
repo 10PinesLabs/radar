@@ -1,18 +1,19 @@
 # A sample Bowerfile
 # Check out https://github.com/42dev/bower-rails#ruby-dsl-configuration for more options
 
-asset 'angular', '1.5.8'
+asset 'angular', '1.6.3'
 asset 'bootstrap', '3.2.0'
-asset 'angular-animate', '1.5.8'
-asset 'angular-cookies', '1.5.8'
-asset 'angular-resource', '1.5.8'
-asset 'angular-route', '1.5.8'
-asset 'angular-sanitize', '1.5.8'
-asset 'angular-touch', '1.5.8'
+asset 'angular-animate', '1.6.3'
+asset 'angular-cookies', '1.6.3'
+asset 'angular-resource', '1.6.3'
+asset 'angular-route', '1.6.3'
+asset 'angular-sanitize', '1.6.3'
+asset 'angular-touch', '1.6.3'
 asset 'lodash', '4.16.2'
 asset 'angular-material', '1.1.1'
 asset 'ngToast', 'ngtoast#2.0.0'
 asset 'd3', '3.5.17'
 asset 'angular-locale_es-es', "*"
 
-resolution 'angular', '1.5.8'
+resolution 'angular', '1.6.3'
+resolution 'angular-sanitize', '1.6.3'
