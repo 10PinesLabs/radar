@@ -8,7 +8,11 @@
 
         <div layout-padding layout="column" md-whiteframe="3">
             <div layout-margin class="radar-container" ng-repeat="radar in radars">
-                <h2 class="axis-description">{{radar.description}}</h2>
+                <p>
+                    <a href="#!/radars/{{radar.id}}/vote">{{radar.description}}</a>
+                    <p ng-if="!radar.active">(cerrado)</p>
+                </p>
+
             </div>
         </div>
     </md-content>

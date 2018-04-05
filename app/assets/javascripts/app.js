@@ -27,7 +27,7 @@ angular
                 templateUrl: 'radars/home.html',
                 controller: 'HomeController',
                 resolve: {
-                    radar: getAll
+                    radars: getAll
                 }
             })
             .when('/radars/:radar_id/vote', {
