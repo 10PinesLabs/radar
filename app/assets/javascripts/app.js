@@ -66,7 +66,8 @@ angular
                 templateUrl: '404.html'
             })
             .when('/crearRadar', {
-                templateUrl: 'radars/radarCreator.html'
+                templateUrl: 'radars/radarCreator.html',
+                controller: 'RadarCreatorController'
             })
             .otherwise('/404');
     })
