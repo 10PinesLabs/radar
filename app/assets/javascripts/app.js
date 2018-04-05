@@ -23,7 +23,7 @@ angular
         };
 
         $routeProvider
-            .when('/radars/home', {
+            .when('/', {
                 templateUrl: 'radars/home.html',
                 controller: 'HomeController',
                 resolve: {
