@@ -65,6 +65,9 @@ angular
             .when('/404', {
                 templateUrl: '404.html'
             })
+            .when('/crearRadar', {
+                templateUrl: 'radars/radarCreator.html'
+            })
             .otherwise('/404');
     })
     .config(function (ngToastProvider) {
