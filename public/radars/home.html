@@ -1,0 +1,15 @@
+<div class="box-container">
+    <md-content class="main-box" layout-padding md-theme="pine-green">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <span>Radares</span>
+            </div>
+        </md-toolbar>
+
+        <div layout-padding layout="column" md-whiteframe="3">
+            <div layout-margin class="radar-container" ng-repeat="radar in radars">
+                <h2 class="axis-description">{{radar.description}}</h2>
+            </div>
+        </div>
+    </md-content>
+</div>

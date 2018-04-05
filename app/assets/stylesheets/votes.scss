@@ -39,6 +39,11 @@ p {
   flex-direction: column;
 }
 
+.radar-container {
+  display: flex;
+  flex-direction: column;
+}
+
 .point-options-container {
   display: flex;
   max-width: 270px;
