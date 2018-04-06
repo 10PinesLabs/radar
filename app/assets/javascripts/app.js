@@ -62,12 +62,12 @@ angular
                     }
                 }
             })
-            .when('/404', {
-                templateUrl: '404.html'
-            })
             .when('/createRadar', {
                 templateUrl: 'radars/radarCreator.html',
                 controller: 'RadarCreatorController'
+            })
+            .when('/404', {
+                templateUrl: '404.html'
             })
             .otherwise('/404');
     })
