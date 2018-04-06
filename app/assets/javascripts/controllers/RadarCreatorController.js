@@ -16,7 +16,7 @@ angular.module('ruben-radar')
             });
         };
 
-        newRadar = function ($scope) {
+        var newRadar = function ($scope) {
             return {
                 description: $scope.radarDescription,
                 axes: $scope.axes
