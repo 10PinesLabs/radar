@@ -16,8 +16,7 @@
             <div class="draw-radar-container">
                 <draw-radar result="result" representation="selectedRepresentation | representationStrategy"></draw-radar>
             </div>
-            <a href="#" data-ng-click="downloadAction('pdf')"> Descargar PDF</a><br/><br/>
-            <a href="#" data-ng-click="downloadAction('csv')"> Descargar CSV</a><br/><br/>
+            <button type="button" ng-click="downloadPDF()">Descargar PDF</button>
         </div>
 
     </md-content>

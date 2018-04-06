@@ -3,5 +3,13 @@ angular.module('ruben-radar')
         $scope.radar = radar;
         $scope.result = result;
         $scope.selectedRepresentation = draw || "circles";
+        $scope.downloadPDF = function () {
+            var pdf = new jsPDF();
+            pdf.text('Los resultados', 10, 10);
+
+            pdf.save($scope.radar.description());
+        };
+
+
     });
 
