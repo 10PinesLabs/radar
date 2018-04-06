@@ -1,9 +1,4 @@
-function newRadar($scope) {
-    return {
-        description: $scope.radarDescription,
-        axes: $scope.axes
-    };
-}
+
 
 angular.module('ruben-radar')
     .controller('RadarCreatorController', function ($scope, _, RadarService, ngToast) {
@@ -20,4 +15,11 @@ angular.module('ruben-radar')
                 ngToast.create('Se ha creado el radar con éxito');
             });
         };
+
+        newRadar = function ($scope) {
+            return {
+                description: $scope.radarDescription,
+                axes: $scope.axes
+            };
+        }
     });
