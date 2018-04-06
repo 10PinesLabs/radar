@@ -23,5 +23,9 @@ angular.module('ruben-radar')
                 });
             });
         };
+
+        $scope.goBack = function goBack() {
+            
+        }
     })
 ;
