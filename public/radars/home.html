@@ -1,0 +1,25 @@
+<div class="box-container">
+    <md-content class="main-box" layout-padding md-theme="pine-green">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <span>Ruben Radar: Radares</span>
+            </div>
+        </md-toolbar>
+
+        <div layout-padding layout="column" md-whiteframe="3">
+            <div layout-margin class="radar-container" ng-repeat="radar in radars">
+                <div ng-if="radar.active">
+                    <p>
+                        <a href="#!/radars/{{radar.id}}/vote">{{radar.description}}</a>
+                    </p>
+                </div>
+                <div ng-if="!radar.active">
+                    <p style="color:grey">
+                        <a href="#!/radars/{{radar.id}}/results">{{radar.description}}</a> (cerrado)
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </md-content>
+</div>

@@ -18,8 +18,18 @@ angular
                 return RadarService.getResult($route.current.params[paramName]);
             }
         };
+        var getAll = function ($route, RadarService) {
+            return RadarService.getAll();
+        };
 
         $routeProvider
+            .when('/', {
+                templateUrl: 'radars/home.html',
+                controller: 'HomeController',
+                resolve: {
+                    radars: getAll
+                }
+            })
             .when('/radars/:radar_id/vote', {
                 templateUrl: 'radars/vote.html',
                 controller: 'VoteController',
