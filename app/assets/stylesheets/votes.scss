@@ -74,6 +74,12 @@ p {
   justify-content: flex-end;
 }
 
+.button-row-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
 .surprised-radar-container {
   display: flex;
   flex-direction: column;
