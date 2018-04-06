@@ -1,3 +1,10 @@
+function newRadar($scope) {
+    return {
+        description: $scope.radarDescription,
+        axes: $scope.axes
+    };
+}
+
 angular.module('ruben-radar')
     .controller('RadarCreatorController', function ($scope, _, RadarService, ngToast) {
         $scope.radarDescription = '';
@@ -5,21 +12,11 @@ angular.module('ruben-radar')
         $scope.axes = [];
 
         $scope.addAxes = function addAxis() {
-            $scope.axes.push($scope.axesInput);
+            $scope.axes.push({description: $scope.axesInput});
         };
 
         $scope.createRadar = function createRadar() {
-            axes = [];
-            for (i = 0; i < $scope.axes.length; i++) {
-                axes.push({description: $scope.axes[i]});
-            }
-
-            newRadar = {
-                description: $scope.radarDescription,
-                axes: axes
-            };
-
-            RadarService.createRadar(newRadar).then(function () {
+            RadarService.createRadar(newRadar($scope)).then(function () {
                 ngToast.create('Se ha creado el radar con éxito');
             });
         };
