@@ -24,8 +24,8 @@ angular.module('ruben-radar')
             });
         };
 
-        $scope.goBack = function goBack() {
-            
+        $scope.goBack = function goBack(path) {
+            $location.path(path)
         }
     })
 ;
