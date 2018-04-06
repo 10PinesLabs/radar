@@ -1,11 +1,11 @@
 angular.module('ruben-radar')
     .controller('RadarCreatorController', function ($scope, _, RadarService, ngToast) {
         $scope.description = '';
-        $scope.axesInput = '';
+        $scope.axisInput = '';
         $scope.axes = [];
 
-        $scope.addAxes = function addAxis() {
-            $scope.axes.push({description: $scope.axesInput});
+        $scope.addAxis = function addAxis() {
+            $scope.axes.push({description: $scope.axisInput});
         };
 
         $scope.createRadar = function createRadar() {
