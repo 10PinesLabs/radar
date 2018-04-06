@@ -3,6 +3,7 @@ Rails.application.routes.draw do
     resources :votes, only: [:create]
     member do
       get :result
+      post :create
       post :close
     end
   end

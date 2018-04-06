@@ -29,6 +29,7 @@ class RadarsController < ApplicationController
   end
 
   private
+
   def create_axis(axis)
     Axis.new(description: axis.require(:description))
   end
