@@ -16,8 +16,17 @@ angular.module('ruben-radar')
         };
 
         $scope.createRadar = function createRadar() {
-            RadarService.createRadar(newRadar($scope)).then(function () {
-                ngToast.create('Se ha creado el radar con éxito');
-            });
+            if($scope.radarDescription.length === 0 || $scope.axes.length === 0){
+                ngToast.create({
+                    className: 'danger',
+                    content: 'No se puede crear un radar sin descripción ni axes.'
+                })
+            }else{
+                RadarService.createRadar(newRadar($scope)).then(function () {
+                    ngToast.create({
+                        className: 'success',
+                        content: 'Se ha creado el radar con éxito'});
+                })
+            }
         };
     });
