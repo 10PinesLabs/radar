@@ -65,7 +65,7 @@ angular
             .when('/404', {
                 templateUrl: '404.html'
             })
-            .when('/crearRadar', {
+            .when('/createRadar', {
                 templateUrl: 'radars/radarCreator.html',
                 controller: 'RadarCreatorController'
             })
