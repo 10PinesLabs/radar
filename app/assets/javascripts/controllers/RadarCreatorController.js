@@ -1,6 +1,6 @@
 angular.module('ruben-radar')
     .controller('RadarCreatorController', function ($scope, _, RadarService, ngToast) {
-        $scope.radarDescription = '';
+        $scope.description = '';
         $scope.axesInput = '';
         $scope.axes = [];
 
@@ -9,7 +9,7 @@ angular.module('ruben-radar')
         };
 
         $scope.createRadar = function createRadar() {
-            if($scope.radarDescription.length === 0 || $scope.axes.length === 0){
+            if($scope.description.length === 0 || $scope.axes.length === 0){
                 createNgToast('danger', 'No se puede crear un radar sin descripción ni axes.');
             } else {
                 RadarService.createRadar(newRadar($scope)).then(function () {
@@ -20,7 +20,7 @@ angular.module('ruben-radar')
 
         var newRadar = function ($scope) {
             return {
-                description: $scope.radarDescription,
+                description: $scope.description,
                 axes: $scope.axes
             };
         };
