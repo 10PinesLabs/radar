@@ -5,7 +5,12 @@
     </div>
     <div ng-repeat="axis in axes">
         <div>
-            {{axis.description}},0,0,0,3,57
+            {{axis.description}}
+            {{amountOfVotesFor1(axis)}}
+            {{amountOfVotesFor2(axis)}}
+            {{amountOfVotesFor3(axis)}}
+            {{amountOfVotesFor4(axis)}}
+            {{amountOfVotesFor5(axis)}}
 
         </div>
     </div>
