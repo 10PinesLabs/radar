@@ -4,6 +4,12 @@ RSpec.describe Radar, type: :model do
   context 'When having a new radar' do
     subject { Radar.new }
 
+    context 'without a description' do
+      it 'must have a default description' do
+        expect(subject.description).to eq('Sin Nombre')
+      end
+    end
+
     context 'and you add an axis to that radar' do
       let(:an_axis) { Axis.new }
       before do
