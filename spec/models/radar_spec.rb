@@ -4,9 +4,15 @@ RSpec.describe Radar, type: :model do
   context 'When having a new radar' do
     subject { Radar.new }
 
+    context 'without a name' do
+      it 'must have a default name' do
+        expect(subject.name).to eq('Sin Nombre')
+      end
+    end
+
     context 'without a description' do
       it 'must have a default description' do
-        expect(subject.description).to eq('Sin Nombre')
+        expect(subject.description).to eq('Sin Descripción')
       end
     end
 
