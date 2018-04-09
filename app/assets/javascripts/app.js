@@ -48,13 +48,6 @@ angular
                     }
                 }
             })
-            .when('/radars/:radar_id/results/csv', {
-                templateUrl: 'radars/resultsInCSV.html',
-                controller: 'ResultsInCSVController',
-                resolve: {
-                    radar: getRadar
-                }
-            })
             .when('/radars/compare', {
                 templateUrl: 'radars/comparision.html',
                 controller: 'CompareRadarsController',
