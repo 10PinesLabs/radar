@@ -1,10 +1,7 @@
 angular.module('ruben-radar')
-    .controller('ResultsInCSVController', function ($scope, $window, _, radar) {
+    .controller('ResultsInCSVController', function ($scope, _, radar) {
         $scope.radar = radar;
         $scope.axes = radar.axes;
-        var blob = new Blob(["hola"], { type: 'text/plain' });
-            url = $window.URL || $window.webkitURL;
-        $scope.fileUrl = url.createObjectURL(blob);
 
         function answerIsOne(answer) {
             return answer.points === 1
