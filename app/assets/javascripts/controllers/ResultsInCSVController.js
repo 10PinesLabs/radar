@@ -1,11 +1,9 @@
 angular.module('ruben-radar')
-    .controller('ResultsInCSVController', function ($scope, _, radar) {
+    .controller('ResultsInCSVController', function ($scope, $window, _, radar) {
         $scope.radar = radar;
         $scope.axes = radar.axes;
 
-        function answerIsOne(answer) {
-            return answer.points === 1
-        }
+
 
 
 
