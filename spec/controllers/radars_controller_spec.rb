@@ -17,6 +17,7 @@ RSpec.describe RadarsController, type: :controller do
     {
         'id' => radar.id,
         'axes' => radar.axes.map{ |axis| serialized_axis(axis)},
+        'name' => radar.name,
         'description' => radar.description,
         'active' => radar.active,
         'created_at' => radar.created_at.as_json
@@ -30,7 +31,7 @@ RSpec.describe RadarsController, type: :controller do
 
     context 'with axes' do
       let(:radar_params) {
-        {description: 'Radar 2015',axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {description: 'Una Arista guardada'}]}
+        {name: 'Radar 2015', description: 'Radar 2015', axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {description: 'Una Arista guardada'}]}
       }
 
       it 'the request should succeed' do
