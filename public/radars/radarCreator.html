@@ -10,7 +10,7 @@
             <input type="text"
                    class="form-control"
                    placeholder="Descripción"
-                   ng-model="description">
+                   ng-model="radar.description">
         </div>
     </div>
 </div>
@@ -24,7 +24,7 @@
               height: 200px;
               overflow-y: scroll;">
             <a class="list-group-item"
-               ng-repeat="ax in axes">{{ax.description}}</a>
+               ng-repeat="axis in radar.axes">{{axis.description}}</a>
         </div>
     </div>
 </div>
@@ -45,7 +45,7 @@
         <span class="input-group-btn">
             <button class="btn btn-basic"
                     type="button"
-                    ng-disabled="axisInput.length === 0"
+                    ng-disabled="isAxisEmpty()"
                     ng-click="addAxis()">
                 Agregar
             </button>
@@ -60,7 +60,7 @@
         <button type="submit"
                 class="btn btn-success"
                 ng-click="createRadar()"
-                ng-disabled="axes.length === 0 || description.length === 0">
+                ng-disabled="radarIsInvalid()">
             Crear
         </button>
     </div>
