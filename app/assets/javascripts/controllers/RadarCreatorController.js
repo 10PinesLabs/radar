@@ -5,7 +5,11 @@ angular.module('ruben-radar')
         $scope.axes = [];
 
         $scope.addAxis = function addAxis() {
-            $scope.axes.push({description: $scope.axisInput});
+            if($scope.axisInput.length === 0){
+                createNgToast('danger', 'No se puede agregar un axis vacío.');
+            } else {
+                $scope.axes.push({description: $scope.axisInput});
+            }
         };
 
         $scope.createRadar = function createRadar() {
