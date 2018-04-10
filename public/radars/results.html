@@ -16,7 +16,7 @@
             <div class="draw-radar-container">
                 <draw-radar result="result" representation="selectedRepresentation | representationStrategy"></draw-radar>
             </div>
-            <button type="button" ng-click="downloadPDF()">Descargar PDF</button>
+            <a ng-href="{{ filePDFUrl }}" download="{{radar.description}}.pdf">Descargar PDF</a>
         </div>
 
     </md-content>

@@ -8,7 +8,7 @@ angular
         'ngToast',
         'ngResource'
     ])
-    .config(function ($routeProvider) {
+    .config(function ($routeProvider,  $compileProvider) {
         var getRadar = function ($route, RadarService) {
             return RadarService.getRadar($route.current.params.radar_id);
         };
@@ -18,6 +18,8 @@ angular
                 return RadarService.getResult($route.current.params[paramName]);
             }
         };
+
+        $compileProvider.aHrefSanitizationWhitelist(/^\s*(|blob|):/);
 
         $routeProvider
             .when('/radars/:radar_id/vote', {
