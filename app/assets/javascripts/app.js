@@ -20,6 +20,7 @@ angular
             }
         };
 
+        //For downloading csv file in resultsController
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(|blob|):/);
 
         $routeProvider
