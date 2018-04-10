@@ -6,7 +6,7 @@ angular.module('ruben-radar')
         $scope.selectedRepresentation = draw || "circles";
         var blob = new Blob([resultToCSV()], { type: 'text/plain' });
             url = $window.URL;
-        $scope.fileUrl = url.createObjectURL(blob);
+        $scope.fileCSVUrl = url.createObjectURL(blob);
 
 
         function resultToCSV() {
