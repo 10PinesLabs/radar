@@ -2,7 +2,11 @@ require 'rails_helper'
 
 RSpec.describe RadarsController, type: :controller do
   def serialized_axis(axis)
-    {'id' => axis.id, 'description' => axis.description}
+    {'id' => axis.id, 'description' => axis.description, 'answers' => axis.answers.map { |answer| serialized_answer(answer)}}
+  end
+
+  def serialized_answer(answer)
+    {'points' => answer.points, 'axis_id' => answer.axis_id}
   end
 
   def serialized_axis_result(axis)
