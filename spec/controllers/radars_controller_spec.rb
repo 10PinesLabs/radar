@@ -53,6 +53,22 @@ RSpec.describe RadarsController, type: :controller do
         expect(response).to have_http_status :bad_request
       end
     end
+
+    context 'with same name as one in the db' do
+      before do
+        post :create, radar_params
+      end
+
+      let(:radar_params) {
+        {name: 'Radar 2015', description: 'Radar 2015', axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {description: 'Una Arista guardada'}]}
+      }
+
+      it 'should be a bad request' do
+        expect(response).to have_http_status :bad_request
+      end
+
+    end
+
   end
 
   context 'When requesting to get the results of a radar' do
