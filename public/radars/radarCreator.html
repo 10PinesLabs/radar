@@ -10,6 +10,7 @@
             <input type="text"
                    class="form-control"
                    placeholder="Descripción"
+                   required
                    ng-model="radar.description">
         </div>
     </div>
@@ -63,5 +64,7 @@
                 ng-disabled="radarIsInvalid()">
             Crear
         </button>
+        <span ng-show="radarIsInvalid()">Tiene que haber una descripción y al menos un axis.</span>
+        <span ng-show="!radarIsInvalid()">Radar valido.</span>
     </div>
 </div>
