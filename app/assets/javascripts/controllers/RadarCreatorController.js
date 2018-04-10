@@ -9,6 +9,7 @@ angular.module('ruben-radar')
                 createNgToast('danger', 'No se puede agregar un axis vacío.');
             } else {
                 $scope.axes.push({description: $scope.axisInput});
+                $scope.axisInput = "";
             }
         };
 
