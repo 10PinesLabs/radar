@@ -11,7 +11,7 @@ angular.module('ruben-radar')
         };
 
         return {
-            nuevoRadar() {
+            newRadar() {
                 return new Radar();
             }
         };

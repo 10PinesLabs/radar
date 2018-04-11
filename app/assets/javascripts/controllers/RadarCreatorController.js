@@ -1,6 +1,6 @@
 angular.module('ruben-radar')
     .controller('RadarCreatorController', function ($scope, _, radarFactory, RadarService, ngToast) {
-        $scope.radar = radarFactory.nuevoRadar();
+        $scope.radar = radarFactory.newRadar();
         $scope.axisInput = '';
 
         $scope.isAxisEmpty = function isAxisEmpty() {
@@ -31,6 +31,6 @@ angular.module('ruben-radar')
                     content:'Se ha creado el radar con éxito.'
                 });
             });
-            $scope.radar = radarFactory.nuevoRadar();
+            $scope.radar = radarFactory.newRadar();
         };
     });
