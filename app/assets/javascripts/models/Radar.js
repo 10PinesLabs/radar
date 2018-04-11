@@ -2,6 +2,7 @@ angular.module('ruben-radar')
     .factory('radarFactory', function () {
 
         function Radar() {
+            this.name = '';
             this.description = '';
             this.axes = [];
         }
