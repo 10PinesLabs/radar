@@ -31,5 +31,6 @@ angular.module('ruben-radar')
                     content:'Se ha creado el radar con éxito.'
                 });
             });
+            $scope.radar = radarFactory.nuevoRadar();
         };
     });
