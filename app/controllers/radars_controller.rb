@@ -1,16 +1,12 @@
 class RadarsController < ApplicationController
 
   def create
-    if Radar.exists?(name: params.require(:name))
-      render json: {errors: 'There is a radar with that name.'}, status: :bad_request
-    else
-      axes = params.require(:axes).map { |axis| create_axis(axis) }
-      name = params.require(:name)
-      description = params.require(:description)
+    axes = params.require(:axes).map { |axis| create_axis(axis) }
+    name = params.require(:name)
+    description = params.require(:description)
 
-      radar = Radar.create!(axes: axes, name: name, description: description)
-      render json: radar, status: :created
-    end
+    radar = Radar.create!(axes: axes, name: name, description: description)
+    render json: radar, status: :created
   end
 
   def result
