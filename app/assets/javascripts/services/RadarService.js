@@ -11,6 +11,10 @@ angular.module('ruben-radar')
             });
         };
 
+        self.createRadar = function createRadar(newRadar) {
+            return Radar.create(newRadar).$promise;
+        };
+
         self.closeRadar = function closeRadar(radar) {
             return radar.$close();
         };

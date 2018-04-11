@@ -1,0 +1,96 @@
+<div class="box-container">
+    <md-content class="main-box" layout-padding md-theme="pine-green">
+
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <span>Crear Radar</span>
+            </div>
+        </md-toolbar>
+
+        <div class="row">
+            <div class="col-sm-7 center-block">
+                <div>
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Descripción"
+                           required
+                           ng-model="radar.description">
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div class="col-sm-7 center-block">
+                <div class="list-group"
+                     style="border: 1px solid darkgrey;
+                      height: 200px;
+                      overflow-y: scroll;">
+                    <a class="list-group-item"
+                       ng-repeat="axis in radar.axes">{{axis.description}}</a>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-sm-7 center-block">
+                <div class="input-axes-group">
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Nueva Arista"
+                           id="axis-input"
+                           ng-model="axisInput">
+
+                </div>
+            </div>
+            <div class="col-sm-3 center-block">
+                <span ng-show="isAxisEmpty()"
+                      class="input-group-btn">
+                    <button class="btn btn-basic"
+                            type="button"
+                            ng-disabled="isAxisEmpty()">
+                        Agregar
+                    </button>
+                </span>
+                <span ng-show="!isAxisEmpty()"
+                      class="input-group-btn">
+                    <button class="btn btn-success"
+                            type="button"
+                            ng-click="addAxis()">
+                        Agregar
+                    </button>
+                </span>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div class="col-md-offset-3 col-md-6 center-block">
+                <span ng-show="radarIsInvalid()">
+                <button type="submit"
+                        class="btn btn-basic"
+                        ng-disabled="radarIsInvalid()">
+                    Crear
+                </button>
+                    <br>
+                    <br>
+                    Tiene que haber una descripción y al menos una arista.
+                </span>
+
+                <span ng-show="!radarIsInvalid()">
+                    <button type="submit"
+                            class="btn btn-success"
+                            ng-click="createRadar()">
+                        Crear
+                    </button>
+                    <br>
+                    <br>
+                    Radar válido.
+                </span>
+            </div>
+        </div>
+    </md-content>
+</div>
