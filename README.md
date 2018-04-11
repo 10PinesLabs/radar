@@ -2,32 +2,40 @@
 
 [![CircleCI](https://circleci.com/gh/10PinesLabs/ruben-radar.svg?style=svg)](https://circleci.com/gh/10PinesLabs/ruben-radar)
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
+In order to run this app, you must install postgreSQL:
 
 ```shell
-rake doc:app
+sudo apt-get update
+sudo apt-get install postgresql postgresql-contrib libpq-dev
+```
+
+Then create the database user:
+
+```shell
+sudo -u postgres createuser -s ruben
+```
+
+And set its password, so open the console:
+
+```shell
+sudo -u postgres psql
+```
+
+The PostgreSQL console is indicated by the *postgres=#* prompt. At the PostgreSQL prompt, enter this command to set the password for the database user that you created:
+
+```shell
+postgres=# \password azucar
+```
+
+At last, grant premissions for the user like this:
+
+```shell
+postgres=# ALTER USER ruben CREATEDB;
+```
+
+If you want to grant all permissions and  owner these are the commands:
+
+```shell
+postgres=# GRANT ALL PRIVILEGES ON  DATABASE database_name to new_user;
+postgres=# ALTER DATABASE database_name owner to new_user;
 ```
