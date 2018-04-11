@@ -81,4 +81,10 @@ angular
         $mdThemingProvider.theme('pine-green')
             .primaryPalette('green')
             .accentPalette('deep-orange');
+    }).config(function($locationProvider) {
+        $locationProvider
+            .html5Mode({
+                enabled: true,
+                requireBase: false
+            });
     });
