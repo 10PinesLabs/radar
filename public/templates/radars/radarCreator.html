@@ -58,22 +58,9 @@
                 </div>
             </div>
             <div class="col-sm-3 center-block">
-                <span ng-show="isAxisEmpty()"
-                      class="input-group-btn">
-                    <button class="btn btn-basic"
-                            type="button"
-                            ng-disabled="isAxisEmpty()">
-                        Agregar
-                    </button>
-                </span>
-                <span ng-show="!isAxisEmpty()"
-                      class="input-group-btn">
-                    <button class="btn btn-success"
-                            type="button"
-                            ng-click="addAxis()">
-                        Agregar
-                    </button>
-                </span>
+                <md-button class="md-raised md-accent" ng-click="addAxis()" ng-disabled="isAxisEmpty()">
+                    Agregar
+                </md-button>
             </div>
         </div>
 
@@ -81,23 +68,15 @@
 
         <div class="row">
             <div class="col-sm-10 center-block">
-                <span ng-show="radarIsInvalid()">
-                <button type="submit"
-                        class="btn btn-basic"
-                        ng-disabled="radarIsInvalid()">
+                <md-button class="md-raised md-accent" ng-click="createRadar()" ng-disabled="radarIsInvalid()">
                     Crear
-                </button>
+                </md-button>
+                <span ng-show="radarIsInvalid()">
                     <br>
                     <br>
                     El radar tiene que tener un nombre, una descripción y al menos una arista.
                 </span>
-
                 <span ng-show="!radarIsInvalid()">
-                    <button type="submit"
-                            class="btn btn-success"
-                            ng-click="createRadar()">
-                        Crear
-                    </button>
                     <br>
                     <br>
                     Radar válido.
