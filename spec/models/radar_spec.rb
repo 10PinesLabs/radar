@@ -5,8 +5,8 @@ RSpec.describe Radar, type: :model do
     subject { Radar.new }
 
     context 'without a name' do
-      it 'must have a default name' do
-        expect(subject.name).to eq('Sin Nombre')
+      it 'must not be valid' do
+        expect(subject.valid?).to be_falsey
       end
     end
 

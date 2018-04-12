@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20180411181309) do
     t.datetime "updated_at",                              null: false
     t.boolean  "active",      default: true
     t.text     "description", default: "Sin Descripción", null: false
-    t.text     "name",        default: "Sin Nombre"
+    t.text     "name",                                    null: false
   end
 
   create_table "votes", force: :cascade do |t|
