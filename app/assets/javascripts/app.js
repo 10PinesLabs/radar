@@ -9,7 +9,7 @@ angular
         'ngResource'
     ])
 
-.config(function ($routeProvider, $compileProvider) {
+    .config(function ($routeProvider, $compileProvider) {
         var getRadar = function ($route, RadarService) {
             return RadarService.getRadar($route.current.params.radar_id);
         };
@@ -22,6 +22,8 @@ angular
 
         //For downloading csv file in resultsController
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(|blob|):/);
+        //$compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension):/);
+
 
         $routeProvider
             .when('/radars/:radar_id/vote', {
@@ -77,8 +79,8 @@ angular
             horizontalPosition: 'center',
             maxNumber: 3
         });
-    }).config(function($mdThemingProvider) {
-        $mdThemingProvider.theme('pine-green')
-            .primaryPalette('green')
-            .accentPalette('deep-orange');
-    });
+    }).config(function ($mdThemingProvider) {
+    $mdThemingProvider.theme('pine-green')
+        .primaryPalette('green')
+        .accentPalette('deep-orange');
+});
