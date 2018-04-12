@@ -39,3 +39,10 @@ If you want to grant all permissions and  owner these are the commands:
 postgres=# GRANT ALL PRIVILEGES ON  DATABASE database_name to new_user;
 postgres=# ALTER DATABASE database_name owner to new_user;
 ```
+Before running application you need to install frontend dependencies:
+
+```shell
+npm install
+rake assets:precompile
+```
+
