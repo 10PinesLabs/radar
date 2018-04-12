@@ -1,3 +1,4 @@
+throw new Error();
 angular
     .module('ruben-radar', [
         'ngRoute',
@@ -21,21 +22,21 @@ angular
 
         $routeProvider
             .when('/radars/:radar_id/vote', {
-                templateUrl: 'radars/vote.html',
+                templateUrl: 'templates/radars/vote.html',
                 controller: 'VoteController',
                 resolve: {
                     radar: getRadar
                 }
             })
             .when('/radars/:radar_id/manage', {
-                templateUrl: 'radars/manage.html',
+                templateUrl: 'templates/radars/manage.html',
                 controller: 'CloseRadarController',
                 resolve: {
                     radar: getRadar
                 }
             })
             .when('/radars/:radar_id/results', {
-                templateUrl: 'radars/results.html',
+                templateUrl: 'templates/radars/results.html',
                 controller: 'ResultsController',
                 resolve: {
                     radar: getRadar,
@@ -46,7 +47,7 @@ angular
                 }
             })
             .when('/radars/compare', {
-                templateUrl: 'radars/comparision.html',
+                templateUrl: 'templates/radars/comparision.html',
                 controller: 'CompareRadarsController',
                 resolve: {
                     afterResult: getResultFromParam('afterResult'),
@@ -54,7 +55,7 @@ angular
                 }
             })
             .when('/radars/selectToCompare', {
-                templateUrl: 'radars/selectToCompare.html',
+                templateUrl: 'templates/radars/selectToCompare.html',
                 controller: 'SelectToCompareController',
                 resolve: {
                     radars: function ($route, RadarService) {
@@ -63,7 +64,7 @@ angular
                 }
             })
             .when('/createRadar', {
-                templateUrl: 'radars/radarCreator.html',
+                templateUrl: 'templates/radars/radarCreator.html',
                 controller: 'RadarCreatorController'
             })
             .when('/404', {
