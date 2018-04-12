@@ -8,7 +8,8 @@ angular
         'ngToast',
         'ngResource'
     ])
-    .config(function ($routeProvider) {
+
+    .config(function ($routeProvider, $compileProvider) {
         var getRadar = function ($route, RadarService) {
             return RadarService.getRadar($route.current.params.radar_id);
         };
@@ -18,6 +19,10 @@ angular
                 return RadarService.getResult($route.current.params[paramName]);
             }
         };
+
+        //For downloading csv file in resultsController and going from ruben's picture to results
+        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension|blob):/);
+
 
         $routeProvider
             .when('/radars/:radar_id/vote', {
@@ -73,8 +78,8 @@ angular
             horizontalPosition: 'center',
             maxNumber: 3
         });
-    }).config(function($mdThemingProvider) {
-        $mdThemingProvider.theme('pine-green')
-            .primaryPalette('green')
-            .accentPalette('deep-orange');
-    });
+    }).config(function ($mdThemingProvider) {
+    $mdThemingProvider.theme('pine-green')
+        .primaryPalette('green')
+        .accentPalette('deep-orange');
+});
