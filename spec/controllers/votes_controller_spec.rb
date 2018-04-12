@@ -21,7 +21,7 @@ RSpec.describe VotesController, type: :controller do
       end
 
       context 'and the answers are from different radars' do
-        let(:another_radar) { create :radar }
+        let(:another_radar) { create :different_radar }
 
         it 'should return an unprocessable entity' do
           request_to_create_vote(a_radar.id, a_radar.axes + another_radar.axes)
