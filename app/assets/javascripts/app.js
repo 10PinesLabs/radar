@@ -67,6 +67,10 @@ angular
                     }
                 }
             })
+            .when('/createRadar', {
+                templateUrl: 'radars/radarCreator.html',
+                controller: 'RadarCreatorController'
+            })
             .when('/404', {
                 templateUrl: '404.html'
             })
@@ -78,8 +82,17 @@ angular
             horizontalPosition: 'center',
             maxNumber: 3
         });
-    }).config(function ($mdThemingProvider) {
-    $mdThemingProvider.theme('pine-green')
-        .primaryPalette('green')
-        .accentPalette('deep-orange');
-});
+
+    })
+    .config(function($mdThemingProvider) {
+        $mdThemingProvider.theme('pine-green')
+            .primaryPalette('green')
+            .accentPalette('deep-orange');
+    })
+    .config(function($locationProvider) {
+        $locationProvider
+            .html5Mode({
+                enabled: true,
+                requireBase: false
+            });
+    });
