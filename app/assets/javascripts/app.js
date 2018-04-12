@@ -1,4 +1,3 @@
-throw new Error();
 angular
     .module('ruben-radar', [
         'ngRoute',
