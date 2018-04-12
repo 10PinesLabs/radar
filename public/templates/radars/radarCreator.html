@@ -12,6 +12,18 @@
                 <div>
                     <input type="text"
                            class="form-control"
+                           placeholder="Nombre"
+                           required
+                           ng-model="radar.name">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-7 center-block">
+                <div>
+                    <input type="text"
+                           class="form-control"
                            placeholder="Descripción"
                            required
                            ng-model="radar.description">
@@ -68,7 +80,7 @@
         <br>
 
         <div class="row">
-            <div class="col-md-offset-3 col-md-6 center-block">
+            <div class="col-sm-10 center-block">
                 <span ng-show="radarIsInvalid()">
                 <button type="submit"
                         class="btn btn-basic"
@@ -77,7 +89,7 @@
                 </button>
                     <br>
                     <br>
-                    Tiene que haber una descripción y al menos una arista.
+                    El radar tiene que tener un nombre, una descripción y al menos una arista.
                 </span>
 
                 <span ng-show="!radarIsInvalid()">
