@@ -7,102 +7,80 @@
             </div>
         </md-toolbar>
 
-        <div class="row">
-            <div class="col-sm-7 center-block">
-                <div>
-                    <input type="text"
-                           class="form-control"
-                           placeholder="Nombre"
-                           required
-                           ng-model="radar.name">
+        <form name="createRadarForm">
+
+            <div layout="row">
+                <md-input-container flex="50">
+                    <label>Descripción</label>
+                    <input required name="description" ng-model="radar.description">
+                    <div ng-messages="projectForm.radar.description.$error">
+                        <div ng-message="required">La descripción es obligatoria.</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <md-list flex>
+                </md-list-item>
+                <md-divider ></md-divider>
+                <md-subheader class="md-no-sticky">Aristas</md-subheader>
+                <md-list-item class="md-2-line" ng-repeat="axis in radar.axes">
+                    <div class="md-list-item-text">
+                        <h3> {{axis.description}} </h3>
+                    </div>
+                    <md-button class="md-secondary md-icon-button"
+                               ng-click="removeAxis(axis)"
+                               aria-label="call">
+                        <md-icon md-svg-icon='images/delete-icon.svg'></md-icon>
+                    </md-button>
+                    <md-divider ></md-divider>
+                </md-list-item>
+            </md-list>
+
+
+
+            <div class="row">
+                <div class="col-sm-7 center-block">
+                    <div class="list-group"
+                         style="border: 1px solid darkgrey;
+                          height: 200px;
+                          overflow-y: scroll;">
+                        <a class="list-group-item"
+                           ng-repeat="axis in radar.axes">{{axis.description}}</a>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-sm-7 center-block">
-                <div>
-                    <input type="text"
-                           class="form-control"
-                           placeholder="Descripción"
-                           required
-                           ng-model="radar.description">
+            <div class="row">
+                <div class="col-sm-7 center-block">
+                    <div class="input-axes-group">
+                        <input type="text"
+                               class="form-control"
+                               placeholder="Nueva Arista"
+                               id="axis-input"
+                               ng-model="axisInput">
+
+                    </div>
                 </div>
-            </div>
-        </div>
-
-        <br>
-
-        <div class="row">
-            <div class="col-sm-7 center-block">
-                <div class="list-group"
-                     style="border: 1px solid darkgrey;
-                      height: 200px;
-                      overflow-y: scroll;">
-                    <a class="list-group-item"
-                       ng-repeat="axis in radar.axes">{{axis.description}}</a>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="row">
-            <div class="col-sm-7 center-block">
-                <div class="input-axes-group">
-                    <input type="text"
-                           class="form-control"
-                           placeholder="Nueva Arista"
-                           id="axis-input"
-                           ng-model="axisInput">
-
-                </div>
-            </div>
-            <div class="col-sm-3 center-block">
-                <span ng-show="isAxisEmpty()"
-                      class="input-group-btn">
-                    <button class="btn btn-basic"
-                            type="button"
-                            ng-disabled="isAxisEmpty()">
+                <div class="col-sm-3 center-block">
+                    <md-button ng-disabled="isAxisEmpty()"
+                               ng-click="addAxis()"
+                               class="md-raised md-primary">
                         Agregar
-                    </button>
-                </span>
-                <span ng-show="!isAxisEmpty()"
-                      class="input-group-btn">
-                    <button class="btn btn-success"
-                            type="button"
-                            ng-click="addAxis()">
-                        Agregar
-                    </button>
-                </span>
+                    </md-button>
+                </div>
             </div>
-        </div>
 
-        <br>
+            <br>
 
-        <div class="row">
-            <div class="col-sm-10 center-block">
-                <span ng-show="radarIsInvalid()">
-                <button type="submit"
-                        class="btn btn-basic"
-                        ng-disabled="radarIsInvalid()">
-                    Crear
-                </button>
-                    <br>
-                    <br>
-                    El radar tiene que tener un nombre, una descripción y al menos una arista.
-                </span>
-
-                <span ng-show="!radarIsInvalid()">
-                    <button type="submit"
-                            class="btn btn-success"
-                            ng-click="createRadar()">
+            <div class="row">
+                <div class="col-sm-10 center-block">
+                    <md-button ng-disabled="radarIsInvalid()"
+                               ng-click="createRadar()"
+                               class="md-raised md-primary">
                         Crear
-                    </button>
-                    <br>
-                    <br>
-                    Radar válido.
-                </span>
+                    </md-button>
+                </div>
             </div>
-        </div>
+        </form>
     </md-content>
 </div>

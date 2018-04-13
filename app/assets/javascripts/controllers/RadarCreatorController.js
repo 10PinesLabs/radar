@@ -2,6 +2,7 @@ angular.module('ruben-radar')
     .controller('RadarCreatorController', function ($scope, _, radarFactory, RadarService, ngToast) {
         $scope.radar = radarFactory.newRadar();
         $scope.axisInput = '';
+        $scope.actionIcon = 'images/delete.png';
 
         $scope.isAxisEmpty = function isAxisEmpty() {
             return _.isEmpty($scope.axisInput);
@@ -10,6 +11,10 @@ angular.module('ruben-radar')
         $scope.addAxis = function addAxis() {
             $scope.radar.addAxis($scope.axisInput);
             $scope.axisInput = '';
+        };
+
+        $scope.removeAxis =  function removeAxis(axis){
+            $scope.radar.removeAxis(axis);
         };
 
         $scope.radarIsInvalid = function radarIsInvalid() {
