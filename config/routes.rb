@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
-  resources :radars, only: %i[create show index] do
-    resources :votes, only: [:create]
-    member do
-      get :result
-      post :create
-      post :close
+  scope path: '/api' do
+    resources :radars, only: %i[create show index] do
+      resources :votes, only: [:create]
+      member do
+        get :result
+        post :create
+        post :close
+      end
     end
   end
   root to: 'application#angular'

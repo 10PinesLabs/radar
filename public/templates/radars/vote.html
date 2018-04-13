@@ -21,7 +21,7 @@
                     <md-button ng-disabled="!allAxesAnswered()" ng-click="submit()" class="md-raised md-accent">Votar</md-button>
                 </div>
             </div>
-            <ng-include ng-if="alreadyVoted" src="'radars/successfulVote.html'"></ng-include>
+            <ng-include ng-if="alreadyVoted" src="'templates/radars/successfulVote.html'"></ng-include>
             <div ng-if="!radar.active">
                 <div layout-margin>
                     <p>
@@ -31,7 +31,7 @@
                         <img layout-margin class="surprised-radar" src="images/closed-ruben.jpg">
                     </div>
                     <p>
-                        Sin embargo <a href="#!/radars/{{radar.id}}/results">acá</a> podés acceder a los resultados.
+                        Sin embargo <a href="/radars/{{radar.id}}/results">acá</a> podés acceder a los resultados.
                     </p>
                 </div>
             </div>
