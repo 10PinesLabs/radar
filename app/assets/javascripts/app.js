@@ -21,7 +21,7 @@ angular
         };
 
         //For downloading csv file in resultsController and going from ruben's picture to results
-        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|chrome-extension|blob):/);
+        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|blob):/);
 
 
         $routeProvider
