@@ -10,6 +10,7 @@ angular
     ])
 
     .config(function ($routeProvider, $compileProvider) {
+
         var getRadar = function ($route, RadarService) {
             return RadarService.getRadar($route.current.params.radar_id);
         };
@@ -22,7 +23,6 @@ angular
 
         //For downloading csv file in resultsController and going from ruben's picture to results
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|blob):/);
-
 
         $routeProvider
             .when('/radars/:radar_id/vote', {
