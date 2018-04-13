@@ -13,9 +13,5 @@ angular.module('ruben-radar')
             return CSVService.createCSVWithResultsOf($scope.radar)
 
         }
-
-        
-
-
     });
 
