@@ -78,9 +78,7 @@ RSpec.describe RadarsController, type: :controller do
           {name: 'Radar 2015', description: 'Radar 2015', axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {description: 'Una Arista guardada'}]}
         }
 
-        it 'should be a bad request' do
-          expect(response).to have_http_status :bad_request
-        end
+        it { expect(response).to have_http_status :bad_request }
       end
 
       context 'with nil as name' do
@@ -88,9 +86,7 @@ RSpec.describe RadarsController, type: :controller do
           {name: nil, description: 'Radar 2015', axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {description: 'Una Arista guardada'}]}
         }
 
-        it 'should be a bad request' do
-          expect(response).to have_http_status :bad_request
-        end
+        it { expect(response).to have_http_status :bad_request }
       end
 
       context 'with empty string as name' do
@@ -98,9 +94,7 @@ RSpec.describe RadarsController, type: :controller do
           {name: '', description: 'Radar 2015', axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {description: 'Una Arista guardada'}]}
         }
 
-        it 'should be a bad request' do
-          expect(response).to have_http_status :bad_request
-        end
+        it { expect(response).to have_http_status :bad_request }
       end
     end
   end
