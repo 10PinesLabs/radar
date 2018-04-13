@@ -1,4 +1,3 @@
-
 <div class="box-container">
     <md-content class="main-box" layout-padding md-theme="pine-green">
         <md-toolbar>
@@ -14,16 +13,19 @@
 
         <div>
             <div class="draw-radar-container">
-                <draw-radar result="result" representation="selectedRepresentation | representationStrategy"></draw-radar>
+                <draw-radar result="result"
+                            representation="selectedRepresentation | representationStrategy"></draw-radar>
             </div>
             <div>
                 <a ng-href="{{ fileCSVUrl }}" download="{{radar.description}}.csv">Descargar CSV</a>
                 <br>
                 <br>
                 <a ng-click="printPage()" download="{{radar.description}}.pdf">Descargar PDF</a>
+                <br>
+                <br>
+                <md-button href="/radars" class="md-raised md-accent">Volver</md-button>
+
             </div>
-
-
         </div>
 
     </md-content>
