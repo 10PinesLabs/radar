@@ -10,7 +10,7 @@
         <form name="createRadarForm">
 
             <div layout="row">
-                <md-input-container flex="90">
+                <md-input-container flex>
                     <label>Descripción</label>
                     <input required name="description" ng-model="radar.description">
                     <div ng-messages="projectForm.radar.description.$error">
@@ -21,7 +21,6 @@
 
             <md-list flex md-virtual-repeat-container style="height:300px">
                 <md-subheader class="md-no-sticky">Aristas</md-subheader>
-                <md-divider ></md-divider>
                 <md-list-item class="md-2-line"
                               ng-repeat="axis in radar.axes">
                     <div class="md-list-item-text">
@@ -43,7 +42,9 @@
                 <div layout-gt-xs="row">
                         <md-input-container class="md-block" flex="90">
                             <label>Nueva Arista</label>
-                            <input ng-model="axisInput">
+                            <input id="axisInputId"
+                                   ng-keyup="$event.keyCode == 13 && !isAxisEmpty() && addAxis()"
+                                   ng-model="axisInput">
                         </md-input-container>
 
                     <div>
