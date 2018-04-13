@@ -41,5 +41,6 @@ angular.module('ruben-radar')
                 });
             });
             $scope.radar = radarFactory.newRadar();
+            $scope.createRadarForm.$setUntouched();
         };
     });
