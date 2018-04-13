@@ -7,7 +7,7 @@
         </md-toolbar>
 
         <div layout-padding layout="column" md-whiteframe="3">
-            <md-list-item class="md-3-line" ng-repeat="radar in radars" ng-click="null" >
+            <md-list-item class="md-3-line" ng-repeat="radar in radars" ng-click="null" href="/radars/{{radar.id}}/results">
                 <div ng-if="radar.active">
                     <div class="md-list-item-text" layout="column" style="color:green">
                         <u>
@@ -20,7 +20,7 @@
                     <md-divider></md-divider>
                 </div>
                 <div ng-if="!radar.active">
-                    <div class="md-list-item-text" layout="column" style="color:green">
+                    <div class="md-list-item-text" layout="column" style="color:green" >
                         <u>
                             <h3>El nombre del radar</h3>
                         </u>
