@@ -2,12 +2,15 @@
     <md-content class="main-box" layout-padding md-theme="pine-green">
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h1>Radar: {{radar.description}}
+                <h1>Radar: El nombre del radar
                     <span ng-switch="radar.active">
                         <span ng-switch-when="true">(abierto)</span>
                         <span ng-switch-when="false">(cerrado)</span>
                     </span>
                 </h1>
+            </div>
+            <div class="md-toolbar-tools">
+                <h4>{{ radar.description }}</h4>
             </div>
         </md-toolbar>
 
