@@ -1,5 +1,5 @@
 angular.module('ruben-radar')
-    .controller('LandingController', function ($scope, _, RadarService) {
+    .controller('LandingController', function ($scope, _, radars) {
         $scope.imagepath = 'images/landing-image.jpg';
 
         $scope.getStyle = function getBackgroundStyle(){
@@ -13,7 +13,8 @@ angular.module('ruben-radar')
                 'left': '0px',
                 'margin': 'auto',
                 'background-repeat': 'no-repeat',
-                'background-size': '100%, 100%'
+                'background-size': '100%, 100%',
+                'background-color': 'green'
             }
         }
        /* $scope.radar = radarFactory.newRadar();
