@@ -1,8 +1,8 @@
 angular.module('ruben-radar')
-    .controller('LandingController', function ($scope, _, radars) {
-        $scope.imagepath = 'images/landing-image.jpg';
+    .controller('LandingController', function ($scope, $location) {
+        $scope.imagepath = 'http://croinagaillimhe.ie/wp-content/uploads/2013/03/photodune-231882-autumn-pine-forest-m.jpg';
 
-        $scope.getStyle = function getBackgroundStyle(){
+        $scope.getImageStyle = function getImageStyle(){
             return {
                 'position': 'fixed',
                 'background-image':'url('+ $scope.imagepath +')',
@@ -11,43 +11,22 @@ angular.module('ruben-radar')
                 'height': '100%',
                 'top': '0px',
                 'left': '0px',
-                'margin': 'auto',
                 'background-repeat': 'no-repeat',
-                'background-size': '100%, 100%',
-                'background-color': 'green'
+                'margin': 'auto',
             }
-        }
-       /* $scope.radar = radarFactory.newRadar();
-        $scope.axisInput = '';
-
-        $scope.isAxisEmpty = function isAxisEmpty() {
-            return _.isEmpty($scope.axisInput);
         };
 
-        $scope.addAxis = function addAxis() {
-            $scope.radar.addAxis($scope.axisInput);
-            $scope.axisInput = '';
-        };
+        $scope.getOverlayStyle = function getOverlayStyle(){
+            return {
+                'background-color': 'rgba(0, 0, 0, 0.5)',
+                'top': '0',
+                'left': '0',
+                'width': '100%',
+                'height': '100%',
+                'position': 'relative',
+                'z-index': '1',
+                'overflow-y': 'scroll'
 
-        $scope.radarIsInvalid = function radarIsInvalid() {
-            return this.radarDescriptionIsEmpty() || this.radarAxisIsEmpty();
+            }
         };
-
-        $scope.radarAxisIsEmpty = function radarAxisIsEmpty() {
-            return _.isEmpty($scope.radar.axes);
-        };
-
-        $scope.radarDescriptionIsEmpty = function radarDescriptionIsEmpty() {
-            return _.isEmpty($scope.radar.description);
-        };
-
-        $scope.createRadar = function createRadar() {
-            RadarService.createRadar($scope.radar).then(function () {
-                ngToast.create({
-                    className: 'success',
-                    content:'Se ha creado el radar con éxito.'
-                });
-            });
-            $scope.radar = radarFactory.newRadar();
-        };*/
     });
