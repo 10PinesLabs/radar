@@ -27,7 +27,6 @@ angular
         $routeProvider
             .when('/', {
                 templateUrl: 'templates/radars/landing.html',
-                controller: 'LandingController'
             })
             .when('/createRadar', {
                 templateUrl: 'templates/radars/radarCreator.html',
