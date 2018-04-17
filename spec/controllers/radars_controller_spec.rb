@@ -16,7 +16,7 @@ RSpec.describe RadarsController, type: :controller do
   def serialized_radar(radar)
     {
         'id' => radar.id,
-        'axes' => radar.axes.map{ |axis| serialized_axis(axis)},
+        'axes' => radar.axes.map{ |axis| serialized_axis(axis) },
         'name' => radar.name,
         'description' => radar.description,
         'active' => radar.active,
@@ -25,24 +25,24 @@ RSpec.describe RadarsController, type: :controller do
   end
 
   context 'When requesting to create a new radar' do
-    before do
-      post :create, radar_params
-    end
+    subject { post :create, radar_params }
 
     context 'with axes' do
       let(:radar_params) {
-        {name: 'Radar 2015', description: 'Radar 2015', axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {description: 'Una Arista guardada'}]}
+        {name: 'New Radar', description: 'Radar 2015', axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {description: 'Una Arista guardada'}]}
       }
 
       it 'the request should succeed' do
-        expect(response).to have_http_status :created
+        expect(subject).to have_http_status :created
       end
 
       it 'a non empty radar should be created' do
+        subject
         expect(Radar.count).to be 1
       end
 
       it 'the radar should have the 2 axes' do
+        subject
         expect(Radar.last.amount_of_axes).to eq 2
       end
     end
@@ -50,43 +50,37 @@ RSpec.describe RadarsController, type: :controller do
     context 'with no axes' do
       let(:radar_params) { {axes: []} }
       it 'should return bad request' do
-        expect(response).to have_http_status :bad_request
+        expect(subject).to have_http_status :bad_request
       end
     end
 
     context 'without a name' do
-      before do
-        post :create, radar_params
-      end
-
       let(:radar_params) {
         {description: 'Radar 2015', axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {description: 'Una Arista guardada'}]}
       }
 
       it 'should be a bad request' do
-        expect(response).to have_http_status :bad_request
+        expect(subject).to have_http_status :bad_request
       end
     end
 
     context 'with name' do
-      before do
-        post :create, radar_params
-      end
 
       context 'equal as one in the db' do
-        let(:radar_params) {
-          {name: 'Radar 2015', description: 'Radar 2015', axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {description: 'Una Arista guardada'}]}
-        }
+       let!(:new_radar) { create :radar }
+       let(:radar_params) {
+         {name: new_radar.name, description: 'Radar 2015', axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {description: 'Una Arista guardada'}]}
+       }
 
-        it { expect(response).to have_http_status :bad_request }
-      end
+       it { expect(subject).to have_http_status :bad_request }
+     end
 
       context 'with nil as name' do
         let(:radar_params) {
           {name: nil, description: 'Radar 2015', axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {description: 'Una Arista guardada'}]}
         }
 
-        it { expect(response).to have_http_status :bad_request }
+        it { expect(subject).to have_http_status :bad_request }
       end
 
       context 'with empty string as name' do
@@ -94,7 +88,7 @@ RSpec.describe RadarsController, type: :controller do
           {name: '', description: 'Radar 2015', axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {description: 'Una Arista guardada'}]}
         }
 
-        it { expect(response).to have_http_status :bad_request }
+        it { expect(subject).to have_http_status :bad_request }
       end
     end
   end
