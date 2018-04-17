@@ -5,6 +5,7 @@
     top: 0px;
     left: 0px;
     background: url("/images/landing-image.jpg") no-repeat center center;
+    background-size: cover;
     margin: auto;
 }
 
