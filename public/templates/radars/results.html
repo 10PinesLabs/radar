@@ -17,13 +17,15 @@
                 <draw-radar result="result" representation="selectedRepresentation | representationStrategy"></draw-radar>
             </div>
             <div>
-                <a ng-href="{{ fileCSVUrl }}" download="{{radar.description}}.csv">Descargar CSV</a>
+                <a ng-href="{{ fileCSVUrl }}" download="{{radar.description}}.csv">
+                    <button>Descargar CSV</button>
+                </a>
                 <br>
                 <br>
-                <a ng-click="printPage()" download="{{radar.description}}.pdf">Descargar PDF</a>
+                <a>
+                    <button ng-click="printPage()" download="{{radar.description}}.pdf">Imprimir PDF</button>
+                </a>
             </div>
-
-
         </div>
 
     </md-content>
