@@ -69,16 +69,6 @@ RSpec.describe RadarsController, type: :controller do
     end
 
     context 'with name' do
-
-      context 'equal as one in the db' do
-       let!(:new_radar) { create :radar }
-       let(:radar_params) {
-         {name: new_radar.name, description: 'Radar 2015', axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {description: 'Una Arista guardada'}]}
-       }
-
-       it { expect(subject).to have_http_status :bad_request }
-     end
-
       context 'with nil as name' do
         let(:radar_params) {
           {name: nil, description: 'Radar 2015', axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {description: 'Una Arista guardada'}]}
