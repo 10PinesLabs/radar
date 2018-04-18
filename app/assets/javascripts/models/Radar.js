@@ -11,6 +11,13 @@ angular.module('ruben-radar')
             this.axes.push({description: axis});
         };
 
+        Radar.prototype.removeAxis = function removeAxis(axis){
+            var index = this.axes.indexOf(axis);
+            if(index != -1){
+                this.axes.splice(index, 1);
+            }
+        };
+
         return {
             newRadar() {
                 return new Radar();
