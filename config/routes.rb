@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :admins
   scope path: '/api' do
     resources :radars, only: %i[create show index] do
       resources :votes, only: [:create]
