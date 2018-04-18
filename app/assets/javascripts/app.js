@@ -25,6 +25,13 @@ angular
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|blob):/);
 
         $routeProvider
+            .when('/', {
+                templateUrl: 'templates/radars/landing.html',
+            })
+            .when('/createRadar', {
+                templateUrl: 'templates/radars/radarCreator.html',
+                controller: 'RadarCreatorController'
+            })
             .when('/radars/:radar_id/vote', {
                 templateUrl: 'templates/radars/vote.html',
                 controller: 'VoteController',
@@ -66,10 +73,6 @@ angular
                         return RadarService.getAll();
                     }
                 }
-            })
-            .when('/createRadar', {
-                templateUrl: 'templates/radars/radarCreator.html',
-                controller: 'RadarCreatorController'
             })
             .when('/404', {
                 templateUrl: '404.html'
