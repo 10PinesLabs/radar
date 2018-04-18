@@ -41,17 +41,12 @@ angular.module('ruben-radar')
 
         $scope.createRadar = function createRadar() {
             RadarService.createRadar($scope.radar).then(function () {
-                ngToast.create({
-                    className: 'success',
-                    content:'Se ha creado el radar con éxito.'
-                });
-            });
-            $scope.radar = radarFactory.newRadar();
-            $scope.createRadarForm.$setUntouched();
                 ngToast.success('Se ha creado el radar con éxito.');
                 $scope.radar = radarFactory.newRadar();
                 }, function(response){
                     ngToast.danger('Ya existe un radar con ese nombre.');
             });
+            $scope.radar = radarFactory.newRadar();
+            $scope.createRadarForm.$setUntouched();
         };
     });

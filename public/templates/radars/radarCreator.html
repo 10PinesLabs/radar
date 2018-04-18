@@ -9,7 +9,14 @@
 
         <form name="createRadarForm">
 
-            <div layout="row">
+            <div layout="column">
+                <md-input-container flex>
+                    <label>Nombre</label>
+                    <input required name="name" ng-model="radar.name">
+                    <div ng-messages="projectForm.radar.name.$error">
+                        <div ng-message="required">El nombre es obligatorio.</div>
+                    </div>
+                </md-input-container>
                 <md-input-container flex>
                     <label>Descripción</label>
                     <input required name="description" ng-model="radar.description">
