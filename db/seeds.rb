@@ -6,7 +6,8 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 Radar.create!(
-    description: 'Retiro 2015',
+    name: 'Retiro 2015',
+    description: 'Descripción del Retiro 2015',
     axes: [
         Axis.new(description: 'Calidad Humana'),
         Axis.new(description: 'Relacion Sincera'),
