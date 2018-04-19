@@ -26,6 +26,20 @@
                 </md-input-container>
             </div>
 
+        <div class="row">
+            <div class="col-sm-7 center-block">
+                <div>
+                    <textarea type="text"
+                              rows="8"
+                              class="form-control"
+                              placeholder="Descripción"
+                              required
+                              ng-model="radar.description"
+                              ng-trim="false">
+                    </textarea>
+                </div>
+            </div>
+        </div>
             <md-list flex md-virtual-repeat-container style="height:300px">
                 <md-subheader class="md-no-sticky">Aristas</md-subheader>
                 <md-list-item class="md-2-line"
