@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Vote, type: :model do
   context 'When having two different Radars' do
     let!(:a_radar) { create :radar }
-    let!(:another_radar) { create :radar }
+    let!(:another_radar) { create :different_radar }
     context 'and a vote have answers from both of them' do
       let(:answers) do
         (a_radar.axes + another_radar.axes).map { |axis| Answer.new(axis: axis, points: 3) }
