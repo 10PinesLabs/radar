@@ -5,6 +5,6 @@ class ApplicationController < ActionController::Base
   include WithErrorHandler
 
   def angular
-    render 'layouts/application'
+    render :'application/angular', layout: false
   end
 end

@@ -25,6 +25,9 @@ angular
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|blob):/);
 
         $routeProvider
+            .when('/admin/login', {
+                templateUrl: 'templates/radars/login.html'
+            })
             .when('/radars/:radar_id/vote', {
                 templateUrl: 'templates/radars/vote.html',
                 controller: 'VoteController',
