@@ -40,6 +40,7 @@ angular.module('ruben-radar')
         };
 
         $scope.createRadar = function createRadar() {
+            window.location.href = '/radars';
             RadarService.createRadar($scope.radar).then(function () {
                 ngToast.success('Se ha creado el radar con éxito.');
                 $scope.radar = radarFactory.newRadar();
