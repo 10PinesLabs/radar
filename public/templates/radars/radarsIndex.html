@@ -1,0 +1,40 @@
+<div class="box-container">
+    <md-content class="main-box" layout-padding md-theme="pine-green">
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <span>Ruben Radar: Radares</span>
+            </div>
+        </md-toolbar>
+
+        <div layout-padding layout="column" md-whiteframe="3">
+            <md-list-item class="md-3-line" ng-repeat="radar in radars" ng-click="null"
+                          href="/radars/{{radar.id}}/results">
+                <div ng-if="radar.active">
+                    <div class="md-list-item-text" layout="column" style="color:green">
+                        <u>
+                            <h3>El nombre del radar</h3>
+                        </u>
+                        <h4 class="hide-description">{{ radar.description }}</h4>
+                        <p>{{radar.created_at | date:'dd MMM yyyy'}}</p>
+                        <p>(Abierto)</p>
+                    </div>
+                    <md-button href="/radars/{{radar.id}}/vote" class="md-raised md-accent">Votar</md-button>
+                </div>
+                <div ng-if="!radar.active">
+                    <div class="md-list-item-text" layout="column" style="color:green">
+                        <u>
+                            <h3>El nombre del radar</h3>
+                        </u>
+                        <h4 class="hide-description">{{ radar.description }}</h4>
+                        <p>{{ radar.created_at }}</p>
+                        <p>(Cerrado)</p>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+            </md-list-item>
+
+        </div>
+
+
+    </md-content>
+</div>
