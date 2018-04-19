@@ -1,4 +1,5 @@
 class RadarsController < ApplicationController
+  before_action :authenticate_admin!, only: :close
 
   def create
     axes = params.require(:axes).map { |axis| create_axis(axis) }

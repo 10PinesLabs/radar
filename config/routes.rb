@@ -9,7 +9,13 @@ Rails.application.routes.draw do
         post :close
       end
     end
+
+    match "/login" => 'auth#create', via: :post
+
   end
   root to: 'application#angular'
   match '*path' => 'application#angular', via: %i[get post]
+
+
+
 end
