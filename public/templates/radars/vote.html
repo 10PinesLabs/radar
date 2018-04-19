@@ -8,8 +8,9 @@
         <div layout-padding layout="column" md-whiteframe="3">
             <div ng-if="radar.active && !alreadyVoted">
                 <div class="md-toolbar-tools">
-                    <span>{{radar.description}}</span>
+                    <h4 class="white-space-pre-line">{{ radar.description }}</h4>
                 </div>
+                <md-divider></md-divider>
                 <div layout-margin class="answer-container" ng-repeat="answer in answers">
                     <h2 class="axis-description">{{answer.axis.description}}</h2>
                     <md-radio-group class="input-group point-options-container" ng-model="answer.points">

@@ -18,7 +18,7 @@
                             representation="selectedRepresentation | representationStrategy"></draw-radar>
             </div>
             <div class="md-toolbar-tools">
-                <h4>{{ radar.description }}</h4>
+                <h4 class="white-space-pre-line">{{ radar.description }}</h4>
             </div>
             <div>
                 <a ng-href="{{ fileCSVUrl }}" download="{{radar.description}}.csv">
@@ -34,5 +34,6 @@
                 <md-button href="/radars" class="md-raised md-accent">Volver</md-button>
             </div>
         </div>
+
     </md-content>
 </div>
