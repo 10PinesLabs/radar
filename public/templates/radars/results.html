@@ -3,18 +3,12 @@
         <md-toolbar>
             <div class="md-toolbar-tools">
 
-                <h1>Radar: {{radar.name}}
-                    <br>
-                    Descripción: {{radar.description}}
-                    <br>
+                <h1>{{radar.name}}
                     <span ng-switch="radar.active">
                         <span ng-switch-when="true">(Abierto)</span>
                         <span ng-switch-when="false">(Cerrado)</span>
                     </span>
                 </h1>
-            </div>
-            <div class="md-toolbar-tools">
-                <h4>{{ radar.description }}</h4>
             </div>
         </md-toolbar>
 
@@ -23,22 +17,22 @@
                 <draw-radar result="result"
                             representation="selectedRepresentation | representationStrategy"></draw-radar>
             </div>
+            <div class="md-toolbar-tools">
+                <h4>{{ radar.description }}</h4>
+            </div>
             <div>
                 <a ng-href="{{ fileCSVUrl }}" download="{{radar.description}}.csv">
-                    <button>Descargar CSV</button>
+                    <md-button class="md-raised md-accent">Descargar CSV</md-button>
                 </a>
                 <br>
                 <br>
                 <a>
-                    <button ng-click="printPage()" download="{{radar.description}}.pdf">Imprimir PDF</button>
+                    <md-button class="md-raised md-accent" ng-click="printPage()" download="{{radar.description}}.pdf">Imprimir PDF</md-button>
                 </a>
                 <br>
                 <br>
                 <md-button href="/radars" class="md-raised md-accent">Volver</md-button>
-
-
             </div>
         </div>
-
     </md-content>
 </div>
