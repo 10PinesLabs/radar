@@ -6,12 +6,14 @@ angular
         'ngAria',
         'ngSanitize',
         'ngToast',
-        'ngResource'
+        'ngResource',
+        'ngCookies'
     ])
 
     .config(function ($routeProvider, $compileProvider) {
 
         var getRadar = function ($route, RadarService) {
+            debugger;
             return RadarService.getRadar($route.current.params.radar_id);
         };
 
@@ -25,9 +27,6 @@ angular
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|blob):/);
 
         $routeProvider
-            .when('/admin/login', {
-                templateUrl: 'templates/radars/login.html'
-            })
             .when('/radars/:radar_id/vote', {
                 templateUrl: 'templates/radars/vote.html',
                 controller: 'VoteController',
@@ -72,7 +71,14 @@ angular
             })
             .when('/createRadar', {
                 templateUrl: 'templates/radars/radarCreator.html',
-                controller: 'RadarCreatorController'
+                controller: 'RadarCreatorController',
+                resolve: {
+                    isLoggedIn: function ($route, RadarService) {
+                        return RadarService.isLoggedIn().then( function(data, $location){
+                            return data;
+                        });
+                    }
+                }
             })
             .when('/404', {
                 templateUrl: '404.html'
@@ -99,3 +105,4 @@ angular
                 requireBase: false
             });
     });
+

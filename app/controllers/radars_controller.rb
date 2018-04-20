@@ -1,5 +1,5 @@
 class RadarsController < ApplicationController
-  before_action :authenticate_admin!, only: :close
+  before_action :authenticate_admin!, only: [:create, :close]
 
   def create
     axes = params.require(:axes).map { |axis| create_axis(axis) }
@@ -27,6 +27,15 @@ class RadarsController < ApplicationController
 
   def index
     render json: Radar.all, status: :ok
+  end
+
+  def isloggedin
+    render json: {is_logged_in: admin_signed_in?}, status: :ok
+  end
+
+  def signout
+    sign_out current_admin
+    render json: {is_logged_in: admin_signed_in?}, status: :ok
   end
 
   private

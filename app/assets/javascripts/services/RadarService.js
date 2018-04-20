@@ -22,4 +22,13 @@ angular.module('ruben-radar')
         self.getAll = function getAll() {
             return Radar.query().$promise;
         };
+
+        self.isLoggedIn = function isLoggedIn(){
+            return Radar.isLoggedIn().$promise;
+        };
+
+        self.signOut = function signOut(){
+            return Radar.signOut().$promise;
+        };
+
     });

@@ -1,7 +1,11 @@
 angular.module('ruben-radar')
-    .controller('RadarCreatorController', function ($scope, _, radarFactory, RadarService, ngToast) {
+    .controller('RadarCreatorController', function ($scope, $cookies, $window, isLoggedIn, _, radarFactory, RadarService, ngToast) {
         $scope.radar = radarFactory.newRadar();
         $scope.axisInput = '';
+
+        if(!isLoggedIn.is_logged_in){
+            $window.location.href = '/422.html'
+        }
 
         $scope.isAxisEmpty = function isAxisEmpty() {
             return _.isEmpty($scope.axisInput);
@@ -43,4 +47,10 @@ angular.module('ruben-radar')
             $scope.radar = radarFactory.newRadar();
             $scope.createRadarForm.$setUntouched();
         };
+
+        $scope.logout = function logout() {
+            RadarService.signOut();
+            $window.location.href = '/422.html';
+        }
+
     });
