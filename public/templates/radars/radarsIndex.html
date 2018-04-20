@@ -23,10 +23,10 @@
                 <div ng-if="!radar.active">
                     <div class="md-list-item-text" layout="column" style="color:green">
                         <u>
-                            <h3>El nombre del radar</h3>
+                            <h3>{{ radar.name }}</h3>
                         </u>
                         <h4 class="hide-description">{{ radar.description }}</h4>
-                        <p>{{ radar.created_at }}</p>
+                        <p>{{radar.created_at | date:'dd MMM yyyy'}}</p>
                         <p>(Cerrado)</p>
                     </div>
                 </div>
