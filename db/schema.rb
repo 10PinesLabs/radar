@@ -50,10 +50,11 @@ ActiveRecord::Schema.define(version: 20180418191404) do
   end
 
   create_table "radars", force: :cascade do |t|
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
     t.boolean  "active",      default: true
-    t.text     "description",                null: false
+    t.text     "description", default: "Sin Descripción", null: false
+    t.text     "name",                                    null: false
   end
 
   create_table "votes", force: :cascade do |t|

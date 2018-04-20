@@ -23,6 +23,10 @@ angular.module('ruben-radar')
             return Radar.query().$promise;
         };
 
+        self.getActiveRadars = function getActiveRadar(){
+            return self.Radar.getAll().filter(radar => radar.active);
+        };
+
         self.isLoggedIn = function isLoggedIn(){
             return Radar.isLoggedIn().$promise;
         };

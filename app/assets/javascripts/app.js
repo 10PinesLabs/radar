@@ -13,7 +13,6 @@ angular
     .config(function ($routeProvider, $compileProvider) {
 
         var getRadar = function ($route, RadarService) {
-            debugger;
             return RadarService.getRadar($route.current.params.radar_id);
         };
 
@@ -27,6 +26,13 @@ angular
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|blob):/);
 
         $routeProvider
+            .when('/', {
+                templateUrl: 'templates/radars/landing.html',
+            })
+            .when('/createRadar', {
+                templateUrl: 'templates/radars/radarCreator.html',
+                controller: 'RadarCreatorController'
+            })
             .when('/radars/:radar_id/vote', {
                 templateUrl: 'templates/radars/vote.html',
                 controller: 'VoteController',
@@ -105,4 +111,3 @@ angular
                 requireBase: false
             });
     });
-
