@@ -22,5 +22,6 @@
 //= require ngToast
 //= require angular-locale_es-es/angular-locale_es-es
 //= require chart.js/dist/Chart.js
+//= require angular-chart.js/dist/angular-chart.js
 //= require_tree .
 

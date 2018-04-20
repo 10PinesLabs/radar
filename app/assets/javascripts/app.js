@@ -39,6 +39,10 @@ angular
                     radar: getRadar
                 }
             })
+            .when('/radars/axis', {
+                templateUrl: 'templates/radars/axis.html',
+                
+            })
             .when('/radars/:radar_id/results', {
                 templateUrl: 'templates/radars/results.html',
                 controller: 'ResultsController',

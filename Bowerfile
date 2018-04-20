@@ -15,6 +15,7 @@ asset 'ngToast', 'ngtoast#2.0.0'
 asset 'd3', '3.5.17'
 asset 'angular-locale_es-es', "*"
 asset 'chart.js', "*"
+asset 'angular-chart.js', "*"
 
 resolution 'angular', '1.6.3'
 resolution 'angular-sanitize', '1.6.3'
