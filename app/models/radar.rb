@@ -9,7 +9,6 @@ class Radar < ActiveRecord::Base
   validates :axes, presence: {message: ERROR_MESSAGE_FOR_NO_QUESTIONS}
   validates :description, presence: {message: ERROR_MESSAGE_FOR_DESCRIPTION_EMPTY}
   validates :name, presence: {message: ERROR_MESSAGE_FOR_NAME_EMPTY}
-  validates_uniqueness_of :name
 
   delegate :empty?, to: :axes
 
