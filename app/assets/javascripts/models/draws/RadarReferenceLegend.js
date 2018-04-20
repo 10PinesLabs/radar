@@ -45,7 +45,7 @@ angular.module('ruben-radar')
                 text.append("tspan")
                     .classed("radar-reference-description", true)
                     .text(function (radar) {
-                        return radar.description;
+                        return radar.name;
                     });
             };
 

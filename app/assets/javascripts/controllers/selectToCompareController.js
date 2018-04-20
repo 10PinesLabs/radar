@@ -48,6 +48,6 @@ angular.module('ruben-radar')
         };
 
         $scope.formatRadar = function (radar) {
-            return radar.description + " (" + $filter('date')(radar.created_at) + ")";
+            return radar.name + " (" + $filter('date')(radar.created_at) + ")";
         }
     });
