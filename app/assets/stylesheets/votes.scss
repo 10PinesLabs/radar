@@ -78,3 +78,11 @@ p {
   max-width: 550px;
   width: 100%;
 }
+
+.hide-description {
+  white-space: nowrap;
+  width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+}
