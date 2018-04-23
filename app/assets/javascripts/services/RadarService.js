@@ -22,4 +22,8 @@ angular.module('ruben-radar')
         self.getAll = function getAll() {
             return Radar.query().$promise;
         };
+
+        self.getActiveRadars = function getActiveRadar(){
+            return self.Radar.getAll().filter(radar => radar.active);
+        };
     });

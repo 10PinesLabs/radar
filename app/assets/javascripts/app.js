@@ -21,10 +21,28 @@ angular
             }
         };
 
+        var getAll = function ($route, RadarService) {
+            return RadarService.getAll();
+        };
+
         //For downloading csv file in resultsController and going from ruben's picture to results
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|blob):/);
 
         $routeProvider
+            .when('/', {
+                templateUrl: 'templates/radars/landing.html',
+            })
+            .when('/createRadar', {
+                templateUrl: 'templates/radars/radarCreator.html',
+                controller: 'RadarCreatorController'
+            })
+            .when('/radars', {
+                templateUrl: 'templates/radars/radarsIndex.html',
+                controller: 'IndexController',
+                resolve: {
+                    radars: getAll
+                }
+            })
             .when('/radars/:radar_id/vote', {
                 templateUrl: 'templates/radars/vote.html',
                 controller: 'VoteController',
@@ -70,10 +88,6 @@ angular
                         return RadarService.getAll();
                     }
                 }
-            })
-            .when('/createRadar', {
-                templateUrl: 'templates/radars/radarCreator.html',
-                controller: 'RadarCreatorController'
             })
             .when('/404', {
                 templateUrl: '404.html'
