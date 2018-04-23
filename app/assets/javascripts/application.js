@@ -12,6 +12,7 @@
 //
 //= require lodash/dist/lodash
 //= require d3/d3
+//= require chart.js/dist/Chart.min.js
 //= require angular
 //= require angular-resource
 //= require angular-material
@@ -21,7 +22,5 @@
 //= require angular-sanitize
 //= require ngToast
 //= require angular-locale_es-es/angular-locale_es-es
-//= require chart.js/dist/Chart.js
-//= require angular-chart.js/dist/angular-chart.js
 //= require_tree .
 
