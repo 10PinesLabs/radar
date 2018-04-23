@@ -1,6 +1,14 @@
 Rails.application.routes.draw do
+
+
+
   scope path: '/api' do
-    devise_for :admins, controllers: {sessions: 'sessions'}
+    devise_for :admins,
+               path_names: {
+                :sign_in => 'login',
+                :sign_out => 'logout'
+            }
+
     resources :radars, only: %i[create show index] do
       resources :votes, only: [:create]
       member do

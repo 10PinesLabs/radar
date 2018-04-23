@@ -1,11 +1,13 @@
 angular.module('ruben-radar')
-    .controller('RadarCreatorController', function ($scope, $cookies, $window, isLoggedIn, _, radarFactory, RadarService, ngToast) {
+    .controller('RadarCreatorController', function ($scope, $cookies, $window, $location, isLoggedIn, _, radarFactory, RadarService, ngToast) {
         $scope.radar = radarFactory.newRadar();
         $scope.axisInput = '';
 
         if(!isLoggedIn.is_logged_in){
-            $window.location.href = '/422.html'
+            $window.location.href = '/';
         }
+
+        console.log($cookies.getAll());
 
         $scope.isAxisEmpty = function isAxisEmpty() {
             return _.isEmpty($scope.axisInput);
@@ -44,17 +46,23 @@ angular.module('ruben-radar')
         };
 
         $scope.createRadar = function createRadar() {
-            RadarService.createRadar($scope.radar).then(function () {
+            RadarService.createRadar($scope.radar).then(function(result) {
+                //$document.cookie
+                console.log($document.cookie);
                 ngToast.success('Se ha creado el radar con éxito.');
                 $scope.radar = radarFactory.newRadar();
-                });
+                }).catch( function(err) {
+                console.log(err);
+                ngToast.danger('No estás loggeado.');
+                $window.location.href = '/';
+            });
             $scope.radar = radarFactory.newRadar();
             $scope.createRadarForm.$setUntouched();
         };
 
         $scope.logout = function logout() {
             RadarService.signOut();
-            $window.location.href = '/422.html';
+            $window.location.href = '/';
         }
 
     });
