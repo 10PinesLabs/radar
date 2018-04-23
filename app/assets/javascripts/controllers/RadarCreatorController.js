@@ -2,6 +2,7 @@ angular.module('ruben-radar')
     .controller('RadarCreatorController', function ($scope, _, radarFactory, RadarService, ngToast) {
         $scope.radar = radarFactory.newRadar();
         $scope.axisInput = '';
+        $scope.axesAmount = 0;
 
         $scope.isAxisEmpty = function isAxisEmpty() {
             return _.isEmpty($scope.axisInput);
@@ -11,6 +12,7 @@ angular.module('ruben-radar')
             $scope.radar.addAxis($scope.axisInput);
             $scope.axisInput = '';
             this.setFocusOfAxisInput();
+            $scope.axesAmount ++;
         };
 
         $scope.setFocusOfAxisInput = function () {
@@ -19,6 +21,7 @@ angular.module('ruben-radar')
 
         $scope.removeAxis =  function removeAxis(axis){
             $scope.radar.removeAxis(axis);
+            $scope.axesAmount --;
         };
 
         $scope.radarIsInvalid = function radarIsInvalid() {
@@ -40,6 +43,7 @@ angular.module('ruben-radar')
         };
 
         $scope.createRadar = function createRadar() {
+            window.location.href = '/radars';
             RadarService.createRadar($scope.radar).then(function () {
                 ngToast.success('Se ha creado el radar con éxito.');
                 $scope.radar = radarFactory.newRadar();

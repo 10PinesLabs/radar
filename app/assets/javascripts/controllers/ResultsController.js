@@ -18,6 +18,5 @@ angular.module('ruben-radar')
         $scope.printPage = function () {
             return window.print();
         }
-
     });
 
