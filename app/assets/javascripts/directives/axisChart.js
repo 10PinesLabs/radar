@@ -4,13 +4,14 @@ angular.module('ruben-radar')
             restrict: 'E',
             replace: false,
             scope: {
+
             },
             link: function (scope, element) {
                 var ctx = document.getElementById('myChart').getContext('2d');
                 var myChart = new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
+                        labels: ['1', '2', '3', '4', '5'],
                         datasets: [{
                             label: 'apples',
                             data: [12, 19, 3, 17, 6, 3, 7],

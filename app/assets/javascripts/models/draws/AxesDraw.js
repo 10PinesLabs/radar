@@ -44,6 +44,9 @@ angular.module('ruben-radar')
                     })
                     .attr("y", function (axis, axisNumber) {
                         return self.textPosition(radarDraw, axisNumber).y;
+                    })
+                    .on("click", function (axis) {
+                        return $window.open('templates/radars/axis.html');
                     });
 
                 legend.append("tspan")
