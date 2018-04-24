@@ -3,10 +3,6 @@ angular.module('ruben-radar')
         $scope.radar = radarFactory.newRadar();
         $scope.axisInput = '';
 
-        if(!isLoggedIn.is_logged_in){
-            $window.location.href = '/';
-        }
-
         console.log($cookies.getAll());
 
         $scope.isAxisEmpty = function isAxisEmpty() {
