@@ -19,7 +19,7 @@ Rails.application.routes.draw do
 
   get '/radars', to: 'application#check_admin_permission'
   get '/createRadar', to: 'application#check_admin_permission'
-  get '/radars/:radar_id/manage', to: 'application#check_admin_permission'
+  get '/radars/:radar_id/vote', to: 'application#check_not_admin_permission'
 
   root to: 'application#angular'
   match '*path' => 'application#angular', via: %i[get post]

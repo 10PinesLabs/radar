@@ -18,7 +18,10 @@
                         <p>{{radar.created_at | date:'dd MMM yyyy'}}</p>
                         <p>(Abierto)</p>
                     </div>
-                    <md-button href="/radars/{{radar.id}}/vote" class="md-raised md-accent">Votar</md-button>
+                    <md-button class="md-raised md-accent"
+                        ng-click="closeRadar(radar)">
+                        Cerrar
+                    </md-button>
                 </div>
                 <div ng-if="!radar.active">
                     <div class="md-list-item-text" layout="column" style="color:green">

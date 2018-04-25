@@ -13,6 +13,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def check_not_admin_permission
+    if admin_signed_in?
+      redirect_to('/')
+    else
+      angular
+    end
+  end
+
   protected
 
   def after_sign_in_path_for(resource)

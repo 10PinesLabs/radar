@@ -52,13 +52,6 @@ angular
                     radar: getRadar
                 }
             })
-            .when('/radars/:radar_id/manage', {
-                templateUrl: 'templates/radars/manage.html',
-                controller: 'CloseRadarController',
-                resolve: {
-                    radar: getRadar
-                }
-            })
             .when('/radars/:radar_id/results', {
                 templateUrl: 'templates/radars/results.html',
                 controller: 'ResultsController',
