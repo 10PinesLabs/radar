@@ -1,5 +1,5 @@
 angular.module('ruben-radar')
-    .controller('RadarCreatorController', function ($scope, $cookies, $window, $location, isLoggedIn, _, radarFactory, RadarService, ngToast) {
+    .controller('RadarCreatorController', function ($scope, $cookies, $document, $window, $location, isLoggedIn, _, radarFactory, RadarService, ngToast) {
         $scope.radar = radarFactory.newRadar();
         $scope.axisInput = '';
 
@@ -13,10 +13,6 @@ angular.module('ruben-radar')
             $scope.radar.addAxis($scope.axisInput);
             $scope.axisInput = '';
             this.setFocusOfAxisInput();
-        };
-
-        $scope.setFocusOfAxisInput = function () {
-            document.getElementById('axisInputId').focus();
         };
 
         $scope.removeAxis =  function removeAxis(axis){
@@ -45,13 +41,10 @@ angular.module('ruben-radar')
             RadarService.createRadar($scope.radar).then(function(result) {
                 //$document.cookie
                 console.log($document.cookie);
-                ngToast.success('Se ha creado el radar con éxito.');
+                ngToast.success('Se ha creado el fradar con éxito.');
                 $scope.radar = radarFactory.newRadar();
-                }).catch( function(err) {
-                console.log(err);
-                ngToast.danger('No estás loggeado.');
-                $window.location.href = '/';
             });
+            $window.location.href = '/radars';
             $scope.radar = radarFactory.newRadar();
             $scope.createRadarForm.$setUntouched();
         };
