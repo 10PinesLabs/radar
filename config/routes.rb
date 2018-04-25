@@ -18,7 +18,9 @@ Rails.application.routes.draw do
   end
 
   # Estas validaciones deberian estar del lado de angular porque son del frontend,
-  # pero hay que estudiar mejor que devuelve devise para poder manejarlo desde ahi.
+  # pero hay que estudiar mejor que devuelve la gema devise para poder manejarlo desde ahi.
+  # El problema surge que parado desde angular no encontre informacion para decidir si estoy
+  # loggeado o no.
   get '/radars', to: 'application#check_admin_permission'
   get '/createRadar', to: 'application#check_admin_permission'
   get '/radars/:radar_id/vote', to: 'application#check_not_admin_permission'
