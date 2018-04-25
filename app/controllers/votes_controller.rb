@@ -1,8 +1,12 @@
 class VotesController < ApplicationController
   def create
-    answers = create_answers(params.require(:answers))
-    vote = Vote.create!(answers: answers)
-    render json: vote, status: :ok
+    if admin_signed_in?
+      render json: {}, status: :unauthorized
+    else
+      answers = create_answers(params.require(:answers))
+      vote = Vote.create!(answers: answers)
+      render json: vote, status: :ok
+    end
   end
 
   private
