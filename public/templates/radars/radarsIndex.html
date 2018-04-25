@@ -2,11 +2,18 @@
     <md-content class="main-box" layout-padding md-theme="pine-green">
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <span>Ruben Radar: Radares</span>
+                <span>Radares</span>
             </div>
         </md-toolbar>
 
-        <div layout-padding layout="column" md-whiteframe="3">
+        <div layout="column"
+             md-whiteframe="3">
+            <md-button href="/createRadar"
+                    class="md-raised md-primary">
+                Crear radar
+            </md-button>
+
+
             <md-list-item class="md-3-line" ng-repeat="radar in radars" ng-click="null"
                           href="/radars/{{radar.id}}/results">
                 <div ng-if="radar.active">
@@ -18,7 +25,7 @@
                         <p>{{radar.created_at | date:'dd MMM yyyy'}}</p>
                         <p>(Abierto)</p>
                     </div>
-                    <md-button class="md-raised md-accent"
+                    <md-button class="md-raised md-warn"
                         ng-click="closeRadar(radar)">
                         Cerrar
                     </md-button>
