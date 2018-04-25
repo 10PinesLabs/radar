@@ -3,8 +3,6 @@ angular.module('ruben-radar')
         $scope.radar = radarFactory.newRadar();
         $scope.axisInput = '';
 
-        console.log($cookies.getAll());
-
         $scope.isAxisEmpty = function isAxisEmpty() {
             return _.isEmpty($scope.axisInput);
         };
@@ -12,7 +10,6 @@ angular.module('ruben-radar')
         $scope.addAxis = function addAxis() {
             $scope.radar.addAxis($scope.axisInput);
             $scope.axisInput = '';
-            this.setFocusOfAxisInput();
         };
 
         $scope.removeAxis =  function removeAxis(axis){
@@ -51,7 +48,6 @@ angular.module('ruben-radar')
 
         $scope.logout = function logout() {
             RadarService.signOut();
-            $window.location.href = '/';
         }
 
     });

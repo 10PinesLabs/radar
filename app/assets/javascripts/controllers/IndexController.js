@@ -6,5 +6,9 @@ angular.module('ruben-radar')
             RadarService.closeRadar(radar).then(function () {
                 ngToast.create('Se ha cerrado el radar con éxito');
             });
+        };
+
+        $scope.logout = function logout() {
+            RadarService.signOut();
         }
     });
