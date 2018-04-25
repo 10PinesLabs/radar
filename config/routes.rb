@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
 
   scope path: '/api' do
-    devise_for :admins, only: :sessions
+    devise_for :admins
 
     resources :radars, only: %i[show index] do
       resources :votes, only: [:create]
@@ -16,6 +16,11 @@ Rails.application.routes.draw do
     match '/isLoggedIn' => 'radars#isloggedin', via: %i[get]
     match '/signOut' => 'radars#signout', via: %i[get]
   end
+
+  get '/radars', to: 'application#check_admin_permission'
+  get '/createRadar', to: 'application#check_admin_permission'
+  get '/radars/:radar_id/manage', to: 'application#check_admin_permission'
+
   root to: 'application#angular'
   match '*path' => 'application#angular', via: %i[get post]
 end
