@@ -30,6 +30,7 @@
                         <h4 class="hide-description">{{ radar.description }}</h4>
                         <p>{{radar.created_at | date:'dd MMM yyyy'}}</p>
                         <p>(Abierto)</p>
+                        <p>Link: {{radarLink(radar)}}</p>
                     </div>
                     <md-button class="md-raised md-warn"
                         ng-click="closeRadar(radar)">

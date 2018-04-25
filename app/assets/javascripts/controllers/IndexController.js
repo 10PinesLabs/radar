@@ -1,5 +1,5 @@
 angular.module('ruben-radar')
-    .controller('IndexController', function ($scope, RadarService, $mdDialog, _, radars, ngToast) {
+    .controller('IndexController', function ($scope, $window, RadarService, $mdDialog, _, radars, ngToast) {
         $scope.radars = _.reverse(radars);
 
         $scope.closeRadar = function closeRadar(radar){
@@ -10,5 +10,9 @@ angular.module('ruben-radar')
 
         $scope.logout = function logout() {
             RadarService.signOut();
+        };
+
+        $scope.radarLink = function radarLink(radar){
+            return $window.location.host + '/radars/' + radar.id.toString() + '/vote';
         }
     });
