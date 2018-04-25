@@ -29,62 +29,90 @@ RSpec.describe RadarsController, type: :controller do
   end
 
   context 'When requesting to create a new radar' do
+
     subject { post :create, radar_params }
 
-    context 'with axes' do
+    context 'and the admin is logged in' do
+      before(:each) do
+        login_with :admin
+      end
+
+      after(:each) do
+        sign_out :admin
+      end
+
+      context 'with axes' do
+        let(:radar_params) {
+          {name: 'New Radar', description: 'Radar 2015', axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {description: 'Una Arista guardada'}]}
+        }
+
+        it 'the request should succeed' do
+          expect(subject).to have_http_status :created
+        end
+
+        it 'a non empty radar should be created' do
+          subject
+          expect(Radar.count).to be 1
+        end
+
+        it 'the radar should have the 2 axes' do
+          subject
+          expect(Radar.last.amount_of_axes).to eq 2
+        end
+      end
+
+      context 'with no axes' do
+        let(:radar_params) { {axes: []} }
+        it 'should return bad request' do
+          expect(subject).to have_http_status :bad_request
+        end
+      end
+
+      context 'without a name' do
+        let(:radar_params) {
+          {description: 'Radar 2015', axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {description: 'Una Arista guardada'}]}
+        }
+
+        it 'should be a bad request' do
+          expect(subject).to have_http_status :bad_request
+        end
+      end
+
+      context 'with name' do
+        context 'with nil as name' do
+          let(:radar_params) {
+            {name: nil, description: 'Radar 2015', axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {description: 'Una Arista guardada'}]}
+          }
+
+          it { expect(subject).to have_http_status :bad_request }
+        end
+
+        context 'with empty string as name' do
+          let(:radar_params) {
+            {name: '', description: 'Radar 2015', axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {description: 'Una Arista guardada'}]}
+          }
+
+          it { expect(subject).to have_http_status :bad_request }
+        end
+      end
+    end
+
+    context 'and the admin is NOT logged in' do
+
       let(:radar_params) {
         {name: 'New Radar', description: 'Radar 2015', axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {description: 'Una Arista guardada'}]}
       }
 
-      it 'the request should succeed' do
-        expect(subject).to have_http_status :created
-      end
-
-      it 'a non empty radar should be created' do
+      it 'a radar should NOT be created' do
         subject
-        expect(Radar.count).to be 1
+        expect(Radar.count).to be 0
       end
 
-      it 'the radar should have the 2 axes' do
-        subject
-        expect(Radar.last.amount_of_axes).to eq 2
-      end
+      # Devise redirect to sign in.
+      it { expect(subject).to have_http_status 302 }
+
     end
 
-    context 'with no axes' do
-      let(:radar_params) { {axes: []} }
-      it 'should return bad request' do
-        expect(subject).to have_http_status :bad_request
-      end
-    end
-
-    context 'without a name' do
-      let(:radar_params) {
-        {description: 'Radar 2015', axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {description: 'Una Arista guardada'}]}
-      }
-
-      it 'should be a bad request' do
-        expect(subject).to have_http_status :bad_request
-      end
-    end
-
-    context 'with name' do
-      context 'with nil as name' do
-        let(:radar_params) {
-          {name: nil, description: 'Radar 2015', axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {description: 'Una Arista guardada'}]}
-        }
-
-        it { expect(subject).to have_http_status :bad_request }
-      end
-
-      context 'with empty string as name' do
-        let(:radar_params) {
-          {name: '', description: 'Radar 2015', axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {description: 'Una Arista guardada'}]}
-        }
-
-        it { expect(subject).to have_http_status :bad_request }
-      end
-    end
   end
 
   context 'When requesting to get the results of a radar' do
@@ -133,25 +161,69 @@ RSpec.describe RadarsController, type: :controller do
 
     let!(:a_radar) { create :radar }
 
-    context 'and the radar is active' do
-      before :each do
-        request_close_radar
-        a_radar.reload
+    before :each do
+      request_close_radar
+      a_radar.reload
+    end
+
+    context 'when admin is logged in' do
+      before(:each) do
+        login_with :admin
       end
 
-      it 'should respond the request with an ok status' do
-        expect(response).to have_http_status :ok
-      end
-      it 'the radar should not be active' do
-        expect(a_radar).not_to be_active
+      after(:each) do
+        sign_out :admin
       end
 
-      context 'and you request to close it again' do
-        it 'should return unprocessable entity' do
+      context 'and the radar is active' do
+        before :each do
           request_close_radar
-          expect(response).to have_http_status :unprocessable_entity
+          a_radar.reload
+        end
+
+        it 'should respond the request with an ok status' do
+          expect(response).to have_http_status :ok
+        end
+        it 'the radar should not be active' do
+          expect(a_radar).not_to be_active
+        end
+
+        context 'and you request to close it again' do
+
+          it 'the radar should not be active' do
+            expect(a_radar).not_to be_active
+          end
+
+          it 'should return unprocessable entity' do
+            request_close_radar
+            expect(response).to have_http_status :unprocessable_entity
+          end
         end
       end
     end
+
+    context 'when admin is NOT logged in' do
+
+      it 'the radar should be active' do
+        expect(a_radar).to be_active
+      end
+
+      # Devise redirect to sign in.
+      it { expect(response).to have_http_status 302 }
+    end
+
   end
+
+
+  context 'when requesting all radars' do
+
+    subject { get :index }
+
+    context 'and the admin is not logged in' do
+      # Devise redirect to sign in.
+      it { expect(subject).to have_http_status 302 }
+    end
+
+  end
+
 end

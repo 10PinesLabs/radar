@@ -10,6 +10,7 @@ class VotesController < ApplicationController
   end
 
   private
+
   def create_answers(answer_params)
     answer_params.map do |answer|
       axis_id = answer.require(:axis).require(:id)
