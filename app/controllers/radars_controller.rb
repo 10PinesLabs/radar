@@ -38,17 +38,11 @@ class RadarsController < ApplicationController
   end
 
   def is_logged_in
-    status = :ok
-    status = :unauthorized if !admin_signed_in?
-
-    render json: {is_logged_in: admin_signed_in?}, status: status
+    render_logged_in_status {!admin_signed_in?}
   end
 
   def is_not_logged_in
-    status = :ok
-    status = :unauthorized if admin_signed_in?
-
-    render json: {is_logged_in: admin_signed_in?}, status: status
+    render_logged_in_status {admin_signed_in?}
   end
 
   def signout
@@ -57,6 +51,13 @@ class RadarsController < ApplicationController
   end
 
   private
+
+  def render_logged_in_status
+    status = :ok
+    status = :unauthorized if yield
+
+    render json: {is_logged_in: admin_signed_in?}, status: status
+  end
 
   def create_axis(axis)
     Axis.new(description: axis.require(:description))
