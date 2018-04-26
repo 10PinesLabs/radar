@@ -34,24 +34,23 @@ angular.module('ruben-radar')
                     data: this.getAxisAnswersFrom(scope.afterResult.axes_results, axis),
                     backgroundColor: "rgb(31, 119, 180)",
                     borderColor: "#3cba9f",
-                    //fill:false
                 }, {
                     label: scope.beforeResult.radar.name,
                     data: this.getAxisAnswersFrom(scope.beforeResult.axes_results, axis),
                     backgroundColor: "rgb(255, 127, 14)",
                     borderColor: "rgba(179,11,198,1)",
-                    //fill:false
+
                 }];
 
             },
-            createBarChart: function (scope, axis){
-                axis = axis || axis;
+            createBarChart: function (axis){
+
                 var ctx = document.getElementById('myChart').getContext('2d');
                 new Chart(ctx, {
                     type: 'bar',
                     data: {
                         labels: ['1', '2', '3', '4', '5'],
-                        datasets: this.getData(scope, axis)
+                        datasets: this.getData(this.scope, axis)
                     }
                 });
 

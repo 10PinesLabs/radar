@@ -53,7 +53,7 @@ angular.module('ruben-radar')
                         mainCanvasSvg.selectAll("axis").transition(200).style("fill-opacity", 0.35);
                     })
                     .on("click", function (axis) {
-                        comparisonDirective.createBarChart(comparisonDirective.scope, axis);
+                        comparisonDirective.createBarChart(axis);
                     });
 
                 legend.append("tspan")
