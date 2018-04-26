@@ -1,5 +1,5 @@
 angular.module('ruben-radar')
-    .directive('radarComparision', function (d3, RadarChart, Vector2D, CompareRadarsStrategy, PolygonsDraw) {
+    .directive('radarComparision', function (d3, RadarChart, Vector2D, CompareRadarsStrategy, PolygonsDraw, _) {
         return {
             restrict: 'E',
             replace: false,
@@ -8,10 +8,12 @@ angular.module('ruben-radar')
                 afterResult: '=',
                 steps: '=',
                 maxValue: '=',
-                dataForBarChart: '=',
                 Representation: '='
             },
             link: function (scope, element) {
+
+                this.scope.beforeResult = scope.beforeResult;
+                this.scope.afterResult = scope.afterResult;
 
                 var defaultConfig = {
                     steps: 5,
@@ -26,17 +28,17 @@ angular.module('ruben-radar')
                 new RadarChart(radarSize, config.steps, config.maxValue, config.Representation).draw(element[0], strategy, this);
 
             },
-            getData: function (axis) {
+            getData: function (scope, axis) {
                 return [{
-                    label: 'scope',
-                    data: [12, 19, 3, 17, 6, 3, 7],
-                    backgroundColor: "rgba(26,129,102,0.2)",
+                    label: scope.afterResult.radar.name,
+                    data: this.getAxisAnswersFrom(scope.afterResult.axes_results, axis),
+                    backgroundColor: "rgb(31, 119, 180)",
                     borderColor: "#3cba9f",
                     //fill:false
                 }, {
-                    label: 'oranges',
-                    data: [2, 29, 5, 5, 2, 3, 10],
-                    backgroundColor: "rgba(255,153,0,0.2)",
+                    label: scope.beforeResult.radar.name,
+                    data: this.getAxisAnswersFrom(scope.beforeResult.axes_results, axis),
+                    backgroundColor: "rgb(255, 127, 14)",
                     borderColor: "rgba(179,11,198,1)",
                     //fill:false
                 }];
@@ -49,10 +51,29 @@ angular.module('ruben-radar')
                     type: 'bar',
                     data: {
                         labels: ['1', '2', '3', '4', '5'],
-                        datasets: this.getData(axis)
+                        datasets: this.getData(scope, axis)
                     }
                 });
 
+            },
+            getAxisAnswersFrom: function(axes_result, axis){
+                var votedPointsOfAxis = _.find(axes_result, function(a) {
+                    return a.axis.description === axis.description;
+                }).points;
+                return this.listForDataAcordingTo(votedPointsOfAxis);
+            },
+            listForDataAcordingTo: function(points) {
+                var list = [];
+                var countedPoints = _.countBy(points);
+                for (var n = 1; n <= 5; n++) {
+                    if (_.has(countedPoints, n)) {
+                        list.push(_.get(countedPoints, n));
+                    }
+                    else {
+                        list.push(0);
+                    }
+                }
+                return list;
             }
 
         };
