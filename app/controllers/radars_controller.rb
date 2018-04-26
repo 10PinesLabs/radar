@@ -1,13 +1,15 @@
 class RadarsController < ApplicationController
-  before_action :authenticate_admin!, only: [:create, :close, :index]
+  # before_action :authenticate_admin!, only: [:create, :close, :index]
 
   def create
-    axes = params.require(:axes).map { |axis| create_axis(axis) }
-    name = params.require(:name)
-    description = params.require(:description)
+    check_admin_permission_to_run_block do
+        axes = params.require(:axes).map { |axis| create_axis(axis) }
+        name = params.require(:name)
+        description = params.require(:description)
 
-    radar = Radar.create!(axes: axes, name: name, description: description)
-    render json: radar, status: :created
+        radar = Radar.create!(axes: axes, name: name, description: description)
+        render json: radar, status: :created
+      end
   end
 
   def result
@@ -21,14 +23,18 @@ class RadarsController < ApplicationController
   end
 
   def close
-    radar = Radar.find(params.require(:id))
-    radar.close
-    radar.save
-    render json: radar, status: :ok
+    check_admin_permission_to_run_block do
+      radar = Radar.find(params.require(:id))
+      radar.close
+      radar.save
+      render json: radar, status: :ok
+    end
   end
 
   def index
-    render json: Radar.all, status: :ok
+    check_admin_permission_to_run_block do
+      render json: Radar.all, status: :ok
+    end
   end
 
   def isloggedin
@@ -45,4 +51,5 @@ class RadarsController < ApplicationController
   def create_axis(axis)
     Axis.new(description: axis.require(:description))
   end
+
 end

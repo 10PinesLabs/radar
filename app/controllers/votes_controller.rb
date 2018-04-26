@@ -1,7 +1,7 @@
 class VotesController < ApplicationController
   def create
     if admin_signed_in?
-      render json: {}, status: :unauthorized
+      render json: {error: 'not user'}, status: :unauthorized
     else
       answers = create_answers(params.require(:answers))
       vote = Vote.create!(answers: answers)

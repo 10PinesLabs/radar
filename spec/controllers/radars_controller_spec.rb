@@ -108,8 +108,7 @@ RSpec.describe RadarsController, type: :controller do
         expect(Radar.count).to be 0
       end
 
-      # Devise redirect to sign in.
-      it { expect(subject).to have_http_status 302 }
+      it { expect(subject).to have_http_status :unauthorized }
 
     end
 
@@ -208,8 +207,7 @@ RSpec.describe RadarsController, type: :controller do
         expect(a_radar).to be_active
       end
 
-      # Devise redirect to sign in.
-      it { expect(response).to have_http_status 302 }
+      it { expect(response).to have_http_status :unauthorized }
     end
 
   end
@@ -220,8 +218,7 @@ RSpec.describe RadarsController, type: :controller do
     subject { get :index }
 
     context 'and the admin is not logged in' do
-      # Devise redirect to sign in.
-      it { expect(subject).to have_http_status 302 }
+      it { expect(subject).to have_http_status :unauthorized }
     end
 
   end

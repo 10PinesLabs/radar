@@ -21,9 +21,9 @@ Rails.application.routes.draw do
   # pero hay que estudiar mejor que devuelve la gema devise para poder manejarlo desde ahi.
   # El problema surge que parado desde angular no encontre informacion para decidir si estoy
   # loggeado o no.
-  get '/radars', to: 'application#check_admin_permission'
-  get '/createRadar', to: 'application#check_admin_permission'
-  get '/radars/:radar_id/vote', to: 'application#check_not_admin_permission'
+  get '/radars', to: 'application#check_admin_permission_to_see_page'
+  get '/createRadar', to: 'application#check_admin_permission_to_see_page'
+  get '/radars/:radar_id/vote', to: 'application#check_not_admin_permission_to_see_page'
 
   root to: 'application#angular'
   match '*path' => 'application#angular', via: %i[get post]
