@@ -12,6 +12,9 @@ angular.module('ruben-radar')
                 Representation: '='
             },
             link: function (scope, element) {
+                scope.getData = function(axis) {
+                    console.log("Click!")
+                }
                 var defaultConfig = {
                     steps: 5,
                     maxValue: 5,
@@ -22,7 +25,8 @@ angular.module('ruben-radar')
                 var strategy = new CompareRadarsStrategy(scope.beforeResult, scope.afterResult);
                 var config = _.merge(defaultConfig, scope);
                 var radarSize = new Vector2D(500, 500);
-                new RadarChart(radarSize, config.steps, config.maxValue, config.Representation).draw(element[0], strategy);
+                new RadarChart(radarSize, config.steps, config.maxValue, config.Representation).draw(element[0], strategy, this);
+                console.log(this)
             }
         };
     });

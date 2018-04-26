@@ -3,7 +3,7 @@
  */
 angular.module('ruben-radar')
     .factory('AxesDraw', function AxesDraw(Vector2D) {
-        return function (drawingStrategy) {
+        return function (drawingStrategy, comparisonDirective) {
             var self = this;
             self.axes = drawingStrategy.axes();
 
@@ -45,8 +45,15 @@ angular.module('ruben-radar')
                     .attr("y", function (axis, axisNumber) {
                         return self.textPosition(radarDraw, axisNumber).y;
                     })
+                    .on('mouseover', function () {
+                        mainCanvasSvg.selectAll("axis").transition(200).style("fill-opacity", 0.1);
+                        d3.select(this).transition(200).style("fill-opacity", .7);
+                    })
+                    .on('mouseout', function () {
+                        mainCanvasSvg.selectAll("axis").transition(200).style("fill-opacity", 0.35);
+                    })
                     .on("click", function (axis) {
-                        return $window.open('templates/radars/axis.html');
+                        return comparisonDirective.getData(axis);
                     });
 
                 legend.append("tspan")
