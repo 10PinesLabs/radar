@@ -13,17 +13,10 @@ Rails.application.routes.draw do
     end
 
     post '/radars', to: 'radars#create'
-    match '/isLoggedIn' => 'radars#isloggedin', via: %i[get]
+    match '/isLoggedIn' => 'radars#is_logged_in', via: %i[get]
+    match '/isNotLoggedIn' => 'radars#is_not_logged_in', via: %i[get]
     match '/signOut' => 'radars#signout', via: %i[get]
   end
-
-  # Estas validaciones deberian estar del lado de angular porque son del frontend,
-  # pero hay que estudiar mejor que devuelve la gema devise para poder manejarlo desde ahi.
-  # El problema surge que parado desde angular no encontre informacion para decidir si estoy
-  # loggeado o no.
-  get '/radars', to: 'application#check_admin_permission_to_see_page'
-  get '/createRadar', to: 'application#check_admin_permission_to_see_page'
-  get '/radars/:radar_id/vote', to: 'application#check_not_admin_permission_to_see_page'
 
   root to: 'application#angular'
   match '*path' => 'application#angular', via: %i[get post]

@@ -37,8 +37,18 @@ class RadarsController < ApplicationController
     end
   end
 
-  def isloggedin
-    render json: {is_logged_in: admin_signed_in?}, status: :ok
+  def is_logged_in
+    status = :ok
+    status = :unauthorized if !admin_signed_in?
+
+    render json: {is_logged_in: admin_signed_in?}, status: status
+  end
+
+  def is_not_logged_in
+    status = :ok
+    status = :unauthorized if admin_signed_in?
+
+    render json: {is_logged_in: admin_signed_in?}, status: status
   end
 
   def signout

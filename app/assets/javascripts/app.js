@@ -9,7 +9,6 @@ angular
         'ngResource',
         'ngCookies'
     ])
-
     .config(function ($routeProvider, $compileProvider) {
 
         var getRadar = function ($route, RadarService) {
@@ -24,6 +23,14 @@ angular
 
         var getAll = function ($route, RadarService) {
             return RadarService.getAll();
+        };
+
+        var isAdminLoggedIn = function ($route, RadarService) {
+            return RadarService.isLoggedIn();
+        };
+
+        var isAdminNotLoggedIn = function ($route, RadarService) {
+            return RadarService.isNotLoggedIn();
         };
 
         //For downloading csv file in resultsController and going from ruben's picture to results
@@ -43,13 +50,17 @@ angular
             })
             .when('/createRadar', {
                 templateUrl: 'templates/radars/radarCreator.html',
-                controller: 'RadarCreatorController'
+                controller: 'RadarCreatorController',
+                resolve: {
+                    isLoggedIn: isAdminLoggedIn
+                }
             })
             .when('/radars/:radar_id/vote', {
                 templateUrl: 'templates/radars/vote.html',
                 controller: 'VoteController',
                 resolve: {
-                    radar: getRadar
+                    radar: getRadar,
+                    isNotLoggedIn: isAdminNotLoggedIn
                 }
             })
             .when('/radars/:radar_id/results', {
@@ -80,17 +91,6 @@ angular
                     }
                 }
             })
-            .when('/createRadar', {
-                templateUrl: 'templates/radars/radarCreator.html',
-                controller: 'RadarCreatorController',
-                resolve: {
-                    isLoggedIn: function ($route, RadarService) {
-                        return RadarService.isLoggedIn().then( function(data, $location){
-                            return data;
-                        });
-                    }
-                }
-            })
             .when('/404', {
                 templateUrl: '404.html'
             })
@@ -115,4 +115,7 @@ angular
                 enabled: true,
                 requireBase: false
             });
+    })
+    .config(function ($httpProvider){
+        $httpProvider.interceptors.push('radarInterceptor');
     });

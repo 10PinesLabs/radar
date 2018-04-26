@@ -31,6 +31,10 @@ angular.module('ruben-radar')
             return Radar.isLoggedIn().$promise;
         };
 
+        self.isNotLoggedIn = function isLoggedIn(){
+            return Radar.isNotLoggedIn().$promise;
+        };
+
         self.signOut = function signOut(){
             return Radar.signOut().$promise;
         };
