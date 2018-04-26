@@ -1,21 +1,22 @@
 angular.module('ruben-radar')
-    .controller('loginController', function ($scope, $mdDialog) {
+    .controller('loginController', function ($scope, $mdDialog, RadarService, $location) {
 
-        $scope.email = '';
-        $scope.password = '';
+        $scope.jsonToLogin = {
+            admin: {
+                email: '',
+                password: '',
+                remember_me: 0
+            }
+        };
 
-        $scope.hide = function() {
+        $scope.hide = function hide() {
             $mdDialog.hide();
         };
 
-        $scope.cancel = function() {
-            $mdDialog.cancel();
-        };
-
-        $scope.answer = function() {
-            $mdDialog.hide({
-                emal: $scope.email,
-                password: $scope.password
+        $scope.login = function login() {
+            $scope.hide();
+            RadarService.login($scope.jsonToLogin).then(function(){
+                $location.path( "/radars" );
             });
         };
     });

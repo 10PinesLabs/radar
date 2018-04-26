@@ -1,5 +1,5 @@
 angular.module('ruben-radar')
-    .controller('RadarCreatorController', function ($scope, $cookies, $window, $location, _, radarFactory, RadarService, ngToast) {
+    .controller('RadarCreatorController', function ($scope, $cookies, $window, $location, _, radarFactory, RadarService) {
         $scope.radar = radarFactory.newRadar();
         $scope.axisInput = '';
 
@@ -35,13 +35,12 @@ angular.module('ruben-radar')
         };
 
         $scope.createRadar = function createRadar() {
-            RadarService.createRadar($scope.radar).then(function(response) {
-                //ngToast.success('Se ha creado el radar con éxito.');
+            RadarService.createRadar($scope.radar).then(function() {
                 $scope.radar = radarFactory.newRadar();
             });
-            //$window.location.href = '/radars';
-            //$scope.radar = radarFactory.newRadar();
-            //$scope.createRadarForm.$setUntouched();
+            $window.location.href = '/radars';
+            $scope.radar = radarFactory.newRadar();
+            $scope.createRadarForm.$setUntouched();
         };
 
         $scope.logout = function logout() {

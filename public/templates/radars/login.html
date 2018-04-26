@@ -13,7 +13,7 @@
 
         <md-input-container>
             <label>Email</label>
-            <input required name="email" ng-model="email">
+            <input required name="email" ng-model="jsonToLogin.admin.email">
             <div ng-messages="loginForm.description.$error">
                 <div ng-message="required">El email es obligatorio.</div>
             </div>
@@ -21,15 +21,17 @@
 
         <md-input-container>
             <label>Password</label>
-            <input type="password" required name="password" ng-model="password">
+            <input type="password" required name="password" ng-model="jsonToLogin.admin.password">
             <div ng-messages="loginForm.description.$error">
                 <div ng-message="required">El email es obligatorio.</div>
             </div>
         </md-input-container>
 
+        {{admin.email}}
+
         <md-dialog-actions layout="row">
             <span flex></span>
-            <md-button ng-click="answer('useful')">
+            <md-button ng-click="login()">
                 Login
             </md-button>
         </md-dialog-actions>

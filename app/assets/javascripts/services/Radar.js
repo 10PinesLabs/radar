@@ -9,6 +9,7 @@ angular.module('ruben-radar')
             'create': {method: 'POST', url: backendUrl + 'radars'},
             'isLoggedIn': {method: 'GET', url: backendUrl + 'isLoggedIn'},
             'isNotLoggedIn': {method: 'GET', url: backendUrl + 'isNotLoggedIn'},
+            'login': {method: 'POST', url: backendUrl + '/admins/sign_in'},
             'signOut': {method: 'GET', url: backendUrl + 'signOut'}
         });
     });
