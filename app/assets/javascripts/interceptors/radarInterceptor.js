@@ -13,10 +13,10 @@ angular.module('ruben-radar')
                     var $mdDialog = $injector.get('$mdDialog');
                     $mdDialog.show(
                       $mdDialog.alert()
-                          .clickOutsideToClose(false)
+                          .clickOutsideToClose(true)
                           .title('Uh oh!')
                           .textContent('No tenes permisos para acceder a este sitio.')
-                          .ok('Salir')
+                          .ok('Ok')
                     );
                     $location.path('/');
                 }
