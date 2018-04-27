@@ -12,6 +12,15 @@ angular.module('ruben-radar')
             RadarService.signOut();
         };
 
+        $scope.copyLink = function copyLink(radar){
+            var textArea = document.createElement("textarea");
+            textArea.value = $scope.radarLink(radar);
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("Copy");
+            document.body.removeChild(textArea);
+        };
+
         $scope.radarLink = function radarLink(radar){
             return $window.location.host + '/radars/' + radar.id.toString() + '/vote';
         }
