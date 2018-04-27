@@ -11,28 +11,35 @@
             </div>
         </md-toolbar>
 
-        <md-input-container>
-            <label>Email</label>
-            <input required
-                   name="email"
-                   ng-model="jsonToLogin.admin.email"
-                   ng-keyup="$event.keyCode == 13 && login()">
-            <div ng-messages="loginForm.description.$error">
-                <div ng-message="required">El email es obligatorio.</div>
-            </div>
-        </md-input-container>
+        <div layout="column" style="padding: 5px; margin: 5px">
 
-        <md-input-container>
-            <label>Password</label>
-            <input type="password"
-                   required
-                   name="password"
-                   ng-model="jsonToLogin.admin.password"
-                   ng-keyup="$event.keyCode == 13 && login()">
-            <div ng-messages="loginForm.description.$error">
-                <div ng-message="required">El email es obligatorio.</div>
+            <div>
+                <md-input-container>
+                    <label>Email</label>
+                    <input required
+                           name="email"
+                           ng-model="jsonToLogin.admin.email"
+                           ng-keyup="$event.keyCode == 13 && login()">
+                    <div ng-messages="loginForm.description.$error">
+                        <div ng-message="required">El email es obligatorio.</div>
+                    </div>
+                </md-input-container>
             </div>
-        </md-input-container>
+
+            <div>
+                <md-input-container>
+                    <label>Password</label>
+                    <input type="password"
+                           required
+                           name="password"
+                           ng-model="jsonToLogin.admin.password"
+                           ng-keyup="$event.keyCode == 13 && login()">
+                    <div ng-messages="loginForm.description.$error">
+                        <div ng-message="required">El email es obligatorio.</div>
+                    </div>
+                </md-input-container>
+            </div>
+        </div>
 
         <md-dialog-actions layout="row">
             <span flex></span>

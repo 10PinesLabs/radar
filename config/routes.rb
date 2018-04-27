@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
 
   scope path: '/api' do
-    devise_for :admins
+    get '/admins/sign_in', to: 'application#angular'
+    devise_for :admins, only: [:sessions]
 
     resources :radars, only: %i[show index] do
       resources :votes, only: [:create]
@@ -13,6 +14,7 @@ Rails.application.routes.draw do
     end
 
     post '/radars', to: 'radars#create'
+    #post 'admins/sign_in', to: 'devise/sessions#create'
     match '/admins/isLoggedIn' => 'radars#is_logged_in', via: %i[get]
     match '/admins/isNotLoggedIn' => 'radars#is_not_logged_in', via: %i[get]
     match '/admins/signOut' => 'radars#signout', via: %i[get]
