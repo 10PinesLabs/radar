@@ -19,6 +19,12 @@
                 Crear radar
             </md-button>
 
+            <md-button href="/radars/selectToCompare"
+                       class="md-raised md-primary"
+                       style="background-color: #7CB342">
+                Comparar Radares
+            </md-button>
+
 
             <md-list-item class="md-3-line" ng-repeat="radar in radars" ng-click="null"
                           href="/radars/{{radar.id}}/results">
