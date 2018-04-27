@@ -8,12 +8,14 @@ angular.module('ruben-radar')
                 afterResult: '=',
                 steps: '=',
                 maxValue: '=',
-                Representation: '='
+                Representation: '=',
+                chart: "="
             },
             link: function (scope, element) {
 
                 this.scope.beforeResult = scope.beforeResult;
                 this.scope.afterResult = scope.afterResult;
+
 
                 var defaultConfig = {
                     steps: 5,
@@ -44,9 +46,11 @@ angular.module('ruben-radar')
 
             },
             createBarChart: function (axis){
-
+                if (this.scope.chart !== "="){
+                    this.scope.chart.destroy();
+                }
                 var ctx = document.getElementById('myChart').getContext('2d');
-                new Chart(ctx, {
+                this.scope.chart = new Chart(ctx, {
                     type: 'bar',
                     data: {
                         labels: ['1', '2', '3', '4', '5'],
