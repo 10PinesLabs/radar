@@ -12,7 +12,7 @@ angular.module('ruben-radar')
             $scope.axisInput = '';
         };
 
-        $scope.removeAxis =  function removeAxis(axis){
+        $scope.removeAxis = function removeAxis(axis){
             $scope.radar.removeAxis(axis);
         };
 
