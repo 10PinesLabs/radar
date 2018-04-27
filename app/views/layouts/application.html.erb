@@ -1,23 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <base href="/" />
   <title>RubenRadar</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css?family=Roboto');
-  </style>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <%= stylesheet_link_tag    'application', media: 'all' %>
-  <%= javascript_include_tag 'application' %>
-  <%= csrf_meta_tags %>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body style="height: auto" ng-app="ruben-radar">
-    <toast></toast>
-  <div class="container">
-      <div ng-view=""></div>
-  </div>
+<body>
+  <%= yield %>
+
+  <% if notice %><p class="alert alert-info"><%= notice %></p><% end %>
+  <% if alert %><p class="alert alert-warning"><%= alert %></p><% end %>
 </body>
 </html>

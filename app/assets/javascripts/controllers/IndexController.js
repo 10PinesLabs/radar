@@ -1,13 +1,18 @@
 angular.module('ruben-radar')
-    .controller('IndexController', function ($scope, $mdDialog, _, radars) {
+    .controller('IndexController', function ($scope, $window, RadarService, $mdDialog, _, radars, ngToast) {
         $scope.radars = _.reverse(radars);
-        $scope.radarsDate = function (radar) {
-            var date = radar.created_at
-            return date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear();
-        }
-        $scope.date = function (radar) {
-            return ;
-        }
 
-    })
-;
+        $scope.closeRadar = function closeRadar(radar){
+            RadarService.closeRadar(radar).then(function () {
+                ngToast.create('Se ha cerrado el radar con éxito');
+            });
+        };
+
+        $scope.logout = function logout() {
+            RadarService.signOut();
+        };
+
+        $scope.radarLink = function radarLink(radar){
+            return $window.location.host + '/radars/' + radar.id.toString() + '/vote';
+        }
+    });

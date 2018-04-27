@@ -1,0 +1,51 @@
+<md-dialog aria-label="login" md-theme="pine-green">
+    <form name="loginForm" ng-cloak>
+        <md-toolbar>
+            <div flex></div>
+            <div class="md-toolbar-tools"
+                 layout="column"
+                 layout-align="end start">
+                <div style="font-size: larger">
+                    <h1>Bienvenido</h1>
+                </div>
+            </div>
+        </md-toolbar>
+
+        <div layout="column" style="padding: 5px; margin: 5px">
+
+            <div>
+                <md-input-container>
+                    <label>Email</label>
+                    <input required
+                           name="email"
+                           ng-model="jsonToLogin.admin.email"
+                           ng-keyup="$event.keyCode == 13 && login()">
+                    <div ng-messages="loginForm.description.$error">
+                        <div ng-message="required">El email es obligatorio.</div>
+                    </div>
+                </md-input-container>
+            </div>
+
+            <div>
+                <md-input-container>
+                    <label>Password</label>
+                    <input type="password"
+                           required
+                           name="password"
+                           ng-model="jsonToLogin.admin.password"
+                           ng-keyup="$event.keyCode == 13 && login()">
+                    <div ng-messages="loginForm.description.$error">
+                        <div ng-message="required">El email es obligatorio.</div>
+                    </div>
+                </md-input-container>
+            </div>
+        </div>
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button ng-click="login()">
+                Login
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

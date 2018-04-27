@@ -1,5 +1,5 @@
 angular.module('ruben-radar')
-    .controller('SelectToCompareController', function ($scope, $location, $filter, _, radars) {
+    .controller('SelectToCompareController', function ($scope, $location, $filter, _, radars, RadarService) {
         var closedRadars = _.filter(radars, function (radar) {
             return !radar.active;
         });
@@ -7,6 +7,10 @@ angular.module('ruben-radar')
 
         $scope.beforeRadar = undefined;
         $scope.afterRadar = _.last(closedRadars);
+
+        $scope.logout = function logout() {
+            RadarService.signOut();
+        };
 
         $scope.compareChosenRadars = function () {
             $location.path('/radars/compare').search({

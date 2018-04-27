@@ -6,9 +6,9 @@ angular
         'ngAria',
         'ngSanitize',
         'ngToast',
-        'ngResource'
+        'ngResource',
+        'ngCookies'
     ])
-
     .config(function ($routeProvider, $compileProvider) {
 
         var getRadar = function ($route, RadarService) {
@@ -25,16 +25,21 @@ angular
             return RadarService.getAll();
         };
 
+        var isAdminLoggedIn = function ($route, RadarService) {
+            return RadarService.isLoggedIn();
+        };
+
+        var isAdminNotLoggedIn = function ($route, RadarService) {
+            return RadarService.isNotLoggedIn();
+        };
+
         //For downloading csv file in resultsController and going from ruben's picture to results
         $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|blob):/);
 
         $routeProvider
             .when('/', {
                 templateUrl: 'templates/radars/landing.html',
-            })
-            .when('/createRadar', {
-                templateUrl: 'templates/radars/radarCreator.html',
-                controller: 'RadarCreatorController'
+                controller: 'landingController'
             })
             .when('/radars', {
                 templateUrl: 'templates/radars/radarsIndex.html',
@@ -43,18 +48,19 @@ angular
                     radars: getAll
                 }
             })
+            .when('/createRadar', {
+                templateUrl: 'templates/radars/radarCreator.html',
+                controller: 'RadarCreatorController',
+                resolve: {
+                    isLoggedIn: isAdminLoggedIn
+                }
+            })
             .when('/radars/:radar_id/vote', {
                 templateUrl: 'templates/radars/vote.html',
                 controller: 'VoteController',
                 resolve: {
-                    radar: getRadar
-                }
-            })
-            .when('/radars/:radar_id/manage', {
-                templateUrl: 'templates/radars/manage.html',
-                controller: 'CloseRadarController',
-                resolve: {
-                    radar: getRadar
+                    radar: getRadar,
+                    isNotLoggedIn: isAdminNotLoggedIn
                 }
             })
             .when('/radars/:radar_id/results', {
@@ -109,4 +115,7 @@ angular
                 enabled: true,
                 requireBase: false
             });
+    })
+    .config(function ($httpProvider){
+        $httpProvider.interceptors.push('radarInterceptor');
     });

@@ -26,4 +26,21 @@ angular.module('ruben-radar')
         self.getActiveRadars = function getActiveRadar(){
             return self.Radar.getAll().filter(radar => radar.active);
         };
+
+        self.isLoggedIn = function isLoggedIn(){
+            return Radar.isLoggedIn().$promise;
+        };
+
+        self.isNotLoggedIn = function isLoggedIn(){
+            return Radar.isNotLoggedIn().$promise;
+        };
+
+        self.login = function login(admin){
+            return Radar.login(admin).$promise;
+        };
+
+        self.signOut = function signOut(){
+            return Radar.signOut().$promise;
+        };
+
     });

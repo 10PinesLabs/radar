@@ -1,8 +1,7 @@
 angular.module('ruben-radar')
-    .controller('RadarCreatorController', function ($scope, _, radarFactory, RadarService, ngToast) {
+    .controller('RadarCreatorController', function ($scope, $cookies, $window, $location, _, radarFactory, RadarService) {
         $scope.radar = radarFactory.newRadar();
         $scope.axisInput = '';
-        $scope.axesAmount = 0;
 
         $scope.isAxisEmpty = function isAxisEmpty() {
             return _.isEmpty($scope.axisInput);
@@ -11,17 +10,10 @@ angular.module('ruben-radar')
         $scope.addAxis = function addAxis() {
             $scope.radar.addAxis($scope.axisInput);
             $scope.axisInput = '';
-            this.setFocusOfAxisInput();
-            $scope.axesAmount ++;
         };
 
-        $scope.setFocusOfAxisInput = function () {
-            document.getElementById('axisInputId').focus();
-        };
-
-        $scope.removeAxis =  function removeAxis(axis){
+        $scope.removeAxis = function removeAxis(axis){
             $scope.radar.removeAxis(axis);
-            $scope.axesAmount --;
         };
 
         $scope.radarIsInvalid = function radarIsInvalid() {
@@ -43,12 +35,16 @@ angular.module('ruben-radar')
         };
 
         $scope.createRadar = function createRadar() {
-            window.location.href = '/radars';
-            RadarService.createRadar($scope.radar).then(function () {
-                ngToast.success('Se ha creado el radar con éxito.');
+            RadarService.createRadar($scope.radar).then(function() {
                 $scope.radar = radarFactory.newRadar();
-                });
+            });
+            $window.location.href = '/radars';
             $scope.radar = radarFactory.newRadar();
             $scope.createRadarForm.$setUntouched();
         };
+
+        $scope.logout = function logout() {
+            RadarService.signOut();
+        }
+
     });
