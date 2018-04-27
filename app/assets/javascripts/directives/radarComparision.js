@@ -69,14 +69,17 @@ angular.module('ruben-radar')
                 var list = [];
                 var countedPoints = _.countBy(points);
                 for (var n = 1; n <= 5; n++) {
-                    if (_.has(countedPoints, n)) {
-                        list.push(_.get(countedPoints, n));
-                    }
-                    else {
-                        list.push(0);
-                    }
+                    list.push(this.amountOfPeopleThatVoted(n, countedPoints))
                 }
                 return list;
+            },
+            amountOfPeopleThatVoted: function(n, countedPoints) {
+                if (_.has(countedPoints, n)) {
+                    return (_.get(countedPoints, n));
+                }
+                else {
+                    return 0;
+                }
             }
 
         };
