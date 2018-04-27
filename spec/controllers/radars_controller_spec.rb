@@ -28,18 +28,18 @@ RSpec.describe RadarsController, type: :controller do
     }
   end
 
-  context 'When requesting to create a new radar' do
 
-    subject { post :create, radar_params }
+  context 'When admin is logged in' do
+    before(:each) do
+      login_with :admin
+    end
 
-    context 'and the admin is logged in' do
-      before(:each) do
-        login_with :admin
-      end
+    after(:each) do
+      sign_out :admin
+    end
 
-      after(:each) do
-        sign_out :admin
-      end
+    context 'and requesting to create a new radar' do
+      subject { post :create, radar_params }
 
       context 'with axes' do
         let(:radar_params) {
@@ -97,7 +97,55 @@ RSpec.describe RadarsController, type: :controller do
       end
     end
 
-    context 'and the admin is NOT logged in' do
+    context 'and requesting to close a radar' do
+      def request_close_radar
+        post :close, {id: a_radar.id}
+      end
+
+      let!(:a_radar) { create :radar }
+
+      before :each do
+        request_close_radar
+        a_radar.reload
+      end
+
+      before(:each) do
+        login_with :admin
+      end
+
+      after(:each) do
+        sign_out :admin
+      end
+
+      context 'and the radar is active' do
+
+        it 'should respond the request with an ok status' do
+          expect(response).to have_http_status :ok
+        end
+
+        it 'the radar should not be active' do
+          expect(a_radar).not_to be_active
+        end
+
+        context 'and you request to close it again' do
+
+          it 'the radar should not be active' do
+            expect(a_radar).not_to be_active
+          end
+
+          it 'should return unprocessable entity' do
+            request_close_radar
+            expect(response).to have_http_status :unprocessable_entity
+          end
+        end
+      end
+    end
+  end
+
+  context 'when admin is NOT logged in' do
+
+    context 'and requesting to create a new radar' do
+      subject { post :create, radar_params }
 
       let(:radar_params) {
         {name: 'New Radar', description: 'Radar 2015', axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {description: 'Una Arista guardada'}]}
@@ -109,10 +157,35 @@ RSpec.describe RadarsController, type: :controller do
       end
 
       it { expect(subject).to have_http_status :unauthorized }
+    end
+
+    context 'and requesting to close a radar' do
+      def request_close_radar
+        post :close, {id: a_radar.id}
+      end
+
+      let!(:a_radar) { create :radar }
+
+      before :each do
+        request_close_radar
+        a_radar.reload
+      end
+
+      it 'the radar should be active' do
+        expect(a_radar).to be_active
+      end
+
+      it { expect(response).to have_http_status :unauthorized }
 
     end
 
+    context 'and requesting all radars' do
+      subject { get :index }
+      it { expect(subject).to have_http_status :unauthorized }
+
+    end
   end
+
 
   context 'When requesting to get the results of a radar' do
     let!(:a_radar) { create :radar }
@@ -150,77 +223,6 @@ RSpec.describe RadarsController, type: :controller do
     it 'should return the radar' do
       expect(JSON.parse(response.body)).to eq serialized_radar(a_radar)
     end
-  end
-
-  context 'When requesting to close a radar' do
-
-    def request_close_radar
-      post :close, {id: a_radar.id}
-    end
-
-    let!(:a_radar) { create :radar }
-
-    before :each do
-      request_close_radar
-      a_radar.reload
-    end
-
-    context 'when admin is logged in' do
-      before(:each) do
-        login_with :admin
-      end
-
-      after(:each) do
-        sign_out :admin
-      end
-
-      context 'and the radar is active' do
-        before :each do
-          request_close_radar
-          a_radar.reload
-        end
-
-        it 'should respond the request with an ok status' do
-          expect(response).to have_http_status :ok
-        end
-        it 'the radar should not be active' do
-          expect(a_radar).not_to be_active
-        end
-
-        context 'and you request to close it again' do
-
-          it 'the radar should not be active' do
-            expect(a_radar).not_to be_active
-          end
-
-          it 'should return unprocessable entity' do
-            request_close_radar
-            expect(response).to have_http_status :unprocessable_entity
-          end
-        end
-      end
-    end
-
-    context 'when admin is NOT logged in' do
-
-      it 'the radar should be active' do
-        expect(a_radar).to be_active
-      end
-
-      it { expect(response).to have_http_status :unauthorized }
-    end
-
-  end
-
-
-  context 'when requesting all radars' do
-
-    subject { get :index }
-
-    context 'and the admin is not logged in' do
-      it { expect(subject).to have_http_status :unauthorized }
-    end
-
   end
 
 end

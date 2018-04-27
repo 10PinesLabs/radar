@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
     '/radars'
   end
 
-  def check_admin_permission_to_run_block
+  def check_admin_permission
     if admin_signed_in?
       yield
     else

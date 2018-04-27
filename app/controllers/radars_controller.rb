@@ -2,7 +2,7 @@ class RadarsController < ApplicationController
   # before_action :authenticate_admin!, only: [:create, :close, :index]
 
   def create
-    check_admin_permission_to_run_block do
+    check_admin_permission do
         axes = params.require(:axes).map { |axis| create_axis(axis) }
         name = params.require(:name)
         description = params.require(:description)
@@ -23,7 +23,7 @@ class RadarsController < ApplicationController
   end
 
   def close
-    check_admin_permission_to_run_block do
+    check_admin_permission do
       radar = Radar.find(params.require(:id))
       radar.close
       radar.save
@@ -32,7 +32,7 @@ class RadarsController < ApplicationController
   end
 
   def index
-    check_admin_permission_to_run_block do
+    check_admin_permission do
       render json: Radar.all, status: :ok
     end
   end
