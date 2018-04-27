@@ -12,9 +12,9 @@ angular.module('ruben-radar')
                 mainCanvasSvg.attr("viewBox", boxMeasures);
             };
 
-            this.draw = function (parentElement, strategy) {
+            this.draw = function (parentElement, strategy, comparisonDirective) {
                 var scaleDraw = new ScaleDraw(steps, maxValue);
-                var axesDraw = new AxesDraw(strategy);
+                var axesDraw = new AxesDraw(strategy, comparisonDirective);
                 var representation = new Representation(strategy);
                 var radarReferenceLegend = new RadarReferenceLegend(strategy);
                 var radarDraw = new RadarDraw(radarSize, scaleDraw, axesDraw, representation);

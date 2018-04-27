@@ -12,6 +12,7 @@
 //
 //= require lodash/dist/lodash
 //= require d3/d3
+//= require chart.js/dist/Chart.min.js
 //= require angular
 //= require angular-resource
 //= require angular-material
