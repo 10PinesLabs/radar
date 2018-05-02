@@ -1,5 +1,22 @@
 <div class="box-container">
+
     <md-content class="main-box" layout-padding md-theme="pine-green">
+
+        <md-fab-speed-dial md-open="scope.isOpen"
+                           class="md-fling md-fab-bottom-right md-hover-full speed-dial"
+                           style="position: fixed !important;">
+
+            <md-fab-trigger>
+                <md-button aria-label="CreateRadar"
+                           class="md-fab md-warn"
+                           title="Crear Radar"
+                           ng-href="/createRadar">
+                    <md-icon class="menu-icon" md-svg-src="images/add-icon.svg"></md-icon>
+                </md-button>
+            </md-fab-trigger>
+
+        </md-fab-speed-dial>
+
         <md-toolbar>
             <div class="md-toolbar-tools">
                 <span>Radares</span>
@@ -14,10 +31,6 @@
 
         <div layout="column"
              md-whiteframe="3">
-            <md-button href="/createRadar"
-                    class="md-raised md-primary">
-                Crear radar
-            </md-button>
 
             <md-button href="/radars/selectToCompare"
                        class="md-raised md-primary"
@@ -54,9 +67,16 @@
                             <md-button class="md-icon-button launch"
                                        ng-click="copyLink(radar)"
                                        aria-label="CopyLink"
-                                       title="Copiar al portapapeles"
+                                       title="Copiar link para votar al portapapeles"
                                        ng-if="radar.active">
                                 <md-icon md-svg-icon="images/clipboard-icon.svg"></md-icon>
+                            </md-button>
+
+                            <md-button class="md-icon-button launch"
+                                       ng-href="/radars/{{radar.id}}/results"
+                                       aria-label="RadarResults"
+                                       title="Resultados">
+                                <md-icon md-svg-icon="images/open-icon.svg"></md-icon>
                             </md-button>
 
                             <md-button class="md-icon-button launch"
@@ -65,13 +85,6 @@
                                        title="Cerrar"
                                        ng-if="radar.active">
                                 <md-icon md-svg-icon="images/close-icon.svg"></md-icon>
-                            </md-button>
-
-                            <md-button class="md-icon-button launch"
-                                       ng-href="/radars/{{radar.id}}/results"
-                                       aria-label="RadarResults"
-                                       title="Resultados">
-                                <md-icon md-svg-icon="images/open-icon.svg"></md-icon>
                             </md-button>
 
                         </md-card-actions>
