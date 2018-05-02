@@ -94,11 +94,10 @@ p {
 }
 
 .hide-description {
-  white-space: nowrap;
-  width: 200px;
-  overflow: hidden;
   text-overflow: ellipsis;
-
+  white-space: nowrap;
+  overflow: hidden;
+  width: 750px;
 }
 
 .white-space-pre-line {
