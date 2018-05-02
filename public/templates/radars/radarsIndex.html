@@ -2,18 +2,35 @@
 
     <md-content class="main-box" layout-padding md-theme="pine-green">
 
-        <md-fab-speed-dial md-open="scope.isOpen"
-                           class="md-fling md-fab-bottom-right md-hover-full speed-dial"
+        <md-fab-speed-dial md-open="isOpen" md-direction="up"
+                           class="md-scale md-fab-bottom-right md-hover-full speed-dial"
                            style="position: fixed !important;">
 
             <md-fab-trigger>
-                <md-button aria-label="CreateRadar"
+                <md-button aria-label="menu"
                            class="md-fab md-warn"
+                           title="Menu">
+                    <md-icon md-svg-src="images/menu-icon.svg"></md-icon>
+                </md-button>
+            </md-fab-trigger>
+
+            <md-fab-actions>
+
+                <md-button aria-label="CreateRadar"
+                           class="md-fab md-mini"
                            title="Crear Radar"
                            ng-href="/createRadar">
                     <md-icon class="menu-icon" md-svg-src="images/add-icon.svg"></md-icon>
                 </md-button>
-            </md-fab-trigger>
+
+                <md-button aria-label="CompareRadar"
+                           class="md-fab md-mini"
+                           title="Comparar Radares"
+                           ng-href="/radars/selectToCompare">
+                    <b>¿=?</b>
+                </md-button>
+            </md-fab-actions>
+
 
         </md-fab-speed-dial>
 
@@ -31,12 +48,6 @@
 
         <div layout="column"
              md-whiteframe="3">
-
-            <md-button href="/radars/selectToCompare"
-                       class="md-raised md-primary"
-                       style="background-color: #7CB342">
-                Comparar Radares
-            </md-button>
 
             <md-list class="md-dense">
                 <md-list-item class="md-3-line"

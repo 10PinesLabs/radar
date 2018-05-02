@@ -1,5 +1,6 @@
 angular.module('ruben-radar')
     .controller('IndexController', function ($scope, $window, RadarService, $mdDialog, _, radars, ngToast) {
+        $scope.isOpen = false;
         $scope.radars = _.reverse(radars);
 
         $scope.closeRadar = function closeRadar(radar){
@@ -28,5 +29,6 @@ angular.module('ruben-radar')
 
         $scope.openMenu = function openMenu($mdOpenMenu, event){
             $mdOpenMenu(event);
-        }
+        };
+
     });
