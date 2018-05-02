@@ -53,13 +53,15 @@
                               ng-repeat="radar in radars">
 
                     <md-card flex>
-                        <md-card-header>
-                            <md-card-header-text>
-                                <span class="md-head">{{radar.created_at | date:'dd MMM yyyy'}}</span>
-                                <span class="md-subhead" ng-if="radar.active">(Abierto)</span>
-                                <span class="md-subhead" ng-if="!radar.active">(Cerrado)</span>
-                            </md-card-header-text>
-                        </md-card-header>
+                        <md-toolbar style="background-color: #C8E6C9">
+                            <md-card-header>
+                                <md-card-header-text>
+                                    <span class="md-head" style="color: black; font-size: 15px;">{{radar.created_at | date:'dd MMM yyyy'}}</span>
+                                    <span class="md-subhead" ng-if="radar.active">(Abierto)</span>
+                                    <span class="md-subhead" ng-if="!radar.active">(Cerrado)</span>
+                                </md-card-header-text>
+                            </md-card-header>
+                        </md-toolbar>
 
                         <md-card-title>
                             <md-card-title-text>
