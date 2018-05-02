@@ -54,16 +54,24 @@
                             <md-button class="md-icon-button launch"
                                        ng-click="copyLink(radar)"
                                        aria-label="CopyLink"
-                                       title="Copiar al portapapeles">
+                                       title="Copiar al portapapeles"
+                                       ng-if="radar.active">
                                 <md-icon md-svg-icon="images/clipboard-icon.svg"></md-icon>
                             </md-button>
 
                             <md-button class="md-icon-button launch"
-                                       ng-if="radar.active"
                                        ng-click="closeRadar(radar)"
                                        aria-label="CloseRadar"
-                                       title="Cerrar el radar">
+                                       title="Cerrar"
+                                       ng-if="radar.active">
                                 <md-icon md-svg-icon="images/close-icon.svg"></md-icon>
+                            </md-button>
+
+                            <md-button class="md-icon-button launch"
+                                       ng-href="/radars/{{radar.id}}/results"
+                                       aria-label="RadarResults"
+                                       title="Resultados">
+                                <md-icon md-svg-icon="images/open-icon.svg"></md-icon>
                             </md-button>
 
                         </md-card-actions>
