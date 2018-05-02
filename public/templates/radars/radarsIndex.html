@@ -36,7 +36,18 @@
                         <h4 class="hide-description">{{ radar.description }}</h4>
                         <p>{{radar.created_at | date:'dd MMM yyyy'}}</p>
                         <p>(Abierto)</p>
-                        <p>Link: {{radarLink(radar)}}</p>
+                        <div layout="row" layout-align="center center" layout-wrap>
+                            <div>
+                                <md-button class="md-icon-button launch"
+                                           ng-click="copyLink(radar)"
+                                           aria-label="CopyLink">
+                                    <md-icon md-svg-icon="images/clipboard-icon.svg"></md-icon>
+                                </md-button>
+                            </div>
+                             <div>
+                                <p id="radarLink">{{radarLink(radar)}}</p>
+                            </div>
+                        </div>
                     </div>
                     <md-button class="md-raised md-warn"
                         ng-click="closeRadar(radar)">
