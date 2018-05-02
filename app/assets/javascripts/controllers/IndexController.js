@@ -3,6 +3,21 @@ angular.module('ruben-radar')
         $scope.isOpen = false;
         $scope.radars = _.reverse(radars);
 
+        $scope.closeConfirmation = function closeConfirmation(event, radar){
+            var confirm = $mdDialog.confirm()
+                .title('Desea cerrar el radar:')
+                .textContent(radar.name)
+                .ariaLabel('CloseRadar')
+                .targetEvent(event)
+                .ok('Cerrar')
+                .cancel('Cancelar');
+            $mdDialog.show(confirm).then(function() {
+                $scope.closeRadar(radar);
+            }, function() {
+                ngToast.warning('El radar no se ha cerrado');
+            });
+        };
+
         $scope.closeRadar = function closeRadar(radar){
             RadarService.closeRadar(radar).then(function () {
                 ngToast.create('Se ha cerrado el radar con éxito');

@@ -31,7 +31,6 @@
                 </md-button>
             </md-fab-actions>
 
-
         </md-fab-speed-dial>
 
         <md-toolbar>
@@ -91,7 +90,7 @@
                             </md-button>
 
                             <md-button class="md-icon-button launch"
-                                       ng-click="closeRadar(radar)"
+                                       ng-click="closeConfirmation($event, radar)"
                                        aria-label="CloseRadar"
                                        title="Cerrar"
                                        ng-if="radar.active">
