@@ -18,6 +18,7 @@ angular.module('ruben-radar')
             document.body.appendChild(textArea);
             textArea.select();
             document.execCommand("Copy");
+            ngToast.create("'" + textArea.value + "' se ha copiado con éxito.");
             document.body.removeChild(textArea);
         };
 
