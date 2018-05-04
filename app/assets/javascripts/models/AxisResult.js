@@ -3,7 +3,12 @@ angular.module('ruben-radar')
         return function (axisResultJson) {
             var self = this;
             self.axis = axisResultJson.axis;
-            self.points = axisResultJson.points;
+
+            if(_.isEmpty(axisResultJson.points)){
+                self.points = [0];
+            } else {
+                self.points = axisResultJson.points;
+            }
 
             self.pointsAverage = function () {
                 return _.sum(self.points) / self.points.length;
