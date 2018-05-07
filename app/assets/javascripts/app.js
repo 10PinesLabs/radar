@@ -106,7 +106,9 @@ angular
     })
     .config(function($mdThemingProvider) {
         $mdThemingProvider.theme('pine-green')
-            .primaryPalette('green')
+            .primaryPalette('light-green', {
+                'default': '900'
+                })
             .accentPalette('deep-orange');
     })
     .config(function($locationProvider) {
