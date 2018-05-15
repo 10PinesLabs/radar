@@ -42,42 +42,7 @@
 
                         <md-card-actions layout="row" layout-align="end center">
 
-                            <md-menu ng-if="radar.active">
-                                <md-button aria-label="Open share menu"
-                                           ng-click="openMenu($mdOpenMenu, $event)">
-                                    <md-icon md-menu-origin md-svg-icon="images/share-icon.svg"></md-icon>
-                                    Compartir
-                                </md-button>
-
-                                <md-menu-content>
-                                    <md-menu-item>
-                                        <md-button ng-click="copyLink(radar)"
-                                                   aria-label="CopyLink"
-                                                   ng-if="radar.active">
-                                            <md-icon md-svg-icon="images/clipboard-icon.svg" md-menu-align-target></md-icon>
-                                            Copiar link para votar al portapapeles
-                                        </md-button>
-                                    </md-menu-item>
-                                </md-menu-content>
-                            </md-menu>
-
-
-                            <md-button class="launch"
-                                       ng-href="/radars/{{radar.id}}/results"
-                                       aria-label="RadarResults"
-                                       title="Resultados">
-                                <img class="logo-image" src="images/radar-icon.png">
-                                Resultados
-                            </md-button>
-
-                            <md-button class="launch"
-                                       ng-click="closeConfirmation($event, radar)"
-                                       aria-label="CloseRadar"
-                                       title="Cerrar"
-                                       ng-if="radar.active">
-                                <md-icon md-svg-icon="images/lock-icon.svg"></md-icon>
-                                Cerrar
-                            </md-button>
+                            <index-card-buttons></index-card-buttons>
 
                         </md-card-actions>
                     </md-card>
