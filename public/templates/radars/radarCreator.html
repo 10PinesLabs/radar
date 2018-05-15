@@ -43,11 +43,11 @@
                 <label>Agregaste {{ radar.axes.length }} aristas.</label>
             </div>
             <div layout="row" layout-align="end end">
-                <label ng-if="radarAxesQttyAreLessThanThree()"
+                <label ng-if="radarAxesQttyIsLessThanThree()"
                        style="color: red">
                     Faltan {{ 3 - radar.axes.length }} aristas para tener la mínima cantidad de aristas válidas.
                 </label>
-                <label ng-if="!radarAxesQttyAreLessThanThree()"
+                <label ng-if="!radarAxesQttyIsLessThanThree()"
                        style="color: green">
                     La cantidad de aristas es válida.
                 </label>
