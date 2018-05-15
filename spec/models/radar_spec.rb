@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Radar, type: :model do
   context 'When having a new radar' do
-    subject { Radar.new }
+    subject { Radar.new(axes: [Axis.new(description: 'lolo'), Axis.new(description: 'lolo'), Axis.new(description: 'lolo')]) }
 
     context 'without a name' do
       it 'must not be valid' do
@@ -48,9 +48,9 @@ RSpec.describe Radar, type: :model do
   end
 
   context 'When creating a new radar' do
-    context 'with no axes' do
+    context 'with less than 3 axis' do
       it 'should raise an error' do
-        expect { Radar.create! }.to raise_error do |error|
+        expect { Radar.create!(name: 'radar',axes: [Axis.new(description: 'lolo'), Axis.new(description: 'lolo')]) }.to raise_error do |error|
           expect(error).to be_a(ActiveRecord::RecordInvalid)
           expect(error.record.errors[:axes]).to be_include Radar::ERROR_MESSAGE_FOR_NO_QUESTIONS
         end
