@@ -19,11 +19,11 @@ angular.module('ruben-radar')
         $scope.radarIsInvalid = function radarIsInvalid() {
             return  this.radarNameIsEmpty()        ||
                     this.radarDescriptionIsEmpty() ||
-                    this.radarAxisIsEmpty();
+                    this.radarAxesQttyAreLessThanThree();
         };
 
-        $scope.radarAxisIsEmpty = function radarAxisIsEmpty() {
-            return _.isEmpty($scope.radar.axes);
+        $scope.radarAxesQttyAreLessThanThree = function radarAxesQttyAreLessThanThree() {
+            return $scope.radar.axes.length < 3;
         };
 
         $scope.radarDescriptionIsEmpty = function radarDescriptionIsEmpty() {

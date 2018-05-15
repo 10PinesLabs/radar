@@ -42,6 +42,16 @@
             <div layout="row" layout-align="end end">
                 <label>Agregaste {{ radar.axes.length }} aristas.</label>
             </div>
+            <div layout="row" layout-align="end end">
+                <label ng-if="radarAxesQttyAreLessThanThree()"
+                       style="color: red">
+                    Faltan {{ 3 - radar.axes.length }} aristas para tener la mínima cantidad de aristas válidas.
+                </label>
+                <label ng-if="!radarAxesQttyAreLessThanThree()"
+                       style="color: green">
+                    La cantidad de aristas es válida.
+                </label>
+            </div>
             <md-list flex md-virtual-repeat-container style="height:300px">
                 <md-subheader required class="md-no-sticky">Aristas *</md-subheader>
                 <md-list-item class="md-2-line"
@@ -87,7 +97,6 @@
                     </md-button>
                 </div>
             </md-content>
-
 
         </form>
     </md-content>
