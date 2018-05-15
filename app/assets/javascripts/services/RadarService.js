@@ -1,6 +1,13 @@
 angular.module('ruben-radar')
     .service('RadarService', function (Radar, RadarResult) {
         var self = this;
+        // No se puede hacer un extract method del radar vacío porque da error la página.
+        self.radar = {
+            name: '',
+            description: '',
+            axes: ''
+        };
+
         self.getRadar = function getRadar(radar_id) {
             return Radar.get({id: radar_id}).$promise;
         };
@@ -43,4 +50,17 @@ angular.module('ruben-radar')
             return Radar.signOut().$promise;
         };
 
+        self.setRadarToCopy = function setRadarToCopy(radar){
+            self.radar = radar;
+        };
+
+        self.getRadarToCopy = function getRadarToCopy(){
+            var radarToCopy = self.radar;
+            self.radar = {
+                name: '',
+                description: '',
+                axes: ''
+            };
+            return radarToCopy;
+        };
     });

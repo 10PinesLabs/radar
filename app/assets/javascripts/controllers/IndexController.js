@@ -14,5 +14,9 @@ angular.module('ruben-radar')
 
         $scope.radarLink = function radarLink(radar){
             return $window.location.host + '/radars/' + radar.id.toString() + '/vote';
+        };
+
+        $scope.copyRadar = function copyRadar(radar){
+            RadarService.setRadarToCopy(radar);
         }
     });
