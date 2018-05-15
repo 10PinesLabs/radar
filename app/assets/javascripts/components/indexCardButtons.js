@@ -1,7 +1,6 @@
 angular.module('ruben-radar').component('indexCardButtons', {
     templateUrl: 'templates/radars/indexCardButtons.html',
     binding: {
-        name: '='
     },
     controller: function ($scope, $window, ngToast, $mdDialog, RadarService) {
         $scope.getRadar = function getRadar(){
