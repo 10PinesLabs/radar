@@ -41,10 +41,10 @@ RSpec.describe RadarsController, type: :controller do
     context 'and requesting to create a new radar' do
       subject { post :create, radar_params }
 
-      context 'with axes' do
-        let(:radar_params) {
-          {name: 'New Radar', description: 'Radar 2015', axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {description: 'Una Arista guardada'}]}
-        }
+      context 'with more or equal than three axes' do
+        let(:radar_params) do
+          {name: 'New Radar', description: 'Radar 2015', axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {description: 'Una Arista guardada'}, {description: 'Otra arista'}]}
+        end
 
         it 'the request should succeed' do
           expect(subject).to have_http_status :created
@@ -57,12 +57,14 @@ RSpec.describe RadarsController, type: :controller do
 
         it 'the radar should have the 2 axes' do
           subject
-          expect(Radar.last.amount_of_axes).to eq 2
+          expect(Radar.last.amount_of_axes).to eq 3
         end
       end
 
-      context 'with no axes' do
-        let(:radar_params) { {axes: []} }
+      context 'with less than three axes' do
+        let(:radar_params) do
+          {name: 'New Radar', description: 'Radar 2015', axes: [{description: 'Esto es una arista nueva del nuevo radar'}, {description: 'Una Arista guardada'}]}
+        end
         it 'should return bad request' do
           expect(subject).to have_http_status :bad_request
         end
