@@ -15,6 +15,10 @@ angular
             return RadarService.getRadar($route.current.params.radar_id);
         };
 
+        var getRadarToCreate = function (RadarService) {
+            return RadarService.getRadarToCopy();
+        };
+
         var getResultFromParam = function (paramName) {
             return function ($route, RadarService) {
                 return RadarService.getResult($route.current.params[paramName]);
@@ -52,6 +56,7 @@ angular
                 templateUrl: 'templates/radars/radarCreator.html',
                 controller: 'RadarCreatorController',
                 resolve: {
+                    radar: getRadarToCreate,
                     isLoggedIn: isAdminLoggedIn
                 }
             })

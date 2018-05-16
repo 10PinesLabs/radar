@@ -1,6 +1,6 @@
 angular.module('ruben-radar')
-    .controller('RadarCreatorController', function ($scope, $cookies, $window, $location, _, radarFactory, RadarService) {
-        $scope.radar = RadarService.getRadarToCopy();
+    .controller('RadarCreatorController', function ($scope, $cookies,radar, $window, $location, _, radarFactory, RadarService) {
+        $scope.radar = radar;
         $scope.axisInput = '';
 
         $scope.isAxisEmpty = function isAxisEmpty() {
