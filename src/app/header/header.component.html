@@ -1,7 +1,13 @@
-<div style="display: flex; flex-direction: column-reverse">
+<div>
   <div class="barra-navegacion">
     <div class="logo">
-      <a href="#"><img src="assets/images/10pines-logo.png"></a>
+      <a href=""><img src="assets/images/10pines-logo.png"></a>
+    </div>
+
+    <div class="login-logout">
+      <button class="login-logout-button" (click)="onClickLoginLogoutButton()">
+        {{button_text}}
+      </button>
     </div>
   </div>
 </div>
