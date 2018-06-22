@@ -1,6 +1,12 @@
 # RubenRadarWeb
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
+## Requerimientos
+
+* node -v > 8.x
+
+## Posibles problemas
+
+* Cannot find module '@angular-devkit/core', esto quiere decir que la versión utilizada del cli es menor a la requerida por el package.json. En tal caso `npm update -g @angular/cli` y `npm update` deberia alcanzar.
 
 ## Development server
 
@@ -12,7 +18,7 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
 
 ## Running unit tests
 
