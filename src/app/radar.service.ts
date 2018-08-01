@@ -30,12 +30,10 @@ export class RadarService {
   }
 
   radar(radarId: any): Radar {
-    debugger;
     return this.radares.find(radar => ( radar.id === radarId));
   }
 
   radars(): Array<Radar> {
-    debugger;
     return this.radares;
   }
 }
