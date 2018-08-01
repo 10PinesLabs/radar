@@ -8,7 +8,6 @@ describe('Vote', () => {
   let ambienteLaboral: Axis;
   let axes: Array<Axis>;
   let radar: Radar;
-  let now: Date;
   let voto: Vote;
   let votos: Array<{ axis: Axis; vote: number; }>;
 
@@ -17,8 +16,7 @@ describe('Vote', () => {
     calidadHumana = new Axis('Calidad humana', 'La calidad humana representa el eje...');
     ambienteLaboral = new Axis('Ambiente laboral', 'El ambiente laboral representa el eje...');
     axes = [calidadTecnica, calidadHumana, ambienteLaboral];
-    now = Date.now();
-    radar = new Radar('Radar 2018', now, axes);
+    radar = new Radar('Radar 2018', axes, 1);
 
     votos = [
       {axis: calidadTecnica, vote: 5},

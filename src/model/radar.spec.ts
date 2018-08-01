@@ -8,15 +8,13 @@ describe('Radar', () => {
   let ambienteLaboral: Axis;
   let axes: Array<Axis>;
   let radar: Radar;
-  let now: Date;
 
   beforeEach(() => {
     calidadTecnica = new Axis('Calidad técnica', 'La calidad técnica representa el eje...');
     calidadHumana = new Axis('Calidad humana', 'La calidad humana representa el eje...');
     ambienteLaboral = new Axis('Ambiente laboral', 'El ambiente laboral representa el eje...');
     axes = [calidadTecnica, calidadHumana, ambienteLaboral];
-    now = Date.now();
-    radar = new Radar('Radar 2018', now, axes);
+    radar = new Radar('Radar 2018', axes, 1);
   });
 
   it('un radar tiene aristas', () => {
@@ -32,17 +30,8 @@ describe('Radar', () => {
   });
 
   it('un radar tiene descripción por default', () => {
-    expect(new Radar('', now, axes).description).toBe('Sin descripción');
-    expect(new Radar(null, now, axes).description).toBe('Sin descripción');
-  });
-
-  // /* TODO: DEL SIGUIEN TEST NO ESTOY SEGURO */
-  // it('la descripción de un radar es la concatenación de las descripciones de sus aristas', () => {
-  //   expect(radar).toBeTruthy();
-  // });
-
-  it('un radar tiene una fecha', () => {
-    expect(radar.date).toBe(now);
+    expect(new Radar('', axes, 1).description).toBe('Sin descripción');
+    expect(new Radar(null, axes, 1).description).toBe('Sin descripción');
   });
 
   it('un radar tiene votos registrados', () => {
@@ -76,7 +65,7 @@ describe('Radar', () => {
   });
 
   function createWrongRadar() {
-    return new Radar(null, now, [new Axis('Calidad técnica', 'La calidad técnica representa el eje...')]);
+    return new Radar(null, [new Axis('Calidad técnica', 'La calidad técnica representa el eje...')], 3);
   }
 
   function tryToCloseAgain() {

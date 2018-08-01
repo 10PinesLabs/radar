@@ -5,16 +5,16 @@ export class Radar {
   closed: boolean;
   votes: Array<Vote>;
   axes: Array<Axis>;
-  date: Date;
   description: string;
+  id: number;
 
-  constructor(description: string, date: Date, axes: Array<Axis>) {
+  constructor(description: string, axes: Array<Axis>, id: number) {
     this.validateAxesLength(axes);
     this.setDescription(description);
-    this.date = date;
 
     this.closed = false;
     this.votes = [];
+    this.id = id;
   }
 
   axesLength() {
