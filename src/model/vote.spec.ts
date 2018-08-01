@@ -6,11 +6,11 @@ describe('Vote', () => {
   let calidadTecnica: Axis;
   let calidadHumana: Axis;
   let ambienteLaboral: Axis;
-  let axes: [Axis];
+  let axes: Array<Axis>;
   let radar: Radar;
   let now: Date;
   let voto: Vote;
-  let votos: [{ axis: Axis; vote: number; }];
+  let votos: Array<{ axis: Axis; vote: number; }>;
 
   beforeEach(() => {
     calidadTecnica = new Axis('Calidad técnica', 'La calidad técnica representa el eje...');

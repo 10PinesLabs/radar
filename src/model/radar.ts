@@ -3,12 +3,12 @@ import {Vote} from './vote';
 
 export class Radar {
   closed: boolean;
-  votes: [Vote];
-  axes: [Axis];
+  votes: Array<Vote>;
+  axes: Array<Axis>;
   date: Date;
   description: string;
 
-  constructor(description: string, date: Date, axes: [Axis]) {
+  constructor(description: string, date: Date, axes: Array<Axis>) {
     this.validateAxesLength(axes);
     this.setDescription(description);
     this.date = date;
@@ -36,7 +36,7 @@ export class Radar {
     }
   }
 
-  private validateAxesLength(axes: [Axis]): any {
+  private validateAxesLength(axes: Array<Axis>): any {
     if (axes.length < 3) {
       throw new Error('Los radares no pueden tener menos de 3 aristas');
     }

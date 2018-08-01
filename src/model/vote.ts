@@ -3,9 +3,9 @@ import {Radar} from './radar';
 
 export class Vote {
   radar: Radar;
-  votes: [{ axis: Axis; vote: number; }];
+  votes: Array<{ axis: Axis; vote: number; }>;
 
-  constructor(radar: Radar, votes: [{ axis: Axis; vote: number; }]) {
+  constructor(radar: Radar, votes: Array<{ axis: Axis; vote: number; }>) {
     this.validateRadar(radar);
     this.validateVotes(votes);
   }
@@ -14,7 +14,7 @@ export class Vote {
     return this.votes.length;
   }
 
-  private validateVotes(votes: [{ axis: Axis; vote: number }]) {
+  private validateVotes(votes: Array<{ axis: Axis; vote: number; }>) {
     if (votes.length < this.radar.axesLength()) {
       throw new Error('Faltan aristas por votar');
     }

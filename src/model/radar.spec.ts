@@ -6,7 +6,7 @@ describe('Radar', () => {
   let calidadTecnica: Axis;
   let calidadHumana: Axis;
   let ambienteLaboral: Axis;
-  let axes: [Axis];
+  let axes: Array<Axis>;
   let radar: Radar;
   let now: Date;
 
