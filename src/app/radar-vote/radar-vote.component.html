@@ -8,12 +8,12 @@
   </ul>
 
   <div class="card-body">
-    <div *ngFor="let axis of radar.axes" class="axes">
-      <app-axis [axis]="axis"></app-axis>
+    <div *ngFor="let axis of axes" class="axes">
+      <app-axis [eje]="axis"></app-axis>
     </div>
 
     <div class="volver-btn">
-      <button type="button" class="btn btn-success">
+      <button type="button" class="btn btn-success" (click)="vote()">
         Votar
       </button>
     </div>

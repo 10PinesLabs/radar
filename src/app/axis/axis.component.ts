@@ -6,11 +6,14 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./axis.component.scss']
 })
 export class AxisComponent implements OnInit {
-  @Input() axis; Axis;
+  @Input() eje; Axis;
 
   constructor() { }
 
   ngOnInit() {
   }
 
+  vote(calification: number): void {
+    this.eje.registerVote(calification);
+  }
 }

@@ -2,6 +2,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { RadarService } from './radar.service';
 import {Radar} from '../model/radar';
 import {Axis} from '../model/axis';
+import {Vote} from '../model/vote';
 
 describe('RadarService', () => {
   let calidadTecnica: Axis;
@@ -27,10 +28,6 @@ describe('RadarService', () => {
     radar2018 = new Radar('Radar 2018', 'Radar utilizado en el Retiro Estrategico 10Pines 2018', axes, 3);
 
   });
-
-  it('should be created', inject([RadarService], (service: RadarService) => {
-    expect(service).toBeTruthy();
-  }));
 
   it('devuelve los radares existentes', inject([RadarService], (service: RadarService) => {
     const radars = service.radars();

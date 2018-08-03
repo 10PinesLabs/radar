@@ -11,7 +11,7 @@ export class Axis {
     this.description = description;
   }
 
-  registerVote(vote: any): any {
+  registerVote(vote: number): void {
     this.vote = vote;
   }
 }

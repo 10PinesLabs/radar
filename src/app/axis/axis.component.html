@@ -1,23 +1,23 @@
 <div class="aristas">
-  <h5>{{axis.title}}</h5>
+  <h5>{{eje.title}}</h5>
   <div class="custom-control custom-radio arista">
-    <input type="radio" class="custom-control-input" id="input-1" name="defaultExampleRadios">
+    <input type="radio" class="custom-control-input" id="input-1" name="defaultExampleRadios" (click)="vote(1)">
     <label class="custom-control-label" for="input-1">1</label>
   </div>
   <div class="custom-control custom-radio arista">
-    <input type="radio" class="custom-control-input" id="input-2" name="defaultExampleRadios">
+    <input type="radio" class="custom-control-input" id="input-2" name="defaultExampleRadios" (click)="vote(2)">
     <label class="custom-control-label" for="input-2">2</label>
   </div>
   <div class="custom-control custom-radio arista">
-    <input type="radio" class="custom-control-input" id="input-3" name="defaultExampleRadios">
+    <input type="radio" class="custom-control-input" id="input-3" name="defaultExampleRadios" (click)="vote(3)">
     <label class="custom-control-label" for="input-3">3</label>
   </div>
   <div class="custom-control custom-radio arista">
-    <input type="radio" class="custom-control-input" id="input-4" name="defaultExampleRadios">
+    <input type="radio" class="custom-control-input" id="input-4" name="defaultExampleRadios" (click)="vote(4)">
     <label class="custom-control-label" for="input-4">4</label>
   </div>
   <div class="custom-control custom-radio arista">
-    <input type="radio" class="custom-control-input" id="input-5" name="defaultExampleRadios" checked>
+    <input type="radio" class="custom-control-input" id="input-5" name="defaultExampleRadios" (click)="vote(5)" checked>
     <label class="custom-control-label" for="input-5">5</label>
   </div>
 </div>

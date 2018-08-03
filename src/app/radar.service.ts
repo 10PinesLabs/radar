@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {Radar} from '../model/radar';
 import {RADARS} from './mock-radars';
+import {Vote} from '../model/vote';
 
 @Injectable({
   providedIn: 'root'
