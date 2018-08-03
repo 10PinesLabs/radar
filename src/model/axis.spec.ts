@@ -1,10 +1,28 @@
 import { Axis } from './axis';
+import {Radar} from './radar';
 
 describe('Axis', () => {
   let arista: Axis;
+  let calidadTecnica: Axis;
+  let calidadHumana: Axis;
+  let ambienteLaboral: Axis;
+  let axes: Array<Axis>;
+  let radar: Radar;
 
   beforeEach(() => {
-    arista = new Axis('Calidad humana', 'La calidad humana representa el eje...');
+    calidadTecnica = new Axis('Calidad técnica', 'La calidad técnica representa el eje...');
+    calidadHumana = new Axis('Calidad humana', 'La calidad humana representa el eje...');
+    ambienteLaboral = new Axis('Ambiente laboral', 'El ambiente laboral representa el eje...');
+
+    axes = [calidadTecnica, calidadHumana, ambienteLaboral];
+
+    radar = new Radar('Radar 2018', 'Radar utilizado en el Retiro Estrategico 10Pines 2018', axes, 1);
+
+    arista = calidadHumana;
+  });
+
+  it('pertenece a un radar', () => {
+    expect(arista.radar).toBe(radar);
   });
 
   it('una arista tiene un titulo', () => {

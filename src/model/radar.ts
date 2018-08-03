@@ -13,6 +13,7 @@ export class Radar {
     this.validateAxesLength(axes);
     this.setTitle(title);
     this.setDescription(description);
+    this.setRadarToAxes();
 
     this.closed = false;
     this.votes = [];
@@ -51,5 +52,9 @@ export class Radar {
 
   private setTitle(title: string) {
     this.title = title || 'Sin título';
+  }
+
+  private setRadarToAxes() {
+    this.axes.forEach(axis => axis.radar = this);
   }
 }

@@ -1,4 +1,7 @@
+import {Radar} from './radar';
+
 export class Axis {
+  radar: Radar;
   title: string;
   description: string;
   vote: number;
