@@ -9,12 +9,12 @@
 
   <div class="card-body">
     <div *ngFor="let axis of radar.axes" class="axes">
-      <app-axis></app-axis>
+      <app-axis [axis]="axis"></app-axis>
     </div>
 
     <div class="volver-btn">
       <button type="button" class="btn btn-success">
-        Volver
+        Votar
       </button>
     </div>
   </div>

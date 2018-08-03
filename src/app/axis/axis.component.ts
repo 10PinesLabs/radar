@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-axis',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./axis.component.scss']
 })
 export class AxisComponent implements OnInit {
+  @Input() axis; Axis;
 
   constructor() { }
 
