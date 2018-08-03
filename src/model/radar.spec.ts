@@ -14,7 +14,7 @@ describe('Radar', () => {
     calidadHumana = new Axis('Calidad humana', 'La calidad humana representa el eje...');
     ambienteLaboral = new Axis('Ambiente laboral', 'El ambiente laboral representa el eje...');
     axes = [calidadTecnica, calidadHumana, ambienteLaboral];
-    radar = new Radar('Radar 2018', axes, 1);
+    radar = new Radar('Radar 2018', 'Radar utilizado en el Retiro Estrategico 10Pines 2018', axes, 1);
   });
 
   it('un radar tiene aristas', () => {
@@ -25,13 +25,22 @@ describe('Radar', () => {
     expect(createWrongRadar).toThrowError(Error, 'Los radares no pueden tener menos de 3 aristas');
   });
 
+  it('un radar tiene titulo', () => {
+    expect(radar.title).toBe('Radar 2018');
+  });
+
+  it('un radar tiene titulo por default', () => {
+    expect(new Radar('', 'Radar utilizado en el Retiro Estrategico 10Pines 2018', axes, 1).title).toBe('Sin título');
+    expect(new Radar(null, 'Radar utilizado en el Retiro Estrategico 10Pines 2018', axes, 1).title).toBe('Sin título');
+  });
+
   it('un radar tiene descripción', () => {
-    expect(radar.description).toBe('Radar 2018');
+    expect(radar.description).toBe('Radar utilizado en el Retiro Estrategico 10Pines 2018');
   });
 
   it('un radar tiene descripción por default', () => {
-    expect(new Radar('', axes, 1).description).toBe('Sin descripción');
-    expect(new Radar(null, axes, 1).description).toBe('Sin descripción');
+    expect(new Radar('Radar 2018', '', axes, 1).description).toBe('Sin descripción');
+    expect(new Radar('Radar 2018', null, axes, 1).description).toBe('Sin descripción');
   });
 
   it('un radar tiene votos registrados', () => {
@@ -65,7 +74,7 @@ describe('Radar', () => {
   });
 
   function createWrongRadar() {
-    return new Radar(null, [new Axis('Calidad técnica', 'La calidad técnica representa el eje...')], 3);
+    return new Radar(null, 'Radar utilizado en el Retiro Estrategico 10Pines 2018', [new Axis('Calidad técnica', 'La calidad técnica representa el eje...')], 3);
   }
 
   function tryToCloseAgain() {

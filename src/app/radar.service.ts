@@ -22,9 +22,9 @@ export class RadarService {
     this.ambienteLaboral = new Axis('Ambiente laboral', 'El ambiente laboral representa el eje...');
     this.axes = [this.calidadTecnica, this.calidadHumana, this.ambienteLaboral];
 
-    this.radar2016 = new Radar('Radar 2016', this.axes, 1);
-    this.radar2017 = new Radar('Radar 2017', this.axes, 2);
-    this.radar2018 = new Radar('Radar 2018', this.axes, 3);
+    this.radar2016 = new Radar('Radar 2016', 'Radar utilizado en el Retiro Estrategico 10Pines 2018', this.axes, 1);
+    this.radar2017 = new Radar('Radar 2017', 'Radar utilizado en el Retiro Estrategico 10Pines 2018', this.axes, 2);
+    this.radar2018 = new Radar('Radar 2018', 'Radar utilizado en el Retiro Estrategico 10Pines 2018', this.axes, 3);
 
     this.radares = [this.radar2016, this.radar2017, this.radar2018];
   }

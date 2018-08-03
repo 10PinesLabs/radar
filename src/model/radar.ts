@@ -5,11 +5,13 @@ export class Radar {
   closed: boolean;
   votes: Array<Vote>;
   axes: Array<Axis>;
+  title: string;
   description: string;
   id: number;
 
-  constructor(description: string, axes: Array<Axis>, id: number) {
+  constructor(title: string, description: string, axes: Array<Axis>, id: number) {
     this.validateAxesLength(axes);
+    this.setTitle(title);
     this.setDescription(description);
 
     this.closed = false;
@@ -45,5 +47,9 @@ export class Radar {
 
   private setDescription(description: string) {
     this.description = description || 'Sin descripción';
+  }
+
+  private setTitle(title: string) {
+    this.title = title || 'Sin título';
   }
 }

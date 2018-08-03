@@ -16,7 +16,7 @@ describe('Vote', () => {
     calidadHumana = new Axis('Calidad humana', 'La calidad humana representa el eje...');
     ambienteLaboral = new Axis('Ambiente laboral', 'El ambiente laboral representa el eje...');
     axes = [calidadTecnica, calidadHumana, ambienteLaboral];
-    radar = new Radar('Radar 2018', axes, 1);
+    radar = new Radar('Radar 2018', 'Radar utilizado en el Retiro Estrategico 10Pines 2018', axes, 1);
 
     votos = [
       {axis: calidadTecnica, vote: 5},

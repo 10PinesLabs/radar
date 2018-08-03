@@ -22,9 +22,9 @@ describe('RadarService', () => {
     ambienteLaboral = new Axis('Ambiente laboral', 'El ambiente laboral representa el eje...');
     axes = [calidadTecnica, calidadHumana, ambienteLaboral];
 
-    radar2016 = new Radar('Radar 2016', axes, 1);
-    radar2017 = new Radar('Radar 2017', axes, 2);
-    radar2018 = new Radar('Radar 2018', axes, 3);
+    radar2016 = new Radar('Radar 2016', 'Radar utilizado en el Retiro Estrategico 10Pines 2018', axes, 1);
+    radar2017 = new Radar('Radar 2017', 'Radar utilizado en el Retiro Estrategico 10Pines 2018', axes, 2);
+    radar2018 = new Radar('Radar 2018', 'Radar utilizado en el Retiro Estrategico 10Pines 2018', axes, 3);
 
   });
 
