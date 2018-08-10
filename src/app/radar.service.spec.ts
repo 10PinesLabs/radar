@@ -1,10 +1,10 @@
 import { TestBed, inject } from '@angular/core/testing';
-import { RadarService } from './radar.service';
+import { RadarServiceStub } from './radar.service';
 import {Radar} from '../model/radar';
 import {Axis} from '../model/axis';
 import {Vote} from '../model/vote';
 
-describe('RadarService', () => {
+describe('RadarServiceStub', () => {
   let calidadTecnica: Axis;
   let calidadHumana: Axis;
   let ambienteLaboral: Axis;
@@ -15,7 +15,7 @@ describe('RadarService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [RadarService]
+      providers: [RadarServiceStub]
     });
 
     calidadTecnica = new Axis('Calidad técnica', 'La calidad técnica representa el eje...');
@@ -29,7 +29,7 @@ describe('RadarService', () => {
 
   });
 
-  it('devuelve los radares existentes', inject([RadarService], (service: RadarService) => {
+  it('devuelve los radares existentes', inject([RadarServiceStub], (service: RadarServiceStub) => {
     const radars = service.radars();
 
     expect(radars.length).toBe(3);
@@ -38,7 +38,7 @@ describe('RadarService', () => {
     expect(radars[2].id).toBe(radar2018.id);
   }));
 
-  it('devuelve un radar en particular', inject([RadarService], (service: RadarService) => {
+  it('devuelve un radar en particular', inject([RadarServiceStub], (service: RadarServiceStub) => {
     expect(service.radar(1).id).toBe(radar2016.id);
   }));
 });

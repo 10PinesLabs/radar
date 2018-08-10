@@ -6,7 +6,7 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./axis.component.scss']
 })
 export class AxisComponent implements OnInit {
-  @Input() eje; Axis;
+  @Input() axis; Axis;
 
   constructor() { }
 
@@ -14,6 +14,6 @@ export class AxisComponent implements OnInit {
   }
 
   vote(calification: number): void {
-    this.eje.registerVote(calification);
+    this.axis.registerVote(calification);
   }
 }

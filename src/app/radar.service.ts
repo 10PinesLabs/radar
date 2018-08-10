@@ -6,18 +6,16 @@ import {Vote} from '../model/vote';
 @Injectable({
   providedIn: 'root'
 })
-export class RadarService {
-  radares: Radar[];
+export class RadarServiceStub {
 
   constructor() {
-    this.radares = RADARS;
   }
 
   radar(radarId: any): Radar {
-    return this.radares.find(radar => ( radar.id === radarId));
+    return RADARS.find(radar => ( radar.id === radarId));
   }
 
   radars(): Array<Radar> {
-    return this.radares;
+    return RADARS;
   }
 }
