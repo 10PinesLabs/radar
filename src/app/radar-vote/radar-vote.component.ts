@@ -23,11 +23,12 @@ export class RadarVoteComponent implements OnInit {
   }
 
   vote() {
-    this.radar.registerVote(this.createVote());
+    const vote = this.createVote();
+    this.radarService.vote(this.radar, vote);
   }
 
   private createVote() {
-    const votes = this.radar.axes.map(axis => ({axis: axis, vote: axis.vote}));
-    return new Vote(this.radar, votes);
+    const axesCalifications = this.radar.axes.map(axis => ({axis: axis, vote: axis.vote}));
+    return new Vote(axesCalifications);
   }
 }

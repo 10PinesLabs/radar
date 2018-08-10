@@ -41,4 +41,13 @@ describe('RadarServiceStub', () => {
   it('devuelve un radar en particular', inject([RadarServiceStub], (service: RadarServiceStub) => {
     expect(service.radar(1).id).toBe(radar2016.id);
   }));
+
+  it('registra un voto para un radar', inject([RadarServiceStub], (service: RadarServiceStub) => {
+    axes.forEach(axis => axis.registerVote(5));
+    const axesCalifications = axes.map(axis => ({axis: axis, vote: axis.vote}));
+
+    service.vote(radar2018, new Vote(axesCalifications));
+
+    expect(radar2018.votes.length).toBe(1);
+  }));
 });

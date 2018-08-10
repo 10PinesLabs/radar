@@ -44,12 +44,12 @@ describe('Radar', () => {
   });
 
   it('un radar tiene votos registrados', () => {
-    const votes = [
+    const axesCalifications = [
       {axis: ambienteLaboral, vote: 5},
       {axis: ambienteLaboral, vote: 5},
       {axis: ambienteLaboral, vote: 5}
       ];
-    const vote = new Vote(radar, votes);
+    const vote = new Vote(axesCalifications);
 
     radar.registerVote(vote);
 

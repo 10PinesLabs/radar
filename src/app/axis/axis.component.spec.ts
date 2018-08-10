@@ -18,11 +18,4 @@ describe('AxisComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
-  it('al apretar uno de los checkboxes se registra el voto', () => {
-    component.axis = new Axis('Calidad técnica', 'La calidad técnica representa el eje...');
-    component.vote(5);
-
-    expect(component.axis.vote).toBe(5);
-  });
 });

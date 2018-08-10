@@ -23,26 +23,10 @@ describe('Vote', () => {
       {axis: calidadHumana, vote: 4},
       {axis: ambienteLaboral, vote: 3}
     ];
-    voto = new Vote(radar, votos);
-  });
-
-  it('un voto pertenece a un radar', () => {
-    expect(voto.radar).toBe(radar);
-  });
-
-  it('un voto no puede no pertenecer a un radar', () => {
-    expect(createWrongVote).toThrowError(Error, 'Los votos deben pertenecer a un radar');
-  });
-
-  it('un voto no puede crearse para un radar cerrado', () => {
-    radar.close();
-
-    expect(createWrongVoteForClosedRadar).toThrowError(Error, 'El radar para el cual desea generar un voto se encuentra cerrado');
+    voto = new Vote(votos);
   });
 
   it('un voto contiene una respuesta por cada arista del radar', () => {
-    expect(voto.votesLength()).toBe(radar.axesLength());
-
     expect(voto.votes[0].vote).toBe(5);
     expect(voto.votes[0].axis).toBe(calidadTecnica);
 
@@ -52,25 +36,4 @@ describe('Vote', () => {
     expect(voto.votes[2].vote).toBe(3);
     expect(voto.votes[2].axis).toBe(ambienteLaboral);
   });
-
-  it('un voto no puede ser creado si no contiene una respuesta por cada arista del radar', () => {
-    expect(createWrongVoteWithLessVotesThanAxes)
-      .toThrowError(Error, 'Faltan aristas por votar');
-  });
-
-  function  createWrongVote() {
-    return new Vote(null, votos);
-  }
-
-  function createWrongVoteForClosedRadar() {
-    return new Vote(radar, votos);
-  }
-
-  function createWrongVoteWithLessVotesThanAxes() {
-    const votos = [
-      {axis: calidadTecnica, vote: 5},
-      {axis: calidadHumana, vote: 4}
-    ];
-    return new Vote(radar,  votos);
-  }
 });
