@@ -13,6 +13,8 @@ describe('RadarServiceStub', () => {
   let radar2017: Radar;
   let radar2018: Radar;
 
+  let radares: Array<Radar>;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [RadarServiceStub]
@@ -30,16 +32,19 @@ describe('RadarServiceStub', () => {
   });
 
   it('devuelve los radares existentes', inject([RadarServiceStub], (service: RadarServiceStub) => {
-    const radars = service.radars();
+    service.radars().subscribe(radars => radares = radars);
 
-    expect(radars.length).toBe(3);
-    expect(radars[0].id).toBe(radar2016.id);
-    expect(radars[1].id).toBe(radar2017.id);
-    expect(radars[2].id).toBe(radar2018.id);
+    expect(radares.length).toBe(3);
+    expect(radares[0].id).toBe(radar2016.id);
+    expect(radares[1].id).toBe(radar2017.id);
+    expect(radares[2].id).toBe(radar2018.id);
   }));
 
   it('devuelve un radar en particular', inject([RadarServiceStub], (service: RadarServiceStub) => {
-    expect(service.radar(1).id).toBe(radar2016.id);
+    const id: number;
+    service.radar(1).subscribe(radar => id = radar.id);
+
+    expect(id).toBe(radar2016.id);
   }));
 
   it('registra un voto para un radar', inject([RadarServiceStub], (service: RadarServiceStub) => {

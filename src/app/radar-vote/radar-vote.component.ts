@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {RadarServiceStub} from '../radar.service';
 import {Radar} from '../../model/radar';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Vote} from '../../model/vote';
 import {Axis} from '../../model/axis';
 
@@ -14,17 +14,22 @@ export class RadarVoteComponent implements OnInit {
   radar: Radar;
   axes: Axis[];
 
-  constructor(private radarService: RadarServiceStub, private route: ActivatedRoute) { }
+  constructor(private radarService: RadarServiceStub, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.radar = this.radarService.radar(id);
-    this.axes = this.radar.axes;
+
+    this.radarService.radar(id).subscribe(radar => {
+      this.radar = radar;
+      this.axes = this.radar.axes;
+    });
   }
 
   vote() {
     const vote = this.createVote();
-    this.radarService.vote(this.radar, vote);
+    this.radarService.vote(this.radar, vote).subscribe(_ =>
+      this.router.navigate(['/'])
+    );
   }
 
   private createVote() {
