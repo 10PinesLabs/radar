@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Axis} from '../../model/axis';
 
 @Component({
   selector: 'app-axis',
@@ -6,12 +7,11 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./axis.component.scss']
 })
 export class AxisComponent implements OnInit {
-  @Input() axis; Axis;
+  @Input() axis: Axis;
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   vote(calification: number): void {
     this.axis.registerVote(calification);
