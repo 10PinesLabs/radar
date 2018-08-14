@@ -1,13 +1,14 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Radar} from '../model/radar';
-import {RADARS} from './mock-radars';
+import {RADARS} from '../mock-radars';
 import {Vote} from '../model/vote';
 import {Observable, of} from 'rxjs/index';
+import {RadarService} from './radar.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class RadarServiceStub {
+export class InMemoryRadarService implements RadarService {
 
   constructor() {
   }

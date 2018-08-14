@@ -14,6 +14,7 @@ En tal caso `npm update -g @angular/cli` y `npm update` deberia alcanzar.
 ## Development server
 
 Run `ng serve` for a dev server. 
+Run `ng serve --prod` for a prod server. 
 Navigate to `http://localhost:4200/`. 
 The app will automatically reload if you change any of the source files.
 

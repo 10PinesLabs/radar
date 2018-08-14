@@ -1,5 +1,5 @@
-import {Radar} from '../model/radar';
-import {Axis} from '../model/axis';
+import {Radar} from './model/radar';
+import {Axis} from './model/axis';
 
 export const AXES: Axis[] = [
   new Axis('Calidad técnica', 'La calidad técnica representa el eje...'),
