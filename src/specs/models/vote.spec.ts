@@ -1,6 +1,6 @@
-import { Vote } from './vote';
-import {Axis} from './axis';
-import {Radar} from './radar';
+import { Vote } from '../../model/vote';
+import {Axis} from '../../model/axis';
+import {Radar} from '../../model/radar';
 
 describe('Vote', () => {
   let calidadTecnica: Axis;

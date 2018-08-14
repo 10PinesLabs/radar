@@ -1,5 +1,5 @@
-import { Axis } from './axis';
-import {Radar} from './radar';
+import { Axis } from '../../model/axis';
+import {Radar} from '../../model/radar';
 
 describe('Axis', () => {
   let arista: Axis;
