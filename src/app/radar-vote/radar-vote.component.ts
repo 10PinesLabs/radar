@@ -4,6 +4,7 @@ import {Radar} from '../../model/radar';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Vote} from '../../model/vote';
 import {Axis} from '../../model/axis';
+import {isUndefined} from 'util';
 
 @Component({
   selector: 'app-radar-vote',
@@ -32,8 +33,8 @@ export class RadarVoteComponent implements OnInit {
     );
   }
 
-  service(): RadarService {
-    return this.radarService;
+  cannotVote() {
+    return this.radar.cannotVote();
   }
 
   private createVote() {

@@ -1,4 +1,5 @@
 import {Radar} from './radar';
+import {isNullOrUndefined} from 'util';
 
 export class Axis {
   radar: Radar;
@@ -13,5 +14,9 @@ export class Axis {
 
   registerVote(vote: number): void {
     this.vote = vote;
+  }
+
+  hasInvalidVote() {
+    return this.vote === undefined;
   }
 }

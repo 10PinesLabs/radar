@@ -38,4 +38,14 @@ describe('Axis', () => {
 
     expect(arista.vote).toBe(5);
   });
+
+  it('cuando se crea la arista su voto es invalido', function () {
+    expect(arista.hasInvalidVote()).toBeTruthy();
+  });
+
+  it('cuando se vota a la arista su voto deja de ser invalido', function () {
+    arista.registerVote(5);
+
+    expect(arista.hasInvalidVote()).toBeFalsy();
+  });
 });

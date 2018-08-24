@@ -44,13 +44,7 @@ describe('Radar', () => {
   });
 
   it('un radar tiene votos registrados', () => {
-    const axesCalifications = [
-      {axis: ambienteLaboral, vote: 5},
-      {axis: ambienteLaboral, vote: 5},
-      {axis: ambienteLaboral, vote: 5}
-      ];
-    const vote = new Vote(axesCalifications);
-
+    const vote = voteAllAxes();
     radar.registerVote(vote);
 
     expect(radar.votes.length).toBe(1);
@@ -72,6 +66,30 @@ describe('Radar', () => {
 
     expect(tryToCloseAgain).toThrowError(Error, 'El radar que intentas cerrar ya ha sido cerrado');
   });
+
+  it('un radar en el que sus aristas no fueron todas votadas no se puede enviar el voto', () => {
+    expect(radar.cannotVote()).toBeTruthy();
+  });
+
+  it('un radar en el que todas sus aristas fueron votadas se puede enviar el voto', () => {
+    const vote = voteAllAxes();
+    radar.registerVote(vote);
+
+    expect(radar.cannotVote()).toBeFalsy();
+  });
+
+  function voteAllAxes() {
+    // Estas lineas simulan el hecho de apretar los radio buttons del componente RadarVote
+    ambienteLaboral.vote = 5;
+    calidadHumana.vote = 5;
+    calidadTecnica.vote = 5;
+
+    return new Vote([
+      {axis: ambienteLaboral, vote: 5},
+      {axis: calidadHumana, vote: 5},
+      {axis: calidadTecnica, vote: 5}
+    ]);
+  }
 
   function createWrongRadar() {
     return new Radar(null, 'Radar utilizado en el Retiro Estrategico 10Pines 2018', [new Axis('Calidad técnica', 'La calidad técnica representa el eje...')], 3);

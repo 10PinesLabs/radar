@@ -20,10 +20,6 @@ export class Radar {
     this.id = id;
   }
 
-  axesLength() {
-    return this.axes.length;
-  }
-
   registerVote(vote: Vote): any {
     this.votes.push(vote);
   }
@@ -31,6 +27,10 @@ export class Radar {
   close() {
     this.validateClosedState();
     this.closed = true;
+  }
+
+  cannotVote() {
+    return this.axes.some(axis => axis.hasInvalidVote());
   }
 
   private validateClosedState() {
