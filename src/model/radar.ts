@@ -33,6 +33,34 @@ export class Radar {
     return this.axes.some(axis => axis.hasInvalidVote());
   }
 
+  axisValuesFor(axis) {
+    this.validateAxisBelongsToRadar(axis);
+
+    const valuesForEachAxisPosition = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+    this.votes.forEach( vote => valuesForEachAxisPosition[vote.valueForAxis(axis)] += 1 );
+    return valuesForEachAxisPosition;
+  }
+
+  axisValues() {
+    const axesWithVotes = [];
+    this.axes.forEach(axis => {
+      const valuesForAxis = this.axisValuesFor(axis);
+      axesWithVotes.push([axis, valuesForAxis]);
+    });
+
+    return axesWithVotes;
+  }
+
+  private validateAxisBelongsToRadar(axis) {
+    if (this.axisBelongsToAxes(axis)) {
+      throw new Error('El axis no pertenece al radar');
+    }
+  }
+
+  private axisBelongsToAxes(axis) {
+    return this.axes.indexOf(axis) === -1;
+  }
+
   private validateClosedState() {
     if (this.closed) {
       throw new Error('El radar que intentas cerrar ya ha sido cerrado');
