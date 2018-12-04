@@ -1,10 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {RadarService} from '../../services/radar.service';
 import {Radar} from '../../model/radar';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Vote} from '../../model/vote';
+import {ActivatedRoute} from '@angular/router';
 import {Axis} from '../../model/axis';
-import {isUndefined} from 'util';
 
 @Component({
   selector: 'app-radar-vote',
@@ -14,8 +12,11 @@ import {isUndefined} from 'util';
 export class RadarVoteComponent implements OnInit {
   radar: Radar;
   axes: Axis[];
+  voted: boolean;
 
-  constructor(@Inject('RadarService') private radarService: RadarService, private route: ActivatedRoute, private router: Router) { }
+  constructor(@Inject('RadarService') private radarService: RadarService, private route: ActivatedRoute) {
+    this.voted = false;
+  }
 
   ngOnInit() {
     const id = +this.route.snapshot.paramMap.get('id');
@@ -26,19 +27,7 @@ export class RadarVoteComponent implements OnInit {
     });
   }
 
-  vote() {
-    const vote = this.createVote();
-    this.radarService.vote(this.radar, vote).subscribe(_ =>
-      this.router.navigate(['/'])
-    );
-  }
-
-  cannotVote() {
-    return this.radar.cannotVote();
-  }
-
-  private createVote() {
-    const axesCalifications = this.radar.axes.map(axis => ({axis: axis, vote: axis.vote}));
-    return new Vote(axesCalifications);
+  isVoted() {
+    return this.voted;
   }
 }
