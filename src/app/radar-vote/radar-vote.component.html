@@ -1,22 +1,13 @@
 <div class="view-container card">
   <h5 class="view-header card-header">{{radar.title}}</h5>
 
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">
-      {{radar.description}}
-    </li>
-  </ul>
-
-  <div class="card-body">
-    <div *ngFor="let axis of axes" class="axes">
-      <app-axis [axis]="axis"></app-axis>
-    </div>
-
-    <div class="volver-btn">
-      <button type="button" class="btn btn-success" [disabled]="cannotVote()" (click)="vote()">
-        Votar
-      </button>
-    </div>
+  <div *ngIf="!isVoted(); else elseVotedBlock">
+      <app-voting-radar [radar]="radar" [axes]="axes" [(voted)]="voted" ></app-voting-radar>
   </div>
+
+  <ng-template #elseVotedBlock>
+    <app-voted-radar></app-voted-radar>
+  </ng-template>
+
 </div>
 
