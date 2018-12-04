@@ -5,20 +5,21 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { AppRoutingModule } from './app-routing.module';
 import { RadarVoteComponent } from './radar-vote/radar-vote.component';
-import { ViewContainerComponent } from './view-container/view-container.component';
+import { AxisComponent } from './axis/axis.component';
+import { environment} from '../environments/environment';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     RadarVoteComponent,
-    ViewContainerComponent,
+    AxisComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [{provide: 'RadarService', useClass: environment.radarServiceType}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

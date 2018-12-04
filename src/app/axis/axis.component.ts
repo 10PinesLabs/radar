@@ -1,0 +1,19 @@
+import {Component, Input, OnInit} from '@angular/core';
+import {Axis} from '../../model/axis';
+
+@Component({
+  selector: 'app-axis',
+  templateUrl: './axis.component.html',
+  styleUrls: ['./axis.component.scss']
+})
+export class AxisComponent implements OnInit {
+  @Input() axis: Axis;
+
+  constructor() { }
+
+  ngOnInit() { }
+
+  vote(calification: number): void {
+    this.axis.registerVote(calification);
+  }
+}

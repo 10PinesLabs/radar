@@ -2,7 +2,7 @@
   background-color: #414141;
   position: fixed;
   height: 50px;
-  width: 96%;
+  width: 100%;
   top: 0;
   padding: 0 2% 0 2%;
   z-index: 2;
@@ -33,19 +33,15 @@
     width: 60%;
     justify-content: flex-end;
     button:focus {outline:0;}
-
-    .login-logout-button {
-      color: darkgray;
-      background-color: #414141;
-      font-size: 16px;
-      padding: 1% 3% 1% 3%;
-      display: flex;
-      align-items: center;
-    }
   }
 
   .logo, .login-logout {
     display: flex;
     align-items: center;
+  }
+
+  .login-logout-btn:hover{
+    background-color: transparent;
+    color: #f8f9fa;
   }
 }
