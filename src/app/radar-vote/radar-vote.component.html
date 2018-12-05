@@ -1,5 +1,4 @@
-<div class="view-container card">
-  <h5 class="view-header card-header">{{radar.title}}</h5>
+<app-card-container [header]="radar.title">
 
   <div *ngIf="!isVoted(); else elseVotedBlock">
       <app-voting-radar [radar]="radar" [axes]="axes" [(voted)]="voted" ></app-voting-radar>
@@ -9,5 +8,4 @@
     <app-voted-radar></app-voted-radar>
   </ng-template>
 
-</div>
-
+</app-card-container>

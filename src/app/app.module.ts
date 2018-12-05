@@ -10,6 +10,7 @@ import { environment} from '../environments/environment';
 import { VotingRadarComponent } from './radar-vote/voting-radar/voting-radar.component';
 import { VotedRadarComponent } from './radar-vote/voted-radar/voted-radar.component';
 import { ResultsComponent } from './results/results.component';
+import { CardContainerComponent } from './card-container/card-container.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { ResultsComponent } from './results/results.component';
     AxisComponent,
     VotingRadarComponent,
     VotedRadarComponent,
-    ResultsComponent
+    ResultsComponent,
+    CardContainerComponent
   ],
   imports: [
     BrowserModule,
