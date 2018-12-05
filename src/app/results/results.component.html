@@ -1,9 +1,11 @@
 <app-card-container [header]="title()">
 
   <div class="card-body">
+    <app-radar-chart></app-radar-chart>
+
     <div *ngFor="let axis of axes">
-      <h5>{{axis.title}}</h5>
-      <p>{{axis.description}}</p>
+      <h5>{{ axis.title }}</h5>
+      <p>{{ axis.description }}</p>
     </div>
   </div>
 

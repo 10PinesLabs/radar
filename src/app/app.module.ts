@@ -11,6 +11,7 @@ import { VotingRadarComponent } from './radar-vote/voting-radar/voting-radar.com
 import { VotedRadarComponent } from './radar-vote/voted-radar/voted-radar.component';
 import { ResultsComponent } from './results/results.component';
 import { CardContainerComponent } from './card-container/card-container.component';
+import { RadarChartComponent } from './results/radar-chart/radar-chart.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { CardContainerComponent } from './card-container/card-container.componen
     VotingRadarComponent,
     VotedRadarComponent,
     ResultsComponent,
-    CardContainerComponent
+    CardContainerComponent,
+    RadarChartComponent
   ],
   imports: [
     BrowserModule,
