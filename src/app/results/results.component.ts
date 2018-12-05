@@ -24,4 +24,9 @@ export class ResultsComponent implements OnInit {
     });
   }
 
+  title() {
+    const radarState = this.radar.isClosed() ? '(Cerrado)' : '(Abierto)';
+    return this.radar.title + ' ' + radarState;
+  }
+
 }
