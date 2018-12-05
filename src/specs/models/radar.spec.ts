@@ -53,13 +53,13 @@ describe('Radar', () => {
   });
 
   it('un radar no esta cerrado cuando se crea', () => {
-    expect(radar.closed).toBeFalsy();
+    expect(radar.isClosed()).toBeFalsy();
   });
 
   it('un radar puede cerrarse', () => {
     radar.close();
 
-    expect(radar.closed).toBeTruthy();
+    expect(radar.isClosed()).toBeTruthy();
   });
 
   it('un radar no puede cerrarse más de una vez', () => {

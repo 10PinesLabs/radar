@@ -51,6 +51,10 @@ export class Radar {
     return axesWithVotes;
   }
 
+  isClosed() {
+    return this.closed;
+  }
+
   private validateAxisBelongsToRadar(axis) {
     if (this.axisBelongsToAxes(axis)) {
       throw new Error('El axis no pertenece al radar');
