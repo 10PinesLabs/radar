@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { Chart } from 'chart.js';
 import { Radar } from 'src/model/radar';
+import { Statistics } from 'src/model/statistics';
 
 @Component({
   selector: 'app-radar-chart',
@@ -87,23 +88,8 @@ export class RadarChartComponent implements AfterViewInit {
     };
   }
 
-  private axisValuesObjToArray(axisValues) {
-    const axisValuesArray = [];
-    [1, 2, 3, 4, 5].forEach(field => axisValuesArray.push(axisValues[field]) );
-    return axisValuesArray;
-  }
-
   private medianFor(axisValues) {
-    const values = this.axisValuesObjToArray(axisValues);
-    let median;
-
-    if (values.length === 0) {
-      median =  0;
-    } else {
-      const m = Math.floor(values.length / 2);
-      median = values.length % 2 === 0 ? (values[m] + values[m - 1]) / 2 : values[m];
-    }
-
-    return median;
+    const statistics = new Statistics(axisValues);
+    return statistics.mean();
   }
 }

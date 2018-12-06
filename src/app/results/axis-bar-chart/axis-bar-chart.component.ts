@@ -1,6 +1,7 @@
 import { Component, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Chart } from 'chart.js';
 import { Axis } from 'src/model/axis';
+import { Statistics } from 'src/model/statistics';
 
 @Component({
   selector: 'app-axis-bar-chart',
@@ -68,8 +69,7 @@ export class AxisBarChartComponent implements AfterViewInit {
   }
 
   private axisValuesObjToArray() {
-    const axisValuesArray = [];
-    [1, 2, 3, 4, 5].forEach(field => axisValuesArray.push(this.values[field]) );
-    return axisValuesArray;
+    const statistics = new Statistics(this.values);
+    return statistics.axisValuesObjToArray();
   }
 }
