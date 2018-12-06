@@ -34,7 +34,6 @@ export class RadarChartComponent implements AfterViewInit {
     });
   }
 
-
   private parseRadarData() {
     const radarLabel = this.radar.title;
     const radarBackgroundColor = 'rgba(157, 217, 191, 0.6)';
@@ -71,6 +70,17 @@ export class RadarChartComponent implements AfterViewInit {
 
   private parseRadarOptions() {
     return {
+      scale: {
+        ticks: {
+          beginAtZero: true,
+          min: 0,
+          max: 5,
+          stepSize: 1
+        },
+        pointLabels: {
+          fontSize: 18
+        }
+      },
       legend: {
         display: true,
       },
@@ -90,7 +100,7 @@ export class RadarChartComponent implements AfterViewInit {
     if (values.length === 0) {
       median =  0;
     } else {
-      const m = values.length / 2;
+      const m = Math.floor(values.length / 2);
       median = values.length % 2 === 0 ? (values[m] + values[m - 1]) / 2 : values[m];
     }
 
