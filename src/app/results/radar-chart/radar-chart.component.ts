@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 import { Chart } from 'chart.js';
 import { Radar } from 'src/model/radar';
-import { Axis } from 'src/model/axis';
 
 @Component({
   selector: 'app-radar-chart',
@@ -70,6 +69,7 @@ export class RadarChartComponent implements AfterViewInit {
 
   private parseRadarOptions() {
     return {
+      responsive: true,
       scale: {
         ticks: {
           beginAtZero: true,

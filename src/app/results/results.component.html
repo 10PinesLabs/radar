@@ -4,8 +4,11 @@
     <app-radar-chart [radar]="radar"></app-radar-chart>
 
     <div *ngFor="let axis of axes">
+      <hr>
       <h5>{{ axis.title }}</h5>
       <p>{{ axis.description }}</p>
+
+      <app-axis-bar-chart [axis]="axis" [values]="radar.axisValuesFor(axis)"></app-axis-bar-chart>
     </div>
   </div>
 
