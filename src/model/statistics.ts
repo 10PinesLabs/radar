@@ -20,21 +20,56 @@ export class Statistics {
   }
 
   mean() {
-    const reducer = (accumulator, currentValue) => accumulator + currentValue;
-    const sum = this.values.reduce(reducer, 0);
+    const sum = this.sumValues();
     const mean = sum / this.values.length;
 
     return mean;
   }
 
+  probabilities() {
+    const qtty = this.sumValues();
+    const probabilities = this.values.map(value => value / qtty);
+
+    return probabilities;
+  }
+
+  expectedValue() {
+    const expectedValue = this.calculateExpectedValueOf(this.values);
+
+    return expectedValue;
+  }
+
+  variance() {
+    const expectedValue = this.expectedValue();
+    const valutesToThePowOfTwo = this.values.map((value) => Math.pow(value, 2) );
+    const expectedValueOfValuesToThePowOfTwo = this.calculateExpectedValueOf(valutesToThePowOfTwo);
+    const variance = expectedValueOfValuesToThePowOfTwo - Math.pow(expectedValue, 2);
+
+    return variance;
+  }
+
   standardDeviation() {
-    const mean = this.mean();
-    const reducer = (accumulator, currentValue) => accumulator + Math.pow(currentValue - mean, 2);
-    const sum = this.values.reduce(reducer, 0);
-    const variance = sum / this.values.length;
+    const variance = this.variance();
     const standardDeviation = Math.sqrt(variance);
 
     return standardDeviation;
+  }
+
+  private calculateExpectedValueOf(values) {
+    const probabilities = this.probabilities();
+    let expectedValue = 0;
+    values.forEach((value, index) => {
+      expectedValue = value * probabilities[index] + expectedValue;
+    });
+
+    return expectedValue;
+  }
+
+  private sumValues() {
+    const reducer = (accumulator, currentValue) => accumulator + currentValue;
+    const sum = this.values.reduce(reducer, 0);
+
+    return sum;
   }
 
   private parseAxisValuesToArray(axisValues: Object) {

@@ -48,9 +48,34 @@ describe('Statistics', () => {
     expect(statistics.mean()).toBe(mean);
   });
 
+  it('Can get the probabilities of the axis values', () => {
+    const axisValues = { 1: 1, 2: 2, 3: 3, 4: 4, 5: 5 };
+    const axisProbabilities = [ 1 / 15 , 2 / 15, 3 / 15, 4 / 15, 5 / 15 ];
+    statistics = new Statistics(axisValues);
+
+    const answerProbabilities = statistics.probabilities();
+    answerProbabilities.forEach((probability, index) => expect(probability).toBeCloseTo(axisProbabilities[index]));
+  });
+
+  it('Can get the expectedValue of the axis values', () => {
+    const axisValues = { 1: 1, 2: 2, 3: 3, 4: 4, 5: 5 };
+    const expectedValue = 11 / 3;
+    statistics = new Statistics(axisValues);
+
+    expect(statistics.expectedValue()).toBeCloseTo(expectedValue);
+  });
+
+  it('Can get the variance of the axis values', () => {
+    const axisValues = { 1: 1, 2: 2, 3: 3, 4: 4, 5: 5 };
+    const variance = 14 / 9;
+    statistics = new Statistics(axisValues);
+
+    expect(statistics.variance()).toBeCloseTo(variance);
+  });
+
   it('Can get the stardard deviation value of the axis values', () => {
     const axisValues = { 1: 1, 2: 2, 3: 3, 4: 4, 5: 5 };
-    const standardDeviation = 1.4142135623730950488;
+    const standardDeviation = Math.sqrt(14 / 9);
     statistics = new Statistics(axisValues);
 
     expect(statistics.standardDeviation()).toBe(standardDeviation);
