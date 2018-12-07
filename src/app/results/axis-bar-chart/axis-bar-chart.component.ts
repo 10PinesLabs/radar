@@ -10,46 +10,69 @@ import { Statistics } from 'src/model/statistics';
 })
 export class AxisBarChartComponent implements AfterViewInit {
 
-  @ViewChild('barChartId') canvasRef: ElementRef;
+  @ViewChild('chartId') canvasRef: ElementRef;
   @Input() axis: Axis;
   @Input() values;
-  barChart = [];
+  chart = [];
 
   constructor() { }
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.createBarChart();
+      this.createChart();
     });
   }
 
-  createBarChart() {
+  createChart() {
     const ctx = this.canvasRef.nativeElement.getContext('2d');
-    const barData = this.parseBarData();
-    const barOptions = this.parseBarOptions();
+    const chartDataset = this.chartDataset();
+    const chartOptions = this.chartOptions();
 
-    this.barChart = new Chart(ctx, {
+    this.chart = new Chart(ctx, {
       type: 'bar',
-      data: barData,
-      options: barOptions,
+      data: chartDataset,
+      options: chartOptions,
     });
   }
 
-  private parseBarData() {
-    const arrayValues = this.axisValuesObjToArray();
-
-    return {
+  private chartDataset() {
+    const chartDataset = {
       labels: [1, 2, 3, 4, 5],
-      datasets: [{
-          label: this.axis.title,
-          backgroundColor: 'rgba(157, 217, 191, 0.6)',
-        borderColor: 'rgba(25, 179, 112, 1)',
-          data: arrayValues,
-      }]
+      datasets: [
+        this.barDataset(),
+        this.expectedValueDataset(),
+      ]
     };
+
+    return chartDataset;
   }
 
-  private parseBarOptions() {
+  private barDataset() {
+    const arrayValues = this.axisValuesObjToArray();
+    const barDataset = {
+      label: 'Votos',
+      backgroundColor: 'rgba(157, 217, 191, 0.6)',
+      borderColor: 'rgba(25, 179, 112, 1)',
+      data: arrayValues,
+    };
+
+    return barDataset;
+  }
+
+  private expectedValueDataset() {
+    const expectedValue = this.axisExpectedValue();
+    const expectedValueDataset = {
+      label: 'Esperanza',
+      data: [expectedValue, expectedValue, expectedValue, expectedValue, expectedValue],
+      backgroundColor: 'transparent',
+      borderColor: 'black',
+      type: 'line',
+    };
+
+    return expectedValueDataset;
+  }
+
+  private chartOptions() {
     return {
       responsive: true,
       scales: {
@@ -71,5 +94,10 @@ export class AxisBarChartComponent implements AfterViewInit {
   private axisValuesObjToArray() {
     const statistics = new Statistics(this.values);
     return statistics.axisValuesObjToArray();
+  }
+
+  private axisExpectedValue() {
+    const statistics = new Statistics(this.values);
+    return statistics.expectedValue();
   }
 }
