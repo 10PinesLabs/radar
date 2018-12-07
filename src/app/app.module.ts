@@ -11,7 +11,6 @@ import { VotingRadarComponent } from './radar-vote/voting-radar/voting-radar.com
 import { VotedRadarComponent } from './radar-vote/voted-radar/voted-radar.component';
 import { ResultsComponent } from './results/results.component';
 import { CardContainerComponent } from './card-container/card-container.component';
-import { RadarChartComponent } from './results/radar-chart/radar-chart.component';
 import { AxisBarChartComponent } from './results/axis-bar-chart/axis-bar-chart.component';
 
 @NgModule({
@@ -24,7 +23,6 @@ import { AxisBarChartComponent } from './results/axis-bar-chart/axis-bar-chart.c
     VotedRadarComponent,
     ResultsComponent,
     CardContainerComponent,
-    RadarChartComponent,
     AxisBarChartComponent
   ],
   imports: [
