@@ -15,6 +15,7 @@ import { AxisBarChartComponent } from './results/axis-bar-chart/axis-bar-chart.c
 import { AxisTableValuesComponent } from './results/axis-table-values/axis-table-values.component';
 import { RadarChartComponent } from './results/radar-chart/radar-chart.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
