@@ -1,14 +1,15 @@
 <app-card-container [header]="title()">
 
   <div class="card-body">
+    <app-radar-chart [radar]="radar"></app-radar-chart>
 
     <div *ngFor="let axis of axes">
+      <hr>
       <h5>{{ axis.title }}</h5>
       <p>{{ axis.description }}</p>
 
       <app-axis-bar-chart [axis]="axis" [values]="radar.axisValuesFor(axis)"></app-axis-bar-chart>
       <app-axis-table-values [axis]="axis" [values]="radar.axisValuesFor(axis)"></app-axis-table-values>
-      <hr>
     </div>
   </div>
 
