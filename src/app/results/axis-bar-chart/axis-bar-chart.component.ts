@@ -40,7 +40,6 @@ export class AxisBarChartComponent implements AfterViewInit {
       labels: [1, 2, 3, 4, 5],
       datasets: [
         this.barDataset(),
-        this.expectedValueDataset(),
       ]
     };
 
@@ -50,26 +49,13 @@ export class AxisBarChartComponent implements AfterViewInit {
   private barDataset() {
     const arrayValues = this.axisValuesObjToArray();
     const barDataset = {
-      label: 'Votos',
+      label: '#Votos',
       backgroundColor: 'rgba(157, 217, 191, 0.6)',
       borderColor: 'rgba(25, 179, 112, 1)',
       data: arrayValues,
     };
 
     return barDataset;
-  }
-
-  private expectedValueDataset() {
-    const expectedValue = this.axisExpectedValue();
-    const expectedValueDataset = {
-      label: 'Esperanza',
-      data: [expectedValue, expectedValue, expectedValue, expectedValue, expectedValue],
-      backgroundColor: 'transparent',
-      borderColor: 'black',
-      type: 'line',
-    };
-
-    return expectedValueDataset;
   }
 
   private chartOptions() {
@@ -96,8 +82,4 @@ export class AxisBarChartComponent implements AfterViewInit {
     return statistics.axisValuesObjToArray();
   }
 
-  private axisExpectedValue() {
-    const statistics = new Statistics(this.values);
-    return statistics.expectedValue();
-  }
 }
