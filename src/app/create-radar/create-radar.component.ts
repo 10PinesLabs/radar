@@ -24,4 +24,21 @@ export class CreateRadarComponent implements OnInit {
     this.axisName = '';
     this.axisDescription = '';
   }
+
+  radarIsInvalid(): boolean {
+    return this.radarNameIsEmpty() || this.radarAxesIsEmpty();
+  }
+
+
+  axisIsInvalid(): boolean {
+    return this.axisName.length === 0;
+  }
+
+  private radarNameIsEmpty(): boolean {
+    return this.radarName.length === 0;
+  }
+
+  private radarAxesIsEmpty(): boolean {
+    return this.axes.length === 0;
+  }
 }
