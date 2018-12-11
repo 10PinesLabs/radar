@@ -29,6 +29,11 @@ export class CreateRadarComponent implements OnInit {
     return this.radarNameIsEmpty() || this.radarAxesIsEmpty();
   }
 
+  eraseAxis(axisToErase) {
+    const idxToErase = this.axes.indexOf(axisToErase);
+    const qttyToBeErased = 1;
+    this.axes.splice(idxToErase, qttyToBeErased);
+  }
 
   axisIsInvalid(): boolean {
     return this.axisName.length === 0;
