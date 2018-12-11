@@ -1,11 +1,26 @@
 <form>
   <div class="form-group">
     <label for="radarName">Nombre del Radar</label>
-    <input type="text" class="form-control" id="radarName" placeholder="Radar" required>
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="radarName"
+      name="radarName"
+      id="radarName"
+      placeholder="Nuevo Radar"
+      required
+    >
   </div>
   <div class="form-group">
     <label for="radarDescription">Descripción del Radar</label>
-    <textarea class="form-control" id="radarDescription" rows="3"></textarea>
+    <textarea
+      class="form-control"
+      [(ngModel)]="radarDescription"
+      name="radarDescription"
+      id="radarDescription"
+      rows="3"
+    >
+  </textarea>
   </div>
 
   <hr>

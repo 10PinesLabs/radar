@@ -11,6 +11,8 @@ export class CreateRadarComponent implements OnInit {
   axes: Axis[] = [];
   axisName = '';
   axisDescription = '';
+  radarName = '';
+  radarDescription = '';
 
   constructor() { }
 
