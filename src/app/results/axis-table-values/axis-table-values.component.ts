@@ -5,7 +5,7 @@ import { Statistics } from 'src/model/statistics';
 @Component({
   selector: 'app-axis-table-values',
   templateUrl: './axis-table-values.component.html',
-  styleUrls: ['./axis-table-values.component.css']
+  styleUrls: ['./axis-table-values.component.scss']
 })
 export class AxisTableValuesComponent implements OnInit {
 
