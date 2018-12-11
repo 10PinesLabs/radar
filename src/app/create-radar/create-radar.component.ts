@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Axis } from 'src/model/axis';
+import { Radar } from 'src/model/radar';
+import { RadarService } from 'src/services/radar.service';
 
 @Component({
   selector: 'app-create-radar',
@@ -14,7 +16,7 @@ export class CreateRadarComponent implements OnInit {
   radarName = '';
   radarDescription = '';
 
-  constructor() { }
+  constructor(@Inject('RadarService') private radarService: RadarService) { }
 
   ngOnInit() { }
 
@@ -26,7 +28,7 @@ export class CreateRadarComponent implements OnInit {
   }
 
   radarIsInvalid(): boolean {
-    return this.radarNameIsEmpty() || this.radarAxesIsEmpty();
+    return this.radarNameIsEmpty() || this.radarAxesIsLessThanThree();
   }
 
   eraseAxis(axisToErase) {
@@ -39,11 +41,17 @@ export class CreateRadarComponent implements OnInit {
     return this.axisName.length === 0;
   }
 
+  createRadar() {
+    const newRadar = new Radar(this.radarName, this.radarDescription, this.axes, null);
+    this.radarService.createRadar(newRadar);
+    window.location.href = '/';
+  }
+
   private radarNameIsEmpty(): boolean {
     return this.radarName.length === 0;
   }
 
-  private radarAxesIsEmpty(): boolean {
-    return this.axes.length === 0;
+  private radarAxesIsLessThanThree(): boolean {
+    return this.axes.length < 3;
   }
 }

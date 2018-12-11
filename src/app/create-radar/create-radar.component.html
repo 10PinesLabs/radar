@@ -1,4 +1,4 @@
-<form>
+<form (ngSubmit)="createRadar()">
   <div class="form-group">
     <label for="radarName">Nombre del Radar</label>
     <input
@@ -66,5 +66,7 @@
 
   <hr>
 
-  <button [disabled]="radarIsInvalid()" type="button" class="btn btn-success">Crear</button>
+  <button [disabled]="radarIsInvalid()" type="submit" class="btn btn-success">
+    Crear
+  </button>
 </form>
