@@ -11,9 +11,9 @@ import { RadarService } from 'src/services/radar.service';
 export class CreateRadarComponent implements OnInit {
 
   axes: Axis[] = [];
-  axisName = '';
+  axisTitle = '';
   axisDescription = '';
-  radarName = '';
+  radarTitle = '';
   radarDescription = '';
 
   constructor(@Inject('RadarService') private radarService: RadarService) { }
@@ -21,14 +21,14 @@ export class CreateRadarComponent implements OnInit {
   ngOnInit() { }
 
   addAxisToAxes() {
-    const newAxis = new Axis(this.axisName, this.axisDescription);
+    const newAxis = new Axis(this.axisTitle, this.axisDescription);
     this.axes.push(newAxis);
-    this.axisName = '';
+    this.axisTitle = '';
     this.axisDescription = '';
   }
 
   radarIsInvalid(): boolean {
-    return this.radarNameIsEmpty() || this.radarAxesIsLessThanThree();
+    return this.radarTitleIsEmpty() || this.radarAxesIsLessThanThree();
   }
 
   eraseAxis(axisToErase) {
@@ -38,17 +38,17 @@ export class CreateRadarComponent implements OnInit {
   }
 
   axisIsInvalid(): boolean {
-    return this.axisName.length === 0;
+    return this.axisTitle.length === 0;
   }
 
   createRadar() {
-    const newRadar = new Radar(this.radarName, this.radarDescription, this.axes, null);
+    const newRadar = new Radar(this.radarTitle, this.radarDescription, this.axes, null);
     this.radarService.createRadar(newRadar);
     window.location.href = '/';
   }
 
-  private radarNameIsEmpty(): boolean {
-    return this.radarName.length === 0;
+  private radarTitleIsEmpty(): boolean {
+    return this.radarTitle.length === 0;
   }
 
   private radarAxesIsLessThanThree(): boolean {

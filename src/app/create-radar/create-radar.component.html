@@ -1,12 +1,12 @@
 <form (ngSubmit)="createRadar()">
   <div class="form-group">
-    <label for="radarName">Nombre del Radar</label>
+    <label for="radarTitle">Nombre del Radar</label>
     <input
       type="text"
       class="form-control"
-      [(ngModel)]="radarName"
-      name="radarName"
-      id="radarName"
+      [(ngModel)]="radarTitle"
+      name="radarTitle"
+      id="radarTitle"
       placeholder="Nuevo Radar"
       required
     >
@@ -39,13 +39,13 @@
   </div>
 
   <div class="form-group">
-    <label for="axisName">Nombre de la Arista</label>
+    <label for="axisTitle">Nombre de la Arista</label>
     <input
       type="text"
       class="form-control"
-      [(ngModel)]="axisName"
-      name="axisName"
-      id="axisName"
+      [(ngModel)]="axisTitle"
+      name="axisTitle"
+      id="axisTitle"
       placeholder="Nueva Arista"
       required
     >
