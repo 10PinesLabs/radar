@@ -25,11 +25,15 @@
 
   <hr>
 
-  <ul class="list-group">
-    <li class="list-group-item" *ngFor="let arista of aristas">
-      {{ arista.title }}
-    </li>
-  </ul>
+  <div class="card axis-card">
+    <div class="card-body axis-card-body">
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let axis of axes">
+          {{ axis.title }}
+        </li>
+      </ul>
+    </div>
+  </div>
 
   <div class="form-group">
     <label for="axisName">Nombre de la Arista</label>
