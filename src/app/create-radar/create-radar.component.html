@@ -11,23 +11,36 @@
   <hr>
 
   <ul class="list-group">
-    <li class="list-group-item">Cras justo odio</li>
-    <li class="list-group-item">Dapibus ac facilisis in</li>
-    <li class="list-group-item">Morbi leo risus</li>
-    <li class="list-group-item">Porta ac consectetur ac</li>
-    <li class="list-group-item">Vestibulum at eros</li>
+    <li class="list-group-item" *ngFor="let arista of aristas">
+      {{ arista.title }}
+    </li>
   </ul>
 
   <div class="form-group">
     <label for="axisName">Nombre de la Arista</label>
-    <input type="text" class="form-control" id="axisName" placeholder="Nueva Arista" required>
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="axisName"
+      name="axisName"
+      id="axisName"
+      placeholder="Nueva Arista"
+      required
+    >
   </div>
   <div class="form-group">
     <label for="axisDescription">Descripción de la Arista</label>
-    <textarea class="form-control" id="axisDescription" rows="3"></textarea>
+    <textarea
+      [(ngModel)]="axisDescription"
+      name="axisDescription"
+      class="form-control"
+      id="axisDescription"
+      rows="3"
+    >
+    </textarea>
   </div>
 
-  <button type="button" class="btn btn-primary">Agregar</button>
+  <button type="button" class="btn btn-primary" (click)="addAxisToAxes()">Agregar</button>
 
   <hr>
 
