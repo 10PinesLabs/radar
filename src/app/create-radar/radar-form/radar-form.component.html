@@ -8,8 +8,13 @@
     id="radarTitle"
     placeholder="Nuevo Radar"
     required
+    #radarTitleModel="ngModel"
   >
+  <div [hidden]="radarTitleModel.valid || radarTitleModel.pristine" class="alert alert-danger">
+    El título es requerido
+  </div>
 </div>
+
 <div class="form-group">
   <label for="radarDescription">Descripción del Radar</label>
   <textarea
