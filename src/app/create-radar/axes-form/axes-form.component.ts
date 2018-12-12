@@ -9,22 +9,27 @@ import { Axis } from 'src/model/axis';
 export class AxesFormComponent implements OnInit {
 
   @Input() axes: Axis[];
-  axisTitle = '';
-  axisDescription = '';
+  newAxis: Axis;
 
-  constructor() { }
+  constructor() {
+    this.newAxis = new Axis('', '');
+  }
 
   ngOnInit() { }
 
+  eraseAxis(axisToErase) {
+    const idxToErase = this.axes.indexOf(axisToErase);
+    const qttyToBeErased = 1;
+    this.axes.splice(idxToErase, qttyToBeErased);
+  }
+
   addAxisToAxes() {
-    const newAxis = new Axis(this.axisTitle, this.axisDescription);
-    this.axes.push(newAxis);
-    this.axisTitle = '';
-    this.axisDescription = '';
+    this.axes.push(this.newAxis);
+    this.newAxis = new Axis('', '');
   }
 
   axisIsInvalid(): boolean {
-    return this.axisTitle.length === 0;
+    return this.newAxis.title.length === 0;
   }
 
 }
