@@ -1,11 +1,26 @@
 .axis-card {
+    margin-bottom: 1rem;
     height: 10rem;
 }
 
 .axis-card-body {
-    overflow: auto;
+    overflow-y: scroll;
 }
 
 .delete-axis-button {
     background-color: transparent;
+}
+
+.create-radar-button-div {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.create-radar-button {
+    padding: 0.5em 1em 0.5em 1em;
+    font-weight: bold;
+}
+
+.text-color {
+    color: black;
 }

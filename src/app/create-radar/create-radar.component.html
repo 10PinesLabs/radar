@@ -6,7 +6,7 @@
         <label for="radarTitle">Nombre del Radar</label>
         <input
           type="text"
-          class="form-control"
+          class="form-control text-color"
           [(ngModel)]="radarTitle"
           name="radarTitle"
           id="radarTitle"
@@ -17,10 +17,11 @@
       <div class="form-group">
         <label for="radarDescription">Descripción del Radar</label>
         <textarea
-          class="form-control"
+          class="form-control text-color"
           [(ngModel)]="radarDescription"
           name="radarDescription"
           id="radarDescription"
+          placeholder="Descripción del Radar (Opcional)"
           rows="3"
         >
       </textarea>
@@ -45,7 +46,7 @@
         <label for="axisTitle">Nombre de la Arista</label>
         <input
           type="text"
-          class="form-control"
+          class="form-control text-color"
           [(ngModel)]="axisTitle"
           name="axisTitle"
           id="axisTitle"
@@ -58,8 +59,9 @@
         <textarea
           [(ngModel)]="axisDescription"
           name="axisDescription"
-          class="form-control"
+          class="form-control text-color"
           id="axisDescription"
+          placeholder="Descripción de la Arista (Opcional)"
           rows="3"
         >
         </textarea>
@@ -69,9 +71,9 @@
 
       <hr>
 
-      <button [disabled]="radarIsInvalid()" type="submit" class="btn btn-success">
-        Crear
-      </button>
+      <div class="create-radar-button-div">
+        <button [disabled]="radarIsInvalid()" type="submit" class="btn btn-success create-radar-button">Crear</button>
+      </div>
     </form>
 
   </div>
