@@ -9,6 +9,7 @@
     placeholder="Nuevo Radar"
     required
     #radarTitleModel="ngModel"
+    (keyup)="onRadarTitleChange()"
   >
   <div [hidden]="radarTitleModel.valid || radarTitleModel.pristine" class="alert alert-danger">
     El título es requerido
@@ -24,6 +25,7 @@
     id="radarDescription"
     placeholder="Descripción del Radar (Opcional)"
     rows="3"
+    (keyup)="onRadarDescriptionChange()"
   >
   </textarea>
 </div>
