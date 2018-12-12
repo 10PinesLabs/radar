@@ -34,11 +34,42 @@
       <div class="card axis-card">
         <div class="card-body axis-card-body">
           <ul class="list-group">
-            <li class="list-group-item  d-flex justify-content-between align-items-center" *ngFor="let axis of axes">
-              {{ axis.title }}
-              <button class="btn delete-axis-button" (click)="eraseAxis(axis)">
-                <img src="assets/images/delete-icon.svg" width="20" />
-              </button>
+            <li class="list-group-item" *ngFor="let axis of axes">
+
+              <div class="container">
+                <div class="row">
+
+                    <div class="col-sm-11">
+                        <div class="row">
+                            <h5 class="mb-1">{{ axis.title }}</h5>
+                        </div>
+                        <div class="row axis-description">
+                            <p class="mb-1">{{ axis.description }}</p>
+                        </div>
+                    </div>
+
+                    <div class="col-sm delete-axis-div">
+                        <button class="btn delete-axis-button" (click)="eraseAxis(axis)">
+                          <img src="assets/images/delete-icon.svg" width="20" />
+                        </button>
+                    </div>
+
+                </div>
+              </div>
+
+              <!-- <div class="d-flex justify-content-between align-items-center">
+                <h5 class="mb-1">{{ axis.title }}</h5>
+
+                <button class="btn delete-axis-button" (click)="eraseAxis(axis)">
+                  <img src="assets/images/delete-icon.svg" width="20" />
+                </button>
+
+              </div>
+
+              <div class="axis-description">
+                <p class="mb-1">{{ axis.description }}</p>
+              </div> -->
+
             </li>
           </ul>
         </div>
