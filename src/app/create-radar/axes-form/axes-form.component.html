@@ -1,7 +1,7 @@
-<p class="axes-label">Se necesitan al menos 3 aristas para crear un radar *</p>
+<p class="axes-label">Se necesitan al menos 3 aristas para crear un radar</p>
 
 <div class="card axis-card">
-  <div class="card-body axis-card-body">
+  <div [ngClass]="cardBodyClases()">
     <ul class="list-group">
       <li class="list-group-item" *ngFor="let axis of axes">
 
@@ -43,6 +43,7 @@
     required
   >
 </div>
+
 <div class="form-group">
   <label for="axisDescription">Descripción de la Arista</label>
   <textarea

@@ -32,4 +32,13 @@ export class AxesFormComponent implements OnInit {
     return this.newAxis.title.length === 0;
   }
 
+  cardBodyClases() {
+    const classes = this.isAxesQuantityValid() ?
+      'card-body axis-card-body valid-axes-quantity' : 'card-body axis-card-body invalid-axes-quantity';
+    return classes;
+  }
+
+  private isAxesQuantityValid() {
+    return this.axes.length >= 3;
+  }
 }
