@@ -3,7 +3,7 @@
 
     <form (ngSubmit)="createRadar()">
       <div class="form-group">
-        <label for="radarTitle">Nombre del Radar</label>
+        <label for="radarTitle">Nombre del Radar *</label>
         <input
           type="text"
           class="form-control text-color"
@@ -28,6 +28,8 @@
       </div>
 
       <hr>
+
+      <p class="axes-label">Se necesitan al menos 3 aristas para crear un radar *</p>
 
       <div class="card axis-card">
         <div class="card-body axis-card-body">
@@ -70,6 +72,8 @@
       <button [disabled]="axisIsInvalid()" type="button" class="btn btn-primary" (click)="addAxisToAxes()">Agregar</button>
 
       <hr>
+
+      <p class="required-fields-label">Los campos con (*) son obligatorios</p>
 
       <div class="create-radar-button-div">
         <button [disabled]="radarIsInvalid()" type="submit" class="btn btn-success create-radar-button">Crear</button>
