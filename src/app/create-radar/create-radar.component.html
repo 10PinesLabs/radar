@@ -1,72 +1,81 @@
-<form (ngSubmit)="createRadar()">
-  <div class="form-group">
-    <label for="radarTitle">Nombre del Radar</label>
-    <input
-      type="text"
-      class="form-control"
-      [(ngModel)]="radarTitle"
-      name="radarTitle"
-      id="radarTitle"
-      placeholder="Nuevo Radar"
-      required
-    >
+<app-card-container [header]="'Crear Radar'">
+  <div class="card-body">
+
+    <form (ngSubmit)="createRadar()">
+      <div class="form-group">
+        <label for="radarTitle">Nombre del Radar</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="radarTitle"
+          name="radarTitle"
+          id="radarTitle"
+          placeholder="Nuevo Radar"
+          required
+        >
+      </div>
+      <div class="form-group">
+        <label for="radarDescription">Descripción del Radar</label>
+        <textarea
+          class="form-control"
+          [(ngModel)]="radarDescription"
+          name="radarDescription"
+          id="radarDescription"
+          rows="3"
+        >
+      </textarea>
+      </div>
+
+      <hr>
+
+      <div class="card axis-card">
+        <div class="card-body axis-card-body">
+          <ul class="list-group">
+            <li class="list-group-item  d-flex justify-content-between align-items-center" *ngFor="let axis of axes">
+              {{ axis.title }}
+              <button class="btn delete-axis-button" (click)="eraseAxis(axis)">
+                <img src="assets/images/delete-icon.svg" width="20" />
+              </button>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="axisTitle">Nombre de la Arista</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="axisTitle"
+          name="axisTitle"
+          id="axisTitle"
+          placeholder="Nueva Arista"
+          required
+        >
+      </div>
+      <div class="form-group">
+        <label for="axisDescription">Descripción de la Arista</label>
+        <textarea
+          [(ngModel)]="axisDescription"
+          name="axisDescription"
+          class="form-control"
+          id="axisDescription"
+          rows="3"
+        >
+        </textarea>
+      </div>
+
+      <button [disabled]="axisIsInvalid()" type="button" class="btn btn-primary" (click)="addAxisToAxes()">Agregar</button>
+
+      <hr>
+
+      <button [disabled]="radarIsInvalid()" type="submit" class="btn btn-success">
+        Crear
+      </button>
+    </form>
+
   </div>
-  <div class="form-group">
-    <label for="radarDescription">Descripción del Radar</label>
-    <textarea
-      class="form-control"
-      [(ngModel)]="radarDescription"
-      name="radarDescription"
-      id="radarDescription"
-      rows="3"
-    >
-  </textarea>
-  </div>
+</app-card-container>
 
-  <hr>
 
-  <div class="card axis-card">
-    <div class="card-body axis-card-body">
-      <ul class="list-group">
-        <li class="list-group-item  d-flex justify-content-between align-items-center" *ngFor="let axis of axes">
-          {{ axis.title }}
-          <button class="btn delete-axis-button" (click)="eraseAxis(axis)">
-            <img src="assets/images/delete-icon.svg" width="20" />
-          </button>
-        </li>
-      </ul>
-    </div>
-  </div>
 
-  <div class="form-group">
-    <label for="axisTitle">Nombre de la Arista</label>
-    <input
-      type="text"
-      class="form-control"
-      [(ngModel)]="axisTitle"
-      name="axisTitle"
-      id="axisTitle"
-      placeholder="Nueva Arista"
-      required
-    >
-  </div>
-  <div class="form-group">
-    <label for="axisDescription">Descripción de la Arista</label>
-    <textarea
-      [(ngModel)]="axisDescription"
-      name="axisDescription"
-      class="form-control"
-      id="axisDescription"
-      rows="3"
-    >
-    </textarea>
-  </div>
-
-  <button [disabled]="axisIsInvalid()" type="button" class="btn btn-primary" (click)="addAxisToAxes()">Agregar</button>
-
-  <hr>
-
-  <button [disabled]="radarIsInvalid()" type="submit" class="btn btn-success">
-    Crear
-  </button>
-</form>
