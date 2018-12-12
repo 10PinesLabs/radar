@@ -1,0 +1,24 @@
+<div class="form-group">
+  <label for="radarTitle">Nombre del Radar *</label>
+  <input
+    type="text"
+    class="form-control text-color"
+    [(ngModel)]="radarTitle"
+    name="radarTitle"
+    id="radarTitle"
+    placeholder="Nuevo Radar"
+    required
+  >
+</div>
+<div class="form-group">
+  <label for="radarDescription">Descripción del Radar</label>
+  <textarea
+    class="form-control text-color"
+    [(ngModel)]="radarDescription"
+    name="radarDescription"
+    id="radarDescription"
+    placeholder="Descripción del Radar (Opcional)"
+    rows="3"
+  >
+  </textarea>
+</div>

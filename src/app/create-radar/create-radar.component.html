@@ -2,30 +2,8 @@
   <div class="card-body">
 
     <form (ngSubmit)="createRadar()">
-      <div class="form-group">
-        <label for="radarTitle">Nombre del Radar *</label>
-        <input
-          type="text"
-          class="form-control text-color"
-          [(ngModel)]="radarTitle"
-          name="radarTitle"
-          id="radarTitle"
-          placeholder="Nuevo Radar"
-          required
-        >
-      </div>
-      <div class="form-group">
-        <label for="radarDescription">Descripción del Radar</label>
-        <textarea
-          class="form-control text-color"
-          [(ngModel)]="radarDescription"
-          name="radarDescription"
-          id="radarDescription"
-          placeholder="Descripción del Radar (Opcional)"
-          rows="3"
-        >
-      </textarea>
-      </div>
+
+      <app-radar-form [(radarTitle)]="radarTitle" [(radarDescription)]="radarDescription" ></app-radar-form>
 
       <hr>
 
@@ -56,19 +34,6 @@
 
                 </div>
               </div>
-
-              <!-- <div class="d-flex justify-content-between align-items-center">
-                <h5 class="mb-1">{{ axis.title }}</h5>
-
-                <button class="btn delete-axis-button" (click)="eraseAxis(axis)">
-                  <img src="assets/images/delete-icon.svg" width="20" />
-                </button>
-
-              </div>
-
-              <div class="axis-description">
-                <p class="mb-1">{{ axis.description }}</p>
-              </div> -->
 
             </li>
           </ul>
