@@ -19,8 +19,8 @@ export class AxesFormComponent implements OnInit {
 
   eraseAxis(axisToErase) {
     const idxToErase = this.axes.indexOf(axisToErase);
-    const qttyToBeErased = 1;
-    this.axes.splice(idxToErase, qttyToBeErased);
+    const quantityToBeErased = 1;
+    this.axes.splice(idxToErase, quantityToBeErased);
   }
 
   addAxisToAxes() {
