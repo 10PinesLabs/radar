@@ -17,6 +17,7 @@ import { AxisTableValuesComponent } from './results/axis-table-values/axis-table
 import { RadarChartComponent } from './results/radar-chart/radar-chart.component';
 import { CreateRadarComponent } from './create-radar/create-radar.component';
 import { RadarFormComponent } from './create-radar/radar-form/radar-form.component';
+import { AxesFormComponent } from './create-radar/axes-form/axes-form.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { RadarFormComponent } from './create-radar/radar-form/radar-form.compone
     AxisTableValuesComponent,
     RadarChartComponent,
     CreateRadarComponent,
-    RadarFormComponent
+    RadarFormComponent,
+    AxesFormComponent
   ],
   imports: [
     BrowserModule,

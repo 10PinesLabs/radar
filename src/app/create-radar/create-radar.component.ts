@@ -11,21 +11,12 @@ import { RadarService } from 'src/services/radar.service';
 export class CreateRadarComponent implements OnInit {
 
   axes: Axis[] = [];
-  axisTitle = '';
-  axisDescription = '';
   radarTitle = '';
   radarDescription = '';
 
   constructor(@Inject('RadarService') private radarService: RadarService) { }
 
   ngOnInit() { }
-
-  addAxisToAxes() {
-    const newAxis = new Axis(this.axisTitle, this.axisDescription);
-    this.axes.push(newAxis);
-    this.axisTitle = '';
-    this.axisDescription = '';
-  }
 
   radarIsInvalid(): boolean {
     return this.radarTitleIsEmpty() || this.radarAxesIsLessThanThree();
@@ -35,10 +26,6 @@ export class CreateRadarComponent implements OnInit {
     const idxToErase = this.axes.indexOf(axisToErase);
     const qttyToBeErased = 1;
     this.axes.splice(idxToErase, qttyToBeErased);
-  }
-
-  axisIsInvalid(): boolean {
-    return this.axisTitle.length === 0;
   }
 
   createRadar() {

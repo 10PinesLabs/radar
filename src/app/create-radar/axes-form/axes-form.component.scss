@@ -1,0 +1,36 @@
+.axes-label {
+    font-size: small;
+    margin-bottom: 0;
+}
+
+.axis-card {
+    margin-bottom: 1rem;
+    height: 20rem;
+}
+
+.axis-card-body {
+    overflow-y: scroll;
+}
+
+.axis-row {
+    margin: auto;
+}
+
+.delete-axis-div {
+    display: flex;
+}
+
+.delete-axis-button {
+    background-color: transparent;
+}
+
+.axis-description {
+    width: 93%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.text-color {
+    color: black;
+}
