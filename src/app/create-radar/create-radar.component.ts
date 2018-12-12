@@ -22,12 +22,6 @@ export class CreateRadarComponent implements OnInit {
     return this.radarTitleIsEmpty() || this.radarAxesIsLessThanThree();
   }
 
-  eraseAxis(axisToErase) {
-    const idxToErase = this.axes.indexOf(axisToErase);
-    const qttyToBeErased = 1;
-    this.axes.splice(idxToErase, qttyToBeErased);
-  }
-
   createRadar() {
     const newRadar = new Radar(this.radarTitle, this.radarDescription, this.axes, null);
     this.radarService.createRadar(newRadar);

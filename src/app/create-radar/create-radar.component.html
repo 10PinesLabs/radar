@@ -1,7 +1,7 @@
 <app-card-container [header]="'Crear Radar'">
   <div class="card-body">
 
-    <form (ngSubmit)="createRadar()">
+    <form (ngSubmit)="createRadar()" #createRadarForm="ngForm">
 
       <app-radar-form [(radarTitle)]="radarTitle" [(radarDescription)]="radarDescription" ></app-radar-form>
 
