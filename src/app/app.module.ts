@@ -9,6 +9,12 @@ import { AxisComponent } from './axis/axis.component';
 import { environment} from '../environments/environment';
 import { VotingRadarComponent } from './radar-vote/voting-radar/voting-radar.component';
 import { VotedRadarComponent } from './radar-vote/voted-radar/voted-radar.component';
+import { ResultsComponent } from './results/results.component';
+import { CardContainerComponent } from './card-container/card-container.component';
+import { AxisBarChartComponent } from './results/axis-bar-chart/axis-bar-chart.component';
+import { AxisTableValuesComponent } from './results/axis-table-values/axis-table-values.component';
+import { RadarChartComponent } from './results/radar-chart/radar-chart.component';
+
 
 @NgModule({
   declarations: [
@@ -17,7 +23,12 @@ import { VotedRadarComponent } from './radar-vote/voted-radar/voted-radar.compon
     RadarVoteComponent,
     AxisComponent,
     VotingRadarComponent,
-    VotedRadarComponent
+    VotedRadarComponent,
+    ResultsComponent,
+    CardContainerComponent,
+    AxisBarChartComponent,
+    AxisTableValuesComponent,
+    RadarChartComponent
   ],
   imports: [
     BrowserModule,

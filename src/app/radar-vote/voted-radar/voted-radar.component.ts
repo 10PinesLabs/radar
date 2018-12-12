@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-voted-radar',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VotedRadarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private route: ActivatedRoute, private router: Router) { }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  redirectToResults() {
+    const id = this.route.snapshot.paramMap.get('id');
+    this.router.navigate(['/radar/' + id + '/results']);
   }
 
 }
