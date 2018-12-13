@@ -35,13 +35,17 @@
   <label for="axisTitle">Nombre de la Arista</label>
   <input
     type="text"
-    class="form-control text-color"
+    [ngClass]="axisTitleInputClass()"
     [(ngModel)]="newAxis.title"
     name="axisTitle"
     id="axisTitle"
     placeholder="Nueva Arista"
     required
+    #axisTitleModel="ngModel"
   >
+</div>
+<div [hidden]="axisTitleModel.pristine || !showAxisTitleError()" class="alert alert-danger">
+  El título de la arista es requerido para crearla
 </div>
 
 <div class="form-group">
@@ -57,4 +61,4 @@
   </textarea>
 </div>
 
-<button [disabled]="axisIsInvalid()" type="button" class="btn btn-primary" (click)="addAxisToAxes()">Agregar</button>
+<button type="button" class="btn btn-primary" (click)="addAxisToAxes()">Agregar</button>

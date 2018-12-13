@@ -10,9 +10,11 @@ export class AxesFormComponent implements OnInit {
 
   @Input() axes: Axis[];
   newAxis: Axis;
+  axisTitleError: boolean;
 
   constructor() {
     this.newAxis = new Axis('', '');
+    this.axisTitleError = false;
   }
 
   ngOnInit() { }
@@ -24,8 +26,12 @@ export class AxesFormComponent implements OnInit {
   }
 
   addAxisToAxes() {
-    this.axes.push(this.newAxis);
-    this.newAxis = new Axis('', '');
+    if (this.axisIsInvalid()) {
+      this.axisTitleError = true;
+    } else {
+      this.axes.push(this.newAxis);
+      this.newAxis = new Axis('', '');
+    }
   }
 
   axisIsInvalid(): boolean {
@@ -36,6 +42,15 @@ export class AxesFormComponent implements OnInit {
     const classes = this.isAxesQuantityValid() ?
       'card-body axis-card-body valid-axes-quantity' : 'card-body axis-card-body invalid-axes-quantity';
     return classes;
+  }
+
+  axisTitleInputClass() {
+    const classes = 'form-control text-color' + (this.showAxisTitleError() ? ' is-invalid' : '');
+    return classes;
+  }
+
+  showAxisTitleError() {
+    return this.axisTitleError && this.axisIsInvalid();
   }
 
   private isAxesQuantityValid() {
