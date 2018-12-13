@@ -9,6 +9,7 @@ import { Axis } from 'src/model/axis';
 export class AxesFormComponent implements OnInit {
 
   @Input() axes: Axis[];
+  @Input() showErrors: boolean;
   newAxis: Axis;
   axisTitleError: boolean;
 
@@ -51,6 +52,10 @@ export class AxesFormComponent implements OnInit {
 
   showAxisTitleError() {
     return this.axisTitleError && this.axisIsInvalid();
+  }
+
+  showAxesQuantityError() {
+    return this.showErrors && this.axes.length < 3;
   }
 
   private isAxesQuantityValid() {

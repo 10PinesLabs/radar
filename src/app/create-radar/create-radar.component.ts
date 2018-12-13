@@ -13,6 +13,7 @@ export class CreateRadarComponent implements OnInit {
   axes: Axis[] = [];
   radarTitle = '';
   radarDescription = '';
+  showErrors = false;
 
   constructor(@Inject('RadarService') private radarService: RadarService) { }
 
@@ -23,9 +24,13 @@ export class CreateRadarComponent implements OnInit {
   }
 
   createRadar() {
-    const newRadar = new Radar(this.radarTitle, this.radarDescription, this.axes, null);
-    this.radarService.createRadar(newRadar);
-    window.location.href = '/';
+    if (this.radarIsInvalid()) {
+      this.showErrors = true;
+    } else {
+      const newRadar = new Radar(this.radarTitle, this.radarDescription, this.axes, null);
+      this.radarService.createRadar(newRadar);
+      window.location.href = '/';
+    }
   }
 
   private radarTitleIsEmpty(): boolean {

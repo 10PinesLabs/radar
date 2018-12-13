@@ -31,6 +31,10 @@
   </div>
 </div>
 
+<div [hidden]="!showAxesQuantityError()" class="alert alert-danger">
+  Se necesitan al menos 3 aristas para crear un radar
+</div>
+
 <div class="form-group">
   <label for="axisTitle">Nombre de la Arista</label>
   <input

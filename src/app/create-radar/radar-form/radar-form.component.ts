@@ -9,6 +9,7 @@ export class RadarFormComponent implements OnInit {
 
   @Input() radarTitle;
   @Input() radarDescription;
+  @Input() showErrors: boolean;
   @Output() radarTitleChange = new EventEmitter();
   @Output() radarDescriptionChange = new EventEmitter();
 
@@ -22,5 +23,9 @@ export class RadarFormComponent implements OnInit {
 
   onRadarDescriptionChange() {
     this.radarDescriptionChange.emit(this.radarDescription);
+  }
+
+  showRadarNameError() {
+    return this.showErrors && this.radarTitle.length === 0;
   }
 }

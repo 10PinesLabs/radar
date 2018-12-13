@@ -11,7 +11,7 @@
     #radarTitleModel="ngModel"
     (keyup)="onRadarTitleChange()"
   >
-  <div [hidden]="radarTitleModel.valid || radarTitleModel.pristine" class="alert alert-danger">
+  <div [hidden]="!showRadarNameError()" class="alert alert-danger">
     El título es requerido
   </div>
 </div>

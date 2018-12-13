@@ -3,16 +3,16 @@
 
     <form (ngSubmit)="createRadar()" #createRadarForm="ngForm">
 
-      <app-radar-form [(radarTitle)]="radarTitle" [(radarDescription)]="radarDescription" ></app-radar-form>
+      <app-radar-form [(radarTitle)]="radarTitle" [(radarDescription)]="radarDescription" [showErrors]="showErrors"></app-radar-form>
 
       <hr>
 
-      <app-axes-form [(axes)]="axes"></app-axes-form>
+      <app-axes-form [(axes)]="axes" [showErrors]="showErrors"></app-axes-form>
 
       <hr>
 
       <div class="create-radar-button-div">
-        <button [disabled]="radarIsInvalid()" type="submit" class="btn btn-success create-radar-button">Crear</button>
+        <button type="submit" class="btn btn-success create-radar-button">Crear</button>
       </div>
     </form>
 
