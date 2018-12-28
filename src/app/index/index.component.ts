@@ -30,6 +30,7 @@ export class IndexComponent implements OnInit {
     elem.select();
     document.execCommand('copy');
     document.body.removeChild(elem);
+    alert('Link:\'' + urlToCopy + '\' copiado!');
   }
 
   closeRadar(radarId: any) {
