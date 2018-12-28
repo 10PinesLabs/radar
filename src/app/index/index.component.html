@@ -18,6 +18,18 @@
       <p class="card-text index-radar-description">
         {{ radar.description }}
       </p>
+
+      <button class="card-link btn btn-link" (click)="redirectToRadar(radar.id)">
+        Ver Resultados
+      </button>
+
+      <button class="card-link btn btn-link" (click)="copyVoteRadarLink(radar.id)" *ngIf="!radar.isClosed()">
+        Copiar Link A Votar
+      </button>
+
+      <button class="card-link btn btn-link" (click)="closeRadar(radar.id)" *ngIf="!radar.isClosed()">
+        Cerrar Radar
+      </button>
     
     </div>
   </div>
