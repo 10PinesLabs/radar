@@ -1,0 +1,25 @@
+<div class="index-container" *ngFor="let radar of radars">
+
+  <div class="card">
+    <div class="card-body">
+
+      <h5 class="card-title">{{ radar.title }}</h5>
+      
+      <h6 class="card-subtitle mb-2 text-muted">
+          <div *ngIf="radar.isClosed(); else radarAbierto">
+            Cerrado
+          </div>
+          
+          <ng-template #radarAbierto>
+            Abierto
+          </ng-template>
+      </h6>
+      
+      <p class="card-text index-radar-description">
+        {{ radar.description }}
+      </p>
+    
+    </div>
+  </div>
+
+</div>

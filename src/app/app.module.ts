@@ -14,6 +14,7 @@ import { CardContainerComponent } from './card-container/card-container.componen
 import { AxisBarChartComponent } from './results/axis-bar-chart/axis-bar-chart.component';
 import { AxisTableValuesComponent } from './results/axis-table-values/axis-table-values.component';
 import { RadarChartComponent } from './results/radar-chart/radar-chart.component';
+import { IndexComponent } from './index/index.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { RadarChartComponent } from './results/radar-chart/radar-chart.component
     CardContainerComponent,
     AxisBarChartComponent,
     AxisTableValuesComponent,
-    RadarChartComponent
+    RadarChartComponent,
+    IndexComponent
   ],
   imports: [
     BrowserModule,
