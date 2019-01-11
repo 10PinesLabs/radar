@@ -15,5 +15,6 @@ export class IndexComponent implements OnInit {
 
   ngOnInit() {
     this.radarService.radars().subscribe(radars => this.radars = radars);
+    this.radars = this.radars.sort((r1, r2) => r2.id - r1.id); // mayor id a menor id
   }
 }
