@@ -15,6 +15,10 @@ import { AxisBarChartComponent } from './results/axis-bar-chart/axis-bar-chart.c
 import { AxisTableValuesComponent } from './results/axis-table-values/axis-table-values.component';
 import { RadarChartComponent } from './results/radar-chart/radar-chart.component';
 import { IndexComponent } from './index/index.component';
+import { RadarCardComponent } from './index/radar-card/radar-card.component';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -30,11 +34,18 @@ import { IndexComponent } from './index/index.component';
     AxisBarChartComponent,
     AxisTableValuesComponent,
     RadarChartComponent,
-    IndexComponent
+    IndexComponent,
+    RadarCardComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 2000,
+      positionClass: 'toast-bottom-left',
+      preventDuplicates: true,
+    })
   ],
   providers: [{provide: 'RadarService', useClass: environment.radarServiceType}],
   bootstrap: [AppComponent]

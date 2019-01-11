@@ -1,37 +1,3 @@
 <div class="index-container" *ngFor="let radar of radars">
-
-  <div class="card">
-    <div class="card-body">
-
-      <h5 class="card-title">{{ radar.title }}</h5>
-      
-      <h6 class="card-subtitle mb-2 text-muted">
-          <div *ngIf="radar.isClosed(); else radarAbierto">
-            Cerrado
-          </div>
-          
-          <ng-template #radarAbierto>
-            Abierto
-          </ng-template>
-      </h6>
-      
-      <p class="card-text index-radar-description">
-        {{ radar.description }}
-      </p>
-
-      <button class="card-link btn btn-link" (click)="redirectToRadar(radar.id)">
-        Ver Resultados
-      </button>
-
-      <button class="card-link btn btn-link" (click)="copyVoteRadarLink(radar.id)" *ngIf="!radar.isClosed()">
-        Copiar Link A Votar
-      </button>
-
-      <button class="card-link btn btn-link" (click)="closeRadar(radar.id)" *ngIf="!radar.isClosed()">
-        Cerrar Radar
-      </button>
-    
-    </div>
-  </div>
-
+  <app-radar-card [radar]="radar"></app-radar-card>
 </div>
