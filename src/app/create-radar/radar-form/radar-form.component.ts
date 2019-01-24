@@ -26,6 +26,7 @@ export class RadarFormComponent implements OnInit {
   }
 
   showRadarNameError() {
-    return this.showErrors && this.radarTitle.length === 0;
+    const trimmedRadarTitle = this.radarTitle.trim();
+    return this.showErrors && trimmedRadarTitle.length === 0;
   }
 }

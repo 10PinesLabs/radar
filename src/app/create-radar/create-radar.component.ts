@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Axis } from 'src/model/axis';
 import { Radar } from 'src/model/radar';
 import { RadarService } from 'src/services/radar.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-radar',
@@ -15,7 +16,7 @@ export class CreateRadarComponent implements OnInit {
   radarDescription = '';
   showErrors = false;
 
-  constructor(@Inject('RadarService') private radarService: RadarService) { }
+  constructor(@Inject('RadarService') private radarService: RadarService, private router: Router) { }
 
   ngOnInit() { }
 
@@ -29,7 +30,7 @@ export class CreateRadarComponent implements OnInit {
     } else {
       const newRadar = new Radar(this.radarTitle, this.radarDescription, this.axes, null);
       this.radarService.createRadar(newRadar);
-      window.location.href = '/';
+      this.router.navigate(['/']);
     }
   }
 

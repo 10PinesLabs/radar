@@ -36,10 +36,11 @@ export class AxesFormComponent implements OnInit {
   }
 
   axisIsInvalid(): boolean {
-    return this.newAxis.title.length === 0;
+    const trimmedTitle = this.newAxis.title.trim();
+    return trimmedTitle.length === 0;
   }
 
-  cardBodyClases() {
+  cardBodyClasses() {
     const classes = this.isAxesQuantityValid() ?
       'card-body axis-card-body valid-axes-quantity' : 'card-body axis-card-body invalid-axes-quantity';
     return classes;
