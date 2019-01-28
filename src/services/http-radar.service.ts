@@ -23,4 +23,8 @@ export class HttpRadarService implements RadarService {
     // throw Error('WIP: Not implemented');
     return new InMemoryRadarService().vote(radar, vote);
   }
+
+  createRadar(radar: Radar) {
+    new InMemoryRadarService().createRadar(radar);
+  }
 }

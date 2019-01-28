@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -14,7 +15,9 @@ import { CardContainerComponent } from './card-container/card-container.componen
 import { AxisBarChartComponent } from './results/axis-bar-chart/axis-bar-chart.component';
 import { AxisTableValuesComponent } from './results/axis-table-values/axis-table-values.component';
 import { RadarChartComponent } from './results/radar-chart/radar-chart.component';
-
+import { CreateRadarComponent } from './create-radar/create-radar.component';
+import { RadarFormComponent } from './create-radar/radar-form/radar-form.component';
+import { AxesFormComponent } from './create-radar/axes-form/axes-form.component';
 
 @NgModule({
   declarations: [
@@ -28,11 +31,15 @@ import { RadarChartComponent } from './results/radar-chart/radar-chart.component
     CardContainerComponent,
     AxisBarChartComponent,
     AxisTableValuesComponent,
-    RadarChartComponent
+    RadarChartComponent,
+    CreateRadarComponent,
+    RadarFormComponent,
+    AxesFormComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [{provide: 'RadarService', useClass: environment.radarServiceType}],
   bootstrap: [AppComponent]

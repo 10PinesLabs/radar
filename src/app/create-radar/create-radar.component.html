@@ -1,0 +1,20 @@
+<app-card-container [header]="'Crear Radar'">
+  <div class="card-body">
+
+    <form (ngSubmit)="createRadar()" #createRadarForm="ngForm">
+
+      <app-radar-form [(radarTitle)]="radarTitle" [(radarDescription)]="radarDescription" [showErrors]="showErrors"></app-radar-form>
+
+      <hr>
+
+      <app-axes-form [(axes)]="axes" [showErrors]="showErrors"></app-axes-form>
+
+      <hr>
+
+      <div class="create-radar-button-container">
+        <button type="submit" class="btn btn-success create-radar-button">Crear</button>
+      </div>
+    </form>
+
+  </div>
+</app-card-container>

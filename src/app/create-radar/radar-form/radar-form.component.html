@@ -1,0 +1,31 @@
+<div class="form-group">
+  <label for="radarTitle">Nombre del Radar</label>
+  <input
+    type="text"
+    class="form-control text-color"
+    [(ngModel)]="radarTitle"
+    name="radarTitle"
+    id="radarTitle"
+    placeholder="Nuevo Radar"
+    required
+    #radarTitleModel="ngModel"
+    (keyup)="onRadarTitleChange()"
+  >
+  <div [hidden]="!showRadarNameError()" class="alert alert-danger radar-form-alert">
+    El título es requerido
+  </div>
+</div>
+
+<div class="form-group">
+  <label for="radarDescription">Descripción del Radar</label>
+  <textarea
+    class="form-control text-color"
+    [(ngModel)]="radarDescription"
+    name="radarDescription"
+    id="radarDescription"
+    placeholder="Descripción del Radar"
+    rows="3"
+    (keyup)="onRadarDescriptionChange()"
+  >
+  </textarea>
+</div>
