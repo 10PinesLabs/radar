@@ -9,7 +9,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: 'radar/:id/vote', component: RadarVoteComponent },
   { path: 'radar/:id/results', component: ResultsComponent },
-  { path: 'createRadar', component: CreateRadarComponent }
+  { path: 'radar/create', component: CreateRadarComponent }
 ];
 
 @NgModule({
