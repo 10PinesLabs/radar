@@ -26,6 +26,10 @@ export class InMemoryRadarService implements RadarService {
   }
 
   close(radarId: any): void {
-    RADARS.find(radar => radar.id === radarId ).close();
+    RADARS.find(radar => radar.id === radarId).close();
+  }
+
+  createRadar(radar: Radar) {
+    RADARS.push(radar);
   }
 }

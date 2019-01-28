@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -16,10 +16,11 @@ import { AxisTableValuesComponent } from './results/axis-table-values/axis-table
 import { RadarChartComponent } from './results/radar-chart/radar-chart.component';
 import { IndexComponent } from './index/index.component';
 import { RadarCardComponent } from './index/radar-card/radar-card.component';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-
+import { CreateRadarComponent } from './create-radar/create-radar.component';
+import { RadarFormComponent } from './create-radar/radar-form/radar-form.component';
+import { AxesFormComponent } from './create-radar/axes-form/axes-form.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,10 @@ import { ToastrModule } from 'ngx-toastr';
     AxisTableValuesComponent,
     RadarChartComponent,
     IndexComponent,
-    RadarCardComponent
+    RadarCardComponent,
+    CreateRadarComponent,
+    RadarFormComponent,
+    AxesFormComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +49,8 @@ import { ToastrModule } from 'ngx-toastr';
       timeOut: 2000,
       positionClass: 'toast-bottom-left',
       preventDuplicates: true,
-    })
+    }),
+    FormsModule
   ],
   providers: [{provide: 'RadarService', useClass: environment.radarServiceType}],
   bootstrap: [AppComponent]

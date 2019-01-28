@@ -28,4 +28,8 @@ export class HttpRadarService implements RadarService {
   close(radarId: any): void {
     new InMemoryRadarService().close(radarId);
   }
+
+  createRadar(radar: Radar) {
+    new InMemoryRadarService().createRadar(radar);
+  }
 }
