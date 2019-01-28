@@ -12,8 +12,18 @@ export const AXES: Axis[] = [
   ambienteLaboralAxis
 ];
 
+const descripcionCorta = 'Descripción corta del Radar.';
 
-const radar2016 = new Radar('Radar 2016', 'Radar utilizado en el Retiro Estrategico 10Pines 2018', AXES, 1);
+const descripcionMedia = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore \
+                          et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip \
+                          ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse \
+                          cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, \
+                          sunt in culpa qui officia deserunt mollit anim id est laborum.';
+
+const descripcionLarga = crearDescripcionLarga(descripcionMedia);
+
+
+const radar2016 = new Radar('Radar 2016', descripcionLarga, AXES, 1);
 const vote1 = new Vote([
   { axis: calidadTecnicaAxis, vote: 1 }, { axis: calidadHumanaAxis, vote: 1 }, { axis: ambienteLaboralAxis, vote: 1 }
 ]);
@@ -38,12 +48,22 @@ voteRadarTimes(radar2016, vote5, 3);
 
 export const RADARS: Radar[] = [
   radar2016,
-  new Radar('Radar 2017', 'Radar utilizado en el Retiro Estrategico 10Pines 2018', AXES, 2),
-  new Radar('Radar 2018', 'Radar utilizado en el Retiro Estrategico 10Pines 2018', AXES, 3)
+  new Radar('Radar 2017', descripcionMedia, AXES, 2),
+  new Radar('Radar 2018', descripcionCorta, AXES, 3)
 ];
 
 function voteRadarTimes(radar, vote, times) {
   for (let i = 0; i < times; i++) {
     radar.registerVote(vote);
   }
+}
+
+function crearDescripcionLarga(texto) {
+  let textoLargo = '';
+
+  for (let i = 0; i < 10; i++) {
+    textoLargo = textoLargo + texto;
+  }
+
+  return textoLargo;
 }

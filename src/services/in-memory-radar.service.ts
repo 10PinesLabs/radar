@@ -9,7 +9,6 @@ import {RadarService} from './radar.service';
   providedIn: 'root'
 })
 export class InMemoryRadarService implements RadarService {
-
   constructor() {
   }
 
@@ -24,6 +23,10 @@ export class InMemoryRadarService implements RadarService {
   vote(radar: Radar, vote: Vote): Observable<Vote> {
     radar.registerVote(vote);
     return of(vote);
+  }
+
+  close(radarId: any): void {
+    RADARS.find(radar => radar.id === radarId).close();
   }
 
   createRadar(radar: Radar) {

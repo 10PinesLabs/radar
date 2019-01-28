@@ -10,5 +10,7 @@ export interface RadarService {
 
   vote(radar: Radar, vote: Vote): Observable<Vote>;
 
+  close(radarId: any): void;
+
   createRadar(radar: Radar);
 }
