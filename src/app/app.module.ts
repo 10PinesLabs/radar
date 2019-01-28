@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -15,6 +14,10 @@ import { CardContainerComponent } from './card-container/card-container.componen
 import { AxisBarChartComponent } from './results/axis-bar-chart/axis-bar-chart.component';
 import { AxisTableValuesComponent } from './results/axis-table-values/axis-table-values.component';
 import { RadarChartComponent } from './results/radar-chart/radar-chart.component';
+import { IndexComponent } from './index/index.component';
+import { RadarCardComponent } from './index/radar-card/radar-card.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 import { CreateRadarComponent } from './create-radar/create-radar.component';
 import { RadarFormComponent } from './create-radar/radar-form/radar-form.component';
 import { AxesFormComponent } from './create-radar/axes-form/axes-form.component';
@@ -32,6 +35,8 @@ import { AxesFormComponent } from './create-radar/axes-form/axes-form.component'
     AxisBarChartComponent,
     AxisTableValuesComponent,
     RadarChartComponent,
+    IndexComponent,
+    RadarCardComponent,
     CreateRadarComponent,
     RadarFormComponent,
     AxesFormComponent
@@ -39,6 +44,12 @@ import { AxesFormComponent } from './create-radar/axes-form/axes-form.component'
   imports: [
     BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 2000,
+      positionClass: 'toast-bottom-left',
+      preventDuplicates: true,
+    }),
     FormsModule
   ],
   providers: [{provide: 'RadarService', useClass: environment.radarServiceType}],

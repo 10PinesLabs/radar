@@ -9,6 +9,7 @@ import {InMemoryRadarService} from './in-memory-radar.service';
   providedIn: 'root'
 })
 export class HttpRadarService implements RadarService {
+
   radar(radarId: any): Observable<Radar> {
     // throw Error('WIP: Not implemented');
     return new InMemoryRadarService().radar(radarId);
@@ -22,6 +23,10 @@ export class HttpRadarService implements RadarService {
   vote(radar: Radar, vote: Vote): Observable<Vote> {
     // throw Error('WIP: Not implemented');
     return new InMemoryRadarService().vote(radar, vote);
+  }
+
+  close(radarId: any): void {
+    new InMemoryRadarService().close(radarId);
   }
 
   createRadar(radar: Radar) {
