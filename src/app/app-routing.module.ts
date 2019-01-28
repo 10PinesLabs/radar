@@ -6,7 +6,7 @@ import { IndexComponent } from './index/index.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' },
-  { path: 'index', component: IndexComponent },
+  { path: 'radars', component: IndexComponent },
   { path: 'radar/:id/vote', component: RadarVoteComponent },
   { path: 'radar/:id/results', component: ResultsComponent }
 ];
