@@ -25,4 +25,8 @@ export class InMemoryRadarService implements RadarService {
     radar.registerVote(vote);
     return of(vote);
   }
+
+  createRadar(radar: Radar) {
+    RADARS.push(radar);
+  }
 }
