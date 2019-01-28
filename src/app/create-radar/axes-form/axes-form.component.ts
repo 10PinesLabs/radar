@@ -30,6 +30,7 @@ export class AxesFormComponent implements OnInit {
     if (this.axisIsInvalid()) {
       this.axisTitleError = true;
     } else {
+      this.axisTitleError = false;
       this.axes.push(this.newAxis);
       this.newAxis = new Axis('', '');
     }
