@@ -5,9 +5,12 @@
     </div>
 
     <div class="login-logout">
-      <button type="button" class="login-logout-btn btn btn-outline-light" (click)="onClickLoginLogoutButton()">
-        {{button_text}}
-      </button>
+      <a href="https://backoffice-10pines-stg.herokuapp.com/auth/sign_in?redirect_url=http://localhost:3000/auth/backoffice/callback&app_id=ruben_radar">
+          <button type="button" class="login-logout-btn btn btn-outline-light" >
+            {{button_text}}
+          </button>
+      </a>
+
     </div>
   </div>
 </div>

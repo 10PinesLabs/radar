@@ -21,6 +21,9 @@ import { ToastrModule } from 'ngx-toastr';
 import { CreateRadarComponent } from './create-radar/create-radar.component';
 import { RadarFormComponent } from './create-radar/radar-form/radar-form.component';
 import { AxesFormComponent } from './create-radar/axes-form/axes-form.component';
+import { TokenComponent } from './token/token.component';
+import {StorageServiceModule} from 'angular-webstorage-service';
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
   declarations: [
@@ -39,9 +42,12 @@ import { AxesFormComponent } from './create-radar/axes-form/axes-form.component'
     RadarCardComponent,
     CreateRadarComponent,
     RadarFormComponent,
-    AxesFormComponent
+    AxesFormComponent,
+    TokenComponent,
+    ErrorComponent,
   ],
   imports: [
+    StorageServiceModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
