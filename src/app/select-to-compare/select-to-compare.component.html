@@ -8,25 +8,22 @@
     <form class="select-to-compare-form">
       <div class="form-group">
         <label for="primerRadar">Primer Radar</label>
-        <select class="form-control select-to-compare-select" id="primerRadar" >
-          <option *ngFor="let radar of radars" [ngValue]="firstRadar">
+        <select class="form-control select-to-compare-select" name="primerRadar" [(ngModel)]="firstRadar">
+          <option *ngFor="let radar of radars" [ngValue]="radar">
             {{radar.title}}
           </option>
         </select>
       </div>
 
       <div class="form-group">
-        <label for="segundoRadar">Segundo Radar</label>
-        <select class="form-control select-to-compare-select" id="segundoRadar">
-          <option *ngFor="let radar of radars" [ngValue]="secondRadar">
+        <label for="segundoRadarToCompare">Segundo Radar</label>
+        <select class="form-control select-to-compare-select" name="segundoRadarToCompare" [(ngModel)]="secondRadar">
+          <option *ngFor="let radar of radars" [ngValue]="radar">
             {{radar.title}}
           </option>
         </select>
       </div>
     </form>
   </div>
-
-  <p>First Radar: {{firstRadar.title}}</p>
-  <p>Second Radar: {{secondRadar.title}}</p>
 
 </app-card-container>
