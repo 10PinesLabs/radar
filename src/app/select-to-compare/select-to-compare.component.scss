@@ -17,8 +17,16 @@
     width: 15em;
 }
 
-.select-to-compare-boton-comparar {
+.select-to-compare-buttons {
     display: flex;
     justify-content: center;
     margin: 1.5em;
+}
+
+.select-to-compare-back-to-index-button {
+    margin-right: 0.5em;
+}
+
+.select-to-compare-compare-button {
+    margin-left: 0.5em;
 }

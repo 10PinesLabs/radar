@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Radar } from 'src/model/radar';
 import { RadarService } from 'src/services/radar.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-select-to-compare',
@@ -14,7 +15,7 @@ export class SelectToCompareComponent implements OnInit {
   firstRadar: Radar;
   secondRadar: Radar;
 
-  constructor(@Inject('RadarService') private radarService: RadarService) { }
+  constructor(@Inject('RadarService') private radarService: RadarService, private router: Router) { }
 
   ngOnInit() {
     this.radarService.radars().subscribe(radars => {
@@ -23,5 +24,9 @@ export class SelectToCompareComponent implements OnInit {
       this.firstRadar = this.radars[0];
       this.secondRadar = this.radars[0];
     });
+  }
+
+  backToIndex() {
+    this.router.navigate(['/radars']);
   }
 }

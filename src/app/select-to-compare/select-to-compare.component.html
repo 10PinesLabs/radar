@@ -33,10 +33,19 @@
       </div>
     </form>
 
-    <div class="select-to-compare-boton-comparar">
+    <div class="select-to-compare-buttons">
+
       <button
         type="button"
-        class="btn btn-success"
+        class="btn btn-secondary select-to-compare-back-to-index-button"
+        (click)="backToIndex()"
+      >
+        Volver al index
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-success select-to-compare-compare-button"
       >
         Comparar
       </button>
