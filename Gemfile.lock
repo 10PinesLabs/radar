@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/10pines/omniauth-backoffice.git
+  revision: 9b402522f7779a3f91c297557b207c8af2c0e2b3
+  specs:
+    omniauth-backoffice (1.0)
+      omniauth (>= 1.3.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -53,6 +60,10 @@ GEM
     crass (1.0.3)
     debug_inspector (0.0.3)
     diff-lcs (1.3)
+    dotenv (2.6.0)
+    dotenv-rails (2.6.0)
+      dotenv (= 2.6.0)
+      railties (>= 3.2, < 6.0)
     erubis (2.7.0)
     factory_bot (4.8.2)
       activesupport (>= 3.0.0)
@@ -62,6 +73,7 @@ GEM
     ffi (1.9.23)
     globalid (0.4.1)
       activesupport (>= 4.2.0)
+    hashie (3.6.0)
     i18n (0.9.5)
       concurrent-ruby (~> 1.0)
     jbuilder (2.7.0)
@@ -73,6 +85,7 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.8.6)
     jsonapi-renderer (0.2.0)
+    jwt (2.1.0)
     loofah (2.2.2)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -84,6 +97,9 @@ GEM
     multi_json (1.13.1)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
+    omniauth (1.9.0)
+      hashie (>= 3.4.6, < 3.7.0)
+      rack (>= 1.6.2, < 3)
     pg (0.20.0)
     rack (1.6.9)
     rack-test (0.6.3)
@@ -183,9 +199,12 @@ DEPENDENCIES
   active_model_serializers
   bower-rails
   byebug
+  dotenv-rails (~> 2.1, >= 2.1.1)
   factory_bot_rails
   jbuilder (~> 2.0)
   jquery-rails
+  jwt
+  omniauth-backoffice!
   pg (= 0.20.0)
   rails (= 4.2.7.1)
   rails_12factor
@@ -197,4 +216,4 @@ DEPENDENCIES
   web-console (~> 2.0)
 
 BUNDLED WITH
-   1.16.1
+   1.17.2

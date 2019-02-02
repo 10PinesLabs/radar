@@ -9,6 +9,5 @@ Rails.application.routes.draw do
       end
     end
   end
-  root to: 'application#angular'
-  match '*path' => 'application#angular', via: %i[get post]
+  get 'auth/backoffice/callback', to: "omni_auth#callback"
 end
