@@ -1,32 +1,32 @@
-.select-to-compare-container {
+.stc-container {
     margin: 2em;
 }
 
-.select-to-compare-title {
+.stc-title {
     text-align: center;
     margin-bottom: 1.5em;
 }
 
-.select-to-compare-form {
+.stc-form {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
 }
 
-.select-to-compare-select {
+.stc-select {
     width: 15em;
 }
 
-.select-to-compare-buttons {
+.stc-buttons {
     display: flex;
     justify-content: center;
     margin: 1.5em;
 }
 
-.select-to-compare-back-to-index-button {
+.stc-back-to-index-button {
     margin-right: 0.5em;
 }
 
-.select-to-compare-compare-button {
+.stc-compare-button {
     margin-left: 0.5em;
 }
