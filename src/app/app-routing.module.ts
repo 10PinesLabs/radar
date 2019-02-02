@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'radar/:id/vote', component: RadarVoteComponent },
   { path: 'radar/:id/results', component: ResultsComponent },
   { path: 'radar', component: CreateRadarComponent },
-  { path: 'selectToCompare', component: CompareComponent }
+  { path: 'compareRadars', component: CompareComponent }
 ];
 
 @NgModule({
