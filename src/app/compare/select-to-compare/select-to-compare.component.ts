@@ -1,6 +1,5 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Radar } from 'src/model/radar';
-import { RadarService } from 'src/services/radar.service';
 
 @Component({
   selector: 'app-select-to-compare',
@@ -10,19 +9,21 @@ import { RadarService } from 'src/services/radar.service';
 export class SelectToCompareComponent implements OnInit {
 
   title: String = 'Comparar Radares';
-  radars: Radar[];
-  firstRadar: Radar;
-  secondRadar: Radar;
+  @Input() radars: Radar[];
+  @Input() firstRadar: Radar;
+  @Input() secondRadar: Radar;
+  @Output() firstRadarChange = new EventEmitter();
+  @Output() secondRadarChange = new EventEmitter();
 
-  constructor(@Inject('RadarService') private radarService: RadarService) { }
+  constructor() { }
 
-  ngOnInit() {
-    this.radarService.radars().subscribe(radars => {
-      this.radars = radars;
-      this.radars = this.radars.sort((r1, r2) => r2.id - r1.id); // mayor id a menor id
-      this.firstRadar = this.radars[0];
-      this.secondRadar = this.radars[0];
-    });
+  ngOnInit() { }
+
+  onFirstRadarChange() {
+    this.firstRadarChange.emit(this.firstRadar);
   }
 
+  onSecondRadarChange() {
+    this.secondRadarChange.emit(this.secondRadar);
+  }
 }

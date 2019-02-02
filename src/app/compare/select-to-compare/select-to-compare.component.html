@@ -8,7 +8,12 @@
     <form class="select-to-compare-form">
       <div class="form-group">
         <label for="primerRadar">Primer Radar</label>
-        <select class="form-control select-to-compare-select" name="primerRadar" [(ngModel)]="firstRadar">
+        <select
+          class="form-control select-to-compare-select"
+          name="primerRadar"
+          [(ngModel)]="firstRadar"
+          (ngModelChange)="onFirstRadarChange()"
+        >
           <option *ngFor="let radar of radars" [ngValue]="radar">
             {{radar.title}}
           </option>
@@ -17,7 +22,12 @@
 
       <div class="form-group">
         <label for="segundoRadarToCompare">Segundo Radar</label>
-        <select class="form-control select-to-compare-select" name="segundoRadarToCompare" [(ngModel)]="secondRadar">
+        <select
+          class="form-control select-to-compare-select"
+          name="segundoRadarToCompare"
+          [(ngModel)]="secondRadar"
+          (ngModelChange)="onSecondRadarChange()"
+        >
           <option *ngFor="let radar of radars" [ngValue]="radar">
             {{radar.title}}
           </option>
@@ -30,7 +40,6 @@
         Comparar
       </button>
     </div>
-
   </div>
 
 </app-card-container>
