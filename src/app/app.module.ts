@@ -22,6 +22,7 @@ import { CreateRadarComponent } from './create-radar/create-radar.component';
 import { RadarFormComponent } from './create-radar/radar-form/radar-form.component';
 import { AxesFormComponent } from './create-radar/axes-form/axes-form.component';
 import { SelectToCompareComponent } from './select-to-compare/select-to-compare.component';
+import { CompareRadarsComponent } from './compare-radars/compare-radars.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { SelectToCompareComponent } from './select-to-compare/select-to-compare.
     CreateRadarComponent,
     RadarFormComponent,
     AxesFormComponent,
-    SelectToCompareComponent
+    SelectToCompareComponent,
+    CompareRadarsComponent
   ],
   imports: [
     BrowserModule,

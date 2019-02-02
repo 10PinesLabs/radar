@@ -5,6 +5,7 @@ import { ResultsComponent } from './results/results.component';
 import { IndexComponent } from './index/index.component';
 import { CreateRadarComponent } from './create-radar/create-radar.component';
 import { SelectToCompareComponent } from './select-to-compare/select-to-compare.component';
+import { CompareRadarsComponent } from './compare-radars/compare-radars.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' },
@@ -12,7 +13,8 @@ const routes: Routes = [
   { path: 'radar/:id/vote', component: RadarVoteComponent },
   { path: 'radar/:id/results', component: ResultsComponent },
   { path: 'radar', component: CreateRadarComponent },
-  { path: 'selectToCompare', component: SelectToCompareComponent }
+  { path: 'selectToCompare', component: SelectToCompareComponent },
+  { path: 'compareRadars', component: CompareRadarsComponent }
 ];
 
 @NgModule({

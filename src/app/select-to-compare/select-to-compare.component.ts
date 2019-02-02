@@ -29,4 +29,8 @@ export class SelectToCompareComponent implements OnInit {
   backToIndex() {
     this.router.navigate(['/radars']);
   }
+
+  compareRadars() {
+    this.router.navigate(['/compareRadars']);
+  }
 }
