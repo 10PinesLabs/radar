@@ -1,14 +1,15 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { RadarService } from 'src/services/radar.service';
 import { Radar } from 'src/model/radar';
+import { RadarService } from 'src/services/radar.service';
 
 @Component({
-  selector: 'app-compare',
-  templateUrl: './compare.component.html',
-  styleUrls: ['./compare.component.scss']
+  selector: 'app-select-to-compare',
+  templateUrl: './select-to-compare.component.html',
+  styleUrls: ['./select-to-compare.component.scss']
 })
-export class CompareComponent implements OnInit {
+export class SelectToCompareComponent implements OnInit {
 
+  title: String = 'Comparar Radares';
   radars: Radar[];
   firstRadar: Radar;
   secondRadar: Radar;
@@ -23,5 +24,4 @@ export class CompareComponent implements OnInit {
       this.secondRadar = this.radars[0];
     });
   }
-
 }
