@@ -37,6 +37,9 @@ gem 'bower-rails'
 
 gem 'rails_12factor', group: :production
 
+# Gema para la autenticación con el backoffice
+gem 'omniauth-backoffice', git: 'https://github.com/10pines/omniauth-backoffice.git'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'rspec-rails'
