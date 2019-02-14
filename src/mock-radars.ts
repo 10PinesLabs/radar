@@ -23,7 +23,6 @@ const descripcionMedia = 'Lorem ipsum dolor sit amet, consectetur adipiscing eli
 const descripcionLarga = crearDescripcionLarga(descripcionMedia);
 
 
-const radar2016 = new Radar('Radar 2016', descripcionLarga, AXES, 1);
 const vote1 = new Vote([
   { axis: calidadTecnicaAxis, vote: 1 }, { axis: calidadHumanaAxis, vote: 1 }, { axis: ambienteLaboralAxis, vote: 1 }
 ]);
@@ -40,16 +39,25 @@ const vote5 = new Vote([
   { axis: calidadTecnicaAxis, vote: 5 }, { axis: calidadHumanaAxis, vote: 5 }, { axis: ambienteLaboralAxis, vote: 5 }
 ]);
 
+
+const radar2016 = new Radar('Radar 2016', descripcionLarga, AXES, 1);
 voteRadarTimes(radar2016, vote1, 3);
 voteRadarTimes(radar2016, vote2, 4);
 voteRadarTimes(radar2016, vote3, 5);
 voteRadarTimes(radar2016, vote4, 4);
 voteRadarTimes(radar2016, vote5, 3);
 
+const radar2018 = new Radar('Radar 2018', descripcionCorta, AXES, 3);
+voteRadarTimes(radar2018, vote1, 1);
+voteRadarTimes(radar2018, vote2, 2);
+voteRadarTimes(radar2018, vote3, 5);
+voteRadarTimes(radar2018, vote4, 4);
+voteRadarTimes(radar2018, vote5, 1);
+
 export const RADARS: Radar[] = [
   radar2016,
   new Radar('Radar 2017', descripcionMedia, AXES, 2),
-  new Radar('Radar 2018', descripcionCorta, AXES, 3)
+  radar2018
 ];
 
 function voteRadarTimes(radar, vote, times) {

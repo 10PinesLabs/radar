@@ -12,8 +12,12 @@ import { Statistics } from 'src/model/statistics';
 export class RadarChartComponent implements AfterViewInit {
 
   @ViewChild('radarChartId') canvasRef: ElementRef;
-  @Input() radar: Radar;
+  @Input() radars: Radar[];
   radarChart = [];
+  greenBorderColor = 'rgba(25, 179, 112, 1)';
+  greenBackgroundColor = 'rgba(157, 217, 191, 0.6)';
+  violetBorderColor = 'rgba(35, 25, 179, 1)';
+  violetBackgroundColor = 'rgba(159, 155, 217, 0.6)';
 
   constructor() { }
 
@@ -35,10 +39,33 @@ export class RadarChartComponent implements AfterViewInit {
   }
 
   private parseRadarData() {
-    const radarLabel = this.radar.title;
-    const radarBackgroundColor = 'rgba(157, 217, 191, 0.6)';
-    const radarBorderColor = 'rgba(25, 179, 112, 1)';
-    const axisValues = this.radar.axisValues();
+    const radarDatasets = [];
+    const axisLabels = [];
+
+    // TODO: que pasa cuando los radares tienen aristas distintas?
+    this.radars[0].axisValues().forEach(axisValue => axisLabels.push(axisValue[0].title));
+
+    if (this.radars.length === 1) {
+      const dataset = this.datasetFromRadar(this.radars[0], this.greenBackgroundColor, this.greenBorderColor);
+      radarDatasets.push(dataset);
+    } else {
+      const firstRadarDataset = this.datasetFromRadar(this.radars[0], this.greenBackgroundColor, this.greenBorderColor);
+      const secondRadarDataset = this.datasetFromRadar(this.radars[1], this.violetBackgroundColor, this.violetBorderColor);
+      radarDatasets.push(firstRadarDataset);
+      radarDatasets.push(secondRadarDataset);
+    }
+
+    return {
+      labels: axisLabels,
+      datasets: radarDatasets
+    };
+  }
+
+  private datasetFromRadar(radar: Radar, backgroundColor: String, borderColor: String) {
+    const radarLabel = radar.title;
+    const radarBackgroundColor = backgroundColor;
+    const radarBorderColor = borderColor;
+    const axisValues = radar.axisValues();
 
     const axisLabels = [];
     const axisMean = [];
@@ -50,20 +77,17 @@ export class RadarChartComponent implements AfterViewInit {
     });
 
     return {
-      labels: axisLabels,
-      datasets: [{
-        label: radarLabel,
-        backgroundColor: radarBackgroundColor,
-        borderColor: radarBorderColor,
-        fill: true,
-        radius: 6,
-        pointRadius: 6,
-        pointBorderWidth: 3,
-        pointBackgroundColor: radarBackgroundColor,
-        pointBorderColor: radarBorderColor,
-        pointHoverRadius: 10,
-        data: axisMean,
-      }]
+      label: radarLabel,
+      backgroundColor: radarBackgroundColor,
+      borderColor: radarBorderColor,
+      fill: true,
+      radius: 6,
+      pointRadius: 6,
+      pointBorderWidth: 3,
+      pointBackgroundColor: radarBackgroundColor,
+      pointBorderColor: radarBorderColor,
+      pointHoverRadius: 10,
+      data: axisMean,
     };
   }
 
