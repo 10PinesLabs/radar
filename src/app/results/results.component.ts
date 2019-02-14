@@ -24,6 +24,10 @@ export class ResultsComponent implements OnInit {
     });
   }
 
+  parseRadarToRadarChart() {
+    return [this.radar];
+  }
+
   title() {
     const radarState = this.radar.isClosed() ? '(Cerrado)' : '(Abierto)';
     return this.radar.title + ' ' + radarState;

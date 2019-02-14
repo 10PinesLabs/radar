@@ -1,7 +1,7 @@
 <app-card-container [header]="title()">
 
   <div class="card-body">
-    <app-radar-chart [radars]="[radar]"></app-radar-chart>
+    <app-radar-chart [radars]="parseRadarToRadarChart()"></app-radar-chart>
 
     <div *ngFor="let axis of axes">
       <hr>
