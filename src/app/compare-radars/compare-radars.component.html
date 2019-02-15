@@ -3,14 +3,20 @@
   <div class="card-body">
     <app-radar-chart [radars]="parseRadarsToRadarChart()"></app-radar-chart>
 
-    <!-- <div *ngFor="let axis of axes">
+    <div *ngFor="let axis of axes()">
       <hr>
       <h5>{{ axis.title }}</h5>
       <p>{{ axis.description }}</p>
 
-      <app-axis-bar-chart [axis]="axis" [values]="radar.axisValuesFor(axis)"></app-axis-bar-chart>
-      <app-axis-table-values [axis]="axis" [values]="radar.axisValuesFor(axis)"></app-axis-table-values>
-    </div> -->
+      <app-axis-bar-chart
+        [axis]="axis"
+        [values]="parseRadarsAxisValuesForAxisChart(axis)"
+        [radarTitles]="parseRadarTitlesToAxisChart()"
+        >
+      </app-axis-bar-chart>
+
+      <!-- <app-axis-table-values [axis]="axis" [values]="radar.axisValuesFor(axis)"></app-axis-table-values> -->
+    </div>
   </div>
 
   <p>FIRST RADAR: {{firstRadar.title}}</p>

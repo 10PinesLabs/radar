@@ -19,7 +19,6 @@ export class CompareRadarsComponent implements OnInit {
   ngOnInit() {
     this.compareRadarsService.firstRadar().subscribe(firstRadar => this.firstRadar = firstRadar);
     this.compareRadarsService.secondRadar().subscribe(secondRadar => this.secondRadar = secondRadar);
-
     // TODO: si no hay radares debería llevar a la pagina de select-to-compare
   }
 
@@ -27,7 +26,20 @@ export class CompareRadarsComponent implements OnInit {
     return 'Comparación entre ' + this.firstRadar.title + ' y ' + this.secondRadar.title;
   }
 
+  axes() {
+    // TODO: debería ser solo las aristas que tienen en comun ambos radars
+    return this.firstRadar.axes;
+  }
+
   parseRadarsToRadarChart() {
     return [this.firstRadar, this.secondRadar];
+  }
+
+  parseRadarsAxisValuesForAxisChart(axis) {
+    return [this.firstRadar.axisValuesFor(axis), this.secondRadar.axisValuesFor(axis)];
+  }
+
+  parseRadarTitlesToAxisChart() {
+    return [this.firstRadar.title, this.secondRadar.title];
   }
 }

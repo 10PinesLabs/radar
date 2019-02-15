@@ -13,7 +13,12 @@ export class AxisBarChartComponent implements AfterViewInit {
   @ViewChild('chartId') canvasRef: ElementRef;
   @Input() axis: Axis;
   @Input() values;
+  @Input() radarTitles;
   chart = [];
+  greenBorderColor = 'rgba(25, 179, 112, 1)';
+  greenBackgroundColor = 'rgba(157, 217, 191, 0.6)';
+  violetBorderColor = 'rgba(35, 25, 179, 1)';
+  violetBackgroundColor = 'rgba(159, 155, 217, 0.6)';
 
   constructor() { }
 
@@ -25,33 +30,41 @@ export class AxisBarChartComponent implements AfterViewInit {
 
   createChart() {
     const ctx = this.canvasRef.nativeElement.getContext('2d');
-    const chartDataset = this.chartDataset();
+    const chartDatasets = this.chartDatasets();
     const chartOptions = this.chartOptions();
 
     this.chart = new Chart(ctx, {
       type: 'bar',
-      data: chartDataset,
+      data: chartDatasets,
       options: chartOptions,
     });
   }
 
-  private chartDataset() {
+  private chartDatasets() {
     const chartDataset = {
       labels: [1, 2, 3, 4, 5],
-      datasets: [
-        this.barDataset(),
-      ]
+      datasets: this.generateDatasets(),
     };
 
     return chartDataset;
   }
 
-  private barDataset() {
-    const arrayValues = this.axisValuesObjToArray();
+  private generateDatasets() {
+    const datasets = [];
+    datasets.push(this.barDataset(this.values[0], this.radarTitles[0], this.greenBackgroundColor, this.greenBorderColor));
+    if (this.values.length === 2) {
+      datasets.push(this.barDataset(this.values[1], this.radarTitles[1], this.violetBackgroundColor, this.violetBorderColor));
+    }
+
+    return datasets;
+  }
+
+  private barDataset(values, radarTitle, backgroundColor: String, borderColor: String) {
+    const arrayValues = this.axisValuesObjToArray(values);
     const barDataset = {
-      label: '#Votos',
-      backgroundColor: 'rgba(157, 217, 191, 0.6)',
-      borderColor: 'rgba(25, 179, 112, 1)',
+      label: radarTitle,
+      backgroundColor: backgroundColor,
+      borderColor: borderColor,
       data: arrayValues,
     };
 
@@ -77,8 +90,8 @@ export class AxisBarChartComponent implements AfterViewInit {
     };
   }
 
-  private axisValuesObjToArray() {
-    const statistics = new Statistics(this.values);
+  private axisValuesObjToArray(values) {
+    const statistics = new Statistics(values);
     return statistics.axisValuesObjToArray();
   }
 
