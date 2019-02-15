@@ -28,7 +28,7 @@ export class ResultsComponent implements OnInit {
     return [this.radar];
   }
 
-  parseRadarAxisValuesForAxisChart(axis) {
+  parseRadarAxisValuesForCharts(axis) {
     return [this.radar.axisValuesFor(axis)];
   }
 

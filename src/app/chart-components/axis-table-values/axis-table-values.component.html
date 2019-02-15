@@ -2,16 +2,18 @@
   <table class="table">
     <thead>
       <tr>
+        <th scope="col">Título</th>
         <th scope="col">Promedio</th>
         <th scope="col">Media</th>
         <th scope="col">Esperanza</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>{{ mean }}</td>
-        <td>{{ median }}</td>
-        <td>{{ expectedValue }}</td>
+      <tr *ngFor="let axisStatistics of axesStatistics">
+        <td>{{ axisStatistics.title }}</td>
+        <td>{{ axisStatistics.mean }}</td>
+        <td>{{ axisStatistics.median }}</td>
+        <td>{{ axisStatistics.expectedValue }}</td>
       </tr>
     </tbody>
   </table>

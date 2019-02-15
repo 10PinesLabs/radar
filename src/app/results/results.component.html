@@ -10,12 +10,17 @@
 
       <app-axis-bar-chart
         [axis]="axis"
-        [values]="parseRadarAxisValuesForAxisChart(axis)"
+        [values]="parseRadarAxisValuesForCharts(axis)"
         [radarTitles]="parseRadarTitleToAxisChart()"
       >
       </app-axis-bar-chart>
 
-      <app-axis-table-values [axis]="axis" [values]="radar.axisValuesFor(axis)"></app-axis-table-values>
+      <app-axis-table-values
+        [axis]="axis"
+        [values]="parseRadarAxisValuesForCharts(axis)"
+        [radarTitles]="parseRadarTitleToAxisChart()"
+      >
+      </app-axis-table-values>
     </div>
   </div>
 

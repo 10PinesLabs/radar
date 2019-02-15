@@ -11,6 +11,8 @@ export class AxisTableValuesComponent implements OnInit {
 
   @Input() axis: Axis;
   @Input() values;
+  @Input() radarTitles;
+  axesStatistics = [];
   mean: number;
   median: number;
   expectedValue: number;
@@ -18,10 +20,20 @@ export class AxisTableValuesComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    const statistics = new Statistics(this.values);
-    this.mean = statistics.mean();
-    this.median = statistics.median();
-    this.expectedValue = statistics.expectedValue();
+    this.getValueStatistics(this.values[0], this.radarTitles[0]);
+    if (this.values.length === 2) {
+      this.getValueStatistics(this.values[1], this.radarTitles[1]);
+    }
   }
 
+  getValueStatistics(values, radarTitle) {
+    const statistics = new Statistics(values);
+    this.axesStatistics.push({
+      title: radarTitle,
+      mean: statistics.mean(),
+      median: statistics.median(),
+      expectedValue: statistics.expectedValue(),
+    });
+
+  }
 }
