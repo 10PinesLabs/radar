@@ -19,7 +19,7 @@ export class CompareRadarsComponent implements OnInit {
   ngOnInit() {
     this.compareRadarsService.firstRadar().subscribe(firstRadar => this.firstRadar = firstRadar);
     this.compareRadarsService.secondRadar().subscribe(secondRadar => this.secondRadar = secondRadar);
-    // TODO: si no hay radares debería llevar a la pagina de select-to-compare
+    this.redirectToSelectToCompareIfThereAreNotRadars();
   }
 
   title() {
@@ -41,5 +41,15 @@ export class CompareRadarsComponent implements OnInit {
 
   parseRadarTitlesToAxisChart() {
     return [this.firstRadar.title, this.secondRadar.title];
+  }
+
+  private redirectToSelectToCompareIfThereAreNotRadars() {
+    if (this.radarsAreNullOrUndefined()) {
+      this.router.navigateByUrl('/selectToCompare');
+    }
+  }
+
+  private radarsAreNullOrUndefined() {
+    return this.firstRadar === null || this.firstRadar === undefined || this.secondRadar === null || this.secondRadar === undefined;
   }
 }

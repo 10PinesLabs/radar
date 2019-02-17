@@ -1,27 +1,31 @@
-<app-card-container [header]="title()">
+<div *ngIf="!radarsAreNullOrUndefined()">
 
-  <div class="card-body">
-    <app-radar-chart [radars]="parseRadarsToRadarChart()"></app-radar-chart>
+  <app-card-container [header]="title()">
 
-    <div *ngFor="let axis of axes()">
-      <hr>
-      <h5>{{ axis.title }}</h5>
-      <p>{{ axis.description }}</p>
+    <div class="card-body">
+      <app-radar-chart [radars]="parseRadarsToRadarChart()"></app-radar-chart>
 
-      <app-axis-bar-chart
-        [axis]="axis"
-        [values]="parseRadarsAxisValuesForAxisChart(axis)"
-        [radarTitles]="parseRadarTitlesToAxisChart()"
+      <div *ngFor="let axis of axes()">
+        <hr>
+        <h5>{{ axis.title }}</h5>
+        <p>{{ axis.description }}</p>
+
+        <app-axis-bar-chart
+          [axis]="axis"
+          [values]="parseRadarsAxisValuesForAxisChart(axis)"
+          [radarTitles]="parseRadarTitlesToAxisChart()"
+          >
+        </app-axis-bar-chart>
+
+        <app-axis-table-values
+          [axis]="axis"
+          [values]="parseRadarsAxisValuesForAxisChart(axis)"
+          [radarTitles]="parseRadarTitlesToAxisChart()"
         >
-      </app-axis-bar-chart>
-
-      <app-axis-table-values
-        [axis]="axis"
-        [values]="parseRadarsAxisValuesForAxisChart(axis)"
-        [radarTitles]="parseRadarTitlesToAxisChart()"
-      >
-      </app-axis-table-values>
+        </app-axis-table-values>
+      </div>
     </div>
-  </div>
 
-</app-card-container>
+  </app-card-container>
+
+</div>
