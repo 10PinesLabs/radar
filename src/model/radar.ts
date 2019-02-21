@@ -55,6 +55,17 @@ export class Radar {
     return this.closed;
   }
 
+  axisBelongsToRadar(axis: Axis) {
+    let belongs = false;
+    this.axes.forEach(radarAxis => {
+      if (axis.title === radarAxis.title) {
+        belongs =  true;
+      }
+    });
+
+    return belongs;
+  }
+
   private validateAxisBelongsToRadar(axis) {
     if (this.axisBelongsToAxes(axis)) {
       throw new Error('El axis no pertenece al radar');

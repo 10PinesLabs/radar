@@ -6,6 +6,16 @@ import { Vote } from './model/vote';
 const calidadTecnicaAxis = new Axis('Calidad técnica', 'La calidad técnica representa el eje...');
 const calidadHumanaAxis = new Axis('Calidad humana', 'La calidad humana representa el eje...');
 const ambienteLaboralAxis = new Axis('Ambiente laboral', 'El ambiente laboral representa el eje...');
+const buenosSueldosAxis = new Axis('Buenos Sueldos', 'Buenos sueldos representa al eje...');
+const saberSmalltalkAxis = new Axis('Saber SmallTalk', 'Saber SmallTalk representa al eje...');
+const saberHaskellAxis = new Axis('Saber Haskell', 'Saber Haskell representa al eje...');
+
+const DIFFERENT_AXES: Axis[] = [
+  buenosSueldosAxis,
+  saberSmalltalkAxis,
+  saberHaskellAxis,
+];
+
 export const AXES: Axis[] = [
   calidadTecnicaAxis,
   calidadHumanaAxis,
@@ -54,10 +64,13 @@ voteRadarTimes(radar2018, vote3, 5);
 voteRadarTimes(radar2018, vote4, 4);
 voteRadarTimes(radar2018, vote5, 1);
 
+const radar2015 = new Radar('Radar 2015', descripcionCorta, DIFFERENT_AXES, 4);
+
 export const RADARS: Radar[] = [
+  radar2015,
   radar2016,
   new Radar('Radar 2017', descripcionMedia, AXES, 2),
-  radar2018
+  radar2018,
 ];
 
 function voteRadarTimes(radar, vote, times) {

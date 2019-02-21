@@ -26,9 +26,15 @@ export class CompareRadarsComponent implements OnInit {
     return 'Comparación entre ' + this.firstRadar.title + ' y ' + this.secondRadar.title;
   }
 
-  axes() {
-    // TODO: debería ser solo las aristas que tienen en comun ambos radars
-    return this.firstRadar.axes;
+  axesInCommon() {
+    const axesInCommon = [];
+    this.firstRadar.axes.forEach(firstRadarAxis => {
+      if (this.secondRadar.axisBelongsToRadar(firstRadarAxis)) {
+        axesInCommon.push(firstRadarAxis);
+      }
+    });
+
+    return axesInCommon;
   }
 
   parseRadarsToRadarChart() {

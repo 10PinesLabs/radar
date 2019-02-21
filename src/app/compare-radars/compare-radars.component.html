@@ -1,31 +1,44 @@
 <div *ngIf="!radarsAreNullOrUndefined()">
 
-  <app-card-container [header]="title()">
+    <app-card-container [header]="title()">
 
-    <div class="card-body">
-      <app-radar-chart [radars]="parseRadarsToRadarChart()"></app-radar-chart>
+      <div *ngIf="axesInCommon().length !== 0; else incompatibleRadars">
 
-      <div *ngFor="let axis of axes()">
-        <hr>
-        <h5>{{ axis.title }}</h5>
-        <p>{{ axis.description }}</p>
+        <div class="card-body">
+          <app-radar-chart [radars]="parseRadarsToRadarChart()"></app-radar-chart>
 
-        <app-axis-bar-chart
-          [axis]="axis"
-          [values]="parseRadarsAxisValuesForAxisChart(axis)"
-          [radarTitles]="parseRadarTitlesToAxisChart()"
-          >
-        </app-axis-bar-chart>
+          <div *ngFor="let axis of axesInCommon()">
+            <hr>
+            <h5>{{ axis.title }}</h5>
+            <p>{{ axis.description }}</p>
 
-        <app-axis-table-values
-          [axis]="axis"
-          [values]="parseRadarsAxisValuesForAxisChart(axis)"
-          [radarTitles]="parseRadarTitlesToAxisChart()"
-        >
-        </app-axis-table-values>
+            <app-axis-bar-chart
+              [axis]="axis"
+              [values]="parseRadarsAxisValuesForAxisChart(axis)"
+              [radarTitles]="parseRadarTitlesToAxisChart()"
+              >
+            </app-axis-bar-chart>
+
+            <app-axis-table-values
+              [axis]="axis"
+              [values]="parseRadarsAxisValuesForAxisChart(axis)"
+              [radarTitles]="parseRadarTitlesToAxisChart()"
+            >
+            </app-axis-table-values>
+          </div>
+
+          <app-compare-radars-buttons></app-compare-radars-buttons>
+        </div>
+
       </div>
-    </div>
 
-  </app-card-container>
+      <ng-template #incompatibleRadars>
+        <div>
+          <h4 class="incompatible-title">Radares incompatibles</h4>
+          <app-compare-radars-buttons></app-compare-radars-buttons>
+        </div>
+      </ng-template>
+
+    </app-card-container>
 
 </div>

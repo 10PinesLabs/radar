@@ -23,6 +23,7 @@ import { CompareRadarsComponent } from './compare-radars/compare-radars.componen
 import { AxisBarChartComponent } from './chart-components/axis-bar-chart/axis-bar-chart.component';
 import { AxisTableValuesComponent } from './chart-components/axis-table-values/axis-table-values.component';
 import { RadarChartComponent } from './chart-components/radar-chart/radar-chart.component';
+import { CompareRadarsButtonsComponent } from './compare-radars/compare-radars-buttons/compare-radars-buttons.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { RadarChartComponent } from './chart-components/radar-chart/radar-chart.
     RadarFormComponent,
     AxesFormComponent,
     SelectToCompareComponent,
-    CompareRadarsComponent
+    CompareRadarsComponent,
+    CompareRadarsButtonsComponent
   ],
   imports: [
     BrowserModule,
