@@ -1,9 +1,0 @@
-machine:
-  services:
-    - postgresql
-
-database:
-  override:
-    - createuser -s -d ruben
-    - createdb ruben_test
-    - bundle exec rake db:migrate
