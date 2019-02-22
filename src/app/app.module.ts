@@ -24,6 +24,7 @@ import { AxesFormComponent } from './create-radar/axes-form/axes-form.component'
 import { TokenComponent } from './token/token.component';
 import {StorageServiceModule} from 'angular-webstorage-service';
 import { ErrorComponent } from './error/error.component';
+import {TokenService} from '../services/token.service';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,10 @@ import { ErrorComponent } from './error/error.component';
     }),
     FormsModule
   ],
-  providers: [{provide: 'RadarService', useClass: environment.radarServiceType}],
+  providers: [
+    {provide: 'RadarService', useClass: environment.radarServiceType},
+    TokenService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

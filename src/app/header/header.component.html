@@ -5,12 +5,16 @@
     </div>
 
     <div class="login-logout">
-      <a href="https://backoffice-10pines-stg.herokuapp.com/auth/sign_in?redirect_url=http://localhost:3000/auth/backoffice/callback&app_id=ruben_radar">
-          <button type="button" class="login-logout-btn btn btn-outline-light" >
-            {{button_text}}
+      <a [hidden]="isLogedIn"
+        href="https://backoffice-10pines-stg.herokuapp.com/auth/sign_in?redirect_url=http://localhost:3000/auth/backoffice/callback&app_id=ruben_radar">
+          <button type="button" class="login-logout-btn btn btn-outline-light">
+            {{LOGIN}}
           </button>
       </a>
 
+      <button [hidden]="!isLogedIn" type="button" class="login-logout-btn btn btn-outline-light" (click)="logout()">
+        {{LOGOUT}}
+      </button>
     </div>
   </div>
 </div>

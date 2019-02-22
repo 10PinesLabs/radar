@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {TokenService} from '../../services/token.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -6,24 +8,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+
   LOGIN = 'Login';
   LOGOUT = 'Logout';
+  isLogedIn: boolean;
 
-  button_text: string;
+  constructor(private tokenService: TokenService,
+              private router: Router) { }
 
-  constructor() { }
-
-  ngOnInit() {
-    this.button_text = this.LOGIN;
+  ngOnInit(): void {
+    this.isLogedIn = this.tokenService.isLoggedIn();
   }
 
-  onClickLoginLogoutButton() {
-    const userIsLoggedIn = this.button_text === this.LOGIN;
-
-    if (userIsLoggedIn) {
-      this.button_text = this.LOGOUT;
-    } else {
-      this.button_text = this.LOGIN;
-    }
+  logout() {
+    this.tokenService.logout();
+    this.router.navigate(['/']);
+    location.reload();
   }
 }

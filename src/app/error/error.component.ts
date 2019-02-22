@@ -9,7 +9,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class ErrorComponent implements OnInit {
 
   message: string;
-  show: boolean;
+  show = false;
 
   constructor(private router: Router,
               private route: ActivatedRoute) { }
