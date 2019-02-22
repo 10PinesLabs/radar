@@ -1,14 +1,13 @@
-import {Radar} from './radar';
-import {isNullOrUndefined} from 'util';
+import { Radar } from './radar';
 
 export class Axis {
   radar: Radar;
-  title: string;
+  name: string;
   description: string;
   vote: number;
 
-  constructor(title: string, description: string) {
-    this.title = title;
+  constructor(name: string, description: string) {
+    this.name = name;
     this.description = description;
   }
 

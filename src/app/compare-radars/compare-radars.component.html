@@ -9,20 +9,20 @@
 
           <div *ngFor="let axis of axesInCommon()">
             <hr>
-            <h5>{{ axis.title }}</h5>
+            <h5>{{ axis.name }}</h5>
             <p>{{ axis.description }}</p>
 
             <app-axis-bar-chart
               [axis]="axis"
               [values]="parseRadarsAxisValuesForAxisChart(axis)"
-              [radarTitles]="parseRadarTitlesToAxisChart()"
+              [radarNames]="parseRadarTitlesToAxisChart()"
               >
             </app-axis-bar-chart>
 
             <app-axis-table-values
               [axis]="axis"
               [values]="parseRadarsAxisValuesForAxisChart(axis)"
-              [radarTitles]="parseRadarTitlesToAxisChart()"
+              [radarNames]="parseRadarTitlesToAxisChart()"
             >
             </app-axis-table-values>
           </div>

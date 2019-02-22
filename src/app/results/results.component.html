@@ -5,20 +5,20 @@
 
     <div *ngFor="let axis of axes">
       <hr>
-      <h5>{{ axis.title }}</h5>
+      <h5>{{ axis.name }}</h5>
       <p>{{ axis.description }}</p>
 
       <app-axis-bar-chart
         [axis]="axis"
         [values]="parseRadarAxisValuesForCharts(axis)"
-        [radarTitles]="parseRadarNameToAxisChart()"
+        [radarNames]="parseRadarNameToAxisChart()"
       >
       </app-axis-bar-chart>
 
       <app-axis-table-values
         [axis]="axis"
         [values]="parseRadarAxisValuesForCharts(axis)"
-        [radarTitles]="parseRadarNameToAxisChart()"
+        [radarNames]="parseRadarNameToAxisChart()"
       >
       </app-axis-table-values>
     </div>

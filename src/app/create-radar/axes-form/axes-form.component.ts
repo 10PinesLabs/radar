@@ -37,7 +37,7 @@ export class AxesFormComponent implements OnInit {
   }
 
   axisIsInvalid(): boolean {
-    const trimmedTitle = this.newAxis.title.trim();
+    const trimmedTitle = this.newAxis.name.trim();
     return trimmedTitle.length === 0;
   }
 

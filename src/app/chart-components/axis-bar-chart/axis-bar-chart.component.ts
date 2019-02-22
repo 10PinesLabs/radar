@@ -13,7 +13,7 @@ export class AxisBarChartComponent implements AfterViewInit {
   @ViewChild('chartId') canvasRef: ElementRef;
   @Input() axis: Axis;
   @Input() values;
-  @Input() radarTitles;
+  @Input() radarNames;
   chart = [];
   greenBorderColor = 'rgba(25, 179, 112, 1)';
   greenBackgroundColor = 'rgba(157, 217, 191, 0.6)';
@@ -51,9 +51,9 @@ export class AxisBarChartComponent implements AfterViewInit {
 
   private generateDatasets() {
     const datasets = [];
-    datasets.push(this.barDataset(this.values[0], this.radarTitles[0], this.greenBackgroundColor, this.greenBorderColor));
+    datasets.push(this.barDataset(this.values[0], this.radarNames[0], this.greenBackgroundColor, this.greenBorderColor));
     if (this.values.length === 2) {
-      datasets.push(this.barDataset(this.values[1], this.radarTitles[1], this.violetBackgroundColor, this.violetBorderColor));
+      datasets.push(this.barDataset(this.values[1], this.radarNames[1], this.violetBackgroundColor, this.violetBorderColor));
     }
 
     return datasets;

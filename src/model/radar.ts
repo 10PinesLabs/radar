@@ -58,7 +58,7 @@ export class Radar {
   axisBelongsToRadar(axis: Axis) {
     let belongs = false;
     this.axes.forEach(radarAxis => {
-      if (axis.title === radarAxis.title) {
+      if (axis.name === radarAxis.name) {
         belongs =  true;
       }
     });

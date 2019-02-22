@@ -26,7 +26,7 @@ describe('Axis', () => {
   });
 
   it('una arista tiene un titulo', () => {
-    expect(arista.title).toBe('Calidad humana');
+    expect(arista.name).toBe('Calidad humana');
   });
 
   it('una arista tiene una descripción', () => {
