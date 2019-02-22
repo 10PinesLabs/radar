@@ -2,20 +2,20 @@ import {Axis} from './axis';
 import {Vote} from './vote';
 
 export class Radar {
-  closed: boolean;
+  active: boolean;
   votes: Array<Vote>;
   axes: Array<Axis>;
   name: string;
   description: string;
   id: number;
 
-  constructor(name: string, description: string, axes: Array<Axis>, id: number) {
+  constructor(name: string, description: string, axes: Array<Axis>, id: number, active = true) {
     this.validateAxesLength(axes);
     this.setName(name);
     this.setDescription(description);
     this.setRadarToAxes();
 
-    this.closed = false;
+    this.active = active;
     this.votes = [];
     this.id = id;
   }
@@ -25,8 +25,8 @@ export class Radar {
   }
 
   close() {
-    this.validateClosedState();
-    this.closed = true;
+    this.validateActiveState();
+    this.active = false;
   }
 
   cannotVote() {
@@ -52,7 +52,7 @@ export class Radar {
   }
 
   isClosed() {
-    return this.closed;
+    return !this.active;
   }
 
   axisBelongsToRadar(axis: Axis) {
@@ -76,8 +76,8 @@ export class Radar {
     return this.axes.indexOf(axis) === -1;
   }
 
-  private validateClosedState() {
-    if (this.closed) {
+  private validateActiveState() {
+    if (!this.active) {
       throw new Error('El radar que intentas cerrar ya ha sido cerrado');
     }
   }
