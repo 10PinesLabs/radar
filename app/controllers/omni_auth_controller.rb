@@ -1,7 +1,7 @@
 class OmniAuthController < ApplicationController
   def callback
     unless is_root_user?
-      redirect_to "#{base_url}/error/#{only_roots_available_message}"
+      redirect_to "#{base_url}/error?message=#{only_roots_available_message}"
       return
     end
 
@@ -18,7 +18,7 @@ class OmniAuthController < ApplicationController
                 "No hemos podido autenticarte"
               end
 
-    redirect_to "#{base_url}/error/#{message}"
+    redirect_to "#{base_url}/error?message=#{message}"
   end
 
   private
@@ -56,6 +56,6 @@ class OmniAuthController < ApplicationController
   end
 
   def only_roots_available_message
-    "Esta funcionalidad es sólo para roots"
+    'Esta funcionalidad es solo para roots'
   end
 end
