@@ -51,7 +51,6 @@ GEM
     arel (6.0.4)
     binding_of_caller (0.8.0)
       debug_inspector (>= 0.0.1)
-    bower-rails (0.11.0)
     builder (3.2.3)
     byebug (10.0.2)
     case_transform (0.2)
@@ -197,7 +196,6 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
-  bower-rails
   byebug
   dotenv-rails (~> 2.1, >= 2.1.1)
   factory_bot_rails

@@ -18,7 +18,5 @@
 .idea
 .env
 bower_components
-/vendor/assets/.bowerrc
-/vendor/assets/bower.json
 /public/assets/
 node_modules/

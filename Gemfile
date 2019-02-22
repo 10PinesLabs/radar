@@ -37,8 +37,6 @@ gem 'pg', '0.20.0'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-gem 'bower-rails'
-
 gem 'rails_12factor', group: :production
 
 # Gema para la autenticación con el backoffice
