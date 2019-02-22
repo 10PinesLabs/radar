@@ -1,15 +1,15 @@
 <div class="form-group">
-  <label for="radarTitle">Nombre del Radar</label>
+  <label for="radarName">Nombre del Radar</label>
   <input
     type="text"
     class="form-control text-color"
-    [(ngModel)]="radarTitle"
-    name="radarTitle"
-    id="radarTitle"
+    [(ngModel)]="radarName"
+    name="radarName"
+    id="radarName"
     placeholder="Nuevo Radar"
     required
     #radarTitleModel="ngModel"
-    (keyup)="onRadarTitleChange()"
+    (keyup)="onRadarNameChange()"
   >
   <div [hidden]="!showRadarNameError()" class="alert alert-danger radar-form-alert">
     El título es requerido

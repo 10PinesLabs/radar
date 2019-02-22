@@ -62,7 +62,7 @@ export class RadarChartComponent implements AfterViewInit {
   }
 
   private datasetFromRadar(radar: Radar, backgroundColor: String, borderColor: String) {
-    const radarLabel = radar.title;
+    const radarLabel = radar.name;
     const radarBackgroundColor = backgroundColor;
     const radarBorderColor = borderColor;
     const axisValues = radar.axisValues();

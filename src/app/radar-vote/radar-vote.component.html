@@ -1,4 +1,4 @@
-<app-card-container [header]="radar.title">
+<app-card-container [header]="title()">
 
   <div *ngIf="!isVoted(); else elseVotedBlock">
       <app-voting-radar [radar]="radar" [axes]="axes" [(voted)]="voted" ></app-voting-radar>

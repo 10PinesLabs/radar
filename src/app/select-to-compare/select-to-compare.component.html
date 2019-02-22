@@ -14,7 +14,7 @@
           [(ngModel)]="firstRadar"
         >
           <option *ngFor="let radar of radars" [ngValue]="radar">
-            {{radar.title}}
+            {{radar.name}}
           </option>
         </select>
       </div>
@@ -27,7 +27,7 @@
           [(ngModel)]="secondRadar"
         >
           <option *ngFor="let radar of radars" [ngValue]="radar">
-            {{radar.title}}
+            {{radar.name}}
           </option>
         </select>
       </div>

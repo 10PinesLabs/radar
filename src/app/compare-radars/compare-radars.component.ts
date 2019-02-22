@@ -23,7 +23,7 @@ export class CompareRadarsComponent implements OnInit {
   }
 
   title() {
-    return 'Comparación entre ' + this.firstRadar.title + ' y ' + this.secondRadar.title;
+    return 'Comparación entre ' + this.firstRadar.name + ' y ' + this.secondRadar.name;
   }
 
   axesInCommon() {
@@ -46,7 +46,7 @@ export class CompareRadarsComponent implements OnInit {
   }
 
   parseRadarTitlesToAxisChart() {
-    return [this.firstRadar.title, this.secondRadar.title];
+    return [this.firstRadar.name, this.secondRadar.name];
   }
 
   private redirectToSelectToCompareIfThereAreNotRadars() {

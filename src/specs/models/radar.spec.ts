@@ -27,12 +27,12 @@ describe('Radar', () => {
   });
 
   it('un radar tiene titulo', () => {
-    expect(radar.title).toBe('Radar 2018');
+    expect(radar.name).toBe('Radar 2018');
   });
 
   it('un radar tiene titulo por default', () => {
-    expect(new Radar('', 'Radar utilizado en el Retiro Estrategico 10Pines 2018', axes, 1).title).toBe('Sin título');
-    expect(new Radar(null, 'Radar utilizado en el Retiro Estrategico 10Pines 2018', axes, 1).title).toBe('Sin título');
+    expect(new Radar('', 'Radar utilizado en el Retiro Estrategico 10Pines 2018', axes, 1).name).toBe('Sin nombre');
+    expect(new Radar(null, 'Radar utilizado en el Retiro Estrategico 10Pines 2018', axes, 1).name).toBe('Sin nombre');
   });
 
   it('un radar tiene descripción', () => {

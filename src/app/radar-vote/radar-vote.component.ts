@@ -30,4 +30,8 @@ export class RadarVoteComponent implements OnInit {
   isVoted() {
     return this.voted;
   }
+
+  title() {
+    return this.radar.name;
+  }
 }

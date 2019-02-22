@@ -5,13 +5,13 @@ export class Radar {
   closed: boolean;
   votes: Array<Vote>;
   axes: Array<Axis>;
-  title: string;
+  name: string;
   description: string;
   id: number;
 
-  constructor(title: string, description: string, axes: Array<Axis>, id: number) {
+  constructor(name: string, description: string, axes: Array<Axis>, id: number) {
     this.validateAxesLength(axes);
-    this.setTitle(title);
+    this.setName(name);
     this.setDescription(description);
     this.setRadarToAxes();
 
@@ -93,8 +93,8 @@ export class Radar {
     this.description = description || 'Sin descripción';
   }
 
-  private setTitle(title: string) {
-    this.title = title || 'Sin título';
+  private setName(name: string) {
+    this.name = name || 'Sin nombre';
   }
 
   private setRadarToAxes() {
