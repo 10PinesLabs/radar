@@ -19,6 +19,15 @@
     },
     "SECRET_KEY_BASE": {
       "required": true
+    },
+    "BACKOFFICE_SECRET": {
+      "required": true
+    },
+    "BACKOFFICE_URL": {
+      "required": true
+    },
+    "DOMAIN_BASE_URL": {
+      "required": true
     }
   },
   "formation": {
