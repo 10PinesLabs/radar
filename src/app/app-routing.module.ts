@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: 'radars', component: IndexComponent },
   { path: 'token/:token', component: TokenComponent },
-  { path: 'error/:message', component: ErrorComponent },
+  { path: 'error', component: ErrorComponent },
   { path: 'radar/:id/vote', component: RadarVoteComponent },
   { path: 'radar/:id/results', component: ResultsComponent },
   { path: 'radar', component: CreateRadarComponent }

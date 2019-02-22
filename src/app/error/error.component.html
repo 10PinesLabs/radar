@@ -1,3 +1,4 @@
-<p>
-  {{ message }}
-</p>
+<div class="error-alert" ng-show="show">
+  <span class="close-error-alert" onclick="this.parentElement.style.display='none';">&times;</span>
+  <strong>{{message}}</strong>
+</div>

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-error',
@@ -7,13 +7,16 @@ import {ActivatedRoute} from '@angular/router';
   styleUrls: ['./error.component.css']
 })
 export class ErrorComponent implements OnInit {
+
   message: string;
+  show: boolean;
 
-
-  constructor(private route: ActivatedRoute) { }
+  constructor(private router: Router,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.message = this.route.snapshot.paramMap.get('message');
+    this.show = true;
+    this.message = this.route.snapshot.queryParamMap.get('message');
   }
 
 
