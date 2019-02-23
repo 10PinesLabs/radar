@@ -27,8 +27,9 @@ export class HttpRadarService implements RadarService {
     return new InMemoryRadarService().vote(radar, vote);
   }
 
-  close(radarId: any): void {
-    new InMemoryRadarService().close(radarId);
+  close(radarId: any): any {
+    const closeURL = 'http://localhost:3000/api/radars/' + radarId + '/close';
+    return this.http.post(closeURL, {});
   }
 
   createRadar(radar: Radar) {
