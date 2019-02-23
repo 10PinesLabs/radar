@@ -6,7 +6,7 @@ export interface RadarService {
 
   radar(radarId: any): Observable<Radar>;
 
-  radars(): Observable<Array<Radar>>;
+  getAll(): Observable<Array<Radar>>;
 
   vote(radar: Radar, vote: Vote): Observable<Vote>;
 

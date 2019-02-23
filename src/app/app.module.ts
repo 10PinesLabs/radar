@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
@@ -6,7 +7,7 @@ import { HeaderComponent } from './header/header.component';
 import { AppRoutingModule } from './app-routing.module';
 import { RadarVoteComponent } from './radar-vote/radar-vote.component';
 import { AxisComponent } from './axis/axis.component';
-import { environment} from '../environments/environment';
+import { environment } from '../environments/environment';
 import { VotingRadarComponent } from './radar-vote/voting-radar/voting-radar.component';
 import { VotedRadarComponent } from './radar-vote/voted-radar/voted-radar.component';
 import { ResultsComponent } from './results/results.component';
@@ -49,6 +50,7 @@ import { CompareRadarsButtonsComponent } from './compare-radars/compare-radars-b
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({

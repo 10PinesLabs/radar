@@ -1,23 +1,25 @@
-import {Injectable} from '@angular/core';
-import {Radar} from '../model/radar';
-import {Vote} from '../model/vote';
-import {Observable} from 'rxjs/index';
-import {RadarService} from './radar.service';
-import {InMemoryRadarService} from './in-memory-radar.service';
+import { Injectable } from '@angular/core';
+import { Radar } from '../model/radar';
+import { Vote } from '../model/vote';
+import { Observable } from 'rxjs/index';
+import { RadarService } from './radar.service';
+import { InMemoryRadarService } from './in-memory-radar.service';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpRadarService implements RadarService {
 
+  constructor (private http: HttpClient) { }
+
   radar(radarId: any): Observable<Radar> {
     // throw Error('WIP: Not implemented');
     return new InMemoryRadarService().radar(radarId);
   }
 
-  radars(): Observable<Array<Radar>> {
-    // throw Error('WIP: Not implemented');
-    return new InMemoryRadarService().radars();
+  getAll(): Observable<Radar[]> {
+    return this.http.get<Array<Radar>>('http://localhost:3000/api/radars');
   }
 
   vote(radar: Radar, vote: Vote): Observable<Vote> {
