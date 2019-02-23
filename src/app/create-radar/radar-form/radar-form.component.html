@@ -8,11 +8,11 @@
     id="radarName"
     placeholder="Nuevo Radar"
     required
-    #radarTitleModel="ngModel"
+    #radarNameModel="ngModel"
     (keyup)="onRadarNameChange()"
   >
   <div [hidden]="!showRadarNameError()" class="alert alert-danger radar-form-alert">
-    El título es requerido
+    El nombre es requerido
   </div>
 </div>
 
@@ -25,7 +25,12 @@
     id="radarDescription"
     placeholder="Descripción del Radar"
     rows="3"
+    required
+    #radarDescriptionModel="ngModel"
     (keyup)="onRadarDescriptionChange()"
   >
   </textarea>
+  <div [hidden]="!showRadarDescriptionError()" class="alert alert-danger radar-form-alert">
+    La descripción es requerida
+  </div>
 </div>

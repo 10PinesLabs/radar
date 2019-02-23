@@ -4,7 +4,7 @@ import {Observable} from 'rxjs/index';
 
 export interface RadarService {
 
-  radar(radarId: any): Observable<Radar>;
+  radar(radarId: number): any;
 
   getAll(): Observable<Array<Radar>>;
 
@@ -12,5 +12,5 @@ export interface RadarService {
 
   close(radarId: number): any;
 
-  createRadar(radar: Radar);
+  createRadar(radar: Radar): any;
 }

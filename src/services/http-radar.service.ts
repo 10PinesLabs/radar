@@ -13,7 +13,7 @@ export class HttpRadarService implements RadarService {
 
   constructor (private http: HttpClient) { }
 
-  radar(radarId: any): Observable<Radar> {
+  radar(radarId: number): any {
     // throw Error('WIP: Not implemented');
     return new InMemoryRadarService().radar(radarId);
   }
@@ -27,12 +27,12 @@ export class HttpRadarService implements RadarService {
     return new InMemoryRadarService().vote(radar, vote);
   }
 
-  close(radarId: any): any {
+  close(radarId: number): any {
     const closeURL = 'http://localhost:3000/api/radars/' + radarId + '/close';
     return this.http.post(closeURL, {});
   }
 
-  createRadar(radar: Radar) {
-    new InMemoryRadarService().createRadar(radar);
+  createRadar(radar: Radar): any {
+    return this.http.post('http://localhost:3000/api/radars', radar);
   }
 }

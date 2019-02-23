@@ -11,11 +11,11 @@ export class AxesFormComponent implements OnInit {
   @Input() axes: Axis[];
   @Input() showErrors: boolean;
   newAxis: Axis;
-  axisTitleError: boolean;
+  axisNameError: boolean;
 
   constructor() {
-    this.newAxis = new Axis('', '');
-    this.axisTitleError = false;
+    this.newAxis = new Axis(null, '', '', null);
+    this.axisNameError = false;
   }
 
   ngOnInit() { }
@@ -28,17 +28,17 @@ export class AxesFormComponent implements OnInit {
 
   addAxisToAxes() {
     if (this.axisIsInvalid()) {
-      this.axisTitleError = true;
+      this.axisNameError = true;
     } else {
-      this.axisTitleError = false;
+      this.axisNameError = false;
       this.axes.push(this.newAxis);
-      this.newAxis = new Axis('', '');
+      this.newAxis = new Axis(null, '', '', null);
     }
   }
 
   axisIsInvalid(): boolean {
-    const trimmedTitle = this.newAxis.name.trim();
-    return trimmedTitle.length === 0;
+    const trimmedName = this.newAxis.name.trim();
+    return trimmedName.length === 0;
   }
 
   cardBodyClasses() {
@@ -47,13 +47,13 @@ export class AxesFormComponent implements OnInit {
     return classes;
   }
 
-  axisTitleInputClass() {
-    const classes = 'form-control text-color' + (this.showAxisTitleError() ? ' is-invalid' : '');
+  axisNameInputClass() {
+    const classes = 'form-control text-color' + (this.showAxisNameError() ? ' is-invalid' : '');
     return classes;
   }
 
-  showAxisTitleError() {
-    return this.axisTitleError && this.axisIsInvalid();
+  showAxisNameError() {
+    return this.axisNameError && this.axisIsInvalid();
   }
 
   showAxesQuantityError() {

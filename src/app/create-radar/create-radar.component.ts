@@ -21,21 +21,24 @@ export class CreateRadarComponent implements OnInit {
   ngOnInit() { }
 
   radarIsInvalid(): boolean {
-    return this.radarNameIsEmpty() || this.radarAxesIsLessThanThree();
+    return this.radarNameIsEmpty() || this.radarDescriptionIsEmpty() || this.radarAxesIsLessThanThree();
   }
 
   createRadar() {
     if (this.radarIsInvalid()) {
       this.showErrors = true;
     } else {
-      const newRadar = new Radar(this.radarName, this.radarDescription, this.axes, null);
-      this.radarService.createRadar(newRadar);
-      this.router.navigate(['/']);
+      const newRadar = new Radar(null, this.radarName, this.radarDescription, this.axes, null);
+      this.radarService.createRadar(newRadar).subscribe(() => this.router.navigate(['/radars']));
     }
   }
 
   private radarNameIsEmpty(): boolean {
     return this.radarName.length === 0;
+  }
+
+  private radarDescriptionIsEmpty(): boolean {
+    return this.radarDescription.length === 0;
   }
 
   private radarAxesIsLessThanThree(): boolean {
