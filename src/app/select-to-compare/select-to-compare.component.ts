@@ -18,11 +18,15 @@ export class SelectToCompareComponent implements OnInit {
 
   constructor(@Inject('RadarService') private radarService: RadarService,
               private compareRadarsService: CompareRadarsService,
-              private router: Router) { }
+              private router: Router) {
+    this.radars = [];
+  }
 
   ngOnInit() {
-    this.radarService.radars().subscribe(radars => {
-      this.radars = radars;
+    this.radarService.getAll().subscribe(radars => {
+      radars.forEach(radar => {
+        this.radars.push(new Radar(radar.id, radar.name, radar.description, radar.axes, radar.active));
+      });
       this.radars = this.radars.sort((r1, r2) => r2.id - r1.id); // mayor id a menor id
       this.firstRadar = this.radars[0];
       this.secondRadar = this.radars[0];

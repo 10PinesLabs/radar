@@ -5,7 +5,10 @@
       <div *ngIf="axesInCommon().length !== 0; else incompatibleRadars">
 
         <div class="card-body">
-          <app-radar-chart [radars]="parseRadarsToRadarChart()"></app-radar-chart>
+          <app-radar-chart
+            [radars]="parseRadarsToRadarChart()"
+            [axesNames]="axesNames()"
+          ></app-radar-chart>
 
           <div *ngFor="let axis of axesInCommon()">
             <hr>

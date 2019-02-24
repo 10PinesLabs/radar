@@ -13,10 +13,15 @@ export class Statistics {
   }
 
   mean() {
-    const sum = this.sumValues();
-    const mean = sum / this.axisValues.length;
+    let mean; // No le asigno un valor porque toFixed() devuelve un string
+    if (this.axisValues.length !== 0) {
+      const sum = this.sumValues();
+      mean = (sum / this.axisValues.length).toFixed(2);
+    } else {
+      mean = 0;
+    }
 
-    return mean.toFixed(2);
+    return mean;
   }
 
   probabilities() {

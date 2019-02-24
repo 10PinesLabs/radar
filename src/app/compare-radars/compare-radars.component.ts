@@ -42,11 +42,15 @@ export class CompareRadarsComponent implements OnInit {
   }
 
   parseRadarsAxisValuesForAxisChart(axis) {
-    return [this.firstRadar.axisValuesFor(axis), this.secondRadar.axisValuesFor(axis)];
+    return [this.firstRadar.axisPointsFor(axis), this.secondRadar.axisPointsFor(axis)];
   }
 
   parseRadarTitlesToAxisChart() {
     return [this.firstRadar.name, this.secondRadar.name];
+  }
+
+  axesNames() {
+    return this.axesInCommon().map(axis => axis.name);
   }
 
   private redirectToSelectToCompareIfThereAreNotRadars() {
