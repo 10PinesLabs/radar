@@ -21,10 +21,15 @@ export class RadarVoteComponent implements OnInit {
   ngOnInit() {
     const id = +this.route.snapshot.paramMap.get('id');
 
-    this.radarService.radar(id).subscribe(radar => {
-      this.radar = radar;
-      this.axes = this.radar.axes;
+    this.radarService.radar(id).subscribe(radarResult => {
+      const radar = radarResult.radar;
+      this.axes = this.parseAxes(radarResult.axes_results);
+      this.radar = new Radar(radar.id, radar.name, radar.description, this.axes, radar.active);
     });
+  }
+
+  parseAxes(axes_results): any {
+    return axes_results.map(e => new Axis(e.axis.id, e.axis.name, e.axis.description, null));
   }
 
   isVoted() {
@@ -33,5 +38,9 @@ export class RadarVoteComponent implements OnInit {
 
   title() {
     return this.radar.name;
+  }
+
+  radarIsUndefined() {
+    return this.radar === undefined;
   }
 }

@@ -1,21 +1,15 @@
-import { Radar } from './radar';
+import { Answer } from './answer';
 
 export class Axis {
-  radar: Radar;
+  id: number;
   name: string;
   description: string;
-  vote: number;
+  answers: Array<Answer>;
 
-  constructor(name: string, description: string) {
+  constructor(id: number, name: string, description: string, answers) {
+    this.id = id;
     this.name = name;
     this.description = description;
-  }
-
-  registerVote(vote: number): void {
-    this.vote = vote;
-  }
-
-  hasInvalidVote() {
-    return this.vote === undefined;
+    this.answers = answers;
   }
 }

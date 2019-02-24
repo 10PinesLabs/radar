@@ -3,6 +3,7 @@ import { RadarService } from '../../../services/radar.service';
 import { Radar } from 'src/model/radar';
 import { Axis } from 'src/model/axis';
 import { Vote } from 'src/model/vote';
+import { Answer } from 'src/model/answer';
 
 
 @Component({
@@ -16,25 +17,29 @@ export class VotingRadarComponent implements OnInit {
   @Input() axes: Axis[];
   @Input() voted: boolean;
   @Output() votedChange = new EventEmitter();
+  answers: Array<Answer>;
 
   constructor(@Inject('RadarService') private radarService: RadarService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.answers = this.axes.map(axis => new Answer(axis, 0));
+  }
 
   cannotVote() {
-    return this.radar.cannotVote();
+    let cannotVote = false;
+    this.answers.forEach(answer => {
+      if (answer.points === 0) {
+        cannotVote = true;
+      }
+    });
+    return cannotVote;
   }
 
   vote() {
-    const vote = this.createVote();
-    this.radarService.vote(this.radar, vote).subscribe();
-    this.voted = true;
-    this.votedChange.emit(this.voted);
+    const vote = new Vote(this.answers);
+    this.radarService.vote(this.radar.id, vote).subscribe(() => {
+      this.voted = true;
+      this.votedChange.emit(this.voted);
+    });
   }
-
-  private createVote() {
-    const axesCalifications = this.radar.axes.map(axis => ({axis: axis, vote: axis.vote}));
-    return new Vote(axesCalifications);
-  }
-
 }

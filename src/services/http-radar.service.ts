@@ -3,7 +3,6 @@ import { Radar } from '../model/radar';
 import { Vote } from '../model/vote';
 import { Observable } from 'rxjs/index';
 import { RadarService } from './radar.service';
-import { InMemoryRadarService } from './in-memory-radar.service';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -14,17 +13,17 @@ export class HttpRadarService implements RadarService {
   constructor (private http: HttpClient) { }
 
   radar(radarId: number): any {
-    // throw Error('WIP: Not implemented');
-    return new InMemoryRadarService().radar(radarId);
+    const radarToVoteURL = 'http://localhost:3000/api/radars/' + radarId + '/result';
+    return this.http.get<Radar>(radarToVoteURL);
   }
 
   getAll(): Observable<Radar[]> {
     return this.http.get<Array<Radar>>('http://localhost:3000/api/radars');
   }
 
-  vote(radar: Radar, vote: Vote): Observable<Vote> {
-    // throw Error('WIP: Not implemented');
-    return new InMemoryRadarService().vote(radar, vote);
+  vote(radarId: number, vote: Vote): any {
+    const voteURL = 'http://localhost:3000/api/radars/' + radarId + '/votes';
+    return this.http.post(voteURL, vote);
   }
 
   close(radarId: number): any {

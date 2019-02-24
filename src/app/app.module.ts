@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { AppRoutingModule } from './app-routing.module';
 import { RadarVoteComponent } from './radar-vote/radar-vote.component';
-import { AxisComponent } from './axis/axis.component';
+import { AxisComponent } from './radar-vote/voting-radar/axis/axis.component';
 import { environment } from '../environments/environment';
 import { VotingRadarComponent } from './radar-vote/voting-radar/voting-radar.component';
 import { VotedRadarComponent } from './radar-vote/voted-radar/voted-radar.component';
@@ -25,6 +25,7 @@ import { AxisBarChartComponent } from './chart-components/axis-bar-chart/axis-ba
 import { AxisTableValuesComponent } from './chart-components/axis-table-values/axis-table-values.component';
 import { RadarChartComponent } from './chart-components/radar-chart/radar-chart.component';
 import { CompareRadarsButtonsComponent } from './compare-radars/compare-radars-buttons/compare-radars-buttons.component';
+
 
 @NgModule({
   declarations: [
