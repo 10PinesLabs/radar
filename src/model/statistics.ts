@@ -13,38 +13,48 @@ export class Statistics {
   }
 
   mean() {
-    let mean; // No le asigno un valor porque toFixed() devuelve un string
+    let mean = 0;
     if (this.axisValues.length !== 0) {
       const sum = this.sumValues();
-      mean = (sum / this.axisValues.length).toFixed(2);
-    } else {
-      mean = 0;
+      mean = parseFloat((sum / this.axisValues.length).toFixed(2));
     }
 
     return mean;
   }
 
   probabilities() {
-    const qtty = this.sumValues();
-    const probabilities = this.axisValues.map(value => value / qtty);
+    const probabilities = [1, 2, 3, 4, 5].map(value => this.quantityOfAparitions(value) / this.axisValues.length);
 
     return probabilities;
   }
 
   expectedValue() {
-    const expectedValue = this.calculateExpectedValueOf(this.axisValues);
-
-    return expectedValue;
-  }
-
-  private calculateExpectedValueOf(values) {
     const probabilities = this.probabilities();
+    const valuesPerPosition = this.valuesPerPosition();
+
     let expectedValue = 0;
-    values.forEach((value, index) => {
+    valuesPerPosition.forEach((value, index) => {
       expectedValue = value * probabilities[index] + expectedValue;
     });
 
     return expectedValue.toFixed(2);
+  }
+
+  private quantityOfAparitions(value: number) {
+    let quantity = 0;
+    this.axisValues.forEach(axisValue => {
+      if (value === axisValue) {
+        quantity++;
+      }
+    });
+
+    return quantity;
+  }
+
+  private valuesPerPosition() {
+    const valuesPerPosition = [];
+    [1, 2, 3, 4, 5].forEach(value => valuesPerPosition.push(this.quantityOfAparitions(value)));
+    return valuesPerPosition;
   }
 
   private sumValues() {
@@ -55,11 +65,15 @@ export class Statistics {
   }
 
   private assertValidAxisValues(axisValues) {
-    const areNonValidAxisValues = this.valuesMoreThanFiveOrLessThanZero(axisValues);
+    const areNonValidAxisValues = this.isEmpty(axisValues) || this.valuesMoreThanFiveOrLessThanZero(axisValues);
 
     if (areNonValidAxisValues) {
       throw new Error('Valores de arista invalidos');
     }
+  }
+
+  private isEmpty(axisValues) {
+    return axisValues.length === 0;
   }
 
   private valuesMoreThanFiveOrLessThanZero(axisValues) {
