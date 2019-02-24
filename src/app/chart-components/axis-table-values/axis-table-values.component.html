@@ -4,7 +4,6 @@
       <tr>
         <th scope="col">Título</th>
         <th scope="col">Promedio</th>
-        <th scope="col">Media</th>
         <th scope="col">Esperanza</th>
       </tr>
     </thead>
@@ -12,7 +11,6 @@
       <tr *ngFor="let axisStatistics of axesStatistics">
         <td>{{ axisStatistics.name }}</td>
         <td>{{ axisStatistics.mean }}</td>
-        <td>{{ axisStatistics.median }}</td>
         <td>{{ axisStatistics.expectedValue }}</td>
       </tr>
     </tbody>

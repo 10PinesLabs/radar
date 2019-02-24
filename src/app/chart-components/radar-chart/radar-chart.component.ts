@@ -2,6 +2,8 @@ import { Component, Input, ElementRef, ViewChild, AfterViewInit } from '@angular
 import { Chart } from 'chart.js';
 import { Radar } from 'src/model/radar';
 import { Statistics } from 'src/model/statistics';
+import { Axis } from 'src/model/axis';
+import { Answer } from 'src/model/answer';
 
 
 @Component({
@@ -13,6 +15,7 @@ export class RadarChartComponent implements AfterViewInit {
 
   @ViewChild('radarChartId') canvasRef: ElementRef;
   @Input() radars: Radar[];
+  @Input() axesNames: String[];
   radarChart = [];
   greenBorderColor = 'rgba(25, 179, 112, 1)';
   greenBackgroundColor = 'rgba(157, 217, 191, 0.6)';
@@ -40,39 +43,39 @@ export class RadarChartComponent implements AfterViewInit {
 
   private parseRadarData() {
     const radarDatasets = [];
-    const axisLabels = [];
 
-    // TODO: que pasa cuando los radares tienen aristas distintas?
-    this.radars[0].axisValues().forEach(axisValue => axisLabels.push(axisValue[0].title));
-
-    if (this.radars.length === 1) {
-      const dataset = this.datasetFromRadar(this.radars[0], this.greenBackgroundColor, this.greenBorderColor);
-      radarDatasets.push(dataset);
-    } else {
-      const firstRadarDataset = this.datasetFromRadar(this.radars[0], this.greenBackgroundColor, this.greenBorderColor);
+    const firstRadarDataset = this.datasetFromRadar(this.radars[0], this.greenBackgroundColor, this.greenBorderColor);
+    radarDatasets.push(firstRadarDataset);
+    if (this.radars.length === 2) {
       const secondRadarDataset = this.datasetFromRadar(this.radars[1], this.violetBackgroundColor, this.violetBorderColor);
-      radarDatasets.push(firstRadarDataset);
       radarDatasets.push(secondRadarDataset);
     }
 
     return {
-      labels: axisLabels,
+      labels: this.axesNames,
       datasets: radarDatasets
     };
   }
 
   private datasetFromRadar(radar: Radar, backgroundColor: String, borderColor: String) {
-    const radarLabel = radar.name;
+    const radarLabel = radar.name + ' (Media)';
     const radarBackgroundColor = backgroundColor;
     const radarBorderColor = borderColor;
-    const axisValues = radar.axisValues();
+    const axisValues = radar.axes.map(axis => {
+      if (this.axesNames.includes(axis.name)) {
+        return {
+          name: axis.name,
+          points: this.parseAxisPoints(axis.answers),
+        };
+      }
+    });
 
     const axisLabels = [];
     const axisMean = [];
     axisValues.forEach(axisValue => {
-      const axisTitle = axisValue[0].title;
-      const mean = this.meanFor(axisValue[1]);
-       axisLabels.push(axisTitle);
+      const axisName = axisValue.name;
+      const mean = this.meanFor(axisValue.points);
+       axisLabels.push(axisName);
       axisMean.push(mean);
     });
 
@@ -109,6 +112,10 @@ export class RadarChartComponent implements AfterViewInit {
         display: true,
       },
     };
+  }
+
+  private parseAxisPoints(answers: Array<Answer>) {
+    return answers.map(answer => answer.points);
   }
 
   private meanFor(axisValues) {

@@ -80,7 +80,6 @@ export class AxisBarChartComponent implements AfterViewInit {
                 beginAtZero: true,
                 steps: 5,
                 stepValue: 1,
-                max: 5
                 }
             }]
         },

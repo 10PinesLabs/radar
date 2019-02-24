@@ -1,27 +1,45 @@
-<app-card-container [header]="title()">
+<div *ngIf="!radarIsUndefined(); else radarUndefined">
 
-  <div class="card-body">
-    <app-radar-chart [radars]="parseRadarToRadarChart()"></app-radar-chart>
+  <app-card-container [header]="title()">
 
-    <div *ngFor="let axis of axes">
-      <hr>
-      <h5>{{ axis.name }}</h5>
-      <p>{{ axis.description }}</p>
+    <div *ngIf="radar.hasVotes(); else radarWithoutVotes">
+      <div class="card-body">
+        <app-radar-chart
+          [radars]="parseRadarToRadarChart()"
+          [axesNames]="axesNames()"
+        ></app-radar-chart>
 
-      <app-axis-bar-chart
-        [axis]="axis"
-        [values]="parseRadarAxisValuesForCharts(axis)"
-        [radarNames]="parseRadarNameToAxisChart()"
-      >
-      </app-axis-bar-chart>
+        <div *ngFor="let axis of axes()">
+          <hr>
+          <h5>{{ axis.name }}</h5>
+          <p>{{ axis.description }}</p>
 
-      <app-axis-table-values
-        [axis]="axis"
-        [values]="parseRadarAxisValuesForCharts(axis)"
-        [radarNames]="parseRadarNameToAxisChart()"
-      >
-      </app-axis-table-values>
+          <app-axis-bar-chart
+            [axis]="axis"
+            [values]="parseRadarAxisValuesForCharts(axis)"
+            [radarNames]="parseRadarNameToAxisChart()"
+          >
+          </app-axis-bar-chart>
+
+          <app-axis-table-values
+            [axis]="axis"
+            [values]="parseRadarAxisValuesForCharts(axis)"
+            [radarNames]="parseRadarNameToAxisChart()"
+          >
+          </app-axis-table-values>
+        </div>
+      </div>
     </div>
-  </div>
 
-</app-card-container>
+    <ng-template #radarWithoutVotes>
+      <h3>El radar no fue votado</h3>
+    </ng-template>
+
+  </app-card-container>
+
+</div>
+
+<ng-template #radarUndefined>
+  <app-card-container [header]="CARGANDO">
+  </app-card-container>
+</ng-template>

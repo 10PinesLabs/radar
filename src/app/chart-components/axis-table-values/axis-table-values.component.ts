@@ -14,7 +14,6 @@ export class AxisTableValuesComponent implements OnInit {
   @Input() radarNames;
   axesStatistics = [];
   mean: number;
-  median: number;
   expectedValue: number;
 
   constructor() { }
@@ -31,7 +30,6 @@ export class AxisTableValuesComponent implements OnInit {
     this.axesStatistics.push({
       name: radarName,
       mean: statistics.mean(),
-      median: statistics.median(),
       expectedValue: statistics.expectedValue(),
     });
 

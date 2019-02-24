@@ -11,25 +11,37 @@ import { Axis } from '../../model/axis';
 })
 export class ResultsComponent implements OnInit {
   radar: Radar;
-  axes: Axis[];
 
   constructor(@Inject('RadarService') private radarService: RadarService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     const id = +this.route.snapshot.paramMap.get('id');
 
-    this.radarService.radar(id).subscribe(radar => {
-      this.radar = radar;
-      this.axes = this.radar.axes;
+    this.radarService.radar(id).subscribe(radarResult => {
+      const radar = radarResult.radar;
+      const axes = this.parseAxes(radarResult.axes_results);
+      this.radar = new Radar(radar.id, radar.name, radar.description, axes, radar.active);
     });
+  }
+
+  parseAxes(axes_results): any {
+    return axes_results.map(e => new Axis(e.axis.id, e.axis.name, e.axis.description, e.axis.answers));
   }
 
   parseRadarToRadarChart() {
     return [this.radar];
   }
 
+  axes() {
+    return this.radar.axes;
+  }
+
   parseRadarAxisValuesForCharts(axis) {
-    return [this.radar.axisValuesFor(axis)];
+    return [this.radar.axisPointsFor(axis)];
+  }
+
+  parseRadarNameToAxisChart() {
+    return [this.radar.name];
   }
 
   title() {
@@ -37,7 +49,11 @@ export class ResultsComponent implements OnInit {
     return this.radar.name + ' ' + radarState;
   }
 
-  parseRadarNameToAxisChart() {
-    return [this.radar.name];
+  axesNames() {
+    return this.radar.axes.map(axis => axis.name);
+  }
+
+  radarIsUndefined() {
+    return this.radar === undefined;
   }
 }

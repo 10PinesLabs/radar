@@ -29,4 +29,19 @@ export class Radar {
 
     return belongs;
   }
+
+  axisPointsFor(axis: Axis) {
+    let points = [];
+    this.axes.forEach(radarAxis => {
+      if (radarAxis.name === axis.name) {
+        points = radarAxis.answers.map(answer => answer.points);
+        return points;
+      }
+    });
+    return points;
+  }
+
+  hasVotes() {
+    return this.axes[0].answers.length !== 0;
+  }
 }
