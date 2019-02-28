@@ -46,7 +46,7 @@ export class RadarChartComponent implements AfterViewInit {
 
     const firstRadarDataset = this.datasetFromRadar(this.radars[0], this.greenBackgroundColor, this.greenBorderColor);
     radarDatasets.push(firstRadarDataset);
-    if (this.radars.length === 2) {
+    if (this.isComparingRadars()) {
       const secondRadarDataset = this.datasetFromRadar(this.radars[1], this.violetBackgroundColor, this.violetBorderColor);
       radarDatasets.push(secondRadarDataset);
     }
@@ -55,6 +55,10 @@ export class RadarChartComponent implements AfterViewInit {
       labels: this.axesNames,
       datasets: radarDatasets
     };
+  }
+
+  private isComparingRadars() {
+    return this.radars.length === 2;
   }
 
   private datasetFromRadar(radar: Radar, backgroundColor: String, borderColor: String) {

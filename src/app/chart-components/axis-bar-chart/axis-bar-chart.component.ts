@@ -52,11 +52,15 @@ export class AxisBarChartComponent implements AfterViewInit {
   private generateDatasets() {
     const datasets = [];
     datasets.push(this.barDataset(this.values[0], this.radarNames[0], this.greenBackgroundColor, this.greenBorderColor));
-    if (this.values.length === 2) {
+    if (this.isComparingRadars()) {
       datasets.push(this.barDataset(this.values[1], this.radarNames[1], this.violetBackgroundColor, this.violetBorderColor));
     }
 
     return datasets;
+  }
+
+  private isComparingRadars() {
+    return this.values.length === 2;
   }
 
   private barDataset(values, radarTitle, backgroundColor: String, borderColor: String) {

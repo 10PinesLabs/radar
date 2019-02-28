@@ -20,7 +20,7 @@ export class AxisTableValuesComponent implements OnInit {
 
   ngOnInit() {
     this.getValueStatistics(this.values[0], this.radarNames[0]);
-    if (this.values.length === 2) {
+    if (this.isComparingRadars()) {
       this.getValueStatistics(this.values[1], this.radarNames[1]);
     }
   }
@@ -32,6 +32,9 @@ export class AxisTableValuesComponent implements OnInit {
       mean: statistics.mean(),
       expectedValue: statistics.expectedValue(),
     });
+  }
 
+  private isComparingRadars() {
+    return this.values.length === 2;
   }
 }
