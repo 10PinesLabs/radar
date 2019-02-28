@@ -25,6 +25,7 @@ import { AxisBarChartComponent } from './chart-components/axis-bar-chart/axis-ba
 import { AxisTableValuesComponent } from './chart-components/axis-table-values/axis-table-values.component';
 import { RadarChartComponent } from './chart-components/radar-chart/radar-chart.component';
 import { CompareRadarsButtonsComponent } from './compare-radars/compare-radars-buttons/compare-radars-buttons.component';
+import { HttpRadarService } from 'src/services/http-radar.service';
 
 
 @NgModule({
@@ -61,7 +62,7 @@ import { CompareRadarsButtonsComponent } from './compare-radars/compare-radars-b
     }),
     FormsModule
   ],
-  providers: [{provide: 'RadarService', useClass: environment.radarServiceType}],
+  providers: [{provide: 'RadarService', useClass: HttpRadarService}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

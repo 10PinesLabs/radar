@@ -1,6 +1,4 @@
-import {HttpRadarService} from '../services/http-radar.service';
-
 export const environment = {
   production: true,
-  radarServiceType: HttpRadarService
+  apiURL: 'https://ruben-radar-stg.herokuapp.com/',
 };
