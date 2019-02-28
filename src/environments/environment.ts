@@ -4,5 +4,5 @@
 
 export const environment = {
   production: false,
-  apiURL: 'http://localhost:4200/'
+  apiURL: 'https://ruben-radar-stg.herokuapp.com/'
 };

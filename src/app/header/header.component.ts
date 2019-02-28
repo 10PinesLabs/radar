@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TokenService} from '../../services/token.service';
 import {Router} from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -18,6 +19,10 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLogedIn = this.tokenService.isLoggedIn();
+  }
+
+  apiURL() {
+    return environment.apiURL;
   }
 
   logout() {
