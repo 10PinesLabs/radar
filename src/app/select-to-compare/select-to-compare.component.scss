@@ -1,0 +1,32 @@
+.stc-container {
+    margin: 2em;
+}
+
+.stc-title {
+    text-align: center;
+    margin-bottom: 1.5em;
+}
+
+.stc-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.stc-select {
+    width: 15em;
+}
+
+.stc-buttons {
+    display: flex;
+    justify-content: center;
+    margin: 1.5em;
+}
+
+.stc-back-to-index-button {
+    margin-right: 0.5em;
+}
+
+.stc-compare-button {
+    margin-left: 0.5em;
+}

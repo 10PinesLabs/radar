@@ -1,15 +1,26 @@
 import { Radar } from './model/radar';
 import { Axis } from './model/axis';
-import { Vote } from './model/vote';
+import { Answer } from './model/answer';
 
 
-const calidadTecnicaAxis = new Axis('Calidad técnica', 'La calidad técnica representa el eje...');
-const calidadHumanaAxis = new Axis('Calidad humana', 'La calidad humana representa el eje...');
-const ambienteLaboralAxis = new Axis('Ambiente laboral', 'El ambiente laboral representa el eje...');
-export const AXES: Axis[] = [
-  calidadTecnicaAxis,
-  calidadHumanaAxis,
-  ambienteLaboralAxis
+const calidadTecnicaAxis = new Axis(1, 'Calidad técnica', 'La calidad técnica representa el eje...', []);
+const calidadHumanaAxis = new Axis(2, 'Calidad humana', 'La calidad humana representa el eje...', []);
+const ambienteLaboralAxis = new Axis(3, 'Ambiente laboral', 'El ambiente laboral representa el eje...', []);
+const buenosSueldosAxis = new Axis(4, 'Buenos Sueldos', 'Buenos sueldos representa al eje...', []);
+const saberSmalltalkAxis = new Axis(5, 'Saber SmallTalk', 'Saber SmallTalk representa al eje...', []);
+const saberHaskellAxis = new Axis(6, 'Saber Haskell', 'Saber Haskell representa al eje...', []);
+
+
+const DIFFERENT_AXES: Axis[] = [
+    buenosSueldosAxis,
+    saberSmalltalkAxis,
+    saberHaskellAxis,
+];
+
+const AXES: Axis[] = [
+    calidadTecnicaAxis,
+    calidadHumanaAxis,
+    ambienteLaboralAxis
 ];
 
 const descripcionCorta = 'Descripción corta del Radar.';
@@ -23,47 +34,34 @@ const descripcionMedia = 'Lorem ipsum dolor sit amet, consectetur adipiscing eli
 const descripcionLarga = crearDescripcionLarga(descripcionMedia);
 
 
-const radar2016 = new Radar('Radar 2016', descripcionLarga, AXES, 1);
-const vote1 = new Vote([
-  { axis: calidadTecnicaAxis, vote: 1 }, { axis: calidadHumanaAxis, vote: 1 }, { axis: ambienteLaboralAxis, vote: 1 }
-]);
-const vote2 = new Vote([
-  { axis: calidadTecnicaAxis, vote: 2 }, { axis: calidadHumanaAxis, vote: 2 }, { axis: ambienteLaboralAxis, vote: 2 }
-]);
-const vote3 = new Vote([
-  { axis: calidadTecnicaAxis, vote: 3 }, { axis: calidadHumanaAxis, vote: 3 }, { axis: ambienteLaboralAxis, vote: 3 }
-]);
-const vote4 = new Vote([
-  { axis: calidadTecnicaAxis, vote: 4 }, { axis: calidadHumanaAxis, vote: 4 }, { axis: ambienteLaboralAxis, vote: 4 }
-]);
-const vote5 = new Vote([
-  { axis: calidadTecnicaAxis, vote: 5 }, { axis: calidadHumanaAxis, vote: 5 }, { axis: ambienteLaboralAxis, vote: 5 }
-]);
+const radar2015 = new Radar(1, 'Radar 2015', descripcionCorta, DIFFERENT_AXES, true);
+const radar2016 = new Radar(2, 'Radar 2016', descripcionLarga, AXES, true);
+const radar2017 = new Radar(4, 'Radar 2017', descripcionMedia, AXES, true);
+const radar2018 = new Radar(3, 'Radar 2018', descripcionCorta, AXES, true);
 
-voteRadarTimes(radar2016, vote1, 3);
-voteRadarTimes(radar2016, vote2, 4);
-voteRadarTimes(radar2016, vote3, 5);
-voteRadarTimes(radar2016, vote4, 4);
-voteRadarTimes(radar2016, vote5, 3);
+votar(radar2015, [[1, 2, 3, 4, 5], [2, 3, 4, 5, 1], [3, 4, 5, 1, 2]]);
+votar(radar2016, [[3, 4, 5, 1, 2], [2, 3, 4, 5, 1], [1, 2, 3, 4, 5]]);
+votar(radar2018, [[3, 3, 3, 1, 2], [4, 4, 4, 5, 1], [3, 2, 2, 4, 5]]);
 
 export const RADARS: Radar[] = [
-  radar2016,
-  new Radar('Radar 2017', descripcionMedia, AXES, 2),
-  new Radar('Radar 2018', descripcionCorta, AXES, 3)
+    radar2015,
+    radar2016,
+    radar2017,
+    radar2018,
 ];
 
-function voteRadarTimes(radar, vote, times) {
-  for (let i = 0; i < times; i++) {
-    radar.registerVote(vote);
-  }
+function votar(radar: Radar, pointsPerAxis) {
+    radar.axes.forEach((axis, index) => {
+        pointsPerAxis[index].forEach(point => axis.answers.push(new Answer(axis, point)));
+    });
 }
 
 function crearDescripcionLarga(texto) {
-  let textoLargo = '';
+    let textoLargo = '';
 
-  for (let i = 0; i < 10; i++) {
-    textoLargo = textoLargo + texto;
-  }
+    for (let i = 0; i < 10; i++) {
+        textoLargo = textoLargo + texto;
+    }
 
-  return textoLargo;
+    return textoLargo;
 }

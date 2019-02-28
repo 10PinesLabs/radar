@@ -7,18 +7,18 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class RadarFormComponent implements OnInit {
 
-  @Input() radarTitle;
+  @Input() radarName;
   @Input() radarDescription;
   @Input() showErrors: boolean;
-  @Output() radarTitleChange = new EventEmitter();
+  @Output() radarNameChange = new EventEmitter();
   @Output() radarDescriptionChange = new EventEmitter();
 
   constructor() { }
 
   ngOnInit() { }
 
-  onRadarTitleChange() {
-    this.radarTitleChange.emit(this.radarTitle);
+  onRadarNameChange() {
+    this.radarNameChange.emit(this.radarName);
   }
 
   onRadarDescriptionChange() {
@@ -26,7 +26,12 @@ export class RadarFormComponent implements OnInit {
   }
 
   showRadarNameError() {
-    const trimmedRadarTitle = this.radarTitle.trim();
-    return this.showErrors && trimmedRadarTitle.length === 0;
+    const trimmedRadarName = this.radarName.trim();
+    return this.showErrors && trimmedRadarName.length === 0;
+  }
+
+  showRadarDescriptionError() {
+    const trimmedRadarDescription = this.radarDescription.trim();
+    return this.showErrors && trimmedRadarDescription.length === 0;
   }
 }

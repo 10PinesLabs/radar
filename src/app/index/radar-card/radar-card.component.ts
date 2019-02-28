@@ -37,7 +37,8 @@ export class RadarCardComponent implements OnInit {
   }
 
   closeRadar() {
-    this.radarService.close(this.radar.id);
+    this.radarService.close(this.radar.id).subscribe(closedRadar =>
+      this.radar = new Radar(closedRadar.id, closedRadar.name, closedRadar.description, closedRadar.axes, closedRadar.active));
   }
 
 }
