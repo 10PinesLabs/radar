@@ -10,7 +10,7 @@
 
               <div class="col-11">
                   <div class="row">
-                      <h5 class="mb-1">{{ axis.title }}</h5>
+                      <h5 class="mb-1">{{ axis.name }}</h5>
                   </div>
                   <div class="row axis-description">
                       <p class="mb-1">{{ axis.description }}</p>
@@ -36,20 +36,20 @@
 </div>
 
 <div class="form-group">
-  <label for="axisTitle">Nombre de la Arista</label>
+  <label for="axisName">Nombre de la Arista</label>
   <input
     type="text"
-    [ngClass]="axisTitleInputClass()"
-    [(ngModel)]="newAxis.title"
-    name="axisTitle"
-    id="axisTitle"
+    [ngClass]="axisNameInputClass()"
+    [(ngModel)]="newAxis.name"
+    name="axisName"
+    id="axisName"
     placeholder="Nueva Arista"
     required
-    #axisTitleModel="ngModel"
+    #axisNameModel="ngModel"
   >
 </div>
-<div [hidden]="axisTitleModel.pristine || !showAxisTitleError()" class="alert alert-danger">
-  El título de la arista es requerido para crearla
+<div [hidden]="axisNameModel.pristine || !showAxisNameError()" class="alert alert-danger">
+  El nombre de la arista es requerido para crearla
 </div>
 
 <div class="form-group">

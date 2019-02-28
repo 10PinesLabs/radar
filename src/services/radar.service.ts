@@ -4,13 +4,13 @@ import {Observable} from 'rxjs/index';
 
 export interface RadarService {
 
-  radar(radarId: any): Observable<Radar>;
+  radar(radarId: number): any;
 
-  radars(): Observable<Array<Radar>>;
+  getAll(): Observable<Array<Radar>>;
 
-  vote(radar: Radar, vote: Vote): Observable<Vote>;
+  vote(radarId: number, vote: Vote): any;
 
-  close(radarId: any): void;
+  close(radarId: number): any;
 
-  createRadar(radar: Radar);
+  createRadar(radar: Radar): any;
 }

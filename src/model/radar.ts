@@ -1,92 +1,47 @@
 import {Axis} from './axis';
-import {Vote} from './vote';
 
 export class Radar {
-  closed: boolean;
-  votes: Array<Vote>;
-  axes: Array<Axis>;
-  title: string;
-  description: string;
   id: number;
+  name: string;
+  description: string;
+  axes: Array<Axis>;
+  active: boolean;
 
-  constructor(title: string, description: string, axes: Array<Axis>, id: number) {
-    this.validateAxesLength(axes);
-    this.setTitle(title);
-    this.setDescription(description);
-    this.setRadarToAxes();
-
-    this.closed = false;
-    this.votes = [];
+  constructor(id: number, name: string, description: string, axes, active: boolean) {
     this.id = id;
-  }
-
-  registerVote(vote: Vote): any {
-    this.votes.push(vote);
-  }
-
-  close() {
-    this.validateClosedState();
-    this.closed = true;
-  }
-
-  cannotVote() {
-    return this.axes.some(axis => axis.hasInvalidVote());
-  }
-
-  axisValuesFor(axis) {
-    this.validateAxisBelongsToRadar(axis);
-
-    const valuesForEachAxisPosition = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
-    this.votes.forEach( vote => valuesForEachAxisPosition[vote.valueForAxis(axis)] += 1 );
-    return valuesForEachAxisPosition;
-  }
-
-  axisValues() {
-    const axesWithVotes = [];
-    this.axes.forEach(axis => {
-      const valuesForAxis = this.axisValuesFor(axis);
-      axesWithVotes.push([axis, valuesForAxis]);
-    });
-
-    return axesWithVotes;
+    this.name = name;
+    this.description = description;
+    this.axes = axes;
+    this.active = active;
   }
 
   isClosed() {
-    return this.closed;
+    return !this.active;
   }
 
-  private validateAxisBelongsToRadar(axis) {
-    if (this.axisBelongsToAxes(axis)) {
-      throw new Error('El axis no pertenece al radar');
-    }
+  axisBelongsToRadar(axis: Axis) {
+    let belongs = false;
+    this.axes.forEach(radarAxis => {
+      if (axis.name === radarAxis.name) {
+        belongs =  true;
+      }
+    });
+
+    return belongs;
   }
 
-  private axisBelongsToAxes(axis) {
-    return this.axes.indexOf(axis) === -1;
+  axisPointsFor(axis: Axis) {
+    let points = [];
+    this.axes.forEach(radarAxis => {
+      if (radarAxis.name === axis.name) {
+        points = radarAxis.answers.map(answer => answer.points);
+        return points;
+      }
+    });
+    return points;
   }
 
-  private validateClosedState() {
-    if (this.closed) {
-      throw new Error('El radar que intentas cerrar ya ha sido cerrado');
-    }
-  }
-
-  private validateAxesLength(axes: Array<Axis>): any {
-    if (axes.length < 3) {
-      throw new Error('Los radares no pueden tener menos de 3 aristas');
-    }
-    this.axes = axes;
-  }
-
-  private setDescription(description: string) {
-    this.description = description || 'Sin descripción';
-  }
-
-  private setTitle(title: string) {
-    this.title = title || 'Sin título';
-  }
-
-  private setRadarToAxes() {
-    this.axes.forEach(axis => axis.radar = this);
+  hasVotes() {
+    return this.axes[0].answers.length !== 0;
   }
 }

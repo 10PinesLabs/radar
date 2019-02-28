@@ -1,19 +1,17 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { AppRoutingModule } from './app-routing.module';
 import { RadarVoteComponent } from './radar-vote/radar-vote.component';
-import { AxisComponent } from './axis/axis.component';
-import { environment} from '../environments/environment';
+import { AxisComponent } from './radar-vote/voting-radar/axis/axis.component';
+import { environment } from '../environments/environment';
 import { VotingRadarComponent } from './radar-vote/voting-radar/voting-radar.component';
 import { VotedRadarComponent } from './radar-vote/voted-radar/voted-radar.component';
 import { ResultsComponent } from './results/results.component';
 import { CardContainerComponent } from './card-container/card-container.component';
-import { AxisBarChartComponent } from './results/axis-bar-chart/axis-bar-chart.component';
-import { AxisTableValuesComponent } from './results/axis-table-values/axis-table-values.component';
-import { RadarChartComponent } from './results/radar-chart/radar-chart.component';
 import { IndexComponent } from './index/index.component';
 import { RadarCardComponent } from './index/radar-card/radar-card.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,6 +19,14 @@ import { ToastrModule } from 'ngx-toastr';
 import { CreateRadarComponent } from './create-radar/create-radar.component';
 import { RadarFormComponent } from './create-radar/radar-form/radar-form.component';
 import { AxesFormComponent } from './create-radar/axes-form/axes-form.component';
+import { SelectToCompareComponent } from './select-to-compare/select-to-compare.component';
+import { CompareRadarsComponent } from './compare-radars/compare-radars.component';
+import { AxisBarChartComponent } from './chart-components/axis-bar-chart/axis-bar-chart.component';
+import { AxisTableValuesComponent } from './chart-components/axis-table-values/axis-table-values.component';
+import { RadarChartComponent } from './chart-components/radar-chart/radar-chart.component';
+import { CompareRadarsButtonsComponent } from './compare-radars/compare-radars-buttons/compare-radars-buttons.component';
+import { HttpRadarService } from 'src/services/http-radar.service';
+
 
 @NgModule({
   declarations: [
@@ -39,10 +45,14 @@ import { AxesFormComponent } from './create-radar/axes-form/axes-form.component'
     RadarCardComponent,
     CreateRadarComponent,
     RadarFormComponent,
-    AxesFormComponent
+    AxesFormComponent,
+    SelectToCompareComponent,
+    CompareRadarsComponent,
+    CompareRadarsButtonsComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
@@ -52,7 +62,7 @@ import { AxesFormComponent } from './create-radar/axes-form/axes-form.component'
     }),
     FormsModule
   ],
-  providers: [{provide: 'RadarService', useClass: environment.radarServiceType}],
+  providers: [{provide: 'RadarService', useClass: HttpRadarService}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -11,10 +11,17 @@ export class IndexComponent implements OnInit {
 
   radars: Radar[];
 
-  constructor(@Inject('RadarService') private radarService: RadarService) { }
+  constructor(@Inject('RadarService') private radarService: RadarService) {
+    this.radars = [];
+  }
 
   ngOnInit() {
-    this.radarService.radars().subscribe(radars => this.radars = radars);
-    this.radars = this.radars.sort((r1, r2) => r2.id - r1.id); // mayor id a menor id
+    this.radarService.getAll().subscribe(radars => {
+
+      radars.forEach(radar => {
+        this.radars.push(new Radar(radar.id, radar.name, radar.description, radar.axes, radar.active));
+      });
+      this.radars = this.radars.sort((r1, r2) => r2.id - r1.id); // mayor id a menor id
+    });
   }
 }
