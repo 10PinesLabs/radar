@@ -1,8 +1,12 @@
 source 'https://rubygems.org'
 
+ruby '2.3.8'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.7.1'
+
+gem 'dotenv-rails', '~> 2.1', '>= 2.1.1'
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -33,9 +37,12 @@ gem 'pg', '0.20.0'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-gem 'bower-rails'
-
 gem 'rails_12factor', group: :production
+
+# Gema para la autenticación con el backoffice
+gem 'omniauth-backoffice', git: 'https://github.com/10pines/omniauth-backoffice.git'
+
+gem 'jwt'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

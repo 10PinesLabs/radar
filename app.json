@@ -19,12 +19,18 @@
     },
     "SECRET_KEY_BASE": {
       "required": true
+    },
+    "BACKOFFICE_SECRET": {
+      "required": true
+    },
+    "BACKOFFICE_URL": {
+      "required": true
+    },
+    "DOMAIN_BASE_URL": {
+      "required": true
     }
   },
   "formation": {
-    "worker": {
-      "quantity": 1
-    },
     "web": {
       "quantity": 1
     }
@@ -33,9 +39,6 @@
     "heroku-postgresql"
   ],
   "buildpacks": [
-    {
-      "url": "heroku/nodejs"
-    },
     {
       "url": "heroku/ruby"
     }
