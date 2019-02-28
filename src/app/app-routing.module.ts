@@ -14,7 +14,7 @@ const routes: Routes = [
   { path: 'radar/:id/results', component: ResultsComponent },
   { path: 'radar', component: CreateRadarComponent },
   { path: 'selectToCompare', component: SelectToCompareComponent },
-  { path: 'compareRadars', component: CompareRadarsComponent }
+  { path: 'radars/compare/:firstRadarId/:secondRadarId', component: CompareRadarsComponent }
 ];
 
 @NgModule({
