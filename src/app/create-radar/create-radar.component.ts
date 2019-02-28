@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Axis } from 'src/model/axis';
 import { Radar } from 'src/model/radar';
 import { RadarService } from 'src/services/radar.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-create-radar',
@@ -16,9 +16,22 @@ export class CreateRadarComponent implements OnInit {
   radarDescription = '';
   showErrors = false;
 
-  constructor(@Inject('RadarService') private radarService: RadarService, private router: Router) { }
+  constructor(@Inject('RadarService') private radarService: RadarService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.activatedRoute.paramMap.subscribe((params) => {
+      const strId = params.get('id');
+      if (strId !== null) {
+        this.radarService.radar(parseInt(strId, 10)).subscribe(radarResult => {
+          this.radarName = radarResult.radar.name;
+          this.radarDescription = radarResult.radar.description;
+          this.axes = radarResult.radar.axes.map(axis => new Axis(null, axis.name, axis.description, []));
+        });
+      }
+    });
+  }
 
   radarIsInvalid(): boolean {
     return this.radarNameIsEmpty() || this.radarDescriptionIsEmpty() || this.radarAxesIsLessThanThree();
