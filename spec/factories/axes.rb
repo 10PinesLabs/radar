@@ -1,5 +1,6 @@
 FactoryBot.define do
   factory :axis do
-    sequence(:description) { |n| "Axis #{n}" }
+    sequence(:name) { |n| "Axis #{n}" }
+    description 'Descripcion de arista'
   end
 end

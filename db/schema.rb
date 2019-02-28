@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190208175648) do
+ActiveRecord::Schema.define(version: 20190223144950) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,10 +35,11 @@ ActiveRecord::Schema.define(version: 20190208175648) do
   end
 
   create_table "axes", force: :cascade do |t|
-    t.string   "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.string   "name"
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
     t.integer  "radar_id"
+    t.string   "description", default: "Sin descripcion"
   end
 
   create_table "radars", force: :cascade do |t|
