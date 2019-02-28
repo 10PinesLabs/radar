@@ -3,8 +3,11 @@ import { Statistics } from '../model/statistics';
 describe('Statistics', () => {
   let statistics: Statistics;
 
-  it('new Statistics throws error if the array is empty', () => {
-    expect(tryCreateNewStatisticsWithEmptyArray).toThrowError(Error, 'Valores de arista invalidos');
+  it('new Statistics if the array is Empty ', () => {
+    statistics = new Statistics([]);
+
+    expect(statistics.expectedValue()).toBe('No posee votos');
+    expect(statistics.mean()).toBe('No posee votos');
   });
 
   it('new Statistics throws error if the array does not contains numbers between 1 to 5', () => {
@@ -27,15 +30,6 @@ describe('Statistics', () => {
     expect(statistics.mean()).toBe(mean);
   });
 
-  it('Can get the probabilities of the axis values', () => {
-    const axisValues = [1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5];
-    const axisProbabilities = [ 1 / 15 , 2 / 15, 3 / 15, 4 / 15, 5 / 15 ];
-    statistics = new Statistics(axisValues);
-
-    const answerProbabilities = statistics.probabilities();
-    answerProbabilities.forEach((probability, index) => expect(probability).toBeCloseTo(axisProbabilities[index]));
-  });
-
   it('Can get the expectedValue of the axis values', () => {
     const axisValues = [1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5];
     const expectedValue = 11 / 3;
@@ -44,23 +38,9 @@ describe('Statistics', () => {
     expect(statistics.expectedValue()).toBeCloseTo(expectedValue);
   });
 
-  function tryCreateNewStatisticsWithEmptyArray() {
-    const emptyArray = [];
-    return new Statistics(emptyArray);
-  }
-
-  function tryCreateNewStatisticsWithNonObject() {
-    const nonObj = 3;
-    return new Statistics(nonObj);
-  }
-
   function tryCreateNewStatisticsWithArrayWithInvalidNumbers() {
     const invalidNumbersArray = [-1, 6, 3];
     return new Statistics(invalidNumbersArray);
   }
 
-  function tryCreateNewStatisticsWithValueLessThanZero() {
-    const nonValidObj = { 1: -5, 2: 3, 3: 1, 4: 9, 5: 3 };
-    return new Statistics(nonValidObj);
-  }
 });

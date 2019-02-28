@@ -2,31 +2,20 @@
 
     <app-card-container [header]="title()">
 
-      <div *ngIf="axesInCommon().length !== 0; else incompatibleRadars">
+      <div *ngIf="canCompareRadars(); else incomparableRadars">
 
         <div class="card-body">
-          <app-radar-chart
-            [radars]="parseRadarsToRadarChart()"
-            [axesNames]="axesNames()"
-          ></app-radar-chart>
+          <app-radar-chart [radars]="parseRadarsToRadarChart()" [axesNames]="axesNames()"></app-radar-chart>
 
           <div *ngFor="let axis of axesInCommon()">
             <hr>
             <h5>{{ axis.name }}</h5>
             <p>{{ axis.description }}</p>
 
-            <app-axis-bar-chart
-              [axis]="axis"
-              [values]="parseRadarsAxisValuesForAxisChart(axis)"
-              [radarNames]="parseRadarTitlesToAxisChart()"
-              >
+            <app-axis-bar-chart [axis]="axis" [values]="parseRadarsAxisValuesForAxisChart(axis)" [radarNames]="parseRadarNamesToAxisChart()">
             </app-axis-bar-chart>
 
-            <app-axis-table-values
-              [axis]="axis"
-              [values]="parseRadarsAxisValuesForAxisChart(axis)"
-              [radarNames]="parseRadarTitlesToAxisChart()"
-            >
+            <app-axis-table-values [axis]="axis" [values]="parseRadarsAxisValuesForAxisChart(axis)" [radarNames]="parseRadarNamesToAxisChart()">
             </app-axis-table-values>
           </div>
 
@@ -35,9 +24,9 @@
 
       </div>
 
-      <ng-template #incompatibleRadars>
+      <ng-template #incomparableRadars>
         <div>
-          <h4 class="incompatible-title">Radares incompatibles</h4>
+          <h4 class="incomparable-title">Los radares no se pueden comparar</h4>
           <app-compare-radars-buttons></app-compare-radars-buttons>
         </div>
       </ng-template>

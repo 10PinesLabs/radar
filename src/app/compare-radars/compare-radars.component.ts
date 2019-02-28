@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, Inject } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CompareRadarsService } from 'src/services/compare-radars.service';
 import { Radar } from 'src/model/radar';
+import { RadarService } from 'src/services/radar.service';
+import { Axis } from 'src/model/axis';
 
 
 @Component({
@@ -14,12 +16,27 @@ export class CompareRadarsComponent implements OnInit {
   firstRadar: Radar;
   secondRadar: Radar;
 
-  constructor(private compareRadarsService: CompareRadarsService, private router: Router) { }
+  constructor(@Inject('RadarService') private radarService: RadarService,
+                private router: Router,
+                private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.compareRadarsService.firstRadar().subscribe(firstRadar => this.firstRadar = firstRadar);
-    this.compareRadarsService.secondRadar().subscribe(secondRadar => this.secondRadar = secondRadar);
-    this.redirectToSelectToCompareIfThereAreNotRadars();
+    this.activatedRoute.paramMap.subscribe((params) => {
+      this.radarService.radar(parseInt(params.get('firstRadarId'))).subscribe(firstRadar => {
+        const radar = firstRadar.radar;
+        this.firstRadar = new Radar(radar.id, radar.name, radar.description, radar.axes, radar.active);
+      });
+
+      this.radarService.radar(parseInt(params.get('secondRadarId'))).subscribe(secondRadar => {
+        const radar = secondRadar.radar;
+        this.secondRadar =
+          new Radar(
+            radar.id,
+            radar.name,
+            radar.description,
+            radar.axes.map(a => new Axis(a.id, a.name, a.description, a.answers)), radar.active);
+      });
+    });
   }
 
   title() {
@@ -45,7 +62,7 @@ export class CompareRadarsComponent implements OnInit {
     return [this.firstRadar.axisPointsFor(axis), this.secondRadar.axisPointsFor(axis)];
   }
 
-  parseRadarTitlesToAxisChart() {
+  parseRadarNamesToAxisChart() {
     return [this.firstRadar.name, this.secondRadar.name];
   }
 
@@ -53,13 +70,11 @@ export class CompareRadarsComponent implements OnInit {
     return this.axesInCommon().map(axis => axis.name);
   }
 
-  private redirectToSelectToCompareIfThereAreNotRadars() {
-    if (this.radarsAreNullOrUndefined()) {
-      this.router.navigateByUrl('/selectToCompare');
-    }
+  canCompareRadars() {
+    return this.axesInCommon().length !== 0;
   }
 
-  private radarsAreNullOrUndefined() {
+  radarsAreNullOrUndefined() {
     return this.firstRadar === null || this.firstRadar === undefined || this.secondRadar === null || this.secondRadar === undefined;
   }
 }

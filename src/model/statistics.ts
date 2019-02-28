@@ -13,31 +13,42 @@ export class Statistics {
   }
 
   mean() {
-    let mean = 0;
-    if (this.axisValues.length !== 0) {
-      const sum = this.sumValues();
-      mean = parseFloat((sum / this.axisValues.length).toFixed(2));
+    if (this.hasVotes()) {
+      let mean = 0;
+      if (this.axisValues.length !== 0) {
+        const sum = this.sumValues();
+        mean = parseFloat((sum / this.axisValues.length).toFixed(2));
+      }
+      return mean;
+    } else {
+      return 'No posee votos';
     }
-
-    return mean;
-  }
-
-  probabilities() {
-    const probabilities = [1, 2, 3, 4, 5].map(value => this.quantityOfAparitions(value) / this.axisValues.length);
-
-    return probabilities;
   }
 
   expectedValue() {
-    const probabilities = this.probabilities();
-    const valuesPerPosition = this.valuesPerPosition();
+    if (this.hasVotes()) {
+      const probabilities = this.probabilities();
+      const valuesPerPosition = this.valuesPerPosition();
 
-    let expectedValue = 0;
-    valuesPerPosition.forEach((value, index) => {
-      expectedValue = value * probabilities[index] + expectedValue;
-    });
+      let expectedValue = 0;
+      valuesPerPosition.forEach((value, index) => {
+        expectedValue = value * probabilities[index] + expectedValue;
+      });
 
-    return expectedValue.toFixed(2);
+      return expectedValue.toFixed(2);
+    } else {
+      return 'No posee votos';
+    }
+  }
+
+  private hasVotes() {
+    return this.axisValues.length > 0;
+  }
+
+  private probabilities() {
+    const probabilities = [1, 2, 3, 4, 5].map(value => this.quantityOfAparitions(value) / this.axisValues.length);
+
+    return probabilities;
   }
 
   private quantityOfAparitions(value: number) {
@@ -65,15 +76,9 @@ export class Statistics {
   }
 
   private assertValidAxisValues(axisValues) {
-    const areNonValidAxisValues = this.isEmpty(axisValues) || this.valuesMoreThanFiveOrLessThanZero(axisValues);
-
-    if (areNonValidAxisValues) {
+    if (this.valuesMoreThanFiveOrLessThanZero(axisValues)) {
       throw new Error('Valores de arista invalidos');
     }
-  }
-
-  private isEmpty(axisValues) {
-    return axisValues.length === 0;
   }
 
   private valuesMoreThanFiveOrLessThanZero(axisValues) {
