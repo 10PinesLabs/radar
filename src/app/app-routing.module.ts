@@ -8,9 +8,10 @@ import {TokenComponent} from './token/token.component';
 import {ErrorComponent} from './error/error.component';
 import { SelectToCompareComponent } from './select-to-compare/select-to-compare.component';
 import { CompareRadarsComponent } from './compare-radars/compare-radars.component';
+import { SignInComponent } from './sign-in/sign-in.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/', pathMatch: 'full' },
+  { path: '', pathMatch: 'full', component: SignInComponent },
   { path: 'radars', component: IndexComponent },
   { path: 'token/:token', component: TokenComponent },
   { path: 'error', component: ErrorComponent },

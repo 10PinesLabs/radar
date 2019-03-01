@@ -30,6 +30,7 @@ import { AxisTableValuesComponent } from './chart-components/axis-table-values/a
 import { RadarChartComponent } from './chart-components/radar-chart/radar-chart.component';
 import { CompareRadarsButtonsComponent } from './compare-radars/compare-radars-buttons/compare-radars-buttons.component';
 import { HttpRadarService } from 'src/services/http-radar.service';
+import { SignInComponent } from './sign-in/sign-in.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { HttpRadarService } from 'src/services/http-radar.service';
     ErrorComponent,
     SelectToCompareComponent,
     CompareRadarsComponent,
-    CompareRadarsButtonsComponent
+    CompareRadarsButtonsComponent,
+    SignInComponent
   ],
   imports: [
     StorageServiceModule,
