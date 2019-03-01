@@ -42,6 +42,6 @@ export class RadarCardComponent implements OnInit {
   }
 
   copiarRadar() {
-    this.router.navigate(['radar', this.radar.id]);
+    this.router.navigate(['radar', 'create', this.radar.id]);
   }
 }
