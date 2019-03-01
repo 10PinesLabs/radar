@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: 'radars', component: IndexComponent },
   { path: 'radar/:id/vote', component: RadarVoteComponent },
   { path: 'radar/:id/results', component: ResultsComponent },
-  { path: 'radar', component: CreateRadarComponent },
+  { path: 'radar/create', component: CreateRadarComponent },
   { path: 'selectToCompare', component: SelectToCompareComponent },
   { path: 'radars/compare/:firstRadarId/:secondRadarId', component: CompareRadarsComponent }
 ];
