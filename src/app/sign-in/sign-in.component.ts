@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-sign-in',
@@ -8,11 +8,11 @@ import { Router } from '@angular/router';
 })
 export class SignInComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor() { }
 
   ngOnInit() { }
 
-  signIn() {
-    this.router.navigate(['radars']);
+  apiURL() {
+    return environment.apiURL;
   }
 }
