@@ -46,6 +46,10 @@ export class CreateRadarComponent implements OnInit {
     }
   }
 
+  backToIndex() {
+    this.router.navigate(['/radars']);
+  }
+
   private radarNameIsEmpty(): boolean {
     return this.radarName.length === 0;
   }
