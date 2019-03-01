@@ -1,10 +1,53 @@
+/* Small devices (landscape phones, to 768px) */
 .view-container {
   margin: auto;
-  width: 58%;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  width: 95%;
+  box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.2);
 
   .view-header {
     background-color: #414141;
     color: white;
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .view-container {
+    margin: auto;
+    width: 58%;
+    box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.2);
+
+    .view-header {
+      background-color: #414141;
+      color: white;
+    }
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .view-container {
+    margin: auto;
+    width: 90%;
+    box-shadow: 0 15px 35px 0 rgba(42, 51, 83, 0.12), 0 5px 15px 0 rgba(0, 0, 0, 0.6);
+
+    .view-header {
+      background-color: #414141;
+      color: white;
+    }
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  .view-container {
+    margin: auto;
+    width: 60%;
+    box-shadow: 0 15px 35px 0 rgba(42, 51, 83, 0.12), 0 5px 15px 0 rgba(0, 0, 0, 0.6);
+
+    .view-header {
+      background-color: #414141;
+      color: white;
+    }
   }
 }

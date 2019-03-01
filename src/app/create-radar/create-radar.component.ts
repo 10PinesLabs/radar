@@ -12,7 +12,7 @@ import { Router } from '@angular/router';
 export class CreateRadarComponent implements OnInit {
 
   axes: Axis[] = [];
-  radarTitle = '';
+  radarName = '';
   radarDescription = '';
   showErrors = false;
 
@@ -21,21 +21,24 @@ export class CreateRadarComponent implements OnInit {
   ngOnInit() { }
 
   radarIsInvalid(): boolean {
-    return this.radarTitleIsEmpty() || this.radarAxesIsLessThanThree();
+    return this.radarNameIsEmpty() || this.radarDescriptionIsEmpty() || this.radarAxesIsLessThanThree();
   }
 
   createRadar() {
     if (this.radarIsInvalid()) {
       this.showErrors = true;
     } else {
-      const newRadar = new Radar(this.radarTitle, this.radarDescription, this.axes, null);
-      this.radarService.createRadar(newRadar);
-      this.router.navigate(['/']);
+      const newRadar = new Radar(null, this.radarName, this.radarDescription, this.axes, null);
+      this.radarService.createRadar(newRadar).subscribe(() => this.router.navigate(['/radars']));
     }
   }
 
-  private radarTitleIsEmpty(): boolean {
-    return this.radarTitle.length === 0;
+  private radarNameIsEmpty(): boolean {
+    return this.radarName.length === 0;
+  }
+
+  private radarDescriptionIsEmpty(): boolean {
+    return this.radarDescription.length === 0;
   }
 
   private radarAxesIsLessThanThree(): boolean {

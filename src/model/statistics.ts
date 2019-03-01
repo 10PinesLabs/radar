@@ -1,108 +1,94 @@
 export class Statistics {
-  axisValues: Object;
-  values: number[];
+  axisValues: number[];
 
-  constructor(axisValues: Object) {
+  constructor(axisValues) {
     this.assertValidAxisValues(axisValues);
     this.axisValues = axisValues;
-    this.values = this.parseAxisValuesToArray(axisValues);
   }
 
   axisValuesObjToArray() {
-    return this.values;
-  }
-
-  median() {
-    const m = Math.floor(this.values.length / 2);
-    const median = this.values[m];
-
-    return median;
+    const values = [0, 0, 0, 0, 0];
+    this.axisValues.forEach(value => values[value - 1]++ );
+    return values;
   }
 
   mean() {
-    const sum = this.sumValues();
-    const mean = sum / this.values.length;
-
-    return mean;
+    if (this.hasVotes()) {
+      let mean = 0;
+      if (this.axisValues.length !== 0) {
+        const sum = this.sumValues();
+        mean = parseFloat((sum / this.axisValues.length).toFixed(2));
+      }
+      return mean;
+    } else {
+      return 'No posee votos';
+    }
   }
 
-  probabilities() {
-    const qtty = this.sumValues();
-    const probabilities = this.values.map(value => value / qtty);
+  expectedValue() {
+    if (this.hasVotes()) {
+      const probabilities = this.probabilities();
+      const valuesPerPosition = this.valuesPerPosition();
+
+      let expectedValue = 0;
+      valuesPerPosition.forEach((value, index) => {
+        expectedValue = value * probabilities[index] + expectedValue;
+      });
+
+      return expectedValue.toFixed(2);
+    } else {
+      return 'No posee votos';
+    }
+  }
+
+  private hasVotes() {
+    return this.axisValues.length > 0;
+  }
+
+  private probabilities() {
+    const probabilities = [1, 2, 3, 4, 5].map(value => this.quantityOfAparitions(value) / this.axisValues.length);
 
     return probabilities;
   }
 
-  expectedValue() {
-    const expectedValue = this.calculateExpectedValueOf(this.values);
-
-    return expectedValue;
-  }
-
-  variance() {
-    const expectedValue = this.expectedValue();
-    const valutesToThePowOfTwo = this.values.map((value) => Math.pow(value, 2) );
-    const expectedValueOfValuesToThePowOfTwo = this.calculateExpectedValueOf(valutesToThePowOfTwo);
-    const variance = expectedValueOfValuesToThePowOfTwo - Math.pow(expectedValue, 2);
-
-    return variance;
-  }
-
-  standardDeviation() {
-    const variance = this.variance();
-    const standardDeviation = Math.sqrt(variance);
-
-    return standardDeviation;
-  }
-
-  private calculateExpectedValueOf(values) {
-    const probabilities = this.probabilities();
-    let expectedValue = 0;
-    values.forEach((value, index) => {
-      expectedValue = value * probabilities[index] + expectedValue;
+  private quantityOfAparitions(value: number) {
+    let quantity = 0;
+    this.axisValues.forEach(axisValue => {
+      if (value === axisValue) {
+        quantity++;
+      }
     });
 
-    return expectedValue;
+    return quantity;
+  }
+
+  private valuesPerPosition() {
+    const valuesPerPosition = [];
+    [1, 2, 3, 4, 5].forEach(value => valuesPerPosition.push(this.quantityOfAparitions(value)));
+    return valuesPerPosition;
   }
 
   private sumValues() {
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
-    const sum = this.values.reduce(reducer, 0);
+    const sum = this.axisValues.reduce(reducer, 0);
 
     return sum;
   }
 
-  private parseAxisValuesToArray(axisValues: Object) {
-    const axisValuesArray = [];
-    [1, 2, 3, 4, 5].forEach(field => axisValuesArray.push(axisValues[field]) );
-    return axisValuesArray;
-  }
-
-  private assertValidAxisValues(axisValues: Object) {
-    const areNonValidAxisValues = this.isEmptyObject(axisValues) ||
-                                  this.isObject(axisValues) ||
-                                  !this.areValidAxisValues(axisValues) ||
-                                  this.areValuesLessThanZero(axisValues);
-
-    if (areNonValidAxisValues) {
+  private assertValidAxisValues(axisValues) {
+    if (this.valuesMoreThanFiveOrLessThanZero(axisValues)) {
       throw new Error('Valores de arista invalidos');
     }
   }
 
-  private isEmptyObject(axisValues: Object): boolean {
-    return Object.keys(axisValues).length === 0;
-  }
+  private valuesMoreThanFiveOrLessThanZero(axisValues) {
+    let lessThanZero = false;
 
-  private isObject(axisValues: Object): boolean {
-    return axisValues.constructor !== Object;
-  }
-
-  private areValidAxisValues(axisValues: Object): boolean {
-    return axisValues.hasOwnProperty('1') && axisValues.hasOwnProperty('2') && axisValues.hasOwnProperty('3')
-      && axisValues.hasOwnProperty('4') && axisValues.hasOwnProperty('5');
-  }
-
-  private areValuesLessThanZero(axisValues) {
-    return axisValues[1] < 0 || axisValues[2] < 0 || axisValues[3] < 0 || axisValues[4] < 0 || axisValues[5] < 0;
+    axisValues.forEach(value => {
+      if (0 > value || value > 5) {
+        lessThanZero = true;
+      }
+    });
+    return lessThanZero;
   }
 }
