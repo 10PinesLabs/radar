@@ -13,12 +13,18 @@ class OmniAuthController < ApplicationController
 
   def failure
     message = if request.env['omniauth.error.type'] == :cancel
-                "Se ha denegado el acceso"
+                'Se ha denegado el acceso'
               else
-                "No hemos podido autenticarte"
+                'No hemos podido autenticarte'
               end
 
     redirect_to "#{base_url}/error?message=#{message}"
+  end
+
+  def redirect
+    backend_url = request.env['REQUEST_URI']
+    backend_url.slice! '/auth/backoffice/redirect'
+    redirect_to "#{ENV.fetch('BACKOFFICE_URL')}/auth/sign_in?redirect_url=#{backend_url}/auth/backoffice/callback&app_id=ruben_radar"
   end
 
   private
@@ -28,9 +34,9 @@ class OmniAuthController < ApplicationController
     unless admin
       Rails.logger.info("Admin de backoffice con id #{auth_hash[:uid]} no existe, creando nuevo")
       admin = Admin.create!(
-          nombre_de_admin: auth_hash[:info][:nickname],
-          email: auth_hash[:info][:email],
-          backoffice_id: auth_hash[:uid]
+        nombre_de_admin: auth_hash[:info][:nickname],
+        email: auth_hash[:info][:email],
+        backoffice_id: auth_hash[:uid]
       )
     end
     Rails.logger.info("Admin #{admin.id} loggeado desde backoffice")
