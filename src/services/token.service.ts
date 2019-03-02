@@ -13,6 +13,10 @@ export class TokenService {
     return !isNullOrUndefined(this.storage.get('token'));
   }
 
+  getToken() {
+    return this.storage.get('token');
+  }
+
   setToken(token: string) {
     this.storage.set('token', token);
   }

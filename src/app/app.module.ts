@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
@@ -31,6 +31,7 @@ import { RadarChartComponent } from './chart-components/radar-chart/radar-chart.
 import { CompareRadarsButtonsComponent } from './compare-radars/compare-radars-buttons/compare-radars-buttons.component';
 import { HttpRadarService } from 'src/services/http-radar.service';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { HttpConfigInterceptor } from 'src/interceptor/httpconfig.interceptor';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,10 @@ import { SignInComponent } from './sign-in/sign-in.component';
     }),
     FormsModule
   ],
-  providers: [{provide: 'RadarService', useClass: HttpRadarService}],
+  providers: [
+    {provide: 'RadarService', useClass: HttpRadarService},
+    {provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
