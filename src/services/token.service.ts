@@ -1,6 +1,6 @@
-import {Inject, Injectable} from '@angular/core';
-import {LOCAL_STORAGE, WebStorageService} from 'angular-webstorage-service';
-import {isNullOrUndefined} from 'util';
+import { Inject, Injectable } from '@angular/core';
+import { LOCAL_STORAGE, WebStorageService } from 'angular-webstorage-service';
+import { isNullOrUndefined } from 'util';
 
 @Injectable({
   providedIn: 'root'
