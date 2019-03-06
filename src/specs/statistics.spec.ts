@@ -6,7 +6,6 @@ describe('Statistics', () => {
   it('new Statistics if the array is Empty ', () => {
     statistics = new Statistics([]);
 
-    expect(statistics.expectedValue()).toBe('No posee votos');
     expect(statistics.mean()).toBe('No posee votos');
   });
 
@@ -28,14 +27,6 @@ describe('Statistics', () => {
     statistics = new Statistics(axisValues);
 
     expect(statistics.mean()).toBe(mean);
-  });
-
-  it('Can get the expectedValue of the axis values', () => {
-    const axisValues = [1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5];
-    const expectedValue = 11 / 3;
-    statistics = new Statistics(axisValues);
-
-    expect(statistics.expectedValue()).toBeCloseTo(expectedValue);
   });
 
   function tryCreateNewStatisticsWithArrayWithInvalidNumbers() {
