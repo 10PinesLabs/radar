@@ -25,47 +25,8 @@ export class Statistics {
     }
   }
 
-  expectedValue() {
-    if (this.hasVotes()) {
-      const probabilities = this.probabilities();
-      const valuesPerPosition = this.valuesPerPosition();
-
-      let expectedValue = 0;
-      valuesPerPosition.forEach((value, index) => {
-        expectedValue = value * probabilities[index] + expectedValue;
-      });
-
-      return expectedValue.toFixed(2);
-    } else {
-      return 'No posee votos';
-    }
-  }
-
   private hasVotes() {
     return this.axisValues.length > 0;
-  }
-
-  private probabilities() {
-    const probabilities = [1, 2, 3, 4, 5].map(value => this.quantityOfAparitions(value) / this.axisValues.length);
-
-    return probabilities;
-  }
-
-  private quantityOfAparitions(value: number) {
-    let quantity = 0;
-    this.axisValues.forEach(axisValue => {
-      if (value === axisValue) {
-        quantity++;
-      }
-    });
-
-    return quantity;
-  }
-
-  private valuesPerPosition() {
-    const valuesPerPosition = [];
-    [1, 2, 3, 4, 5].forEach(value => valuesPerPosition.push(this.quantityOfAparitions(value)));
-    return valuesPerPosition;
   }
 
   private sumValues() {

@@ -3,15 +3,13 @@
     <thead>
       <tr>
         <th scope="col">Título</th>
-        <th scope="col">Promedio</th>
-        <th scope="col">Esperanza</th>
+        <th scope="col">Media</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let axisStatistics of axesStatistics">
         <td>{{ axisStatistics.name }}</td>
         <td>{{ axisStatistics.mean }}</td>
-        <td>{{ axisStatistics.expectedValue }}</td>
       </tr>
     </tbody>
   </table>
