@@ -43,7 +43,7 @@ class OmniAuthController < ApplicationController
   end
 
   def generate_token
-    hmac_secret = ENV.fetch('BACKOFFICE_SECRET')
+    hmac_secret = Rails.configuration.jwt_secret
     payload = auth_hash[:info]
 
     JWT.encode payload, hmac_secret, 'HS256'

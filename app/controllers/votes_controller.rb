@@ -1,4 +1,5 @@
 class VotesController < ApplicationController
+  before_filter :ensure_authenticated!, except: [ :create ]
   def create
     answers = create_answers(params.require(:answers))
     vote = Vote.create!(answers: answers)

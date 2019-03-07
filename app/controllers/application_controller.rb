@@ -4,4 +4,18 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
   include WithErrorHandler
 
+  def ensure_authenticated!
+    header = request
+               .headers['Authorization']
+               &.split(' ')
+               &.last
+
+    begin
+      @decoded = JWT.decode(header, Rails.configuration.jwt_secret)
+    rescue JWT::DecodeError => e
+      render json: { errors: e.message }, status: :unauthorized
+    end
+  end
+
+
 end
