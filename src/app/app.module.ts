@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
@@ -19,6 +19,10 @@ import { ToastrModule } from 'ngx-toastr';
 import { CreateRadarComponent } from './create-radar/create-radar.component';
 import { RadarFormComponent } from './create-radar/radar-form/radar-form.component';
 import { AxesFormComponent } from './create-radar/axes-form/axes-form.component';
+import { TokenComponent } from './token/token.component';
+import {StorageServiceModule} from 'angular-webstorage-service';
+import { ErrorComponent } from './error/error.component';
+import {TokenService} from '../services/token.service';
 import { SelectToCompareComponent } from './select-to-compare/select-to-compare.component';
 import { CompareRadarsComponent } from './compare-radars/compare-radars.component';
 import { AxisBarChartComponent } from './chart-components/axis-bar-chart/axis-bar-chart.component';
@@ -26,7 +30,8 @@ import { AxisTableValuesComponent } from './chart-components/axis-table-values/a
 import { RadarChartComponent } from './chart-components/radar-chart/radar-chart.component';
 import { CompareRadarsButtonsComponent } from './compare-radars/compare-radars-buttons/compare-radars-buttons.component';
 import { HttpRadarService } from 'src/services/http-radar.service';
-
+import { SignInComponent } from './sign-in/sign-in.component';
+import { HttpConfigInterceptor } from 'src/interceptor/httpconfig.interceptor';
 
 @NgModule({
   declarations: [
@@ -46,11 +51,15 @@ import { HttpRadarService } from 'src/services/http-radar.service';
     CreateRadarComponent,
     RadarFormComponent,
     AxesFormComponent,
+    TokenComponent,
+    ErrorComponent,
     SelectToCompareComponent,
     CompareRadarsComponent,
-    CompareRadarsButtonsComponent
+    CompareRadarsButtonsComponent,
+    SignInComponent
   ],
   imports: [
+    StorageServiceModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
@@ -62,7 +71,10 @@ import { HttpRadarService } from 'src/services/http-radar.service';
     }),
     FormsModule
   ],
-  providers: [{provide: 'RadarService', useClass: HttpRadarService}],
+  providers: [
+    {provide: 'RadarService', useClass: HttpRadarService},
+    {provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

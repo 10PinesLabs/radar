@@ -15,25 +15,25 @@ export class HttpRadarService implements RadarService {
   constructor (private http: HttpClient) { }
 
   radar(radarId: number): any {
-    const radarToVoteURL = environment.apiURL + 'api/radars/' + radarId + '/result';
+    const radarToVoteURL = environment.apiURL + '/api/radars/' + radarId + '/result';
     return this.http.get<Radar>(radarToVoteURL);
   }
 
   getAll(): Observable<Radar[]> {
-    return this.http.get<Array<Radar>>(environment.apiURL + 'api/radars');
+    return this.http.get<Array<Radar>>(environment.apiURL + '/api/radars');
   }
 
   vote(radarId: number, vote: Vote): any {
-    const voteURL = environment.apiURL + 'api/radars/' + radarId + '/votes';
+    const voteURL = environment.apiURL + '/api/radars/' + radarId + '/votes';
     return this.http.post(voteURL, vote);
   }
 
   close(radarId: number): any {
-    const closeURL = environment.apiURL + 'api/radars/' + radarId + '/close';
+    const closeURL = environment.apiURL + '/api/radars/' + radarId + '/close';
     return this.http.post(closeURL, {});
   }
 
   createRadar(radar: Radar): any {
-    return this.http.post(environment.apiURL + 'api/radars', radar);
+    return this.http.post(environment.apiURL + '/api/radars', radar);
   }
 }
