@@ -12,21 +12,22 @@ export class HeaderComponent implements OnInit {
 
   LOGIN = 'Login';
   LOGOUT = 'Logout';
-  isLoggedIn: boolean;
 
   constructor(private tokenService: TokenService, private router: Router) { }
 
   ngOnInit(): void {
-    this.isLoggedIn = this.tokenService.isLoggedIn();
   }
 
   apiURL() {
     return environment.apiURL;
   }
 
+  isLoggedIn(): boolean {
+    return this.tokenService.isLoggedIn();
+  }
+
   logout() {
     this.tokenService.logout();
     this.router.navigate(['/']);
-    location.reload();
   }
 }

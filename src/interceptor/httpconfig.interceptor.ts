@@ -1,29 +1,16 @@
 import { Injectable } from '@angular/core';
-import {
-    HttpInterceptor,
-    HttpRequest,
-    HttpResponse,
-    HttpHandler,
-    HttpEvent,
-    HttpErrorResponse
-} from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 
-import { Observable, throwError, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { TokenService } from 'src/services/token.service';
-import { tokenKey } from '@angular/core/src/view';
 
 @Injectable() export class HttpConfigInterceptor implements HttpInterceptor {
 
-    constructor(private tokenService: TokenService) { }
+  constructor(private tokenService: TokenService) { }
 
-    intercept(request: HttpRequest<any>, next: HttpHandler): Observable< HttpEvent<any> > {
-        return next.handle(request).pipe(
-            map((event: HttpEvent<any>) => {
-                if (event instanceof HttpResponse) {
-                    console.log('event--->>>', event);
-                }
-                return event;
-            }));
-    }
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any> > {
+    const token = this.tokenService.getToken();
+    const validatedRequest = request.clone({ setHeaders: { Authorization: 'Bearer ' + token }} );
+    return next.handle(validatedRequest);
+  }
 }

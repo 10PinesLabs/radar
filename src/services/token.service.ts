@@ -7,21 +7,27 @@ import { isNullOrUndefined } from 'util';
 })
 export class TokenService {
 
-  constructor(@Inject(LOCAL_STORAGE) private storage: WebStorageService) { }
+  private token: string;
 
-  isLoggedIn() {
+  constructor(@Inject(LOCAL_STORAGE) private storage: WebStorageService) {
+    this.token = this.storage.get('token');
+  }
+
+  isLoggedIn(): boolean {
     return !isNullOrUndefined(this.storage.get('token'));
   }
 
   getToken() {
-    return this.storage.get('token');
+    return this.token;
   }
 
   setToken(token: string) {
     this.storage.set('token', token);
+    this.token = token;
   }
 
   logout() {
     this.storage.remove('token');
+    this.token = null;
   }
 }

@@ -5,13 +5,13 @@
     </div>
 
     <div class="login-logout">
-      <a [hidden]="isLoggedIn" href="{{ apiURL() }}/auth/backoffice/redirect">
+      <a [hidden]="isLoggedIn()" href="{{ apiURL() }}/auth/backoffice/redirect">
           <button type="button" class="login-logout-btn btn btn-outline-light">
             {{LOGIN}}
           </button>
       </a>
 
-      <button [hidden]="!isLoggedIn" type="button" class="login-logout-btn btn btn-outline-light" (click)="logout()">
+      <button [hidden]="!isLoggedIn()" type="button" class="login-logout-btn btn btn-outline-light" (click)="logout()">
         {{LOGOUT}}
       </button>
     </div>
