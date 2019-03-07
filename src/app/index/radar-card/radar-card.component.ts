@@ -41,4 +41,7 @@ export class RadarCardComponent implements OnInit {
       this.radar = new Radar(closedRadar.id, closedRadar.name, closedRadar.description, closedRadar.axes, closedRadar.active));
   }
 
+  copiarRadar() {
+    this.router.navigate(['radar', 'create', this.radar.id]);
+  }
 }
