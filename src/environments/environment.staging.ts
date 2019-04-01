@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiURL: 'https://ruben-radar.herokuapp.com',
+  apiURL: 'https://ruben-radar-stg.herokuapp.com',
 };
