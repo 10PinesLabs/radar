@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {TokenService} from '../../services/token.service';
+import {Router} from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -6,24 +9,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+
   LOGIN = 'Login';
   LOGOUT = 'Logout';
 
-  button_text: string;
+  constructor(private tokenService: TokenService, private router: Router) { }
 
-  constructor() { }
-
-  ngOnInit() {
-    this.button_text = this.LOGIN;
+  ngOnInit(): void {
   }
 
-  onClickLoginLogoutButton() {
-    const userIsLoggedIn = this.button_text === this.LOGIN;
+  apiURL() {
+    return environment.apiURL;
+  }
 
-    if (userIsLoggedIn) {
-      this.button_text = this.LOGOUT;
-    } else {
-      this.button_text = this.LOGIN;
-    }
+  isLoggedIn(): boolean {
+    return this.tokenService.isLoggedIn();
+  }
+
+  logout() {
+    this.tokenService.logout();
+    this.router.navigate(['/']);
   }
 }

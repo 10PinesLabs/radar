@@ -1,0 +1,36 @@
+/* Small devices (landscape phones, to 768px) */
+.index-container {
+    margin: auto;
+    width: 98%;
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .index-container {
+    margin: auto;
+    width: 88%;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .index-container {
+    margin: auto;
+    width: 58%;
+  }
+}
+
+.card-crear-radar {
+    margin-bottom: 0.3em;
+    background-color: #f5f6f7;
+}
+
+.card-body-crear-radar {
+    padding: 0.5em;
+}
+
+.btn-crear-y-comparar-radar {
+    color: #4b4f56;
+    font-size: smaller;
+    font-weight: bold;
+}

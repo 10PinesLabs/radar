@@ -2,9 +2,7 @@
 // `ng build ---prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-import {InMemoryRadarService} from '../services/in-memory-radar.service';
-
 export const environment = {
   production: false,
-  radarServiceType: InMemoryRadarService
+  apiURL: 'http://localhost:3000',
 };
