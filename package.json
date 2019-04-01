@@ -5,11 +5,10 @@
     "ng": "ng",
     "start": "ng serve --proxy-config=proxy.config.json",
     "start:server": "node server.js",
-    "build": "ng build",
+    "build": "ng build --aot --configuration=$ENVIRONMENT",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "postinstall": "ng build --aot --configuration=$ENVIRONMENT"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
