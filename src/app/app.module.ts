@@ -32,6 +32,7 @@ import { CompareRadarsButtonsComponent } from './compare-radars/compare-radars-b
 import { HttpRadarService } from 'src/services/http-radar.service';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { HttpConfigInterceptor } from 'src/interceptor/httpconfig.interceptor';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { HttpConfigInterceptor } from 'src/interceptor/httpconfig.interceptor';
     SelectToCompareComponent,
     CompareRadarsComponent,
     CompareRadarsButtonsComponent,
-    SignInComponent
+    SignInComponent,
+    PageNotFoundComponent
   ],
   imports: [
     StorageServiceModule,

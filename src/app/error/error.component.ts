@@ -1,23 +1,17 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-error',
   templateUrl: './error.component.html',
-  styleUrls: ['./error.component.css']
+  styleUrls: ['./error.component.scss']
 })
 export class ErrorComponent implements OnInit {
 
-  message: string;
-  show = false;
+  constructor() { }
 
-  constructor(private router: Router,
-              private route: ActivatedRoute) { }
+  ngOnInit() { }
 
-  ngOnInit() {
-    this.show = true;
-    this.message = this.route.snapshot.queryParamMap.get('message');
+  header() {
+    return 'Error 401';
   }
-
-
 }
