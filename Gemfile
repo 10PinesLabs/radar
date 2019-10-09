@@ -40,7 +40,7 @@ gem 'pg', '0.20.0'
 gem 'rails_12factor', group: :production
 
 # Gema para la autenticación con el backoffice
-gem 'omniauth-backoffice', git: 'https://github.com/10pines/omniauth-backoffice.git'
+gem 'omniauth-backoffice', git: 'https://github.com/10pines/omniauth-backoffice.git', tag: 'V1.0'
 
 gem 'jwt'
 
