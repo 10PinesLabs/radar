@@ -1,6 +1,7 @@
 GIT
   remote: https://github.com/10pines/omniauth-backoffice.git
-  revision: 9b402522f7779a3f91c297557b207c8af2c0e2b3
+  revision: bddc1eed256f5a251a28719c5eae54b66ad24c9b
+  tag: V1.0
   specs:
     omniauth-backoffice (1.0)
       omniauth (>= 1.3.1)
