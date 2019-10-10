@@ -30,7 +30,7 @@ RSpec.describe RadarsController, type: :controller do
 
   context 'When logged in as a valid user' do
     before do
-      controller.stub(:ensure_authenticated! => true)
+      allow(controller).to receive(:ensure_authenticated!) { true }
     end
     context 'When requesting to create a new radar' do
       subject {post :create, radar_params}
