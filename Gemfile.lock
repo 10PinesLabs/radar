@@ -98,7 +98,7 @@ GEM
       hashie (>= 3.4.6, < 3.7.0)
       rack (>= 1.6.2, < 3)
     pg (0.20.0)
-    rack (1.6.11)
+    rack (1.6.13)
     rack-cors (1.0.3)
     rack-test (0.6.3)
       rack (>= 1.0)
