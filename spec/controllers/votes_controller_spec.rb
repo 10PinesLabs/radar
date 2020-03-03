@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe VotesController, type: :controller do
 
   def request_to_create_vote(radar_id, axes)
-    post :create, {
+    post :create, params: {
         radar_id: radar_id,
         answers: axes.map { |axis| {axis: {id: axis.id}, points: 3} }
     }
@@ -16,7 +16,7 @@ RSpec.describe VotesController, type: :controller do
       context 'and the answers are all from that radar' do
         it 'a new vote should be created' do
           request_to_create_vote(a_radar.id, a_radar.axes)
-          expect(Vote.count).to be 1
+          expect(Vote.count).to eq 1
         end
       end
 

@@ -1,4 +1,4 @@
-class Axis < ActiveRecord::Base
+class Axis < ApplicationRecord
   ERROR_MESSAGE_FOR_EMPTY_NAME = 'El nombre del eje no puede estar vacío'
   validates :name, presence: { message: ERROR_MESSAGE_FOR_EMPTY_NAME }
   validates :radar, presence: true
