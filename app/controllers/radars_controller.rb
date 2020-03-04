@@ -1,6 +1,6 @@
 class RadarsController < ApplicationController
 
-  before_filter :ensure_authenticated!, except: [:result, :show]
+  before_action :ensure_authenticated!, except: [:result, :show]
 
   def create
     axes = params.require(:axes).map { |axis| create_axis(axis) }

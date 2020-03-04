@@ -1,4 +1,4 @@
-class Radar < ActiveRecord::Base
+class Radar < ApplicationRecord
 
   ERROR_MESSAGE_FOR_ALREADY_CLOSED = 'No se puede cerrar el radar, el mismo ya está cerrado'
   ERROR_MESSAGE_FOR_NO_QUESTIONS = 'El radar debe tener por lo menos un eje asignado'

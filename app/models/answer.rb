@@ -1,4 +1,4 @@
-class Answer < ActiveRecord::Base
+class Answer < ApplicationRecord
   ERROR_MESSAGE_FOR_NO_AXIS = 'La respuesta tiene que estar asociada a una pregunta'
   ERROR_MESSAGE_FOR_OUT_OF_RANGE_POINT = 'La puntuación debe estar en el rango de 1 a 5'
 

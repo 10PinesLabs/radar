@@ -1,4 +1,4 @@
-class Vote < ActiveRecord::Base
+class Vote < ApplicationRecord
   ERROR_MESSAGE_FOR_NO_ANSWERS = 'El voto debe tener por lo menos una respuesta a un eje'
   ERROR_MESSAGE_FOR_ANSWERS_FROM_DIFFERENT_RADARS = 'El voto no puede tener respuestas a diferentes radares'
   ERROR_MESSAGE_CANNOT_ANSWER_CLOSED_RADAR = 'No se puede votar en un radar cerrado'

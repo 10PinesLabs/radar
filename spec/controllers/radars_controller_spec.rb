@@ -33,7 +33,9 @@ RSpec.describe RadarsController, type: :controller do
       allow(controller).to receive(:ensure_authenticated!) { true }
     end
     context 'When requesting to create a new radar' do
-      subject {post :create, radar_params}
+      subject do
+        post :create, params: radar_params
+      end
 
       context 'with axes' do
         let(:radar_params) {
@@ -51,7 +53,7 @@ RSpec.describe RadarsController, type: :controller do
 
         it 'a non empty radar should be created' do
           subject
-          expect(Radar.count).to be 1
+          expect(Radar.count).to eq 1
         end
 
         it 'the radar should have the 2 axes' do
@@ -102,7 +104,7 @@ RSpec.describe RadarsController, type: :controller do
       before do
         Vote.create!(answers: a_radar.axes.map {|axis| Answer.new(axis: axis, points: 4)})
         Vote.create!(answers: a_radar.axes.map {|axis| Answer.new(axis: axis, points: 3)})
-        get :result, {id: a_radar.id}
+        get :result, params: {id: a_radar.id}
       end
 
       it 'the result should be the radar result serialized' do
@@ -114,7 +116,7 @@ RSpec.describe RadarsController, type: :controller do
     context 'When requesting to show a radar' do
       context 'that does not exists' do
         it 'should return a not found response' do
-          get :show, {id: -1}
+          get :show, params: {id: -1}
           expect(response).to have_http_status :not_found
         end
       end
@@ -122,7 +124,7 @@ RSpec.describe RadarsController, type: :controller do
       let(:a_radar) {create :radar}
 
       before do
-        get :show, {id: a_radar.id}
+        get :show, params: {id: a_radar.id}
       end
 
       it 'should return an ok status' do
@@ -137,7 +139,7 @@ RSpec.describe RadarsController, type: :controller do
     context 'When requesting to close a radar' do
 
       def request_close_radar
-        post :close, {id: a_radar.id}
+        post :close, params: {id: a_radar.id}
       end
 
       let!(:a_radar) {create :radar}
