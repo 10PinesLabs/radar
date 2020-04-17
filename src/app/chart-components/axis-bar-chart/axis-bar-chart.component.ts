@@ -10,7 +10,7 @@ import { Statistics } from 'src/model/statistics';
 })
 export class AxisBarChartComponent implements AfterViewInit {
 
-  @ViewChild('chartId') canvasRef: ElementRef;
+  @ViewChild('chartId', { static: false }) canvasRef: ElementRef;
   @Input() axis: Axis;
   @Input() values;
   @Input() radarNames;
