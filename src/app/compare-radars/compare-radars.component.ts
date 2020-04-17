@@ -21,12 +21,12 @@ export class CompareRadarsComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe((params) => {
-      this.radarService.radar(parseInt(params.get('firstRadarId'))).subscribe(firstRadar => {
+      this.radarService.radar(parseInt(params.get('firstRadarId'), 10)).subscribe(firstRadar => {
         const radar = firstRadar.radar;
         this.firstRadar = new Radar(radar.id, radar.name, radar.description, radar.axes, radar.active);
       });
 
-      this.radarService.radar(parseInt(params.get('secondRadarId'))).subscribe(secondRadar => {
+      this.radarService.radar(parseInt(params.get('secondRadarId'), 10)).subscribe(secondRadar => {
         const radar = secondRadar.radar;
         this.secondRadar =
           new Radar(
