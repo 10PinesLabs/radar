@@ -7,6 +7,7 @@
     "start:server": "node server.js",
     "build": "ng build --aot --configuration=$ENVIRONMENT",
     "test": "ng test",
+    "test:headless": "ng test --watch=false --browsers=ChromeHeadless",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
