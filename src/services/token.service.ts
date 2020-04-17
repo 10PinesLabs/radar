@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { LOCAL_STORAGE, WebStorageService } from 'angular-webstorage-service';
+import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
 import { isNullOrUndefined } from 'util';
 
 @Injectable({
@@ -9,7 +9,7 @@ export class TokenService {
 
   private token: string;
 
-  constructor(@Inject(LOCAL_STORAGE) private storage: WebStorageService) {
+  constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {
     this.token = this.storage.get('token');
   }
 

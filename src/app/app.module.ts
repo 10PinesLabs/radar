@@ -7,7 +7,6 @@ import { HeaderComponent } from './header/header.component';
 import { AppRoutingModule } from './app-routing.module';
 import { RadarVoteComponent } from './radar-vote/radar-vote.component';
 import { AxisComponent } from './radar-vote/voting-radar/axis/axis.component';
-import { environment } from '../environments/environment';
 import { VotingRadarComponent } from './radar-vote/voting-radar/voting-radar.component';
 import { VotedRadarComponent } from './radar-vote/voted-radar/voted-radar.component';
 import { ResultsComponent } from './results/results.component';
@@ -20,7 +19,6 @@ import { CreateRadarComponent } from './create-radar/create-radar.component';
 import { RadarFormComponent } from './create-radar/radar-form/radar-form.component';
 import { AxesFormComponent } from './create-radar/axes-form/axes-form.component';
 import { TokenComponent } from './token/token.component';
-import {StorageServiceModule} from 'angular-webstorage-service';
 import { ErrorComponent } from './error/error.component';
 import {TokenService} from '../services/token.service';
 import { SelectToCompareComponent } from './select-to-compare/select-to-compare.component';
@@ -61,7 +59,6 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     PageNotFoundComponent
   ],
   imports: [
-    StorageServiceModule,
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
@@ -75,7 +72,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
   ],
   providers: [
     {provide: 'RadarService', useClass: HttpRadarService},
-    {provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true},
   ],
   bootstrap: [AppComponent]
 })
