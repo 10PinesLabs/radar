@@ -29,8 +29,9 @@
     "chart.js": "^2.9.3",
     "core-js": "^2.6.11",
     "express": "^4.17.1",
-    "ngx-toastr": "^9.2.0",
+    "ngx-toastr": "^11.3.3",
     "rxjs": "^6.5.5",
+    "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
