@@ -13,7 +13,7 @@ import { Answer } from 'src/model/answer';
 })
 export class RadarChartComponent implements AfterViewInit {
 
-  @ViewChild('radarChartId', { static: false }) canvasRef: ElementRef;
+  @ViewChild('radarChartId') canvasRef: ElementRef;
   @Input() radars: Radar[];
   @Input() axesNames: String[];
   radarChart = [];
