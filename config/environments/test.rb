@@ -37,6 +37,23 @@ Rails.application.configure do
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 
+  OmniAuth.config.test_mode = true
+  OmniAuth.config.mock_auth[:backoffice] =
+      OmniAuth::AuthHash.new(
+{
+        'provider' => 'backoffice',
+        'uid' => '123545',
+        'extra' => {
+            'root' => true
+        }
+    })
+  OmniAuth.config.mock_auth[:google_oauth2] =
+      OmniAuth::AuthHash.new(
+          {
+              'provider' => 'google_oauth2',
+              'uid' => '123545',
+          })
+
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 end
