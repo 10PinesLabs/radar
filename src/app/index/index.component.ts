@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { RadarService } from 'src/services/radar.service';
+import { RadarTemplateService } from 'src/services/radarTemplate.service';
 import { Radar } from 'src/model/radar';
+import { RadarTemplate } from "../../model/radarTemplate";
 
 @Component({
   selector: 'app-index',
@@ -10,18 +11,18 @@ import { Radar } from 'src/model/radar';
 export class IndexComponent implements OnInit {
 
   radars: Radar[];
+  radarTemplates: RadarTemplate[];
 
-  constructor(@Inject('RadarService') private radarService: RadarService) {
-    this.radars = [];
+  constructor(@Inject('RadarTemplateService') private radarTemplateService: RadarTemplateService) {
+    this.radarTemplates = [];
   }
 
   ngOnInit() {
-    this.radarService.getAll().subscribe(radars => {
-
-      radars.forEach(radar => {
-        this.radars.push(new Radar(radar.id, radar.name, radar.description, radar.axes, radar.active));
-      });
-      this.radars = this.radars.sort((r1, r2) => r2.id - r1.id); // mayor id a menor id
+    this.radarTemplateService.getAll().subscribe(radarTemplates => {
+      radarTemplates.forEach( radarTemplate => {
+        this.radarTemplates.push(new RadarTemplate(radarTemplate.id, radarTemplate.name,
+          radarTemplate.description, radarTemplate.axes, radarTemplate.active, radarTemplate.radars))
+      })
     });
   }
 }

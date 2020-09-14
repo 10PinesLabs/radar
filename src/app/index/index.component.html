@@ -1,14 +1,11 @@
 <div class="index-container">
-
-  <div class="card card-crear-radar">
-    <div class="card-body card-body-crear-radar">
-      <a class="btn btn-link btn-crear-y-comparar-radar" routerLink="/radar/create">Crear Radar</a>
-      <a class="btn btn-link btn-crear-y-comparar-radar" routerLink="/selectToCompare">Comparar Radares</a>
-    </div>
+  <div class="card card-index-header" >
+    <app-button-with-icon iconClass="far fa-plus-square" label="Nuevo Modelo de Radar" type="success"
+                          [onClick]=""></app-button-with-icon>
+    <app-header-filters class="header-filters-container" [radarTemplates]="radarTemplates"></app-header-filters>
   </div>
-
-  <div *ngFor="let radar of radars">
-    <app-radar-card [radar]="radar"></app-radar-card>
+  <div class="radar-container" *ngFor="let radarTemplate of radarTemplates">
+    <app-radar-template-card [radarTemplate]="radarTemplate"></app-radar-template-card>
   </div>
 
 </div>

@@ -5,11 +5,11 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-radar-card',
-  templateUrl: './radar-card.component.html',
-  styleUrls: ['./radar-card.component.scss']
+  selector: 'app-radar-row',
+  templateUrl: './radar-row.component.html',
+  styleUrls: ['./radar-row.component.scss']
 })
-export class RadarCardComponent implements OnInit {
+export class RadarRowComponent implements OnInit {
 
   @Input() radar: Radar;
   radarUrl: string;
@@ -21,7 +21,20 @@ export class RadarCardComponent implements OnInit {
     this.radarUrl = window.location.host + '/radar/' + this.radar.id + '/vote';
   }
 
-  copyVoteRadarLink(): any {
+  parseRadarToRadarChart() {
+    return [this.radar];
+  }
+
+  axesNames() {
+    return this.radar.axes.map(axis => axis.name);
+  }
+
+  amountOfVotes(radar: any): Number {
+    // This assumes all axes have the same amount of votes (which is validated in the backend)
+    return radar.axes[0].answers.length || 0;
+  }
+
+  copyVoteRadarLink = (): any => {
     const elem = document.createElement('textarea');
     elem.value = this.radarUrl;
     document.body.appendChild(elem);
@@ -32,7 +45,7 @@ export class RadarCardComponent implements OnInit {
     });
   }
 
-  redirectToRadar() {
+  redirectToRadar = () => {
     this.router.navigate(['/radar/' + this.radar.id + '/results']);
   }
 

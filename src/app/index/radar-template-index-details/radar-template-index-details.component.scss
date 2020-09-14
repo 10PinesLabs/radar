@@ -1,0 +1,48 @@
+.radars-table {
+  width: 100%;
+  border-bottom: 1px solid silver;
+}
+
+.radar-row {
+  padding: 0 1em;
+}
+
+.new-radar-section{
+  padding: 2em 0;
+}
+
+.radar-template-card-description {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.radar-template-title-container{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  padding-right: 1em;
+}
+
+.radar-template-title-subcontainer{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 0.5em;
+}
+
+.radar-template-title{
+  padding-bottom: 0;
+  margin-bottom: 0;
+  padding-left: 0.5em;
+}
+
+.radar-container {
+  width: 90%;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}

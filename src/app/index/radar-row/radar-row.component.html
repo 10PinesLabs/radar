@@ -1,0 +1,16 @@
+<div class="radar-row">
+  <div>
+    <span class="radar-row-open-status-label" *ngIf="radar.active; else radarCerrado">Abierto</span>
+    <ng-template #radarCerrado>
+      <span class="radar-row-closed-status-label"> Cerrado </span>
+    </ng-template>
+    <span class="radar-row-title"> {{ radar.name }} </span>
+  </div>
+  <div>
+    <span> {{amountOfVotes(radar)}} {{ amountOfVotes(radar) === 1 ? "voto" : "votos" }} </span>
+    <app-button-with-icon iconClass="fas fa-link" label="Link de Votación" type="link"
+                          [onClick]="copyVoteRadarLink"></app-button-with-icon>
+    <app-button-with-icon iconClass="far fa-chart-bar" label="Resultados" type="secondary"
+                          [onClick]="redirectToRadar"></app-button-with-icon>
+  </div>
+</div>
