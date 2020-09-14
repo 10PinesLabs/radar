@@ -16,7 +16,8 @@ RSpec.describe Radar, type: :model do
       end
     end
 
-    context 'and you add an axis to that radar' do
+    #TODO: Move this context to radar template when creating radars from there
+    xcontext 'and you add an axis to that radar' do
       let(:an_axis) { Axis.new }
       before do
         subject.add(an_axis)
@@ -48,11 +49,11 @@ RSpec.describe Radar, type: :model do
   end
 
   context 'When creating a new radar' do
-    context 'with no axes' do
+    context 'from no radar template' do
       it 'should raise an error' do
         expect { Radar.create! }.to raise_error do |error|
           expect(error).to be_a(ActiveRecord::RecordInvalid)
-          expect(error.record.errors[:axes]).to be_include Radar::ERROR_MESSAGE_FOR_NO_QUESTIONS
+          expect(error.record.errors[:radar_template]).to be_include Radar::ERROR_MESSAGE_FOR_RADAR_TEMPLATE_MISSING
         end
       end
     end

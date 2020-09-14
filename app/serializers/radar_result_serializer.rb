@@ -7,6 +7,10 @@ class RadarResultSerializer < ActiveModel::Serializer
   end
 
   def axes_results
-    object.axes.map { |axis| AxisResultSerializer.new(axis) }
+    object.axes.map do |axis|
+      answers = Answer.where(axis: axis, radar: object).map{ |answer| AnswerSerializer.new(answer) }
+      answers_points = answers.map{|answer| answer.object.points}
+      {axis: {id: axis.id, name: axis.name, description: axis.description, answers: answers}, points: answers_points}
+    end
   end
 end
