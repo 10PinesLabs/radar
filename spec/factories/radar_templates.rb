@@ -1,11 +1,11 @@
 FactoryBot.define do
-  factory :radar do
-    radar_template { association :radar_template }
+  factory :radar_template do
+    axes { build_list(:axis, 3) }
     name { 'Retiro 2015' }
     description { 'Retiro 2015' }
   end
 
-  factory :different_radar, parent: :radar do
+  factory :different_radar_template, parent: :radar_template do
     name { 'Otro Retiro 2015' }
   end
 end

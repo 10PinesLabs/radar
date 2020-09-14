@@ -1,26 +1,27 @@
 require 'rails_helper'
 
 RSpec.describe RadarsController, type: :controller do
-  def serialized_axis(axis)
-    {'id' => axis.id, 'name' => axis.name, 'description' => axis.description, 'answers' => axis.answers.map {|answer| serialized_answer(answer)}}
+  def serialized_axis(radar, axis)
+    {'id' => axis.id, 'name' => axis.name, 'description' => axis.description,
+     'answers' => Answer.where(axis: axis, radar: radar).map {|answer| serialized_answer(answer)}}
   end
 
   def serialized_answer(answer)
     {'points' => answer.points, 'axis_id' => answer.axis_id}
   end
 
-  def serialized_axis_result(axis)
-    {'axis' => serialized_axis(axis), 'points' => axis.answers.map(&:points)}
+  def serialized_axis_result(radar, axis)
+    {'axis' => serialized_axis(radar, axis), 'points' => Answer.where(axis: axis, radar: radar).map(&:points)}
   end
 
   def serialized_radar_result(radar)
-    {'radar' => serialized_radar(radar), 'axes_results' => radar.axes.map {|axis| serialized_axis_result(axis)}}
+    {'radar' => serialized_radar(radar), 'axes_results' => radar.axes.map {|axis| serialized_axis_result(radar, axis)}}
   end
 
   def serialized_radar(radar)
     {
       'id' => radar.id,
-      'axes' => radar.axes.map {|axis| serialized_axis(axis)},
+      'axes' => radar.axes.map {|axis| serialized_axis(radar, axis)},
       'name' => radar.name,
       'description' => radar.description,
       'active' => radar.active,
@@ -37,14 +38,12 @@ RSpec.describe RadarsController, type: :controller do
         post :create, params: radar_params
       end
 
+      let(:radar_template) { create :radar_template }
+      let(:radar_template_id) { radar_template.id }
+
       context 'with axes' do
         let(:radar_params) {
-          {name: 'New Radar', description: 'Radar 2015',
-           axes: [
-             {name: 'Nombre primera arista', description: 'Esto es una arista nueva del nuevo radar'},
-             {name: 'Nombre segunda arista', description: 'Una Arista guardada'}
-           ]
-          }
+          { name: 'New Radar', description: 'Radar 2015', radar_template_id: radar_template_id}
         }
 
         it 'the request should succeed' do
@@ -56,22 +55,15 @@ RSpec.describe RadarsController, type: :controller do
           expect(Radar.count).to eq 1
         end
 
-        it 'the radar should have the 2 axes' do
+        it 'the radar should have the same amount of radar template axes' do
           subject
-          expect(Radar.last.amount_of_axes).to eq 2
-        end
-      end
-
-      context 'with no axes' do
-        let(:radar_params) {{axes: []}}
-        it 'should return bad request' do
-          expect(subject).to have_http_status :bad_request
+          expect(Radar.last.axes.count).to eq radar_template.axes.count
         end
       end
 
       context 'without a name' do
         let(:radar_params) {
-          {description: 'Radar 2015', axes: [{name: 'Nombre primera arista', description: 'Esto es una arista nueva del nuevo radar'}, {name: 'Nombre segunda arista', description: 'Una Arista guardada'}]}
+          {description: 'Radar 2015'}
         }
 
         it 'should be a bad request' do
@@ -82,7 +74,7 @@ RSpec.describe RadarsController, type: :controller do
       context 'with name' do
         context 'with nil as name' do
           let(:radar_params) {
-            {name: nil, description: 'Radar 2015', axes: [{name: 'Nombre primera arista', description: 'Esto es una arista nueva del nuevo radar'}, {name: 'Nombre segunda arista', description: 'Una Arista guardada'}]}
+            {name: nil, description: 'Radar 2015'}
           }
 
           it {expect(subject).to have_http_status :bad_request}
@@ -90,7 +82,7 @@ RSpec.describe RadarsController, type: :controller do
 
         context 'with empty string as name' do
           let(:radar_params) {
-            {name: '', description: 'Radar 2015', axes: [{name: 'Nombre primera arista', description: 'Esto es una arista nueva del nuevo radar'}, {name: 'Nombre primera arista', description: 'Una Arista guardada'}]}
+            {name: '', description: 'Radar 2015'}
           }
 
           it {expect(subject).to have_http_status :bad_request}
@@ -102,8 +94,8 @@ RSpec.describe RadarsController, type: :controller do
       let!(:a_radar) {create :radar}
 
       before do
-        Vote.create!(answers: a_radar.axes.map {|axis| Answer.new(axis: axis, points: 4)})
-        Vote.create!(answers: a_radar.axes.map {|axis| Answer.new(axis: axis, points: 3)})
+        Vote.create!(answers: a_radar.axes.map {|axis| Answer.new(axis: axis, points: 4, radar: a_radar)})
+        Vote.create!(answers: a_radar.axes.map {|axis| Answer.new(axis: axis, points: 3, radar: a_radar)})
         get :result, params: {id: a_radar.id}
       end
 

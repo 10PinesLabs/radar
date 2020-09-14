@@ -6,7 +6,10 @@ RSpec.describe Vote, type: :model do
     let!(:another_radar) { create :different_radar }
     context 'and a vote have answers from both of them' do
       let(:answers) do
-        (a_radar.axes + another_radar.axes).map { |axis| Answer.new(axis: axis, points: 3) }
+        [
+            Answer.new(axis: a_radar.axes.first, radar: a_radar, points: 3),
+            Answer.new(axis: another_radar.axes.first, radar: another_radar, points: 3)
+        ]
       end
       it 'should err when creating the vote' do
         expect { Vote.create!(answers: answers) }.to raise_error IncompleteVote, Vote::ERROR_MESSAGE_MISSING_AXES
@@ -22,7 +25,7 @@ RSpec.describe Vote, type: :model do
       end
 
       context 'with answers for the radar' do
-        let(:answers) { a_radar.axes.map { |axis| build :answer, axis: axis } }
+        let(:answers) { a_radar.axes.map { |axis| build :answer, axis: axis, radar: a_radar } }
 
         it 'All the radar questions should have one answer' do
           subject
@@ -32,7 +35,7 @@ RSpec.describe Vote, type: :model do
       end
 
       context 'with only some answers for the radar' do
-        let(:answers) { [build(:answer, axis: a_radar.axes.first)] }
+        let(:answers) { [build(:answer, axis: a_radar.axes.first, radar: a_radar)] }
 
         it 'All the radar questions should have one answer' do
           expect { subject }.to raise_error IncompleteVote, Vote::ERROR_MESSAGE_MISSING_AXES
@@ -50,8 +53,8 @@ RSpec.describe Vote, type: :model do
         end
       end
 
-      context 'with an axis from a closed Radar' do
-        let(:answers) { a_radar.axes.map { |axis| build :answer, axis: axis } }
+      context 'with an answer from a closed Radar' do
+        let(:answers) { a_radar.axes.map { |axis| build :answer, axis: axis, radar: a_radar } }
 
         before do
           a_radar.close
@@ -62,7 +65,7 @@ RSpec.describe Vote, type: :model do
         end
       end
       context 'with not all the axes from the radar' do
-        let(:answers) { a_radar.axes.map { |axis| build :answer, axis: axis }.drop 1 }
+        let(:answers) { a_radar.axes.map { |axis| build :answer, axis: axis, radar: a_radar }.drop 1 }
 
         it 'should err' do
           expect { subject }.to raise_error IncompleteVote, Vote::ERROR_MESSAGE_MISSING_AXES

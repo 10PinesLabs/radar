@@ -16,7 +16,7 @@ class Vote < ApplicationRecord
   end
 
   def for?(a_radar)
-    axes.all? { |axis| axis.radar == a_radar }
+    answers.all? { |answer| answer.radar == a_radar }
   end
 
   def answers_from_same_radar
