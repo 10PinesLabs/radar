@@ -16,7 +16,7 @@
 @media (min-width: 992px) {
   .index-container {
     margin: auto;
-    width: 58%;
+    width: 98%;
   }
 }
 
@@ -33,4 +33,16 @@
     color: #4b4f56;
     font-size: smaller;
     font-weight: bold;
+}
+
+.card-index-header{
+  padding: 1em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-filters-container {
+  width: 40%; border-left: 1px silver solid; padding: 0 1em;
 }

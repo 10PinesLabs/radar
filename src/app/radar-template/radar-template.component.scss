@@ -1,0 +1,22 @@
+.radar-template-container {
+  height: 80%;
+  padding: 0 2em;
+}
+
+.radar-template-details-sub-container {
+  width: 49%;
+  height: 45em;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.radar-template-details-container{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}

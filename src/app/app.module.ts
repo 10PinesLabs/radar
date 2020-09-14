@@ -13,6 +13,11 @@ import { ResultsComponent } from './results/results.component';
 import { CardContainerComponent } from './card-container/card-container.component';
 import { IndexComponent } from './index/index.component';
 import { RadarCardComponent } from './index/radar-card/radar-card.component';
+import { RadarTemplateCardComponent } from './index/radar-template-card/radar-template-card.component';
+import { RadarTemplatePreViewComponent } from './index/radar-template-pre-view/radar-template-pre-view.component';
+import { RadarTemplateIndexDetailsComponent } from './index/radar-template-index-details/radar-template-index-details.component';
+import { ButtonWithIconComponent } from './commons/buttons/button-with-icon.component';
+import { HeaderFiltersComponent } from './index/header-filters/header-filters.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { CreateRadarComponent } from './create-radar/create-radar.component';
@@ -28,6 +33,7 @@ import { AxisTableValuesComponent } from './chart-components/axis-table-values/a
 import { RadarChartComponent } from './chart-components/radar-chart/radar-chart.component';
 import { CompareRadarsButtonsComponent } from './compare-radars/compare-radars-buttons/compare-radars-buttons.component';
 import { HttpRadarService } from 'src/services/http-radar.service';
+import { HttpRadarTemplateService } from 'src/services/http-radarTemplate.service';
 import { SignInComponent } from './sign-in/sign-in.component';
 import { HttpConfigInterceptor } from 'src/interceptor/httpconfig.interceptor';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -47,6 +53,11 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     RadarChartComponent,
     IndexComponent,
     RadarCardComponent,
+    RadarTemplateCardComponent,
+    RadarTemplatePreViewComponent,
+    RadarTemplateIndexDetailsComponent,
+    ButtonWithIconComponent,
+    HeaderFiltersComponent,
     CreateRadarComponent,
     RadarFormComponent,
     AxesFormComponent,
@@ -72,6 +83,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
   ],
   providers: [
     {provide: 'RadarService', useClass: HttpRadarService},
+    {provide: 'RadarTemplateService', useClass: HttpRadarTemplateService},
     {provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true},
   ],
   bootstrap: [AppComponent]
