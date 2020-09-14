@@ -21,22 +21,35 @@ ActiveRecord::Schema.define(version: 20200911233556) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "axis_id"
+    t.integer  "radar_id"
+    t.index ["radar_id"], name: "index_answers_on_radar_id", using: :btree
   end
 
   create_table "axes", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
-    t.integer  "radar_id"
-    t.string   "description", default: "Sin descripcion"
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+    t.string   "description",       default: "Sin descripcion"
+    t.integer  "radar_template_id"
+    t.index ["radar_template_id"], name: "index_axes_on_radar_template_id", using: :btree
+  end
+
+  create_table "radar_templates", force: :cascade do |t|
+    t.text     "description",                null: false
+    t.text     "name",                       null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "active",      default: true, null: false
   end
 
   create_table "radars", force: :cascade do |t|
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
-    t.boolean  "active",      default: true
-    t.text     "description", default: "Sin Descripción", null: false
-    t.text     "name",                                    null: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+    t.boolean  "active",            default: true
+    t.text     "description",       default: "Sin Descripción", null: false
+    t.text     "name",                                          null: false
+    t.integer  "radar_template_id"
+    t.index ["radar_template_id"], name: "index_radars_on_radar_template_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|

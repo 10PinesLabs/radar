@@ -3,11 +3,11 @@ class RadarsController < ApplicationController
   before_action :ensure_authenticated!, except: [:result, :show]
 
   def create
-    axes = params.require(:axes).map { |axis| create_axis(axis) }
     name = params.require(:name)
     description = params.require(:description)
+    radar_template_id = params.require(:radar_template_id)
 
-    radar = Radar.create!(axes: axes, name: name, description: description)
+    radar = Radar.create!(radar_template_id: radar_template_id, name: name, description: description)
     render json: radar, status: :created
   end
 

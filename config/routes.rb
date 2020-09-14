@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   scope path: '/api' do
+    resources :radar_templates, only: %i[create show index] do
+
+    end
     resources :radars, only: %i[create show index] do
       resources :votes, only: [:create]
       member do
