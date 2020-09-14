@@ -12,7 +12,7 @@ import { VotedRadarComponent } from './radar-vote/voted-radar/voted-radar.compon
 import { ResultsComponent } from './results/results.component';
 import { CardContainerComponent } from './card-container/card-container.component';
 import { IndexComponent } from './index/index.component';
-import { RadarCardComponent } from './index/radar-card/radar-card.component';
+import { RadarRowComponent } from './index/radar-row/radar-row.component';
 import { RadarTemplateCardComponent } from './index/radar-template-card/radar-template-card.component';
 import { RadarTemplatePreViewComponent } from './index/radar-template-pre-view/radar-template-pre-view.component';
 import { RadarTemplateIndexDetailsComponent } from './index/radar-template-index-details/radar-template-index-details.component';
@@ -52,7 +52,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     AxisTableValuesComponent,
     RadarChartComponent,
     IndexComponent,
-    RadarCardComponent,
+    RadarRowComponent,
     RadarTemplateCardComponent,
     RadarTemplatePreViewComponent,
     RadarTemplateIndexDetailsComponent,

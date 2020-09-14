@@ -5,11 +5,11 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: 'app-radar-card',
-  templateUrl: './radar-card.component.html',
-  styleUrls: ['./radar-card.component.scss']
+  selector: 'app-radar-row',
+  templateUrl: './radar-row.component.html',
+  styleUrls: ['./radar-row.component.scss']
 })
-export class RadarCardComponent implements OnInit {
+export class RadarRowComponent implements OnInit {
 
   @Input() radar: Radar;
   radarUrl: string;
