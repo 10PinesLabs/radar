@@ -32,7 +32,7 @@ export class SelectToCompareComponent implements OnInit {
   }
 
   backToIndex() {
-    this.router.navigate(['/radars']);
+    this.router.navigate(['/radarTemplates']);
   }
 
   compareRadars() {

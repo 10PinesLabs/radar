@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Axis } from 'src/model/axis';
 import { Router, ActivatedRoute } from '@angular/router';
 import {RadarTemplateService} from "../../services/radarTemplate.service";
+import {RadarTemplate} from "../../model/radarTemplate";
 
 @Component({
   selector: 'app-create-radar-template',
@@ -23,12 +24,12 @@ export class CreateRadarTemplateComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe((params) => {
       const strId = params.get('id');
       if (strId !== null) {
-        //this.radarTemplateService.create(parseInt(strId, 10)).subscribe(result => {
-          //debugger;
-          //this.radarTemplateName = result.radar.name;
-          //this.radarTemplateDescription = result.radar.description;
-          //this.axes = result.radar.axes.map(axis => new Axis(null, axis.name, axis.description, []));
-        //});
+        // Check if why would we need this
+        this.radarTemplateService.get(strId).subscribe(result => {
+          this.radarTemplateName = result.name;
+          this.radarTemplateDescription = result.description;
+          this.axes = result.axes.map(axis => new Axis(null, axis.name, axis.description, []));
+        });
       }
     });
   }
@@ -42,8 +43,8 @@ export class CreateRadarTemplateComponent implements OnInit {
     if (this.radarTemplateIsInvalid()) {
       this.showErrors = true;
     } else {
-     // const newRadarTemplate = new RadarTemplate(null, this.radarTemplateName, this.radarTemplateDescription, this.axes, null);
-     // this.radarTemplateService.createRadarTemplate(newRadarTemplate).subscribe(() => this.router.navigate(['/radarTemplates']));
+     const newRadarTemplate = new RadarTemplate(null, this.radarTemplateName, this.radarTemplateDescription, this.axes, null, []);
+     this.radarTemplateService.create(newRadarTemplate).subscribe(() => this.router.navigate(['/radarTemplates']));
     }
   }
 

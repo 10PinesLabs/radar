@@ -5,6 +5,8 @@ export interface RadarTemplateService {
 
   getAll(): Observable<Array<RadarTemplate>>;
 
-  get(id): Observable<RadarTemplate>
+  get(id: String): Observable<RadarTemplate>
+
+  create(radarTemplate: RadarTemplate);
 
 }

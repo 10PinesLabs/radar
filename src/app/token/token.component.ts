@@ -16,6 +16,6 @@ export class TokenComponent implements OnInit {
   ngOnInit() {
     const token = this.route.snapshot.paramMap.get('token');
     this.tokenService.setToken(token);
-    this.router.navigate(['radars']);
+    this.router.navigate(['radarTemplates']);
   }
 }
