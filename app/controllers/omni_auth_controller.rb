@@ -23,7 +23,8 @@ class OmniAuthController < ApplicationController
   def redirect
     case params[:provider]
     when 'backoffice'
-      backend_url = ENV['BASE_URL']
+      backend_url = request.env['REQUEST_URI']
+      backend_url.slice! '/auth/backoffice/redirect'
       redirect_to "#{ENV.fetch('BACKOFFICE_URL')}/auth/sign_in?redirect_url=#{backend_url}/auth/backoffice/callback&app_id=radar-app"
     when 'google'
       redirect_to "/auth/google_oauth2"

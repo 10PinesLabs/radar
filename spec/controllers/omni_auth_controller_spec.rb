@@ -10,6 +10,9 @@ RSpec.describe OmniAuthController, type: :controller do
       {provider: provider_name}
     }
 
+    before do
+      request.env['REQUEST_URI'] = 'http://localhost:3000'
+    end
 
     context 'with backoffice' do
       let(:provider_name){ "backoffice" }
