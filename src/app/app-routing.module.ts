@@ -11,11 +11,11 @@ import { CompareRadarsComponent } from './compare-radars/compare-radars.componen
 import { SignInComponent } from './sign-in/sign-in.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import {RadarTemplateComponent} from "./radar-template/radar-template.component";
-import {CreateRadarTemplateComponent} from "./radar-template/create-radar-template.component";
+import {CreateRadarTemplateComponent} from "./create-radar-template/create-radar-template.component";
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: SignInComponent },
-  { path: 'radars', component: IndexComponent },
+  { path: 'radarTemplates', component: IndexComponent },
   { path: 'token/:token', component: TokenComponent },
   { path: 'error', component: ErrorComponent },
   { path: 'radar/:id/vote', component: RadarVoteComponent },

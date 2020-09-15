@@ -30,7 +30,7 @@ export class RadarTemplateFormComponent implements OnInit {
     return this.showErrors && trimmedRadarTemplateName.length === 0;
   }
 
-  showRadarDescriptionError() {
+  showRadarTemplateDescriptionError() {
     const trimmedRadarTemplateDescription = this.radarTemplateDescription.trim();
     return this.showErrors && trimmedRadarTemplateDescription.length === 0;
   }

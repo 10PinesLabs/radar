@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { RadarTemplateService } from 'src/services/radarTemplate.service';
 import { Radar } from 'src/model/radar';
 import { RadarTemplate } from "../../model/radarTemplate";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-index',
@@ -13,7 +14,8 @@ export class IndexComponent implements OnInit {
   radars: Radar[];
   radarTemplates: RadarTemplate[];
 
-  constructor(@Inject('RadarTemplateService') private radarTemplateService: RadarTemplateService) {
+  constructor(@Inject('RadarTemplateService') private radarTemplateService: RadarTemplateService,
+              private router: Router) {
     this.radarTemplates = [];
   }
 
@@ -24,5 +26,9 @@ export class IndexComponent implements OnInit {
           radarTemplate.description, radarTemplate.axes, radarTemplate.active, radarTemplate.radars))
       })
     });
+  }
+
+  navigateToCreateRadarTemplate = () => {
+    this.router.navigate(['radarTemplate/create']);
   }
 }

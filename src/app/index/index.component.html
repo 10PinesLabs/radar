@@ -1,7 +1,7 @@
 <div class="index-container">
   <div class="card card-index-header" >
     <app-button-with-icon iconClass="far fa-plus-square" label="Nuevo Modelo de Radar" type="success"
-                          [onClick]=""></app-button-with-icon>
+                          [onClick]="navigateToCreateRadarTemplate"></app-button-with-icon>
     <app-header-filters class="header-filters-container" [radarTemplates]="radarTemplates"></app-header-filters>
   </div>
   <div class="radar-container" *ngFor="let radarTemplate of radarTemplates">

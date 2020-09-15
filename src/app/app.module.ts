@@ -21,6 +21,8 @@ import { HeaderFiltersComponent } from './index/header-filters/header-filters.co
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { CreateRadarComponent } from './create-radar/create-radar.component';
+import { CreateRadarTemplateComponent } from './create-radar-template/create-radar-template.component';
+import { RadarTemplateFormComponent } from './create-radar-template/radar-template-form/radar-template-form.component';
 import { RadarFormComponent } from './create-radar/radar-form/radar-form.component';
 import { AxesFormComponent } from './create-radar/axes-form/axes-form.component';
 import { TokenComponent } from './token/token.component';
@@ -59,6 +61,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     ButtonWithIconComponent,
     HeaderFiltersComponent,
     CreateRadarComponent,
+    CreateRadarTemplateComponent,
+    RadarTemplateFormComponent,
     RadarFormComponent,
     AxesFormComponent,
     TokenComponent,

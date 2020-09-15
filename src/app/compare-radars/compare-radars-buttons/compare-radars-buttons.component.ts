@@ -13,7 +13,7 @@ export class CompareRadarsButtonsComponent implements OnInit {
   ngOnInit() { }
 
   backToIndex() {
-    this.router.navigate(['/radars']);
+    this.router.navigate(['/radarTemplates']);
   }
 
   backToSelectToCompare() {

@@ -47,7 +47,7 @@ export class CreateRadarComponent implements OnInit {
   }
 
   backToIndex() {
-    this.router.navigate(['/radars']);
+    this.router.navigate(['/radarTemplates']);
   }
 
   private radarNameIsEmpty(): boolean {
