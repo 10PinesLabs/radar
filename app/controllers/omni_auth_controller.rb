@@ -30,8 +30,6 @@ class OmniAuthController < ApplicationController
     else
       render json: { errors: 'Proveedor de autenticacion invalido' }, status: :not_found
     end
-
-
   end
 
   private
