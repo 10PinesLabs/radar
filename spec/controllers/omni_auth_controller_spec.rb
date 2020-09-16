@@ -74,7 +74,7 @@ RSpec.describe OmniAuthController, type: :controller do
     end
 
     it 'redirects the user to the token url' do
-      expect(should).to redirect_to match(ENV['DOMAIN_BASE_URL'] + '/token/')
+      expect(should).to redirect_to match(ENV['BASE_URL'] + '/token/')
     end
 
     context 'if the user does not exist yet' do
@@ -96,7 +96,7 @@ RSpec.describe OmniAuthController, type: :controller do
         end
 
         it 'redirects the user to the error page with the correct error messagge' do
-          expect(subject).to redirect_to(ENV['DOMAIN_BASE_URL']+'/error?message=Esta funcionalidad es solo para roots')
+          expect(subject).to redirect_to(ENV['BASE_URL']+'/error?message=Esta funcionalidad es solo para roots')
         end
 
         it 'does not login the user' do
