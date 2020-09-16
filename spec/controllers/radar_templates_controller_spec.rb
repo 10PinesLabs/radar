@@ -37,14 +37,18 @@ RSpec.describe RadarTemplatesController, type: :controller do
         'name' => radar_template.name,
         'description' => radar_template.description,
         'active' => radar_template.active,
-        'created_at' => radar_template.created_at.as_json
+        'created_at' => radar_template.created_at.as_json,
     }
   end
 
+  let(:logged_user){create :user}
+
   context 'When logged in as a valid user' do
+
     before do
-      allow(controller).to receive(:ensure_authenticated!) { true }
+      allow(JWT).to receive(:decode).and_return [logged_user.as_json]
     end
+
     context 'When requesting to create a new radar template' do
       subject do
         post :create, params: radar_template_params
@@ -72,6 +76,11 @@ RSpec.describe RadarTemplatesController, type: :controller do
         it 'the radar should have the 2 axes' do
           subject
           expect(RadarTemplate.last.amount_of_axes).to eq 2
+        end
+
+        it 'the radar template belong to the logged user' do
+          subject
+          expect(RadarTemplate.last.user_id).to eq logged_user.id
         end
       end
 
@@ -128,6 +137,12 @@ RSpec.describe RadarTemplatesController, type: :controller do
     end
 
     context 'When requesting to show a radar' do
+      let(:a_radar_template) {create :radar_template, user: logged_user}
+
+      subject do
+        get :show, params: {id: a_radar_template.id}
+      end
+
       context 'that does not exists' do
         it 'should return a not found response' do
           get :show, params: {id: -1}
@@ -135,19 +150,32 @@ RSpec.describe RadarTemplatesController, type: :controller do
         end
       end
 
-      let(:a_radar_template) {create :radar_template}
+      context 'with a user that owns the radar template' do
 
-      before do
-        get :show, params: {id: a_radar_template.id}
+        it 'should return an ok status' do
+          subject
+          expect(response).to have_http_status :ok
+        end
+
+        it 'should return the radar' do
+          subject
+          expect(JSON.parse(response.body)).to eq serialized_radar_template(a_radar_template)
+        end
       end
 
-      it 'should return an ok status' do
-        expect(response).to have_http_status :ok
+      context 'with a user that do not owns the radar template' do
+        let(:another_user){create :user, name: 'otro pino', provider: 'backoffice'}
+
+        before do
+          allow(JWT).to receive(:decode).and_return [another_user.as_json]
+        end
+
+        it 'should return not found' do
+          subject
+          expect(response).to have_http_status(:not_found)
+        end
       end
 
-      it 'should return the radar' do
-        expect(JSON.parse(response.body)).to eq serialized_radar_template(a_radar_template)
-      end
     end
 
     xcontext 'When requesting to close a radar' do
