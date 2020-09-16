@@ -68,13 +68,14 @@ RSpec.describe OmniAuthController, type: :controller do
     }
 
     let(:provider_name){'google_oauth2'}
+    let(:domain_base_url){"http://localhost:4200"}
 
     before do
       request.env["omniauth.auth"] = OmniAuth.config.mock_auth[:google_oauth2]
     end
 
     it 'redirects the user to the token url' do
-      expect(should).to redirect_to match(ENV['BASE_URL'] + '/token/')
+      expect(should).to redirect_to match(domain_base_url + '/token/')
     end
 
     context 'if the user does not exist yet' do
@@ -96,7 +97,7 @@ RSpec.describe OmniAuthController, type: :controller do
         end
 
         it 'redirects the user to the error page with the correct error messagge' do
-          expect(subject).to redirect_to(ENV['BASE_URL']+'/error?message=Esta funcionalidad es solo para roots')
+          expect(subject).to redirect_to(domain_base_url + '/error?message=Esta funcionalidad es solo para roots')
         end
 
         it 'does not login the user' do

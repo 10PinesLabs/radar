@@ -61,7 +61,7 @@ class OmniAuthController < ApplicationController
   end
 
   def base_url
-    ENV.fetch('BASE_URL')
+    ENV.fetch('DOMAIN_BASE_URL')
   end
 
   def only_roots_available_message
