@@ -78,7 +78,7 @@ RSpec.describe RadarTemplatesController, type: :controller do
           expect(RadarTemplate.last.amount_of_axes).to eq 2
         end
 
-        it 'the radar template belong to the logged user' do
+        it 'the radar template belongs to the logged user' do
           subject
           expect(RadarTemplate.last.user_id).to eq logged_user.id
         end
