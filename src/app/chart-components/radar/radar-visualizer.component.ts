@@ -5,7 +5,6 @@ import { Statistics } from 'src/model/statistics';
 import { Answer } from 'src/model/answer';
 import { RadarChartComponent } from '../radar-chart/radar-chart.component';
 
-
 @Component({
   selector: 'app-radar-visualizer',
   templateUrl: './radar-visualizer.component.html',
@@ -28,8 +27,6 @@ export class RadarVisualizerComponent implements OnInit{
    }
 
   ngOnInit(): void {
-
-
     const numberOfRadars = this.radars.length
     this.selectorWidth = this.selectorWidth + numberOfRadars * 10
     this.selectorDotSize = this.selectorDotSize - 0.05 * numberOfRadars
@@ -37,13 +34,15 @@ export class RadarVisualizerComponent implements OnInit{
     this.selectorWidth = this.selectorWidth>80 ? 80 : this.selectorWidth
     this.selectorDotSize = this.selectorDotSize<0.5 ? 0.5 : this.selectorDotSize
     this.selectorLabelPaddingTop = this.selectorDotSize + .6
+    this.selectedRadarIndex = this.radars.length-1  
+    this.onRadarSelected.emit(this.selectedRadar())
   }
 
   selectedRadar(){
     return this.radars[this.selectedRadarIndex]
   }
 
-  radarSelected(index){
+  selectRadar(index){
     this.selectedRadarIndex = index
     this.chart.update([this.selectedRadar()])
     this.onRadarSelected.emit(this.selectedRadar())
