@@ -1,8 +1,7 @@
-import { Component, Input, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, Input, ElementRef, ViewChild, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
 import { Chart } from 'chart.js';
 import { Radar } from 'src/model/radar';
 import { Statistics } from 'src/model/statistics';
-import { Axis } from 'src/model/axis';
 import { Answer } from 'src/model/answer';
 
 
@@ -16,6 +15,8 @@ export class RadarChartComponent implements AfterViewInit {
   @ViewChild('radarChartId') canvasRef: ElementRef;
   @Input() radars: Radar[];
   @Input() axesNames: String[];
+  @Input() showLabels: Boolean;
+
   radarChart = [];
   greenBorderColor = 'rgba(25, 179, 112, 1)';
   greenBackgroundColor = 'rgba(157, 217, 191, 0.6)';
@@ -28,6 +29,11 @@ export class RadarChartComponent implements AfterViewInit {
     setTimeout(() => {
       this.createRadarChart();
     });
+  }
+
+  update(radars){
+    this.radars = radars
+    this.createRadarChart()
   }
 
   createRadarChart() {
@@ -52,7 +58,7 @@ export class RadarChartComponent implements AfterViewInit {
     }
 
     return {
-      labels: this.axesNames,
+      labels: this.axesNames || this.radars[0].axes.map(axis => axis.name),
       datasets: radarDatasets
     };
   }
@@ -66,7 +72,7 @@ export class RadarChartComponent implements AfterViewInit {
     const radarBackgroundColor = backgroundColor;
     const radarBorderColor = borderColor;
     const axisValues = radar.axes.map(axis => {
-      if (this.axesNames.includes(axis.name)) {
+      if (!this.axesNames || this.axesNames.includes(axis.name)) {
         return {
           name: axis.name,
           points: this.parseAxisPoints(axis.answers),
@@ -100,7 +106,8 @@ export class RadarChartComponent implements AfterViewInit {
 
   private parseRadarOptions() {
     return {
-      responsive: true,
+      responsive: true, 
+      maintainAspectRatio: true,
       scale: {
         ticks: {
           beginAtZero: true,
@@ -110,10 +117,11 @@ export class RadarChartComponent implements AfterViewInit {
         },
         pointLabels: {
           fontSize: 18,
+          display:this.showLabels || false
         }
       },
       legend: {
-        display: true,
+        display: false,
       },
     };
   }
