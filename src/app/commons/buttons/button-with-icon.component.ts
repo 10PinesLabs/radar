@@ -11,6 +11,7 @@ export class ButtonWithIconComponent implements OnInit {
   @Input() onClick: () => {};
   @Input() iconClass: String;
   @Input() type: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'light' | 'dark';
+  @Input() outline : Boolean;
 
   constructor() {
   }
@@ -19,7 +20,8 @@ export class ButtonWithIconComponent implements OnInit {
   }
 
   mapTypeToClass() {
-    return 'btn-' + this.type;
+    const selector = this.outline ? "btn-outline-" :  'btn-'
+    return selector + this.type;
   }
 
 }
