@@ -39,7 +39,8 @@ import { HttpRadarTemplateService } from 'src/services/http-radarTemplate.servic
 import { SignInComponent } from './sign-in/sign-in.component';
 import { HttpConfigInterceptor } from 'src/interceptor/httpconfig.interceptor';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-
+import { RadarTemplateComponent } from './radar-template/radar-template.component';
+import { RadarVisualizerComponent } from './chart-components/radar/radar-visualizer.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -71,7 +72,9 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     CompareRadarsComponent,
     CompareRadarsButtonsComponent,
     SignInComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent, 
+    RadarTemplateComponent,
+    RadarVisualizerComponent
   ],
   imports: [
     BrowserModule,
