@@ -2,7 +2,15 @@
   <h1> {{radarTemplate.name}} </h1>
   <div class="radar-template-details-container">
     <div class="card radar-template-details-sub-container">
-      <h3 style="color: grey"> Coming Soon</h3>
+      <div class="left-header">
+        <h5>{{selectedRadar?.name}}</h5>
+        <app-button-with-icon label="Ver radar" iconClass="far fa-chart-bar" type="success" outline="true">Ver radar</app-button-with-icon>
+      </div>
+      <app-radar-visualizer
+      [radars]="radars()"
+      [showLabels]="true"
+      (onRadarSelected)="setSelectedRadar($event)"
+    ></app-radar-visualizer>
     </div>
     <div class="card radar-template-details-sub-container">
       <h3 style="color: grey"> Component: <b>radar-template</b> </h3>

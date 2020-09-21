@@ -2,7 +2,6 @@ import {Component, OnInit, Input, Inject} from '@angular/core';
 import { RadarTemplate } from 'src/model/radarTemplate';
 import {RadarTemplateService} from "../../services/radarTemplate.service";
 import {ActivatedRoute} from "@angular/router";
-import {Radar} from "../../model/radar";
 
 @Component({
   selector: 'app-radar-template',
@@ -13,7 +12,8 @@ export class RadarTemplateComponent implements OnInit {
 
   @Input() radarTemplate: RadarTemplate;
   id: String;
-
+  selectedRadar = null
+  
   constructor(@Inject('RadarTemplateService') private radarTemplateService: RadarTemplateService,
               private route: ActivatedRoute) {
     this.id = this.route.snapshot.paramMap.get("id")
@@ -24,6 +24,14 @@ export class RadarTemplateComponent implements OnInit {
       this.radarTemplate = new RadarTemplate(radarTemplate.id, radarTemplate.name,
         radarTemplate.description, radarTemplate.axes, radarTemplate.active, radarTemplate.radars)
     });
+  }
+
+  radars(){
+    return this.radarTemplate.radars
+  }
+
+  setSelectedRadar(radar){
+    this.selectedRadar = radar
   }
 
 }
