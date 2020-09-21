@@ -6,7 +6,10 @@
     </div>
 
     <div class="radar-template-pre-view-container">
-      <app-radar-template-pre-view [radarTemplate]="radarTemplate"></app-radar-template-pre-view>
+      <app-radar-visualizer
+      [radars]="radars()"
+      [showLabels]="false"
+    ></app-radar-visualizer>
     </div>
 
   </div>
