@@ -23,6 +23,10 @@ import { ToastrModule } from 'ngx-toastr';
 import { CreateRadarComponent } from './create-radar/create-radar.component';
 import { CreateRadarTemplateComponent } from './create-radar-template/create-radar-template.component';
 import { RadarTemplateFormComponent } from './create-radar-template/radar-template-form/radar-template-form.component';
+import { RadarTemplateAxisEvolutionComponent } from './radar-template/axis-evolution/radar-template-axis-evolution.component';
+import { RadarTemplateComponent } from './radar-template/radar-template.component';
+import { RadarTemplateAxisEvolutionLineChartComponent } from './radar-template/axis-evolution/charts/line-chart/radar-template-axis-evolution-line-chart.component';
+import { RadarTemplateAxisEvolutionDispersionChartComponent } from './radar-template/axis-evolution/charts/dispersion-chart/radar-template-axis-evolution-dispersion-chart.component';
 import { RadarFormComponent } from './create-radar/radar-form/radar-form.component';
 import { AxesFormComponent } from './create-radar/axes-form/axes-form.component';
 import { TokenComponent } from './token/token.component';
@@ -62,6 +66,10 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     HeaderFiltersComponent,
     CreateRadarComponent,
     CreateRadarTemplateComponent,
+    RadarTemplateAxisEvolutionComponent,
+    RadarTemplateComponent,
+    RadarTemplateAxisEvolutionLineChartComponent,
+    RadarTemplateAxisEvolutionDispersionChartComponent,
     RadarTemplateFormComponent,
     RadarFormComponent,
     AxesFormComponent,
