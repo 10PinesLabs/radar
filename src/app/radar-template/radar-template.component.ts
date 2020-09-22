@@ -2,7 +2,6 @@ import {Component, OnInit, Input, Inject} from '@angular/core';
 import { RadarTemplate } from 'src/model/radarTemplate';
 import {RadarTemplateService} from "../../services/radarTemplate.service";
 import {ActivatedRoute} from "@angular/router";
-import {Radar} from "../../model/radar";
 
 @Component({
   selector: 'app-radar-template',

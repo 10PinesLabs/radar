@@ -1,0 +1,8 @@
+<div class="radar-template-details-right-section-container">
+  <div class="title-with-icon">
+    <i class="fas fa-dot-circle" color="green"></i>
+    <span class="axis-title"> {{ axisName() }} </span>
+  </div>
+  <app-axis-evolution-line-chart [radarTemplate]="radarTemplate" [selectedAxisId]="selectedAxisId"></app-axis-evolution-line-chart>
+  <app-axis-evolution-dispersion-chart [radarTemplate]="radarTemplate" [selectedAxisId]="selectedAxisId"></app-axis-evolution-dispersion-chart>
+</div>
