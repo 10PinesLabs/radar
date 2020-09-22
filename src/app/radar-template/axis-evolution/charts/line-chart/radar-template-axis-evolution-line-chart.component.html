@@ -1,0 +1,7 @@
+<div *ngIf="axisEvolutionLineChart" style="padding-top: 2em;">
+  <div class="title-with-icon">
+    <i class="fas fa-dot-circle" color="silver"></i>
+    <span class="chart-subtitle"> Evolución del <b style="color: green;"> promedio </b> a lo largo del tiempo </span>
+  </div>
+  <canvas #axisEvolutionLineChartId width="800" height="230">{{ axisEvolutionLineChart }}</canvas>
+</div>
