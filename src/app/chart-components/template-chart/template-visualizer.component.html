@@ -3,6 +3,7 @@
     #radarChart
     [radars]="[selectedRadar()]"
     [isPreview]="isPreview"
+    [showLabels]="showLabels"
     (onRadarAxisSelected)="setRadarAxisIndexSelection($event)"
   ></app-radar-chart>
   <div class="radar-selector" [hidden]="hideSelector" [style.width.%]="selectorWidth">

@@ -16,6 +16,7 @@ export class RadarChartComponent implements AfterViewInit {
   @Input() radars: Radar[];
   @Input() axesNames: String[];
   @Input() isPreview: Boolean = true;
+  @Input() showLabels: Boolean = true;
   @Output() onRadarAxisSelected: EventEmitter<number> = new EventEmitter<number>();
 
   radarChart:Chart = {destroy: ()=>{}, data:()=>{}};
@@ -148,7 +149,7 @@ export class RadarChartComponent implements AfterViewInit {
         },
         pointLabels: {
           fontSize: 18,
-          display:!this.isPreview || false,
+          display: this.showLabels,
         }
       },
       legend: {

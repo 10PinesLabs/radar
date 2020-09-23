@@ -14,7 +14,8 @@ export class RadarTemplateVisualizerComponent implements OnInit{
 
   @ViewChild('radarChart') chart: RadarChartComponent;
   @Input() radars: Radar[];
-  @Input() isPreview: Boolean;
+  @Input() isPreview: Boolean = true;
+  @Input() showLabels: Boolean = true;
   @Output() onRadarSelected = new EventEmitter<Radar>();
   @Output() onAxieSelected = new EventEmitter<number>();
 
