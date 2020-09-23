@@ -1,15 +1,14 @@
 class OmniAuthController < ApplicationController
   def callback
-    unless is_root_user?
+    if params[:provider] == 'backoffice' && !is_root_user?
       redirect_to "#{base_url}/error?message=#{only_roots_available_message}"
       return
     end
 
-    create_admin
+    login_user params[:provider]
 
     redirect_to "#{base_url}/token/#{generate_token}"
   end
-
 
   def failure
     message = if request.env['omniauth.error.type'] == :cancel
@@ -22,24 +21,28 @@ class OmniAuthController < ApplicationController
   end
 
   def redirect
-    backend_url = request.env['REQUEST_URI']
-    backend_url.slice! '/auth/backoffice/redirect'
-    redirect_to "#{ENV.fetch('BACKOFFICE_URL')}/auth/sign_in?redirect_url=#{backend_url}/auth/backoffice/callback&app_id=ruben_radar"
+    case params[:provider]
+    when 'backoffice'
+      request_uri = request.env['REQUEST_URI']
+      backend_url = request_uri.gsub "/auth/backoffice/redirect", ""
+      redirect_to "#{ENV.fetch('BACKOFFICE_URL')}/auth/sign_in?redirect_url=#{backend_url}/auth/backoffice/callback&app_id=radar-app"
+    when 'google'
+      redirect_to "/auth/google_oauth2"
+    else
+      render json: { errors: 'Proveedor de autenticacion invalido' }, status: :not_found
+    end
   end
 
   private
 
-  def create_admin
-    admin = Admin.find_by_backoffice_id(auth_hash[:uid])
-    unless admin
-      Rails.logger.info("Admin de backoffice con id #{auth_hash[:uid]} no existe, creando nuevo")
-      admin = Admin.create!(
-        nombre_de_admin: auth_hash[:info][:nickname],
-        email: auth_hash[:info][:email],
-        backoffice_id: auth_hash[:uid]
-      )
+  def login_user provider
+    user = User.find_or_create_by!(uid: auth_hash[:uid]) do |user|
+      user.name = auth_hash[:info][:name]
+      user.email = auth_hash[:info][:email]
+      user.provider = provider
     end
-    Rails.logger.info("Admin #{admin.id} loggeado desde backoffice")
+
+    Rails.logger.info("Admin #{user.id} loggeado desde #{provider}")
   end
 
   def generate_token

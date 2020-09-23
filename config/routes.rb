@@ -12,6 +12,6 @@ Rails.application.routes.draw do
       end
     end
   end
-  get 'auth/backoffice/callback', to: "omni_auth#callback"
-  get 'auth/backoffice/redirect', to: "omni_auth#redirect"
+  get 'auth/:provider/callback', to: "omni_auth#callback"
+  get 'auth/:provider/redirect', to: "omni_auth#redirect"
 end
