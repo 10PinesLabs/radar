@@ -4,5 +4,17 @@
 
 export const environment = {
   production: false,
-  apiURL: 'http://localhost:3000',
+  apiURL: "http://localhost:3000",
+  logins: [
+    {
+      label: "Entrar con Backoffice",
+      name: "backoffice",
+      logo: "assets/images/logo-backoffice.png",
+    },
+    {
+      label: "Entrar con Google",
+      name: "google",
+      logo: "assets/images/logo-google.png"
+    }
+  ],
 };
