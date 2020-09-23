@@ -9,9 +9,9 @@
   width: 100%;
 
   .radar-selector{
-    margin-top: 30px;
     border-top: 2px solid #818A91;
     width: 150px  ;
+    padding-bottom: 3em;
     height: 0;
     display: flex;
     justify-content: space-between;
@@ -54,9 +54,8 @@
 
       span{
         display: block;
-        width: 45px;
-        margin-left: -12px;
-        text-align: center;
+        width: 80px;
+        text-align: left;
         font-size: 14px;
         opacity: 0;
         transition: .2s;

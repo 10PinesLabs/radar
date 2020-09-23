@@ -2,9 +2,10 @@
   <app-radar-chart
     #radarChart
     [radars]="[selectedRadar()]"
-    [showLabels]="showLabels"
+    [isPreview]="isPreview"
+    (onRadarAxisSelected)="setRadarAxisIndexSelection($event)"
   ></app-radar-chart>
-  <div class="radar-selector" [style.width.%]="selectorWidth">
+  <div class="radar-selector" [hidden]="hideSelector" [style.width.%]="selectorWidth">
     <a
       [style.width.em]="selectorDotSize"
       [style.height.em]="selectorDotSize"

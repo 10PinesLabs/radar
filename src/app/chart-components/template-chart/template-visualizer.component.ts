@@ -6,21 +6,23 @@ import { Answer } from 'src/model/answer';
 import { RadarChartComponent } from '../radar-chart/radar-chart.component';
 
 @Component({
-  selector: 'app-radar-visualizer',
-  templateUrl: './radar-visualizer.component.html',
-  styleUrls: ['./radar-visualizer.component.scss']
+  selector: 'app-template-visualizer',
+  templateUrl: './template-visualizer.component.html',
+  styleUrls: ['./template-visualizer.component.scss']
 })
-export class RadarVisualizerComponent implements OnInit{
+export class RadarTemplateVisualizerComponent implements OnInit{
 
   @ViewChild('radarChart') chart: RadarChartComponent;
   @Input() radars: Radar[];
-  @Input() showLabels: Boolean;
+  @Input() isPreview: Boolean;
   @Output() onRadarSelected = new EventEmitter<Radar>();
+  @Output() onAxieSelected = new EventEmitter<number>();
 
   selectedRadarIndex = 0;
   selectorDotSize = 1.3
   selectorWidth =  15
   selectorLabelPaddingTop = 1
+  hideSelector=false
 
   constructor() {
 
@@ -28,7 +30,12 @@ export class RadarVisualizerComponent implements OnInit{
 
   ngOnInit(): void {
     const numberOfRadars = this.radars.length
-    this.selectorWidth = this.selectorWidth + numberOfRadars * 10
+    if(numberOfRadars<=1){
+      this.hideSelector = true
+      return
+    } 
+    
+    this.selectorWidth = this.selectorWidth + numberOfRadars * 5
     this.selectorDotSize = this.selectorDotSize - 0.05 * numberOfRadars
 
     this.selectorWidth = this.selectorWidth>80 ? 80 : this.selectorWidth
@@ -50,5 +57,9 @@ export class RadarVisualizerComponent implements OnInit{
 
   isRadarSelected(radar){
     return radar.id === this.radars[this.selectedRadarIndex].id
+  }
+
+  setRadarAxisIndexSelection(axieIndex){
+    this.onAxieSelected.emit(this.selectedRadar().axes[axieIndex].id)
   }
 }

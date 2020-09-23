@@ -1,7 +1,9 @@
-import {Component, OnInit, Input, Inject} from '@angular/core';
+import {Component, OnInit, Input, Inject, ViewChild} from '@angular/core';
 import { RadarTemplate } from 'src/model/radarTemplate';
 import {RadarTemplateService} from "../../services/radarTemplate.service";
 import {ActivatedRoute} from "@angular/router";
+import { FitTextDirective } from '../commons/directives/fittext.directive';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-radar-template',
@@ -9,13 +11,13 @@ import {ActivatedRoute} from "@angular/router";
   styleUrls: ['./radar-template.component.scss']
 })
 export class RadarTemplateComponent implements OnInit {
-
+  @ViewChild(FitTextDirective) textFitter : FitTextDirective;
   @Input() radarTemplate: RadarTemplate;
   id: String;
   selectedRadar = null
   
   constructor(@Inject('RadarTemplateService') private radarTemplateService: RadarTemplateService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,  private router: Router) {
     this.id = this.route.snapshot.paramMap.get("id")
   }
 
@@ -32,6 +34,12 @@ export class RadarTemplateComponent implements OnInit {
 
   setSelectedRadar(radar){
     this.selectedRadar = radar
+  }
+
+  viewRadar(){
+    const radarUrl = `radar/${this.selectedRadar.id}/results`
+    console.log(radarUrl)
+    this.router.navigate([radarUrl]);
   }
 
 }

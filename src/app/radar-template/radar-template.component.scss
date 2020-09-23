@@ -30,10 +30,50 @@
   width: 100%;
   justify-content: space-between;
 
+  button{
+    max-height: 3em;
+    width: fit-content;
+    min-width: 4em;
+    align-items: flex-end;
+    display: flex;
+    padding-bottom: 0.5em;
+    margin-left: .6em;
+    justify-content: center;
+    white-space: nowrap;
+    color: #68BD44;
+    background-color: white;
+    outline: none;
+    border:none;
+    text-decoration: none;
+    border-radius: .2em;
+    transition: .5s;
 
-  h5{
-    max-width: 80%;
-    display: block;
-    height: 5em;
+    &:hover{
+      background-color: rgb(235, 235, 235);
+    }
+
+    &:active{
+      border: solid 1px rgb(161, 161, 161);
+    }
+    img{
+      width: 2em;
+      height: 2em;;
+    }
   }
+}
+
+app-button-with-icon  {
+  margin: auto 0;
+}
+
+.title-container{
+  width: 80%;
+  height: 3em;
+  display: flex;
+  align-items: center;
+}
+
+app-template-visualizer{
+  padding: 0 6em;
+  margin-top: 1em;
 }

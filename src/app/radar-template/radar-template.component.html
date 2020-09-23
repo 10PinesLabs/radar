@@ -3,14 +3,13 @@
   <div class="radar-template-details-container">
     <div class="card radar-template-details-sub-container">
       <div class="left-header">
-        <h5>{{selectedRadar?.name}}</h5>
-        <app-button-with-icon label="Ver radar" iconClass="far fa-chart-bar" type="success" outline="true">Ver radar</app-button-with-icon>
+        <div class="title-container"><div [fittext] [maxFontSize]="30" >{{selectedRadar?.name}}</div></div>
+        <button label="Ver radar" (click)="viewRadar()"><img src="../../assets/images/radar-button.svg"><span>Ver radar</span></button>
       </div>
-      <app-radar-visualizer
+      <app-template-visualizer
       [radars]="radars()"
-      [showLabels]="true"
       (onRadarSelected)="setSelectedRadar($event)"
-    ></app-radar-visualizer>
+    ></app-template-visualizer>
     </div>
     <div class="card radar-template-details-sub-container">
       <h3 style="color: grey"> Component: <b>radar-template</b> </h3>
