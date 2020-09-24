@@ -12,6 +12,7 @@ export class HeaderComponent implements OnInit {
 
   LOGIN = 'Login';
   LOGOUT = 'Logout';
+  user = 'Username'
 
   constructor(private tokenService: TokenService, private router: Router) { }
 

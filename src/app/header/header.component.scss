@@ -1,7 +1,7 @@
 .barra-navegacion {
-  background-color: #414141;
+  background-color: white;
   position: fixed;
-  height: 50px;
+  height: 4em;
   width: 100%;
   top: 0;
   padding: 0 2% 0 2%;
@@ -18,6 +18,10 @@
     display: flex;
     align-items: center;
     width: auto;
+    color: #68BD44;
+    font-size: 1.7em;
+    font-family: 'Roboto', sans-serif;
+
     a {
       display: inline-grid;
       align-self: stretch;
@@ -25,23 +29,27 @@
     }
 
     img {
-      height: 70%;
+      height: 100%;
+    }
+
+    span{
+      margin-top: 4px;
     }
   }
 
-  .login-logout {
+  .header-buttons {
     width: 60%;
-    justify-content: flex-end;
-    button:focus {outline:0;}
-  }
-
-  .logo, .login-logout {
+    height: 50%;
     display: flex;
+    justify-content: flex-end;
     align-items: center;
+    margin: auto 0;
+
+    input{
+      max-height: 100%;
+        width: auto;
+    }
+
   }
 
-  .login-logout-btn:hover{
-    background-color: transparent;
-    color: #f8f9fa;
-  }
 }

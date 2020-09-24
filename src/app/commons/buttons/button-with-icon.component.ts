@@ -10,6 +10,7 @@ export class ButtonWithIconComponent implements OnInit {
   @Input() label: String;
   @Input() onClick: () => {};
   @Input() iconClass: String;
+  @Input() iconImgSrc: String;
   @Input() type: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'light' | 'dark';
 
   constructor() {
