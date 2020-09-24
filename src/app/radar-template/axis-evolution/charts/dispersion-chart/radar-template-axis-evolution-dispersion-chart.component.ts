@@ -32,6 +32,8 @@ export class RadarTemplateAxisEvolutionDispersionChartComponent implements After
       fillOpacity: .3,
       data: axisEvolutionLineChartData,
       options: {
+        responsive: true, 
+        maintainAspectRatio: false,
         legend: {
           position: "bottom",
           align: "middle"

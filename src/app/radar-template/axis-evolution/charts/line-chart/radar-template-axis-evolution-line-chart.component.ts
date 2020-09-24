@@ -13,7 +13,7 @@ export class RadarTemplateAxisEvolutionLineChartComponent implements AfterViewIn
   @ViewChild('axisEvolutionLineChartId') lineCanvasRef: ElementRef;
   @Input() radarTemplate: RadarTemplate;
   @Input() selectedAxisId: Number;
-  axisEvolutionLineChart = [];
+  axisEvolutionLineChart = { destroy: ()=>{}};
 
   constructor() {
   }
@@ -24,6 +24,12 @@ export class RadarTemplateAxisEvolutionLineChartComponent implements AfterViewIn
     });
   }
 
+  updateChart(axisId){
+    this.selectedAxisId = axisId;
+    this.axisEvolutionLineChart.destroy()
+    this.createAxisEvolutionLineChart()
+  }
+
   private createAxisEvolutionLineChart() {
     const ctx = this.lineCanvasRef.nativeElement.getContext('2d');
     const axisEvolutionLineChartData = this.parseAxisEvolutionLineChartData();
@@ -31,6 +37,8 @@ export class RadarTemplateAxisEvolutionLineChartComponent implements AfterViewIn
       type: 'line',
       data: axisEvolutionLineChartData,
       options: {
+        responsive: true, 
+        maintainAspectRatio: false,
         legend: {
           display: false,
         },

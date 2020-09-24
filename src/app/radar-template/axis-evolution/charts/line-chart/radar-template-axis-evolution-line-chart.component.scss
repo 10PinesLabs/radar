@@ -5,3 +5,19 @@
 .title-with-icon {
   display: flex; flex-direction: row; align-items: center; padding-bottom: 1em;
 }
+
+.container{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+:host{
+  width: 100%;
+  height: 50%;
+}
+
+.canvas-container{
+  flex-grow: 1;
+}

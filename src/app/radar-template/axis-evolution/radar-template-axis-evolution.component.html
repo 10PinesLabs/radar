@@ -3,6 +3,8 @@
     <i class="fas fa-dot-circle" color="green"></i>
     <span class="axis-title"> {{ axisName() }} </span>
   </div>
+  <div *ngIf="radarTemplate && selectedAxisId" class="charts-container">
   <app-axis-evolution-line-chart [radarTemplate]="radarTemplate" [selectedAxisId]="selectedAxisId"></app-axis-evolution-line-chart>
   <app-axis-evolution-dispersion-chart [radarTemplate]="radarTemplate" [selectedAxisId]="selectedAxisId"></app-axis-evolution-dispersion-chart>
+  </div>
 </div>

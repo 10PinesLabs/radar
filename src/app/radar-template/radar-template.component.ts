@@ -15,6 +15,7 @@ export class RadarTemplateComponent implements OnInit {
   @Input() radarTemplate: RadarTemplate;
   id: String;
   selectedRadar = null
+  selectedAxieId : Number = null
   
   constructor(@Inject('RadarTemplateService') private radarTemplateService: RadarTemplateService,
               private route: ActivatedRoute,  private router: Router) {
@@ -34,11 +35,15 @@ export class RadarTemplateComponent implements OnInit {
 
   setSelectedRadar(radar){
     this.selectedRadar = radar
+    this.selectedAxieId = null;
+  }
+
+  setSelectedAxie(id){
+    this.selectedAxieId = id;
   }
 
   viewRadar(){
     const radarUrl = `radar/${this.selectedRadar.id}/results`
-    console.log(radarUrl)
     this.router.navigate([radarUrl]);
   }
 
