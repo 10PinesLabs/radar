@@ -5,9 +5,8 @@ class OmniAuthController < ApplicationController
       return
     end
 
-    login_user params[:provider]
-
-    redirect_to "#{base_url}/token/#{generate_token}"
+    user = login_user params[:provider]
+    redirect_to "#{base_url}/token/#{generate_token_for user}"
   end
 
   def failure
@@ -41,14 +40,13 @@ class OmniAuthController < ApplicationController
       user.email = auth_hash[:info][:email]
       user.provider = provider
     end
-
     Rails.logger.info("Admin #{user.id} loggeado desde #{provider}")
+    user
   end
 
-  def generate_token
+  def generate_token_for user
     hmac_secret = Rails.configuration.jwt_secret
-    payload = auth_hash[:info]
-
+    payload = user.as_json
     JWT.encode payload, hmac_secret, 'HS256'
   end
 
