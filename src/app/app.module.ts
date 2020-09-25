@@ -39,7 +39,6 @@ import { HttpRadarTemplateService } from 'src/services/http-radarTemplate.servic
 import { SignInComponent } from './sign-in/sign-in.component';
 import { HttpConfigInterceptor } from 'src/interceptor/httpconfig.interceptor';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { HtttpSessionService } from 'src/services/http-session.service';
 
 @NgModule({
   declarations: [
@@ -88,9 +87,9 @@ import { HtttpSessionService } from 'src/services/http-session.service';
   ],
   providers: [
     {provide: 'RadarService', useClass: HttpRadarService},
-    {provide: 'SessionService', useClass: HtttpSessionService},
     {provide: 'RadarTemplateService', useClass: HttpRadarTemplateService},
     {provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true},
+    TokenService
   ],
   bootstrap: [AppComponent]
 })

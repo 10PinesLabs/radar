@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
-import { SessionService } from 'src/services/session.service';
+import { TokenService } from 'src/services/token.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -12,7 +12,7 @@ export class SignInComponent implements OnInit {
 
   providers = []
   
-  constructor(@Inject('SessionService') private session : SessionService,  private router: Router) {
+  constructor(private session : TokenService,  private router: Router) {
       if(session.isLoggedIn()){ this.router.navigateByUrl('/radarTemplates')}
    }
 

@@ -1,6 +1,5 @@
-import { Inject, Injectable } from '@angular/core';
-import { LOCAL_STORAGE, StorageService } from 'ngx-webstorage-service';
-import { isNullOrUndefined } from 'util';
+import { Injectable } from '@angular/core';
+import * as Cookies from 'js-cookie'
 
 @Injectable({
   providedIn: 'root'
@@ -9,12 +8,13 @@ export class TokenService {
 
   private token: string;
 
-  constructor(@Inject(LOCAL_STORAGE) private storage: StorageService) {
-    this.token = this.storage.get('token');
+  constructor() {
+    this.token = Cookies.get('session');
   }
 
   isLoggedIn(): boolean {
-    return !isNullOrUndefined(this.storage.get('token'));
+    if(this.token) return true;
+    return false;
   }
 
   getToken() {
@@ -22,12 +22,12 @@ export class TokenService {
   }
 
   setToken(token: string) {
-    this.storage.set('token', token);
+    Cookies.set('session', token);
     this.token = token;
   }
 
   logout() {
-    this.storage.remove('token');
+    Cookies.remove('session');
     this.token = null;
   }
 }
