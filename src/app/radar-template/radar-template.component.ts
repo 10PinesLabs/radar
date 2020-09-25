@@ -35,7 +35,6 @@ export class RadarTemplateComponent implements OnInit {
 
   setSelectedRadar(radar){
     this.selectedRadar = radar
-    this.selectedAxieId = null;
   }
 
   setSelectedAxie(id){

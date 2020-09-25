@@ -6,7 +6,7 @@ import {CHART_COLORS} from "../../radar-template-axis-evolution.component";
 @Component({
   selector: 'app-axis-evolution-line-chart',
   templateUrl: './radar-template-axis-evolution-line-chart.component.html',
-  styleUrls: ['./radar-template-axis-evolution-line-chart.component.scss']
+  styleUrls: ['../radar-template-axis-chart-styles.scss']
 })
 export class RadarTemplateAxisEvolutionLineChartComponent implements AfterViewInit {
 

@@ -20,6 +20,8 @@ export class RadarChartComponent implements AfterViewInit {
   @Output() onRadarAxisSelected: EventEmitter<number> = new EventEmitter<number>();
 
   radarChart:Chart = {destroy: ()=>{}, data:()=>{}};
+  selectedAxisIndex:Number = null;
+
   greenBorderColor = 'rgba(25, 179, 112, 1)';
   greenBackgroundColor = 'rgba(157, 217, 191, 0.6)';
   violetBorderColor = 'rgba(35, 25, 179, 1)';
@@ -39,6 +41,7 @@ export class RadarChartComponent implements AfterViewInit {
     this.radars = radars
     this.radarChart.destroy()
     this.createRadarChart()
+    if(this.selectedAxisIndex !== null) this.selectAxisByIndex(this.selectedAxisIndex)
   }
 
   createRadarChart() {
@@ -116,22 +119,27 @@ export class RadarChartComponent implements AfterViewInit {
     const axis = chartElements[0];
     if(axis){
       const axisIndex = axis._index;
-      this.onRadarAxisSelected.emit(axisIndex)
-      this.radarChart.data.datasets[0].pointBorderColor = []
-      this.radarChart.data.datasets[0].pointBackgroundColor = []
-      this.radarChart.data.datasets[0].pointRadius = []
-      this.radarChart.data.datasets[0].pointBorderWidth = []
-
-      this.radarChart.data.datasets[0].pointBorderColor[axisIndex] = this.selectedAxieBorderColor
-      this.radarChart.data.datasets[0].pointBackgroundColor[axisIndex] = this.selectedAxieBackgroundColor
-
-      const selectedPointRadius = this.radarChart.data.datasets[0].radius * 1.2
-      this.radarChart.data.datasets[0].pointRadius[axisIndex] = selectedPointRadius
-
-      this.radarChart.options.scale.pointLabels.fontColor = []
-      this.radarChart.options.scale.pointLabels.fontColor[axisIndex] = this.selectedAxieBorderColor
-      this.radarChart.update();
+      this.selectAxisByIndex(axisIndex)
     }
+  }
+
+  private selectAxisByIndex(axisIndex) {
+    this.selectedAxisIndex = axisIndex
+    this.onRadarAxisSelected.emit(axisIndex)
+    this.radarChart.data.datasets[0].pointBorderColor = []
+    this.radarChart.data.datasets[0].pointBackgroundColor = []
+    this.radarChart.data.datasets[0].pointRadius = []
+    this.radarChart.data.datasets[0].pointBorderWidth = []
+
+    this.radarChart.data.datasets[0].pointBorderColor[axisIndex] = this.selectedAxieBorderColor
+    this.radarChart.data.datasets[0].pointBackgroundColor[axisIndex] = this.selectedAxieBackgroundColor
+
+    const selectedPointRadius = this.radarChart.data.datasets[0].radius * 1.2
+    this.radarChart.data.datasets[0].pointRadius[axisIndex] = selectedPointRadius
+
+    this.radarChart.options.scale.pointLabels.fontColor = []
+    this.radarChart.options.scale.pointLabels.fontColor[axisIndex] = this.selectedAxieBorderColor
+    this.radarChart.update();
   }
 
   private parseRadarOptions() {
