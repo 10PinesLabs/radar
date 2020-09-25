@@ -145,7 +145,7 @@ export class RadarChartComponent implements AfterViewInit {
   private parseRadarOptions() {
     return {
       responsive: true, 
-      maintainAspectRatio: true,
+      maintainAspectRatio: false,
       aspectRatio:1,
       onClick: this.onAxieSelected,
       scale: {

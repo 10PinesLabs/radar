@@ -1,13 +1,12 @@
 /* Small devices (landscape phones, to 768px) */
 .view-container-router{
-  padding-top: 4em;
+  padding-top: 5em;
   padding-bottom: 3%;
 }
 
 /* Medium devices (tablets, 768px and up) */
 @media (min-width: 768px) {
   .view-container-router{
-    padding-top: 5em;
     padding-bottom: 3%;
   }
 }
@@ -15,7 +14,6 @@
 /* Large devices (desktops, 992px and up) */
 @media (min-width: 992px) {
   .view-container-router{
-    padding-top: 6em;
     padding-bottom: 3%;
   }
 }
@@ -23,7 +21,6 @@
 /* Extra large devices (large desktops, 1200px and up) */
 @media (min-width: 1200px) {
   .view-container-router{
-    padding-top: 7em;
     padding-bottom: 3%;
   }
 }

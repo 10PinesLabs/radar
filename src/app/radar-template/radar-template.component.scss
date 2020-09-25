@@ -5,7 +5,7 @@
 
 .radar-template-details-sub-container {
   width: 49%;
-  height: 45em;
+  height: calc(100vh - 5em);
   background: white;
   display: flex;
   flex-direction: column;
