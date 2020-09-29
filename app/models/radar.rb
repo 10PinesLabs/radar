@@ -4,6 +4,7 @@ class Radar < ApplicationRecord
   ERROR_MESSAGE_FOR_DESCRIPTION_EMPTY = 'El radar debe tener una descripción'
   ERROR_MESSAGE_FOR_NAME_EMPTY = 'El radar debe tener un nombre'
   ERROR_MESSAGE_FOR_RADAR_TEMPLATE_MISSING = 'El radar debe pertenecer a un template de radar'
+  default_scope { order(created_at: :asc) }
   belongs_to :radar_template
   has_many :answers
 
