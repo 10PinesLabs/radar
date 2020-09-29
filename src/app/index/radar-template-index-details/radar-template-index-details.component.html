@@ -20,7 +20,7 @@
 <div class="radar-container">
   <table class="table table-striped">
     <tbody>
-      <tr *ngFor="let radar of radarTemplate.radars">
+      <tr *ngFor="let radar of radarTemplate.radars | reverse">
         <td class="radar-row">
           <app-radar-row [radar]="radar"></app-radar-row>
         </td>
