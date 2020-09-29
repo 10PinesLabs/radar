@@ -1,11 +1,20 @@
-<div class="radar-template-container">
-  <h1> {{radarTemplate.name}} </h1>
+<div class="radar-template-container" *ngIf="radarTemplate">
+  <h1> <img src="../../assets/images/target.svg"> {{radarTemplate.name}} </h1>
   <div class="radar-template-details-container">
     <div class="card radar-template-details-sub-container">
-      <h3 style="color: grey"> Coming Soon</h3>
+      <div class="left-header">
+        <div class="title-container" *ngIf="selectedRadar"><div [fittext] [maxFontSize]="30" >{{selectedRadar.name}}</div></div>
+        <button label="Ver radar" (click)="viewRadar()"><img src="../../assets/images/radar-button.svg"><span>Ver radar</span></button>
+      </div>
+      <app-template-visualizer
+      [radars]="radars()"
+      [isPreview]="false"
+      (onRadarSelected)="setSelectedRadar($event)"
+      (onAxieSelected)="setSelectedAxie($event)"
+    ></app-template-visualizer>
     </div>
-    <div class="card radar-template-details-sub-container">
-      <app-radar-template-axis-evolution [radarTemplate]="radarTemplate" [selectedAxisId]="17"></app-radar-template-axis-evolution>
+    <div class="card radar-template-details-sub-container right-container">
+      <app-radar-template-axis-evolution [radarTemplate]="radarTemplate" [selectedAxisId]="selectedAxieId"></app-radar-template-axis-evolution>
     </div>
   </div>
 </div>

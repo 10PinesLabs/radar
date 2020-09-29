@@ -17,10 +17,6 @@
   .logo {
     display: flex;
     align-items: center;
-    width: auto;
-    color: #68BD44;
-    font-size: 1.7em;
-    font-family: 'Roboto', sans-serif;
 
     a {
       display: inline-grid;
@@ -29,12 +25,9 @@
     }
 
     img {
-      height: 100%;
+      height: 80%;
     }
 
-    span{
-      margin-top: 4px;
-    }
   }
 
   .header-buttons {

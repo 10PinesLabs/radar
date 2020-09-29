@@ -43,7 +43,8 @@ import { HttpRadarTemplateService } from 'src/services/http-radarTemplate.servic
 import { SignInComponent } from './sign-in/sign-in.component';
 import { HttpConfigInterceptor } from 'src/interceptor/httpconfig.interceptor';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-
+import { RadarTemplateVisualizerComponent } from './chart-components/template-chart/template-visualizer.component';
+import {FitTextDirective} from './commons/directives/fittext.directive'
 @NgModule({
   declarations: [
     AppComponent,
@@ -79,7 +80,10 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     CompareRadarsComponent,
     CompareRadarsButtonsComponent,
     SignInComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent, 
+    RadarTemplateComponent,
+    RadarTemplateVisualizerComponent,
+    FitTextDirective,
   ],
   imports: [
     BrowserModule,
@@ -91,12 +95,13 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
       positionClass: 'toast-bottom-left',
       preventDuplicates: true,
     }),
-    FormsModule
+    FormsModule,
   ],
   providers: [
     {provide: 'RadarService', useClass: HttpRadarService},
     {provide: 'RadarTemplateService', useClass: HttpRadarTemplateService},
     {provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true},
+    TokenService
   ],
   bootstrap: [AppComponent]
 })

@@ -5,12 +5,13 @@
 
 .radar-template-details-sub-container {
   width: 49%;
-  height: 45em;
+  height: calc(100vh - 5em);
   background: white;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-top: 1.5em;
 }
 
 .radar-template-details-container{
@@ -19,4 +20,65 @@
   width: 100%;
   justify-content: space-between;
   align-items: center;
+}
+
+.left-header{
+  display: flex;
+  flex-direction: row;
+  padding: 0 1em;
+  padding-left: 2em;
+  width: 100%;
+  justify-content: space-between;
+
+  button{
+    max-height: 3em;
+    width: fit-content;
+    min-width: 4em;
+    align-items: flex-end;
+    display: flex;
+    padding-bottom: 0.5em;
+    margin-left: .6em;
+    justify-content: center;
+    white-space: nowrap;
+    color: #68BD44;
+    background-color: white;
+    outline: none;
+    border:none;
+    text-decoration: none;
+    border-radius: .2em;
+    transition: .5s;
+
+    &:hover{
+      background-color: rgb(235, 235, 235);
+    }
+
+    &:active{
+      border: solid 1px rgb(161, 161, 161);
+    }
+    img{
+      width: 2em;
+      height: 2em;;
+    }
+  }
+}
+
+.right-container{
+  padding-left: 1em;
+  padding-right: .5em;
+}
+
+app-button-with-icon  {
+  margin: auto 0;
+}
+
+.title-container{
+  width: 80%;
+  height: 3em;
+  display: flex;
+  align-items: center;
+}
+
+app-template-visualizer{
+  padding: 0 15%;
+  margin-top: 1em;
 }

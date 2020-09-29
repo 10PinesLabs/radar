@@ -1,5 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import { RadarTemplate } from 'src/model/radarTemplate';
+import { RadarTemplateAxisEvolutionLineChartComponent } from './charts/line-chart/radar-template-axis-evolution-line-chart.component';
 
 export const CHART_COLORS = {
   green: 'rgb(72, 129, 9, 1)',
@@ -21,15 +22,24 @@ export const POINTS_RANGE = 5;
   templateUrl: './radar-template-axis-evolution.component.html',
   styleUrls: ['./radar-template-axis-evolution.component.scss']
 })
-export class RadarTemplateAxisEvolutionComponent implements OnInit {
+export class RadarTemplateAxisEvolutionComponent implements OnInit, OnChanges{
   @Input() radarTemplate: RadarTemplate;
-  @Input() selectedAxisId: Number;
+  @Input() selectedAxisId: Number ;
+  @ViewChild(RadarTemplateAxisEvolutionLineChartComponent) axisEvolutionLineChart : RadarTemplateAxisEvolutionLineChartComponent
 
   constructor() {
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if(!changes.selectedAxisId.firstChange && this.selectedAxisId)
+      this.axisEvolutionLineChart?.updateChart(this.selectedAxisId)
+  }
+
   axisName() {
-    return this.radarTemplate.radars[0].axes.filter(axis => axis.id === this.selectedAxisId)[0].name;
+    if(this.selectedAxisId){
+      return this.radarTemplate.radars[0].axes.filter(axis => axis.id === this.selectedAxisId)[0].name;
+    }
+    return "No se selecciono ningun eje"
   }
 
   ngOnInit(): void {

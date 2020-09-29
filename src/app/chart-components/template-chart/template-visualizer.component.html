@@ -1,0 +1,21 @@
+<div class="radar-visualizer">
+  <app-radar-chart
+    #radarChart
+    [radars]="[selectedRadar()]"
+    [isPreview]="isPreview"
+    [showLabels]="showLabels"
+    (onRadarAxisSelected)="setRadarAxisIndexSelection($event)"
+  ></app-radar-chart>
+  <div class="radar-selector" [hidden]="hideSelector" [style.width.%]="selectorWidth">
+    <a
+      [style.width.em]="selectorDotSize"
+      [style.height.em]="selectorDotSize"
+      (click)="selectRadar(i)"
+      *ngFor="let radar of radars; index as i"
+      [class.selected]="isRadarSelected(radar)"
+      ><span [style.paddingTop.em]="selectorLabelPaddingTop">{{
+        radar.name
+      }}</span></a
+    >
+  </div>
+</div>
