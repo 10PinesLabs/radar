@@ -16,4 +16,8 @@ export class RadarTemplateCardComponent implements OnInit {
   ngOnInit() {
   }
 
+  radars(){
+    return this.radarTemplate.radars
+  }
+
 }

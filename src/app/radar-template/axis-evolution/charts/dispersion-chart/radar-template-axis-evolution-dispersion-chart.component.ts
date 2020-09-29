@@ -6,7 +6,7 @@ import {CHART_COLORS, POINTS_RANGE} from "../../radar-template-axis-evolution.co
 @Component({
   selector: 'app-axis-evolution-dispersion-chart',
   templateUrl: './radar-template-axis-evolution-dispersion-chart.component.html',
-  styleUrls: ['./radar-template-axis-evolution-dispersion-chart.component.scss']
+  styleUrls: ['../radar-template-axis-chart-styles.scss']
 })
 export class RadarTemplateAxisEvolutionDispersionChartComponent implements AfterViewInit {
 
@@ -32,6 +32,8 @@ export class RadarTemplateAxisEvolutionDispersionChartComponent implements After
       fillOpacity: .3,
       data: axisEvolutionLineChartData,
       options: {
+        responsive: true, 
+        maintainAspectRatio: false,
         legend: {
           position: "bottom",
           align: "middle"

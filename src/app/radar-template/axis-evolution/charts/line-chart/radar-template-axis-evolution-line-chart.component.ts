@@ -6,14 +6,14 @@ import {CHART_COLORS} from "../../radar-template-axis-evolution.component";
 @Component({
   selector: 'app-axis-evolution-line-chart',
   templateUrl: './radar-template-axis-evolution-line-chart.component.html',
-  styleUrls: ['./radar-template-axis-evolution-line-chart.component.scss']
+  styleUrls: ['../radar-template-axis-chart-styles.scss']
 })
 export class RadarTemplateAxisEvolutionLineChartComponent implements AfterViewInit {
 
   @ViewChild('axisEvolutionLineChartId') lineCanvasRef: ElementRef;
   @Input() radarTemplate: RadarTemplate;
   @Input() selectedAxisId: Number;
-  axisEvolutionLineChart = [];
+  axisEvolutionLineChart = { destroy: ()=>{}};
 
   constructor() {
   }
@@ -24,6 +24,12 @@ export class RadarTemplateAxisEvolutionLineChartComponent implements AfterViewIn
     });
   }
 
+  updateChart(axisId){
+    this.selectedAxisId = axisId;
+    this.axisEvolutionLineChart.destroy()
+    this.createAxisEvolutionLineChart()
+  }
+
   private createAxisEvolutionLineChart() {
     const ctx = this.lineCanvasRef.nativeElement.getContext('2d');
     const axisEvolutionLineChartData = this.parseAxisEvolutionLineChartData();
@@ -31,6 +37,8 @@ export class RadarTemplateAxisEvolutionLineChartComponent implements AfterViewIn
       type: 'line',
       data: axisEvolutionLineChartData,
       options: {
+        responsive: true, 
+        maintainAspectRatio: false,
         legend: {
           display: false,
         },
