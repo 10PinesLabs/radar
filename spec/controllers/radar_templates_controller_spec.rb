@@ -80,7 +80,7 @@ RSpec.describe RadarTemplatesController, type: :controller do
 
         it 'the radar template belongs to the logged user' do
           subject
-          expect(RadarTemplate.last.user_id).to eq logged_user.id
+          expect(RadarTemplate.last.owner_id).to eq logged_user.id
         end
       end
 
@@ -137,7 +137,7 @@ RSpec.describe RadarTemplatesController, type: :controller do
     end
 
     context 'When requesting to show a radar' do
-      let(:a_radar_template) {create :radar_template, user: logged_user}
+      let(:a_radar_template) {create :radar_template, owner: logged_user}
 
       subject do
         get :show, params: {id: a_radar_template.id}
