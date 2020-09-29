@@ -31,4 +31,8 @@ export class HeaderComponent implements OnInit {
     this.tokenService.logout();
     this.router.navigate(['/']);
   }
+
+  navegateToRadares(){
+    this.router.navigate(['/radarTemplates'])
+  }
 }
