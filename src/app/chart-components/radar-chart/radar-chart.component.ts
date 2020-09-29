@@ -156,7 +156,7 @@ export class RadarChartComponent implements AfterViewInit {
           stepSize: 1,
         },
         pointLabels: {
-          fontSize: 18,
+          fontSize: 10,
           display: this.showLabels,
         }
       },
