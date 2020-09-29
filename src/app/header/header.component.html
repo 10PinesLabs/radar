@@ -6,14 +6,15 @@
 
 
     <div class="header-buttons">
-      <button type="button" class=" btn btn-light waves-effect px-3">
-        Radares
-      </button>
+      <div *ngIf="isLoggedIn()">
+        <button type="button" class=" btn btn-light waves-effect px-3" (click)="navegateToRadares()">
+          Radares
+        </button>
 
-      <button type="button" class=" btn btn-light waves-effect px-3">
-        {{user}}
-      </button>
-
+        <button type="button" class=" btn btn-light waves-effect px-3">
+          {{user}}
+        </button>
+      </div>
       <input type="image" src="assets/images/help-circle.svg" />
 
     </div>
