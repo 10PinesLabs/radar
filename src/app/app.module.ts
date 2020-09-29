@@ -101,6 +101,7 @@ import {FitTextDirective} from './commons/directives/fittext.directive'
     {provide: 'RadarService', useClass: HttpRadarService},
     {provide: 'RadarTemplateService', useClass: HttpRadarTemplateService},
     {provide: HTTP_INTERCEPTORS, useClass: HttpConfigInterceptor, multi: true},
+    TokenService
   ],
   bootstrap: [AppComponent]
 })
