@@ -1,5 +1,15 @@
 /* Small devices (landscape phones, to 768px) */
 .view-container-router{
   padding-top: 5em;
-  padding-bottom: 3%;
+  height: 100vh;
+  background-image: url('../assets/images/Fondo-pinos.png');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  overflow-y: hidden;
+  background-position: bottom;
+}
+
+.view-scrollable-container {
+  overflow-y: auto;
+  height: 95vh;
 }
