@@ -1,7 +1,7 @@
 import {Component, Input, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
 import { RadarTemplate } from 'src/model/radarTemplate';
 import { Chart } from 'chart.js';
-import {CHART_COLORS} from "../../radar-template-axis-evolution.component";
+import {CHART_COLORS} from "../../../../app.component";
 
 @Component({
   selector: 'app-axis-evolution-line-chart',
@@ -37,7 +37,7 @@ export class RadarTemplateAxisEvolutionLineChartComponent implements AfterViewIn
       type: 'line',
       data: axisEvolutionLineChartData,
       options: {
-        responsive: true, 
+        responsive: true,
         maintainAspectRatio: false,
         legend: {
           display: false,

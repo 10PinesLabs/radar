@@ -1,7 +1,7 @@
 import {Component, Input, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
 import { RadarTemplate } from 'src/model/radarTemplate';
 import { Chart } from 'chart.js';
-import {CHART_COLORS, POINTS_RANGE} from "../../radar-template-axis-evolution.component";
+import {CHART_COLORS, POINTS_RANGE} from "../../../../app.component";
 
 @Component({
   selector: 'app-axis-evolution-dispersion-chart',
@@ -32,7 +32,7 @@ export class RadarTemplateAxisEvolutionDispersionChartComponent implements After
       fillOpacity: .3,
       data: axisEvolutionLineChartData,
       options: {
-        responsive: true, 
+        responsive: true,
         maintainAspectRatio: false,
         legend: {
           position: "bottom",
