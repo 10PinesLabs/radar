@@ -178,6 +178,33 @@ RSpec.describe RadarTemplatesController, type: :controller do
 
     end
 
+    context 'when requesting to share a radar' do
+
+      let(:radar_template){create :radar_template, owner: logged_user}
+      let(:shared_user){create :user}
+
+      subject do
+        post :share, params:{  radar_template_id: radar_template.id, user_id: shared_user.id}
+      end
+
+      it 'the request should be sucssessfull' do
+        expect(subject).to have_http_status :ok
+      end
+
+      context 'after the request logged as a shared user' do
+        before do
+          subject
+          allow(JWT).to receive(:decode).and_return [shared_user.as_json]
+        end
+
+        it 'should be able to see the radar template' do
+          expect(get :show, params:{id: radar_template.id}).to have_http_status :ok
+        end
+      end
+
+
+    end
+
     xcontext 'When requesting to close a radar' do
 
       def request_close_radar

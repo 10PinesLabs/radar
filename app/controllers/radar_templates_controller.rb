@@ -11,16 +11,25 @@ class RadarTemplatesController < ApplicationController
   end
 
   def show
-    radar_template = RadarTemplate.find(params.require(:id))
-    unless radar_template.owner_id == @logged_user['id']
-      render json: { errors: radar_not_found_message}, :status => :not_found
-      return
+    do_with_radar_template_or_render_error params.require(:id) do |template|
+      render json: template, status: :ok
     end
-    render json: radar_template, status: :ok
   end
 
   def index
     render json: RadarTemplate.where(:user_id => @logged_user['id']), status: :ok
+  end
+
+  def share
+    shared_user = User.find(params.require(:user_id))
+    do_with_radar_template_or_render_error params.require(:radar_template_id) do |template|
+      begin
+        template.agregar_usuario(@logged_user, shared_user)
+        render status: :ok
+      rescue StandardError => error_message
+        render status: :unauthorized, json: error_message
+      end
+    end
   end
 
   private
@@ -31,6 +40,15 @@ class RadarTemplatesController < ApplicationController
 
   def radar_not_found_message
     "No se encontro el radar template"
+  end
+
+  def do_with_radar_template_or_render_error template_id
+    radar_template = RadarTemplate.find(template_id)
+    unless radar_template.owner_id == @logged_user['id']
+      render json: { errors: radar_not_found_message}, :status => :not_found
+      return
+    end
+    yield radar_template
   end
 
 end

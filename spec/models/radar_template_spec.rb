@@ -35,14 +35,20 @@ RSpec.describe RadarTemplate, type: :model do
       end
 
       it 'no agrega el usuario a la coleccion' do
-        subject
+        subject rescue nil
         expect(radar_template.users.size).to eq 0
       end
 
     end
 
     context 'si el usuario ya lo posee' do
+      before do
+        subject
+      end
+
       it 'no lo vuelve a agregar' do
+        subject
+        expect(radar_template.users.size).to eq 1
       end
     end
 
