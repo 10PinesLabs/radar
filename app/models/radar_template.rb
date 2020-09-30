@@ -12,11 +12,19 @@ class RadarTemplate < ApplicationRecord
   end
 
   def agregar_usuario (owner, user)
-    if owner.id == self.owner.id
+    if is_owned_by? owner
       users << user
       return
     end
     raise OWNER_ERROR
+  end
+
+  def is_know_by? user
+    users.include?(user) || is_owned_by?(user)
+  end
+
+  def is_owned_by? user
+    user.id == self.owner.id
   end
 
 end

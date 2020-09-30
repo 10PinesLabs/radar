@@ -176,32 +176,58 @@ RSpec.describe RadarTemplatesController, type: :controller do
         end
       end
 
+      context 'with a user that the radar has been shared to' do
+        let(:shared_user){create :user}
+
+        before do
+          post :share, params:{ radar_template_id: a_radar_template.id, user_id: shared_user.id}
+          allow(JWT).to receive(:decode).and_return [shared_user.as_json]
+        end
+
+        it 'should be able to see the radar template' do
+          expect(subject).to have_http_status :ok
+        end
+      end
     end
 
     context 'when requesting to share a radar' do
 
       let(:radar_template){create :radar_template, owner: logged_user}
-      let(:shared_user){create :user}
+      let(:another_user){create :user}
 
-      subject do
-        post :share, params:{  radar_template_id: radar_template.id, user_id: shared_user.id}
+      def compartir
+        post :share, params:{  radar_template_id: radar_template.id, user_id: another_user.id}
       end
 
       it 'the request should be sucssessfull' do
-        expect(subject).to have_http_status :ok
+        compartir
+        expect(response).to have_http_status :ok
       end
 
-      context 'after the request logged as a shared user' do
+      context 'as shared radar user' do
         before do
-          subject
-          allow(JWT).to receive(:decode).and_return [shared_user.as_json]
+          compartir
+          allow(JWT).to receive(:decode).and_return [another_user.as_json]
         end
 
-        it 'should be able to see the radar template' do
-          expect(get :show, params:{id: radar_template.id}).to have_http_status :ok
+        it 'should return unauthorized' do
+          compartir
+          expect(response).to have_http_status :unauthorized
         end
       end
 
+      context 'as a user not knower of radar template' do
+
+        before do
+          allow(JWT).to receive(:decode).and_return [another_user.as_json]
+        end
+
+        it 'should return not found' do
+          compartir
+          expect(response).to have_http_status :not_found
+        end
+
+      end
 
     end
 

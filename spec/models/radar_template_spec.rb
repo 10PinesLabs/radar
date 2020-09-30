@@ -1,14 +1,37 @@
 require 'rails_helper'
 
 RSpec.describe RadarTemplate, type: :model do
+
+  let(:radar_template){create :radar_template, owner: owner}
+  let(:owner){create :user}
+  let(:user){create :user}
+
+  describe '#is_owned_by?' do
+    it 'el dueño del template lo posee' do
+      expect(radar_template.is_owned_by? owner).to be true
+    end
+
+    it 'otro usuario no lo posee' do
+      expect(radar_template.is_owned_by? user).to be false
+    end
+  end
+
+  describe '#is_know_by?' do
+    it 'al crearse el template es conocido por su dueño' do
+      expect(radar_template.is_know_by? owner).to be true
+    end
+
+    it 'al crearse el template no es conocido por otro usuario' do
+      expect(radar_template.is_know_by? user).to be false
+    end
+  end
+
   describe '#agregar_usuario ' do
     subject do
       radar_template.agregar_usuario owner, user
     end
 
-    let(:radar_template){create :radar_template, owner: owner}
-    let(:owner){create :user}
-    let(:user){create :user}
+
 
     context 'en caso de exito' do
 
@@ -17,10 +40,22 @@ RSpec.describe RadarTemplate, type: :model do
         expect(radar_template.users).to contain_exactly(user)
       end
 
-      it 'el usuario lo posee' do
+      it 'el usuario lo conoce' do
         subject
         expect(user.radar_templates).to contain_exactly(radar_template)
       end
+
+      it 'el template sabe que el usuario lo conoce' do
+        subject
+        expect(radar_template.is_know_by? user).to eq true
+      end
+
+      it 'el usuario no lo posee' do
+        subject
+        expect(radar_template.is_owned_by? user).to eq false
+      end
+
+
     end
 
     context 'si el owner no posee el radar template ' do

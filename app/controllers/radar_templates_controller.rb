@@ -25,7 +25,7 @@ class RadarTemplatesController < ApplicationController
     do_with_radar_template_or_render_error params.require(:radar_template_id) do |template|
       begin
         template.agregar_usuario(@logged_user, shared_user)
-        render status: :ok
+        render status: :ok, json: "El radar se compartio satisfactoriamente"
       rescue StandardError => error_message
         render status: :unauthorized, json: error_message
       end
@@ -44,7 +44,7 @@ class RadarTemplatesController < ApplicationController
 
   def do_with_radar_template_or_render_error template_id
     radar_template = RadarTemplate.find(template_id)
-    unless radar_template.owner_id == @logged_user.id
+    unless radar_template.is_know_by? @logged_user
       render json: { errors: radar_not_found_message}, :status => :not_found
       return
     end
