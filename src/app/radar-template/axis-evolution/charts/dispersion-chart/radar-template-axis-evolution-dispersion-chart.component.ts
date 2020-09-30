@@ -13,9 +13,15 @@ export class RadarTemplateAxisEvolutionDispersionChartComponent implements After
   @ViewChild('axisEvolutionDispersionChartId') dispersionCanvasRef: ElementRef;
   @Input() radarTemplate: RadarTemplate;
   @Input() selectedAxisId: Number;
-  axisEvolutionDispersionChart = [];
+  axisEvolutionDispersionChart = {destroy: () => {}};
 
   constructor() {
+  }
+
+  updateChart(axisId){
+    this.selectedAxisId = axisId;
+    this.axisEvolutionDispersionChart.destroy()
+    this.createAxisEvolutionDispersionChart()
   }
 
   ngAfterViewInit() {
