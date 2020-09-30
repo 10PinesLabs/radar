@@ -11,7 +11,8 @@ class RadarTemplatesController < ApplicationController
   end
 
   def show
-    do_with_radar_template_or_render_error params.require(:id) do |template|
+    template_id = params.require(:id)
+    do_with_radar_template_or_render_error template_id do |template|
       render json: template, status: :ok
     end
   end
@@ -22,7 +23,8 @@ class RadarTemplatesController < ApplicationController
 
   def share
     shared_user = User.find(params.require(:user_id))
-    do_with_radar_template_or_render_error params.require(:radar_template_id) do |template|
+    template_id = params.require(:radar_template_id)
+    do_with_radar_template_or_render_error template_id do |template|
       begin
         template.agregar_usuario(@logged_user, shared_user)
         render status: :ok, json: "El radar se compartio satisfactoriamente"
