@@ -6,7 +6,7 @@ class RadarTemplatesController < ApplicationController
     axes = params.require(:axes).map { |axis| create_axis(axis) }
     name = params.require(:name)
     description = params.require(:description)
-    radar_template = RadarTemplate.create!(axes: axes, name: name, description: description, owner_id: @logged_user['id'])
+    radar_template = RadarTemplate.create!(axes: axes, name: name, description: description, owner_id: @logged_user.id)
     render json: radar_template, status: :created
   end
 
@@ -17,7 +17,7 @@ class RadarTemplatesController < ApplicationController
   end
 
   def index
-    render json: RadarTemplate.where(:user_id => @logged_user['id']), status: :ok
+    render json: RadarTemplate.where(:user_id => @logged_user.id), status: :ok
   end
 
   def share
@@ -44,7 +44,7 @@ class RadarTemplatesController < ApplicationController
 
   def do_with_radar_template_or_render_error template_id
     radar_template = RadarTemplate.find(template_id)
-    unless radar_template.owner_id == @logged_user['id']
+    unless radar_template.owner_id == @logged_user.id
       render json: { errors: radar_not_found_message}, :status => :not_found
       return
     end

@@ -11,7 +11,8 @@ class ApplicationController < ActionController::Base
                &.last
 
     begin
-      @logged_user = JWT.decode(header, Rails.configuration.jwt_secret)[0]
+      logged_user_hash = JWT.decode(header, Rails.configuration.jwt_secret)[0]
+      @logged_user = User.find_by_id(logged_user_hash['id'])
     rescue JWT::DecodeError => e
       render json: { errors: e.message }, status: :unauthorized
     end
