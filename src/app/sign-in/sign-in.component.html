@@ -1,18 +1,13 @@
 <div class="sign-in">
-  <div class="card card-sign-in">
+  <div class="card-sign-in">
+    <div class="card-body card-body-sign-in">
+      <img src="assets/images/logo-radar.svg">
+      <p>Logueate usando tu usuario de:</p>
 
-    <div class="alert alert-danger alert-sign-in" role="alert">
-      Necesita loguearse para continuar
+      <div class="parent-button-sign-in" >
+        <app-button-with-icon class="button-sign-in"  *ngFor="let provider of providers" [onClick]="loginWith(provider.name)" label="{{provider.label}}"
+                              type="success" iconImgSrc="{{provider.logo}}" [onClick]=""></app-button-with-icon>
+      </div>
     </div>
-
-      <div class="card-body card-body-sign-in">
-        <h5 class="card-title">Radar</h5>
-        <p>Logueate usando tu usuario de:</p>
-
-        <div class="parent-button-sign-in" >
-        <app-button-with-icon class="button-sign-in"  *ngFor="let provider of providers" [onClick]="loginWith(provider.name)" label="{{provider.label}}" type="primary" iconImgSrc="{{provider.logo}}" [onClick]=""></app-button-with-icon>
-        </div>
-        
-      </div>  
-    </div>
+  </div>
 </div>
