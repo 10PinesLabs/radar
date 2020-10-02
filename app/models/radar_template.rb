@@ -10,7 +10,7 @@ class RadarTemplate < ApplicationRecord
     axes.count
   end
 
-  def add_user (owner, user)
+  def add_user(owner, user)
     validate_ownership! owner
     users << user
   end

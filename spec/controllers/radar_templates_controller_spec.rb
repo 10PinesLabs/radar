@@ -29,7 +29,7 @@ RSpec.describe RadarTemplatesController, type: :controller do
     }
   end
 
-  def serialized_radar_template(radar_template)
+  def serialized_radar_template(radar_template, user)
     {
         'id' => radar_template.id,
         'radars' => radar_template.radars.map {|axis| serialized_radar(axis)},
@@ -38,6 +38,7 @@ RSpec.describe RadarTemplatesController, type: :controller do
         'description' => radar_template.description,
         'active' => radar_template.active,
         'created_at' => radar_template.created_at.as_json,
+        'is_owner' => radar_template.is_owned_by?(user)
     }
   end
 
@@ -159,7 +160,7 @@ RSpec.describe RadarTemplatesController, type: :controller do
 
         it 'should return the radar' do
           subject
-          expect(JSON.parse(response.body)).to eq serialized_radar_template(a_radar_template)
+          expect(JSON.parse(response.body)).to eq serialized_radar_template(a_radar_template, logged_user)
         end
       end
 
@@ -244,7 +245,7 @@ RSpec.describe RadarTemplatesController, type: :controller do
 
       it 'returns owned templates' do
         subject
-        expect(JSON.parse(response.body)).to contain_exactly(serialized_radar_template(a_radar_template))
+        expect(JSON.parse(response.body)).to contain_exactly(serialized_radar_template(a_radar_template, logged_user))
       end
 
       context 'if another user has shared radar templates with the logged user' do
@@ -257,7 +258,7 @@ RSpec.describe RadarTemplatesController, type: :controller do
 
         it 'includes those radar templates in the response' do
           subject
-          expect(JSON.parse(response.body)).to contain_exactly(serialized_radar_template(a_radar_template))
+          expect(JSON.parse(response.body)).to contain_exactly(serialized_radar_template(a_radar_template, logged_user))
         end
       end
     end
