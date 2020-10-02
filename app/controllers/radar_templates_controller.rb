@@ -18,7 +18,7 @@ class RadarTemplatesController < ApplicationController
   end
 
   def index
-    render json: RadarTemplate.where(:user_id => @logged_user.id), status: :ok
+    render json: RadarTemplate.where(:owner_id => @logged_user.id), status: :ok
   end
 
   def share
