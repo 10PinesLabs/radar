@@ -8,13 +8,28 @@ RSpec.describe RadarTemplate, type: :model do
 
   describe '#is_owned_by?' do
 
-    it 'el dueño del template lo posee' do
-      expect(radar_template.is_owned_by? owner).to be true
+    subject do
+      radar_template.is_owned_by? user
     end
 
-    it 'otro usuario no lo posee' do
-      expect(radar_template.is_owned_by? user).to be false
+    context 'si el usuario posee el radar template' do
+
+      before do
+        radar_template.update!(owner: user)
+      end
+
+      it 'devuelve true' do
+        expect(subject).to be true
+      end
     end
+
+    context 'si el usuario no posee el radar template' do
+      it 'devuelve false' do
+        expect(subject).to be false
+
+      end
+    end
+
   end
 
   describe '#is_know_by?' do
@@ -32,8 +47,6 @@ RSpec.describe RadarTemplate, type: :model do
       radar_template.agregar_usuario owner, user
     end
 
-
-
     context 'en caso de exito' do
 
       it 'lo agrega a la coleccion' do
@@ -45,17 +58,6 @@ RSpec.describe RadarTemplate, type: :model do
         subject
         expect(user.radar_templates).to contain_exactly(radar_template)
       end
-
-      it 'el template sabe que el usuario lo conoce' do
-        subject
-        expect(radar_template.is_known_by? user).to eq true
-      end
-
-      it 'el usuario no lo posee' do
-        subject
-        expect(radar_template.is_owned_by? user).to eq false
-      end
-
 
     end
 
