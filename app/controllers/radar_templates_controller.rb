@@ -30,7 +30,7 @@ class RadarTemplatesController < ApplicationController
 
     if_radar_present radar_template_id do |template|
       begin
-        template.agregar_usuario(@logged_user, shared_user)
+        template.add_user(@logged_user, shared_user)
         render status: :ok, json: "El radar se compartio satisfactoriamente"
       rescue StandardError => error_message
         render status: :unauthorized, json: error_message

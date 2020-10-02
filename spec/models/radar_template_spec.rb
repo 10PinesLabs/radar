@@ -44,7 +44,7 @@ RSpec.describe RadarTemplate, type: :model do
 
   describe '#agregar_usuario ' do
     subject do
-      radar_template.agregar_usuario owner, user
+      radar_template.add_user owner, user
     end
 
     context 'en caso de exito' do
@@ -65,7 +65,7 @@ RSpec.describe RadarTemplate, type: :model do
       let(:otro_owner){create :user}
 
       subject do
-        radar_template.agregar_usuario otro_owner, user
+        radar_template.add_user otro_owner, user
       end
       it 'lanza el error correcto' do
         radar_template

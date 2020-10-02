@@ -6,12 +6,11 @@ class RadarTemplate < ApplicationRecord
   has_and_belongs_to_many :users
   default_scope { order(created_at: :desc) }
 
-
   def amount_of_axes
     axes.count
   end
 
-  def agregar_usuario (owner, user)
+  def add_user (owner, user)
     validate_ownership! owner
     users << user
   end
