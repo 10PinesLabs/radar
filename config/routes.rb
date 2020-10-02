@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   scope path: '/api' do
-    resources :radar_templates, only: %i[create show index] do
-
+    resources :radar_templates, only: %i[create show index share] do
+      post 'share/:user_id', to: "radar_templates#share"
     end
     resources :radars, only: %i[create show index] do
       resources :votes, only: [:create]

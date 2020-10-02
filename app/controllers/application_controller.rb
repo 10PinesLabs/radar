@@ -23,7 +23,8 @@ class ApplicationController < ActionController::Base
                  .headers['Authorization']
                  &.split(' ')
                  &.last
-    @logged_user = JWT.decode(header, Rails.configuration.jwt_secret)[0]
+    logged_user_hash = JWT.decode(header, Rails.configuration.jwt_secret)[0]
+    @logged_user = User.find_by_id(logged_user_hash['id'])
 
   end
 
