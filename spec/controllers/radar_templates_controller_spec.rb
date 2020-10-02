@@ -231,21 +231,34 @@ RSpec.describe RadarTemplatesController, type: :controller do
 
     end
 
-    context 'when requesting to list availavble templates' do
-
-      let(:a_radar_template) {create :radar_template, owner: logged_user}
+    context 'when requesting to list available templates' do
+      let!(:a_radar_template) {create :radar_template, owner: logged_user}
 
       subject do
         get :index
       end
 
-      it 'should return ok' do
+      it 'returns ok' do
         expect(subject).to have_http_status :ok
       end
 
-      it 'owned templates should be listed' do
+      it 'returns owned templates' do
         subject
-        expect(JSON.parse(response.body)).to eq serialized_radar_template(a_radar_template)
+        expect(JSON.parse(response.body)).to contain_exactly(serialized_radar_template(a_radar_template))
+      end
+
+      context 'if another user has shared radar templates with the logged user' do
+        let(:another_user) {create :user}
+        let!(:a_radar_template) {create :radar_template, owner: another_user}
+
+        before do
+          a_radar_template.add_user another_user, logged_user
+        end
+
+        it 'includes those radar templates in the response' do
+          subject
+          expect(JSON.parse(response.body)).to contain_exactly(serialized_radar_template(a_radar_template))
+        end
       end
     end
 

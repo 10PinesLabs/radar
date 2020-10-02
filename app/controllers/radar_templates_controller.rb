@@ -18,10 +18,7 @@ class RadarTemplatesController < ApplicationController
   end
 
   def index
-    owned_templates = RadarTemplate.where(:owner_id => @logged_user.id)
-    shared_templates = @logged_user.radar_templates
-    templates = owned_templates + shared_templates
-    render json:templates , status: :ok
+    render json: @logged_user.accessible_radar_templates , status: :ok
   end
 
   def share
@@ -30,7 +27,7 @@ class RadarTemplatesController < ApplicationController
 
     if_radar_present radar_template_id do |template|
       begin
-        template.agregar_usuario(@logged_user, shared_user)
+        template.add_user(@logged_user, shared_user)
         render status: :ok, json: "El radar se compartio satisfactoriamente"
       rescue StandardError => error_message
         render status: :unauthorized, json: error_message
