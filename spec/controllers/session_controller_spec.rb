@@ -8,8 +8,8 @@ RSpec.describe SessionController, type: :controller do
       get :user
     end
 
-    it 'should return unauthorizd' do
-      expect(subject).to have_http_status :unauthorized
+    it 'should return not found' do
+      expect(subject).to have_http_status :not_found
     end
 
     context 'and the user is logged in' do
