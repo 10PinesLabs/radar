@@ -7,18 +7,18 @@ class RadarTemplatesController < ApplicationController
     name = params.require(:name)
     description = params.require(:description)
     radar_template = RadarTemplate.create!(axes: axes, name: name, description: description, owner_id: @logged_user.id)
-    render json: radar_template, status: :created
+    render json: radar_template, logged_user: @logged_user, status: :created
   end
 
   def show
     radar_template_id = params.require(:id)
     if_radar_present radar_template_id do |template|
-      render json: template, status: :ok
+      render json: template, logged_user: @logged_user, status: :ok
     end
   end
 
   def index
-    render json: @logged_user.accessible_radar_templates , status: :ok
+    render json: @logged_user.accessible_radar_templates, logged_user: @logged_user , status: :ok
   end
 
   def share
