@@ -12,7 +12,7 @@ class RadarTemplatesController < ApplicationController
 
   def show
     template_id = params.require(:id)
-    do_with_radar_template_or_render_error template_id do |template|
+    with_radar template_id do |template|
       render json: template, status: :ok
     end
   end
@@ -24,7 +24,8 @@ class RadarTemplatesController < ApplicationController
   def share
     shared_user = User.find(params.require(:user_id))
     template_id = params.require(:radar_template_id)
-    do_with_radar_template_or_render_error template_id do |template|
+
+    with_radar template_id do |template|
       begin
         template.agregar_usuario(@logged_user, shared_user)
         render status: :ok, json: "El radar se compartio satisfactoriamente"
@@ -32,6 +33,7 @@ class RadarTemplatesController < ApplicationController
         render status: :unauthorized, json: error_message
       end
     end
+
   end
 
   private
@@ -40,17 +42,18 @@ class RadarTemplatesController < ApplicationController
     Axis.new(name: axis.require(:name), description: axis['description'])
   end
 
-  def radar_not_found_message
-    "No se encontro el radar template"
+  def with_radar template_id
+    radar_template = RadarTemplate.find(template_id)
+    render_not_found unless radar_template.is_known_by? @logged_user
+    yield radar_template
   end
 
-  def do_with_radar_template_or_render_error template_id
-    radar_template = RadarTemplate.find(template_id)
-    unless radar_template.is_know_by? @logged_user
-      render json: { errors: radar_not_found_message}, :status => :not_found
-      return
-    end
-    yield radar_template
+  def render_not_found
+    render json: { errors: radar_not_found_message}, :status => :not_found
+  end
+
+  def radar_not_found_message
+    "No se encontro el radar template"
   end
 
 end
