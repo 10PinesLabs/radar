@@ -47,8 +47,7 @@ class RadarTemplatesController < ApplicationController
 
   def if_radar_present template_id
     radar_template = RadarTemplate.find(template_id)
-    render_not_found unless radar_template.is_known_by? @logged_user
-    yield radar_template
+    radar_template.is_known_by?(@logged_user) ? yield(radar_template) : render_not_found
   end
 
   def render_not_found
