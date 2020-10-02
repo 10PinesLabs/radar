@@ -199,7 +199,7 @@ RSpec.describe RadarTemplatesController, type: :controller do
         post :share, params:{  radar_template_id: radar_template.id, user_id: another_user.id}
       end
 
-      it 'the request should be sucssessfull' do
+      it 'the request should be successful' do
         compartir
         expect(response).to have_http_status :ok
       end
