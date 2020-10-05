@@ -1,0 +1,13 @@
+<div class="sign-in">
+  <div class="card-sign-in">
+    <div class="card-body card-body-sign-in">
+      <img src="assets/images/logo-radar.svg">
+      <p>Logueate usando tu usuario de:</p>
+
+      <div class="parent-button-sign-in" >
+        <app-button-with-icon class="button-sign-in"  *ngFor="let provider of providers" [onClick]="loginWith(provider.name)" label="{{provider.label}}"
+                              type="success" iconImgSrc="{{provider.logo}}" [onClick]=""></app-button-with-icon>
+      </div>
+    </div>
+  </div>
+</div>

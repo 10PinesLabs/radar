@@ -1,0 +1,27 @@
+<div *ngIf="!radarIsUndefined(); else radarUndefined">
+
+  <app-card-container [header]="title()">
+
+    <div *ngIf="!radar.isClosed(); else radarClosed">
+
+      <div *ngIf="!isVoted(); else elseVotedBlock">
+          <app-voting-radar [radar]="radar" [axes]="axes" [(voted)]="voted" ></app-voting-radar>
+      </div>
+
+      <ng-template #elseVotedBlock>
+        <app-voted-radar></app-voted-radar>
+      </ng-template>
+
+    </div>
+
+    <ng-template #radarClosed>
+      <h3>El radar está cerrado</h3>
+    </ng-template>
+
+  </app-card-container>
+
+</div>
+
+<ng-template #radarUndefined>
+  <app-card-container [header]="CARGANDO"></app-card-container>
+</ng-template>

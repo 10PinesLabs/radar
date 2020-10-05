@@ -1,0 +1,16 @@
+<div class="axis-table">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Título</th>
+        <th scope="col">Media</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let axisStatistics of axesStatistics">
+        <td>{{ axisStatistics.name }}</td>
+        <td>{{ axisStatistics.mean }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,18 @@
+h2 {
+  margin: 0.5em;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+p {
+  margin: 1em;
+}
+
+.voted-radar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

@@ -1,0 +1,56 @@
+<app-card-container [header]="title">
+
+  <div class="stc-container">
+    <h4 class="stc-title">
+      Elegir radares para comparar
+    </h4>
+
+    <form class="stc-form">
+      <div class="form-group">
+        <label for="primerRadar">Primer Radar</label>
+        <select
+          class="form-control stc-select"
+          name="primerRadar"
+          [(ngModel)]="firstRadar"
+        >
+          <option *ngFor="let radar of radars" [ngValue]="radar">
+            {{radar.name}}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="segundoRadarToCompare">Segundo Radar</label>
+        <select
+          class="form-control stc-select"
+          name="segundoRadarToCompare"
+          [(ngModel)]="secondRadar"
+        >
+          <option *ngFor="let radar of radars" [ngValue]="radar">
+            {{radar.name}}
+          </option>
+        </select>
+      </div>
+    </form>
+
+    <div class="stc-buttons">
+
+      <button
+        type="button"
+        class="btn btn-secondary stc-back-to-index-button"
+        (click)="backToIndex()"
+      >
+        Volver al index
+      </button>
+
+      <button
+        type="button"
+        class="btn btn-success stc-compare-button"
+        (click)="compareRadars()"
+      >
+        Comparar
+      </button>
+    </div>
+  </div>
+
+</app-card-container>

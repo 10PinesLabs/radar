@@ -1,0 +1,30 @@
+<div class="radar-template-title-container">
+  <div class="radar-template-title-subcontainer">
+    <i class="fas fa-dot-circle" color="green"></i>
+    <h3 class="radar-template-title">{{ radarTemplate.name }}</h3>
+  </div>
+  <div>
+    <app-button-with-icon iconClass="far fa-plus-square" label="Nuevo Radar" type="success"
+                          [onClick]=""></app-button-with-icon>
+    <app-button-with-icon iconClass="fas fa-chart-pie" label="Ver Modelo" type="secondary"
+                          [onClick]="navigateToRadarTemplate"></app-button-with-icon>
+  </div>
+
+</div>
+<span class="card-text radar-template-card-description"> {{ radarTemplate.description }}</span>
+
+<div class="new-radar-section">
+  <b> Radares </b>
+</div>
+
+<div class="radar-container">
+  <table class="table table-striped">
+    <tbody>
+      <tr *ngFor="let radar of radarTemplate.radars | reverse">
+        <td class="radar-row">
+          <app-radar-row [radar]="radar"></app-radar-row>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

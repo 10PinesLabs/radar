@@ -1,0 +1,22 @@
+<div>
+  <div class="barra-navegacion">
+    <div class="logo">
+      <a href=""><img src="assets/images/logo-radar.svg"></a>
+    </div>
+
+
+    <div class="header-buttons">
+      <div *ngIf="isLoggedIn()">
+        <button type="button" class=" btn btn-light waves-effect px-3" (click)="navegateToRadares()">
+          Radares
+        </button>
+
+        <button type="button" class=" btn btn-light waves-effect px-3">
+          {{user}}
+        </button>
+      </div>
+      <input type="image" src="assets/images/help-circle.svg" />
+
+    </div>
+  </div>
+</div>

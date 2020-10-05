@@ -1,0 +1,49 @@
+h5 {
+  text-align: center;
+}
+
+p {
+  text-align: center;
+}
+
+.sign-in {
+  width: 400px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+}
+
+.alert-sign-in {
+  text-align: center;
+}
+
+.card-sign-in {
+  width: 25rem;
+  background: rgb(255, 255, 255, 0.3);
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.card-body-sign-in {
+  display: flex;
+  flex-direction: column;
+}
+
+.button-sign-in {
+  margin: 0.8em 0;
+}
+
+.logo-sign-in {
+  max-width: 2em;
+  max-height: 2em;
+}
+
+.parent-button-sign-in {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+}

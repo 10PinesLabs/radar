@@ -1,0 +1,17 @@
+.radar-template-container{
+  display: flex;
+  flex-direction: row;
+}
+
+.radar-template-index-details-container{
+  width: 60%;
+}
+
+.radar-template-pre-view-container {
+  min-height: 30em;
+  width: 40%;
+  border-left: 1px silver solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

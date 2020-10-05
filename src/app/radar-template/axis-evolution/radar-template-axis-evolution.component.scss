@@ -1,0 +1,29 @@
+:host{
+  width: 100%;
+  height: 100%;
+}
+
+.charts-container{
+  width: 100%;
+  height: 100%;
+  display:flex;
+  flex-direction: column;
+}
+
+.radar-template-details-right-section-container {
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; width: 100%;
+  height: 100%;
+}
+
+.axis-title {
+  padding-left: 0.5em; font-size: 2em;
+}
+
+.gray{
+  color:gray;
+}
+
+.title-with-icon {
+  display: flex; flex-direction: row; align-items: baseline;
+}
+
