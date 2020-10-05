@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   scope path: '/api' do
-    resources :radar_templates, only: %i[create show index] do
-
+    resources :radar_templates, only: %i[create show index share] do
+      post 'share/:user_id', to: "radar_templates#share"
     end
     resources :radars, only: %i[create show index] do
       resources :votes, only: [:create]
@@ -14,4 +14,5 @@ Rails.application.routes.draw do
   end
   get 'auth/:provider/callback', to: "omni_auth#callback"
   get 'auth/:provider/redirect', to: "omni_auth#redirect"
+  get '/me', to: "session#user"
 end
