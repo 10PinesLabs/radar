@@ -4,4 +4,8 @@ class User < ActiveRecord::Base
   def accessible_radar_templates
     RadarTemplate.where(owner: self) + radar_templates
   end
+
+  def accessible_radar_template_containers
+    RadarTemplateContainer.where(owner: self)
+  end
 end

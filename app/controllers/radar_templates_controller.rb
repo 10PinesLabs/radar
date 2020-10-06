@@ -3,10 +3,14 @@ class RadarTemplatesController < ApplicationController
   before_action :ensure_authenticated!
 
   def create
+    container = RadarTemplateContainer.find(params.require(:radar_template_container_id))
     axes = params.require(:axes).map { |axis| create_axis(axis) }
     name = params.require(:name)
     description = params.require(:description)
-    radar_template = RadarTemplate.create!(axes: axes, name: name, description: description, owner_id: @logged_user.id)
+    radar_template = RadarTemplate.create!(axes: axes, name: name,
+                                           description: description,
+                                           radar_template_container: container,
+                                           owner_id: @logged_user.id)
     render json: radar_template, logged_user: @logged_user, status: :created
   end
 

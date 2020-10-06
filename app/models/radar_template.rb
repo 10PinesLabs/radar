@@ -1,5 +1,7 @@
 class RadarTemplate < ApplicationRecord
   OWNER_ERROR = 'No puede agregar un usuario a un radar template que no le pertenece'
+  belongs_to :radar_template_container
+  validates :radar_template_container, presence: true
   has_many :radars
   has_many :axes
   belongs_to :owner, :class_name => 'User', :foreign_key => 'owner_id', :validate => true
@@ -13,6 +15,12 @@ class RadarTemplate < ApplicationRecord
   def add_user(owner, user)
     validate_ownership! owner
     users << user
+  end
+
+  def close owner
+    validate_ownership! owner
+    update!(active: false)
+    radars.each {|r| r.close owner}
   end
 
   def validate_ownership! owner

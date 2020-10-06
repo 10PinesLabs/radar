@@ -51,6 +51,8 @@ RSpec.describe RadarTemplatesController, type: :controller do
     end
 
     context 'When requesting to create a new radar template' do
+      let(:radar_template_container) { create(:radar_template_container, owner: logged_user)}
+
       subject do
         post :create, params: radar_template_params
       end
@@ -58,6 +60,7 @@ RSpec.describe RadarTemplatesController, type: :controller do
       context 'with axes' do
         let(:radar_template_params) {
           {name: 'New Radar Template', description: 'Radar 2015',
+           radar_template_container_id: radar_template_container.id,
            axes: [
              {name: 'Nombre primera arista', description: 'Esto es una arista nueva del nuevo radar'},
              {name: 'Nombre segunda arista', description: 'Una Arista guardada'}
@@ -94,7 +97,22 @@ RSpec.describe RadarTemplatesController, type: :controller do
 
       context 'without a name' do
         let(:radar_template_params) {
-          {description: 'Radar 2015', axes: [{name: 'Nombre primera arista', description: 'Esto es una arista nueva del nuevo radar'}, {name: 'Nombre segunda arista', description: 'Una Arista guardada'}]}
+          {description: 'Radar 2015',
+           radar_template_container_id: radar_template_container.id,
+           axes: [{name: 'Nombre primera arista', description: 'Esto es una arista nueva del nuevo radar'}, {name: 'Nombre segunda arista', description: 'Una Arista guardada'}]}
+        }
+
+        it 'should be a bad request' do
+          expect(subject).to have_http_status :bad_request
+        end
+      end
+
+      context 'without a container' do
+        let(:radar_template_params) {
+          {description: 'Radar 2015',
+           axes: [{name: 'Nombre primera arista',
+                   description: 'Esto es una arista nueva del nuevo radar'},
+                  {name: 'Nombre segunda arista', description: 'Una Arista guardada'}]}
         }
 
         it 'should be a bad request' do
