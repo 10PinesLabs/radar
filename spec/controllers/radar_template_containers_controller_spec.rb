@@ -119,7 +119,8 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
       end
     end
 
-    context 'When requesting to show a container' do
+    context 'that owns a radar template container' do
+
       let(:radar_template) { create(:radar_template, owner: logged_user)}
       let(:a_radar_template_container) {radar_template.radar_template_container}
 
@@ -129,96 +130,100 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
         a_radar_template_container.update!(owner: logged_user)
       end
 
-      subject do
-        get :show, params: {id: request_radar_template_container_id}
-      end
+      context 'When requesting to show a container' do
+        subject do
+          get :show, params: {id: request_radar_template_container_id}
+        end
 
-      context 'that does not exists' do
-        let(:request_radar_template_container_id) { -1 }
-        it 'should return a not found response' do
-          subject
-          expect(response).to have_http_status :not_found
+        context 'that does not exists' do
+          let(:request_radar_template_container_id) { -1 }
+          it 'should return a not found response' do
+            subject
+            expect(response).to have_http_status :not_found
+          end
+        end
+
+        context 'with a user that owns the radar template container' do
+
+          it 'should return an ok status' do
+            subject
+            expect(response).to have_http_status :ok
+          end
+
+          it 'should return the container with all the radar templates information' do
+            subject
+            expect(JSON.parse(response.body)).to eq serialized_radar_template_container(a_radar_template_container, logged_user)
+          end
+        end
+
+        context 'with a user that do not owns the radar template' do
+          let(:another_user){create :user, name: 'otro pino', provider: 'backoffice'}
+
+          before do
+            allow(JWT).to receive(:decode).and_return [another_user.as_json]
+          end
+
+          it 'should return not found' do
+            subject
+            expect(response).to have_http_status(:not_found)
+          end
+        end
+
+        context 'with a user that the radar has been shared to' do
+          let(:shared_user){create :user}
+
+          before do
+            allow(JWT).to receive(:decode).and_return [logged_user.as_json]
+            post :share, params:{ id: a_radar_template_container.id, user_id: shared_user.id}
+            allow(JWT).to receive(:decode).and_return [shared_user.as_json]
+          end
+
+          it 'should be able to see the radar template' do
+            expect(subject).to have_http_status :ok
+          end
         end
       end
 
-      context 'with a user that owns the radar template container' do
+      context 'when requesting to share a radar template container' do
 
-        it 'should return an ok status' do
-          subject
+        let(:another_user){create :user}
+
+        def share_request
+          post :share, params:{  id: request_radar_template_container_id, user_id: another_user.id}
+        end
+
+        it 'the request should be successful' do
+          share_request
           expect(response).to have_http_status :ok
         end
 
-        it 'should return the container with all the radar templates information' do
-          subject
-          expect(JSON.parse(response.body)).to eq serialized_radar_template_container(a_radar_template_container, logged_user)
-        end
-      end
+        context 'as shared radar user' do
+          before do
+            share_request
+            allow(JWT).to receive(:decode).and_return [another_user.as_json]
+          end
 
-      context 'with a user that do not owns the radar template' do
-        let(:another_user){create :user, name: 'otro pino', provider: 'backoffice'}
-
-        before do
-          allow(JWT).to receive(:decode).and_return [another_user.as_json]
-        end
-
-        it 'should return not found' do
-          subject
-          expect(response).to have_http_status(:not_found)
-        end
-      end
-
-      xcontext 'with a user that the radar has been shared to' do
-        let(:shared_user){create :user}
-
-        before do
-          post :share, params:{ radar_template_id: a_radar_template_container.id, user_id: shared_user.id}
-          allow(JWT).to receive(:decode).and_return [shared_user.as_json]
+          it 'should return unauthorized' do
+            share_request
+            expect(response).to have_http_status :unauthorized
+          end
         end
 
-        it 'should be able to see the radar template' do
-          expect(subject).to have_http_status :ok
-        end
-      end
-    end
+        context 'as a user not knower of radar template' do
 
-    xcontext 'when requesting to share a radar' do
+          before do
+            allow(JWT).to receive(:decode).and_return [another_user.as_json]
+          end
 
-      let(:radar_template){create :radar_template, owner: logged_user}
-      let(:another_user){create :user}
+          it 'should return not found' do
+            share_request
+            expect(response).to have_http_status :not_found
+          end
 
-      def share_request
-        post :share, params:{  radar_template_id: radar_template.id, user_id: another_user.id}
-      end
-
-      it 'the request should be successful' do
-        share_request
-        expect(response).to have_http_status :ok
-      end
-
-      context 'as shared radar user' do
-        before do
-          share_request
-          allow(JWT).to receive(:decode).and_return [another_user.as_json]
-        end
-
-        it 'should return unauthorized' do
-          share_request
-          expect(response).to have_http_status :unauthorized
-        end
-      end
-
-      context 'as a user not knower of radar template' do
-
-        before do
-          allow(JWT).to receive(:decode).and_return [another_user.as_json]
-        end
-
-        it 'should return not found' do
-          compartir
-          expect(response).to have_http_status :not_found
         end
 
       end
+
 
     end
 
@@ -238,17 +243,17 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
         expect(JSON.parse(response.body)).to contain_exactly(serialized_radar_template_container(a_radar_template_container, logged_user))
       end
 
-      xcontext 'if another user has shared radar templates with the logged user' do
+      context 'if another user has shared radar templates with the logged user' do
         let(:another_user) {create :user}
-        let!(:a_radar_template_container) {create :radar_template, owner: another_user}
+        let!(:a_radar_template_container) {create :radar_template_container, owner: another_user}
 
         before do
-          a_radar_template.add_user another_user, logged_user
+          a_radar_template_container.add_user another_user, logged_user
         end
 
         it 'includes those radar templates in the response' do
           subject
-          expect(JSON.parse(response.body)).to contain_exactly(serialized_radar_template(a_radar_template, logged_user))
+          expect(JSON.parse(response.body)).to contain_exactly(serialized_radar_template_container(a_radar_template_container, logged_user))
         end
       end
     end

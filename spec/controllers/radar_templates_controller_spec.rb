@@ -199,7 +199,7 @@ RSpec.describe RadarTemplatesController, type: :controller do
         let(:shared_user){create :user}
 
         before do
-          post :share, params:{ radar_template_id: a_radar_template.id, user_id: shared_user.id}
+          post :share, params:{ id: a_radar_template.id, user_id: shared_user.id}
           allow(JWT).to receive(:decode).and_return [shared_user.as_json]
         end
 
@@ -215,7 +215,7 @@ RSpec.describe RadarTemplatesController, type: :controller do
       let(:another_user){create :user}
 
       def compartir
-        post :share, params:{  radar_template_id: radar_template.id, user_id: another_user.id}
+        post :share, params:{  id: radar_template.id, user_id: another_user.id}
       end
 
       it 'the request should be successful' do

@@ -1,4 +1,4 @@
-class RadarTemplateContainersController < ApplicationController
+class RadarTemplateContainersController < OwnerableController
 
   before_action :ensure_authenticated!
 
@@ -8,7 +8,7 @@ class RadarTemplateContainersController < ApplicationController
 
   def show
     radar_template_container_id = params.require(:id)
-    if_container_present radar_template_container_id do |container|
+    if_ownerable_present radar_template_container_id do |container|
       render json: container, logged_user: @logged_user, status: :ok
     end
   end
@@ -26,19 +26,29 @@ class RadarTemplateContainersController < ApplicationController
     render json: radar_template_container, logged_user: @logged_user, status: :ok
   end
 
+  def share
+    shared_user = User.find(params.require(:user_id))
+    radar_template_container_id = params.require(:id)
+
+    if_ownerable_present radar_template_container_id do |container|
+      begin
+        container.add_user(@logged_user, shared_user)
+        render status: :ok, json: "El constainer se compartio satisfactoriamente"
+      rescue StandardError => error_message
+        render status: :unauthorized, json: error_message
+      end
+    end
+
+  end
+
   private
 
-  #TODO: Delete duplicated code (see RadarTemplateController)
-  def if_container_present(container_id)
-    radar_template_container = RadarTemplateContainer.find(container_id)
-    radar_template_container.is_owned_by?(@logged_user) ? yield(radar_template_container) : render_not_found
+  def find_ownerable ownerable_id
+    RadarTemplateContainer.find(ownerable_id)
   end
 
-  def render_not_found
-    render json: { errors: radar_not_found_message}, :status => :not_found
-  end
-
-  def radar_not_found_message
+  def not_found_message
     "No se encontro el radar template"
   end
+
 end
