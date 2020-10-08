@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200929172212) do
+ActiveRecord::Schema.define(version: 20201007145423) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,14 +34,32 @@ ActiveRecord::Schema.define(version: 20200929172212) do
     t.index ["radar_template_id"], name: "index_axes_on_radar_template_id", using: :btree
   end
 
-  create_table "radar_templates", force: :cascade do |t|
+  create_table "radar_template_containers", force: :cascade do |t|
     t.text     "description",                null: false
     t.text     "name",                       null: false
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
     t.boolean  "active",      default: true, null: false
-    t.integer  "owner_id",                   null: false
+    t.integer  "owner_id"
+    t.index ["owner_id"], name: "index_radar_template_containers_on_owner_id", using: :btree
+  end
+
+  create_table "radar_template_containers_users", id: false, force: :cascade do |t|
+    t.integer "user_id",                     null: false
+    t.integer "radar_template_container_id", null: false
+    t.index ["user_id"], name: "index_radar_template_containers_users_on_user_id", using: :btree
+  end
+
+  create_table "radar_templates", force: :cascade do |t|
+    t.text     "description",                                null: false
+    t.text     "name",                                       null: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+    t.boolean  "active",                      default: true, null: false
+    t.integer  "owner_id",                                   null: false
+    t.integer  "radar_template_container_id"
     t.index ["owner_id"], name: "index_radar_templates_on_owner_id", using: :btree
+    t.index ["radar_template_container_id"], name: "index_radar_templates_on_radar_template_container_id", using: :btree
   end
 
   create_table "radar_templates_users", id: false, force: :cascade do |t|

@@ -4,6 +4,7 @@ FactoryBot.define do
     name { 'Retiro 2015' }
     description { 'Retiro 2015' }
     owner { association :user }
+    radar_template_container { association :radar_template_container }
 
   end
 
