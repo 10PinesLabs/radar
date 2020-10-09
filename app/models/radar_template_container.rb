@@ -3,6 +3,7 @@ class RadarTemplateContainer < ApplicationRecord
   has_many :radar_templates, -> { order(created_at: :asc) }
   belongs_to :owner, :class_name => 'User', :foreign_key => 'owner_id', :validate => true
   after_create :set_show_code
+  validates_uniqueness_of :show_code
 
   def close owner
     validate_ownership! owner
@@ -13,7 +14,10 @@ class RadarTemplateContainer < ApplicationRecord
   private
 
   def set_show_code
-    update!(show_code: generate_code)
+    self.show_code = generate_code
+    until self.save
+      self.show_code = generate_code
+    end
   end
 
   def generate_code
