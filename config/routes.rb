@@ -5,7 +5,6 @@ Rails.application.routes.draw do
         post :close
         post 'share/:user_id', to: "radar_template_containers#share"
       end
-
     end
     resources :radar_templates, only: %i[create show index share] do
       member do
@@ -20,6 +19,7 @@ Rails.application.routes.draw do
         post :close
       end
     end
+    get 'code', to: "radar_template_containers#show_with_code"
   end
   get 'auth/:provider/callback', to: "omni_auth#callback"
   get 'auth/:provider/redirect', to: "omni_auth#redirect"

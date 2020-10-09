@@ -1,6 +1,6 @@
 class RadarTemplateContainersController < ApplicationController
 
-  before_action :ensure_authenticated!
+  before_action :ensure_authenticated! , except: [:show_with_code]
 
   def index
     render json: @logged_user.accessible_radar_template_containers, logged_user: @logged_user , status: :ok
@@ -11,6 +11,11 @@ class RadarTemplateContainersController < ApplicationController
     if_container_present radar_template_container_id do |container|
       render json: container, logged_user: @logged_user, status: :ok
     end
+  end
+
+  def show_with_code
+    container = RadarTemplateContainer.find_by_show_code(params['#'])
+    container ? render( json: container, logged_user: @logged_user, status: :ok) : render_not_found
   end
 
   def create
@@ -38,7 +43,6 @@ class RadarTemplateContainersController < ApplicationController
         render status: :unauthorized, json: error_message
       end
     end
-
   end
 
   private
