@@ -21,6 +21,6 @@ class RadarTemplateContainer < ApplicationRecord
   end
 
   def generate_code
-    ((1..9).to_a.sample *7).join
+    rand.to_s[2..8]
   end
 end
