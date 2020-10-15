@@ -4,6 +4,6 @@ class RadarTemplateContainerSerializer < ActiveModel::Serializer
 
   def is_owner
     logged_user = instance_options[:logged_user]
-    logged_user ? object.is_owned_by?(logged_user) : false
+    !logged_user.nil? && object.is_owned_by?(logged_user)
   end
 end

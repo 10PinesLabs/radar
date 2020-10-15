@@ -306,38 +306,36 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
         end
       end
     end
+  end
 
-    context 'When requesting to show info with a code' do
-      subject do
-        get :show_with_code, params:{ '#': radar_template_code}
+  context 'When requesting to show info with a code' do
+    subject do
+      get :show_with_code, params:{ '#': radar_template_code}
+    end
+
+    context 'that´s valid code for a template container' do
+
+      let(:radar_template) { create(:radar_template)}
+      let(:a_radar_template_container) {radar_template.radar_template_container}
+
+      let(:radar_template_code) { a_radar_template_container.show_code }
+
+      it 'should return ok' do
+        expect(subject).to have_http_status :ok
       end
 
-      context 'that has a valid code for a template container' do
-
-        let(:radar_template) { create(:radar_template)}
-        let(:a_radar_template_container) {radar_template.radar_template_container}
-
-        let(:radar_template_code) { a_radar_template_container.show_code }
-
-        it 'should return ok' do
-          expect(subject).to have_http_status :ok
-        end
-
-        it 'should return  the radar container of the code serialized' do
-          subject
-          expect(JSON.parse(response.body)).to eq serialized_radar_template_container(a_radar_template_container, logged_user)
-        end
-      end
-
-      context 'that has a invalid code for a template container' do
-        let(:radar_template_code) { '2423235'}
-
-        it 'should return not found' do
-          expect(subject).to have_http_status :not_found
-        end
+      it 'returns the serialized radar template container' do
+        subject
+        expect(JSON.parse(response.body)).to eq serialized_radar_template_container(a_radar_template_container, logged_user)
       end
     end
 
+    context 'that´s invalid' do
+      let(:radar_template_code) { '2423235'}
 
+      it 'returns not found' do
+        expect(subject).to have_http_status :not_found
+      end
+    end
   end
 end
