@@ -1,6 +1,6 @@
 class VotingsController < ApplicationController
 
-  before_action :ensure_authenticated!, except: [:show]
+  before_action :ensure_authenticated!, except: [:show_by_code]
 
   def create
     radar_template_container = RadarTemplateContainer.find(params.require(:radar_template_container_id))
