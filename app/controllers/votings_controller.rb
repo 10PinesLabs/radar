@@ -10,7 +10,7 @@ class VotingsController < ApplicationController
   end
 
   def show_by_code
-    voting = Voting.find_by_code(code: params.require(:code))
+    voting = Voting.find_by_code(params.require(:code))
     render json: voting, status: :ok
   rescue ActiveRecord::RecordNotFound => error
     render_error([error.message], :not_found)
