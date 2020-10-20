@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201007145423) do
+ActiveRecord::Schema.define(version: 20201019171758) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,7 +76,9 @@ ActiveRecord::Schema.define(version: 20201007145423) do
     t.text     "description",       default: "Sin Descripción", null: false
     t.text     "name",                                          null: false
     t.integer  "radar_template_id"
+    t.integer  "voting_id"
     t.index ["radar_template_id"], name: "index_radars_on_radar_template_id", using: :btree
+    t.index ["voting_id"], name: "index_radars_on_voting_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -92,6 +94,15 @@ ActiveRecord::Schema.define(version: 20201007145423) do
   create_table "votes", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "votings", force: :cascade do |t|
+    t.integer  "radar_template_container_id"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.datetime "ends_at"
+    t.string   "code"
+    t.index ["radar_template_container_id"], name: "index_votings_on_radar_template_container_id", using: :btree
   end
 
 end
