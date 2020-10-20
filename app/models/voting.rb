@@ -3,13 +3,17 @@ class Voting < ApplicationRecord
 
   belongs_to :radar_template_container
   validates :radar_template_container, presence: true
-  has_many :radar_templates
+  has_many :radars
 
   def self.generate!(radar_template_container, ends_at)
     transaction do
       voting = Voting.create!(radar_template_container: radar_template_container, ends_at: ends_at)
       voting.generate_and_save_code!
-      radar_template_container.radar_templates.each {|radar_template| Radar.create!(radar_template: radar_template) }
+      radar_template_container.radar_templates.each do |radar_template|
+        automatic_description = "Votación de #{radar_template.name} del #{ends_at}"
+        Radar.create!(voting: self, radar_template: radar_template, name: automatic_description, description: automatic_description)
+      end
+      voting
     end
   end
 

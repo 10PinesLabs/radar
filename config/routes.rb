@@ -6,7 +6,7 @@ Rails.application.routes.draw do
         post 'share/:user_id', to: "radar_template_containers#share"
       end
 
-      resources :votings, only: [:create]
+      resources :votings, only: [:create, :show]
 
     end
     resources :radar_templates, only: %i[create show index share] do

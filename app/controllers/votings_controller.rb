@@ -4,9 +4,9 @@ class VotingsController < ApplicationController
 
   def create
     radar_template_container = RadarTemplateContainer.find(params.require(:radar_template_container_id))
-    ends_at = DateTime.new(params.require(:ends_at))
+    ends_at = DateTime.parse(params.require(:ends_at))
     voting = Voting.generate!(radar_template_container, ends_at)
-    render json: voting, status: :created
+    render json: {code: voting.code}, status: :created
   end
 
   def show
