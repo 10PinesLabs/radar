@@ -3,6 +3,6 @@ class RadarTemplateContainerSerializer < ActiveModel::Serializer
   has_many :radar_templates
 
   def is_owner
-    object.is_owned_by? instance_options[:logged_user]
+    instance_options[:logged_user] && object.is_owned_by?(instance_options[:logged_user])
   end
 end
