@@ -3,15 +3,22 @@ class Voting < ApplicationRecord
 
   belongs_to :radar_template_container
   validates :radar_template_container, presence: true
+  validates :ends_at, presence: true
   has_many :radars
+
+  def active?
+    DateTime.now < ends_at
+  end
 
   def self.generate!(radar_template_container, ends_at)
     transaction do
+      radar_template_container.validate_no_active_votings!
       voting = Voting.create!(radar_template_container: radar_template_container, ends_at: ends_at)
       voting.generate_and_save_code!
       radar_template_container.radar_templates.each do |radar_template|
-        automatic_description = "Votación de #{radar_template.name} del #{ends_at}"
-        Radar.create!(voting: self, radar_template: radar_template, name: automatic_description, description: automatic_description)
+        automatic_description = "Votación de #{radar_template.name} del #{ends_at.to_date}"
+        Radar.create!(voting: voting, radar_template: radar_template,
+                      name: automatic_description, description: automatic_description)
       end
       voting
     end
