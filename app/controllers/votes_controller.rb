@@ -3,7 +3,7 @@ class VotesController < ApplicationController
 
   def create
     template = RadarTemplate.find(params.require(:radar_template_id))
-    radar = template.radars.where(:active == true).first!
+    radar = template.radars.where(:active == true).last!
     answers = create_answers(radar, params.require(:answers))
     vote = Vote.create!(answers: answers)
     render json: vote, status: :ok
