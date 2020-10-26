@@ -50,11 +50,9 @@ RSpec.describe VotesController, type: :controller do
 
 
     end
-    tallarin
     context 'when there is no radar for the radar template' do
       let(:radar_template){ create :radar_template}
       let(:voted_axes){ radar_template.axes}
-      un tallarin que se mueve por aqui que se mueve por aca
       it 'should return not found' do
         expect(subject).to have_http_status :not_found
       end

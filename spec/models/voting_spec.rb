@@ -4,6 +4,7 @@ RSpec.describe Voting, type: :model do
 
   let(:radar_template_container) { create :radar_template_container }
   let(:ends_at) { DateTime.now + 5.days }
+  let(:name) { "A voting name" }
 
   describe "#generate_and_save_code" do
 
@@ -50,7 +51,7 @@ RSpec.describe Voting, type: :model do
   describe "#generate!" do
 
     subject do
-      Voting.generate!(radar_template_container, ends_at)
+      Voting.generate!(radar_template_container, name, ends_at)
     end
 
     context "when there is already an active voting associated with the radar container" do
@@ -96,6 +97,27 @@ RSpec.describe Voting, type: :model do
       it 'associates the new radars to the created voting' do
         subject
         expect(Voting.first.radars.count).to eq(2)
+      end
+
+      context "when the name is not passed" do
+        let(:name) {nil}
+
+        let(:expected_name) { "Votación de #{a_radar_template.name} del #{ends_at.to_date}" }
+        let(:another_expected_name) { "Votación de #{another_radar_template.name} del #{ends_at.to_date}" }
+
+        it "generates a automatic one indicating the container name and the date" do
+          voting = subject
+          expect(voting.reload.radars.all.map{|r| r.name}).to contain_exactly(expected_name, another_expected_name)
+        end
+      end
+
+      context "when the name is passed" do
+        let(:name) { "A voting name"}
+
+        it "assigns the passed name to all generated radars" do
+          voting = subject
+          expect(voting.reload.radars.all.map{|r| r.name}).to contain_exactly(name, name)
+        end
       end
 
     end

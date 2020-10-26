@@ -20,6 +20,6 @@ module Ownerable
   end
 
   def is_owned_by? user
-    user.id == self.owner.id
+    user && user.id == self.owner.id
   end
 end
