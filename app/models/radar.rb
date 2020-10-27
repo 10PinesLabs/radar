@@ -6,6 +6,7 @@ class Radar < ApplicationRecord
   ERROR_MESSAGE_FOR_RADAR_TEMPLATE_MISSING = 'El radar debe pertenecer a un template de radar'
   default_scope { order(created_at: :asc) }
   belongs_to :radar_template
+  belongs_to :voting
   has_many :answers
 
   validates :description, presence: {message: ERROR_MESSAGE_FOR_DESCRIPTION_EMPTY}

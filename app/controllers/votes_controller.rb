@@ -1,7 +1,9 @@
 class VotesController < ApplicationController
   before_action :ensure_authenticated!, except: [ :create ]
+
   def create
-    radar = Radar.find(params.require(:radar_id))
+    template = RadarTemplate.find(params.require(:radar_template_id))
+    radar = template.radars.where(:active == true).last!
     answers = create_answers(radar, params.require(:answers))
     vote = Vote.create!(answers: answers)
     render json: vote, status: :ok
