@@ -31,12 +31,8 @@ class RadarTemplateContainersController < ApplicationController
     radar_template_container_id = params.require(:id)
 
     if_container_present radar_template_container_id do |container|
-      begin
-        container.add_user(@logged_user, shared_user)
-        render status: :ok, json: "El constainer se compartio satisfactoriamente"
-      rescue StandardError => error_message
-        render status: :unauthorized, json: error_message
-      end
+      container.add_user(@logged_user, shared_user)
+      render status: :ok, json: "El constainer se compartio satisfactoriamente"
     end
 
   end
