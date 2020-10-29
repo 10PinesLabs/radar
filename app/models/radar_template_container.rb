@@ -5,6 +5,20 @@ class RadarTemplateContainer < ApplicationRecord
   has_many :radar_templates, -> { order(created_at: :asc) }
   belongs_to :owner, :class_name => 'User', :foreign_key => 'owner_id', :validate => true
   has_many :votings
+  validates_uniqueness_of :name
+
+  def clone_container!(owner, name, description, share: false)
+    validate_ownership! owner
+    transaction do
+      cloned_container = RadarTemplateContainer.create!(owner: owner, description: description,
+                                                        name: name, users: share ? users : [])
+      radar_templates.each do |radar_template|
+        RadarTemplate.create!(radar_template_container: cloned_container, name: radar_template.name, owner: owner,
+                              description: radar_template.description, axes: radar_template.axes)
+      end
+      cloned_container
+    end
+  end
 
   def active_voting
     votings.all.select{ |voting| voting.active? }.first
@@ -18,9 +32,9 @@ class RadarTemplateContainer < ApplicationRecord
     raise RuntimeError.new(CANNOT_HAVE_MORE_THAN_ONE_ACTIVE_VOTING_ERROR_MESSAGE) if active_voting.present?
   end
 
-  def close owner
+  def close(owner)
     validate_ownership! owner
     update!(active: false)
-    radar_templates.each {|rt| rt.close owner}
+    radar_templates.each { |rt| rt.close owner }
   end
 end

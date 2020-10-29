@@ -301,5 +301,91 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
         end
       end
     end
+
+    describe "#clone" do
+
+      before do
+        a_radar_template_container.update!(owner: logged_user)
+      end
+
+      let(:param_name) { "A name" }
+      let(:param_description) { "A description" }
+      let(:param_share) { false }
+      let(:param_container_id) { a_radar_template_container.id }
+
+      def subject
+        post :clone, params: {id: param_container_id, name: param_name,
+                              description: param_description, share: param_share}
+      end
+
+      it 'returns status created' do
+        subject
+        expect(response).to have_http_status :created
+      end
+
+      it "returns the serialized container" do
+        subject
+        expect(RadarTemplateContainer.count).to eq 2
+        cloned_container = RadarTemplateContainer.last
+        expect(JSON.parse(response.body)).to eq serialized_radar_template_container(cloned_container, logged_user)
+      end
+
+      context "if logged user does not own the container" do
+
+        let(:another_user){create :user, name: 'otro pino', provider: 'backoffice'}
+
+        before do
+          allow(JWT).to receive(:decode).and_return [another_user.as_json]
+        end
+
+        it 'returns not found' do
+          subject
+          expect(response).to have_http_status(:not_found)
+        end
+      end
+
+      context "if the container does not exist" do
+
+        let(:param_container_id) { -1 }
+
+        it 'returns not found' do
+          subject
+          expect(response).to have_http_status(:not_found)
+        end
+
+      end
+
+      context "if the name is not passed" do
+
+        let(:param_name) { nil }
+
+        it 'returns bad request' do
+          subject
+          expect(response).to have_http_status(:bad_request)
+        end
+
+        it 'returns an expressive error message' do
+          subject
+          expect(JSON.parse(response.body)).to eq({"errors"=>["param is missing or the value is empty: name"]})
+        end
+
+      end
+
+      context "if the name already exist" do
+        let(:param_name) { a_radar_template_container.name }
+
+        it 'returns bad request' do
+          subject
+          expect(response).to have_http_status(:bad_request)
+        end
+
+        it 'returns an expressive error message' do
+          subject
+          expect(JSON.parse(response.body)).to eq({"errors"=>["has already been taken"]})
+        end
+      end
+
+    end
+
   end
 end
