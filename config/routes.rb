@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     resources :radar_template_containers, only: %i[index show create] do
       member do
         post :close
-        post 'share/:user_id', to: "radar_template_containers#share"
+        post 'share', to: "radar_template_containers#share"
         post 'clone', to: "radar_template_containers#clone"
       end
       resources :votings, only: [:create]
