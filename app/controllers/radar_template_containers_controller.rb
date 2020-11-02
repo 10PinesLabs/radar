@@ -27,11 +27,14 @@ class RadarTemplateContainersController < ApplicationController
   end
 
   def share
-    shared_user = User.find(params.require(:user_id))
+    shared_users = params.require(:users_ids)
     radar_template_container_id = params.require(:id)
 
     if_container_present radar_template_container_id do |container|
-      container.add_user(@logged_user, shared_user)
+      shared_users.each do |user|
+        shared_user = User.find(user)
+        container.add_user(@logged_user, shared_user)
+      end
       render status: :ok, json: "El constainer se compartio satisfactoriamente"
     end
   end
