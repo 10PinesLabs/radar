@@ -13,8 +13,13 @@ class RadarTemplateContainer < ApplicationRecord
       cloned_container = RadarTemplateContainer.create!(owner: owner, description: description,
                                                         name: name, users: share ? users : [])
       radar_templates.each do |radar_template|
-        RadarTemplate.create!(radar_template_container: cloned_container, name: radar_template.name, owner: owner,
-                              description: radar_template.description, axes: radar_template.axes)
+        # Clones template
+        cloned_template = RadarTemplate.create!(radar_template_container: cloned_container, name: radar_template.name, owner: owner,
+                              description: radar_template.description)
+        # Clones axes
+        radar_template.axes.each do |axis|
+          Axis.create!(name: axis.name, description: axis.description, radar_template: cloned_template)
+        end
       end
       cloned_container
     end
