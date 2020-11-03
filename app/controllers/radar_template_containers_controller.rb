@@ -35,7 +35,7 @@ class RadarTemplateContainersController < ApplicationController
         shared_user = User.find(user)
         container.add_user(@logged_user, shared_user)
       end
-      render status: :ok, json: "El constainer se compartio satisfactoriamente"
+      render status: :ok, json: {message: "El container se compartio satisfactoriamente"}
     end
   end
 
