@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :radar_template_container do
-    name { '10Pines' }
+    sequence(:name) { |n| "Radar template container #{n}" }
     description { 'Radares anuales de 10Pines' }
     owner { association :user }
   end

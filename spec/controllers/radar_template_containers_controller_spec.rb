@@ -58,6 +58,11 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
   end
 
   let(:logged_user){create :user}
+  let(:another_user){create :user}
+  let(:yet_another_user) {create :user}
+  let(:radar_template) { create(:radar_template, owner: logged_user)}
+  let(:a_radar_template_container) {radar_template.radar_template_container}
+  let(:request_radar_template_container_id) { a_radar_template_container.id }
 
   context 'When logged in as a valid user' do
 
@@ -65,7 +70,7 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
       allow(JWT).to receive(:decode).and_return [logged_user.as_json]
     end
 
-    context 'When requesting to create a new radar template container' do
+    describe '#create' do
       subject do
         post :create, params: radar_template_container_params
       end
@@ -91,16 +96,6 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
         end
       end
 
-      context 'without a name' do
-        let(:radar_template_container_params) {
-          {description: 'Radar 2015'}
-        }
-
-        it 'should be a bad request' do
-          expect(subject).to have_http_status :bad_request
-        end
-      end
-
       context 'regarding name' do
         context 'with nil as name' do
           let(:radar_template_container_params) {
@@ -120,115 +115,119 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
       end
     end
 
-    context 'that owns a radar template container' do
-
-      let(:radar_template) { create(:radar_template, owner: logged_user)}
-      let(:a_radar_template_container) {radar_template.radar_template_container}
-
-      let(:request_radar_template_container_id) { a_radar_template_container.id }
+    describe '#show' do
 
       before do
         a_radar_template_container.update!(owner: logged_user)
       end
 
-      context 'When requesting to show a container' do
-        subject do
-          get :show, params: {id: request_radar_template_container_id}
-        end
+      subject do
+        get :show, params: {id: request_radar_template_container_id}
+      end
 
-        context 'that does not exists' do
-          let(:request_radar_template_container_id) { -1 }
-          it 'should return a not found response' do
-            subject
-            expect(response).to have_http_status :not_found
-          end
-        end
-
-        context 'with a user that owns the radar template container' do
-
-          it 'should return an ok status' do
-            subject
-            expect(response).to have_http_status :ok
-          end
-
-          it 'should return the container with all the radar templates information' do
-            subject
-            expect(JSON.parse(response.body)).to eq serialized_radar_template_container(a_radar_template_container, logged_user)
-          end
-        end
-
-        context 'with a user that do not owns the radar template' do
-          let(:another_user){create :user, name: 'otro pino', provider: 'backoffice'}
-
-          before do
-            allow(JWT).to receive(:decode).and_return [another_user.as_json]
-          end
-
-          it 'should return not found' do
-            subject
-            expect(response).to have_http_status(:not_found)
-          end
-        end
-
-        context 'with a user that the radar has been shared to' do
-          let(:shared_user){create :user}
-
-          before do
-            allow(JWT).to receive(:decode).and_return [logged_user.as_json]
-            post :share, params:{ id: a_radar_template_container.id, user_id: shared_user.id}
-            allow(JWT).to receive(:decode).and_return [shared_user.as_json]
-          end
-
-          it 'should be able to see the radar template' do
-            expect(subject).to have_http_status :ok
-          end
+      context 'that does not exists' do
+        let(:request_radar_template_container_id) { -1 }
+        it 'should return a not found response' do
+          subject
+          expect(response).to have_http_status :not_found
         end
       end
 
-      context 'when requesting to share a radar template container' do
+      context 'with a user that owns the radar template container' do
 
-        let(:another_user){create :user}
-
-        def share_request
-          post :share, params:{  id: request_radar_template_container_id, user_id: another_user.id}
-        end
-
-        it 'the request should be successful' do
-          share_request
+        it 'should return an ok status' do
+          subject
           expect(response).to have_http_status :ok
         end
 
-        context 'as shared radar user' do
-          before do
-            share_request
-            allow(JWT).to receive(:decode).and_return [another_user.as_json]
-          end
+        it 'should return the container with all the radar templates information' do
+          subject
+          expect(JSON.parse(response.body)).to eq serialized_radar_template_container(a_radar_template_container, logged_user)
+        end
+      end
 
-          it 'should return unauthorized' do
-            share_request
-            expect(response).to have_http_status :unauthorized
-          end
+      context 'with a user that do not owns the radar template' do
+        let(:another_user){create :user, name: 'otro pino', provider: 'backoffice'}
+
+        before do
+          allow(JWT).to receive(:decode).and_return [another_user.as_json]
         end
 
-        context 'as a user not knower of radar template' do
+        it 'should return not found' do
+          subject
+          expect(response).to have_http_status(:not_found)
+        end
+      end
 
-          before do
-            allow(JWT).to receive(:decode).and_return [another_user.as_json]
-          end
+      context 'with a user that the radar has been shared to' do
+        let(:shared_user){create :user}
 
-          it 'should return not found' do
-            share_request
-            expect(response).to have_http_status :not_found
-          end
+        before do
+          allow(JWT).to receive(:decode).and_return [logged_user.as_json]
+          post :share, params:{ id: a_radar_template_container.id, users_ids: [shared_user.id]}
+          allow(JWT).to receive(:decode).and_return [shared_user.as_json]
+        end
 
+        it 'should be able to see the radar template' do
+          expect(subject).to have_http_status :ok
+        end
+      end
+
+    end
+
+    describe '#share' do
+
+      before do
+        a_radar_template_container.update!(owner: logged_user)
+      end
+
+      let(:request_user_id) { another_user.id}
+      let(:another_request_user_id) { yet_another_user.id }
+      let(:request_users_ids) { [request_user_id, another_request_user_id] }
+
+      subject do
+        post :share, params:{  id: request_radar_template_container_id, users_ids: request_users_ids}
+      end
+
+      it 'the request should be successful' do
+        subject
+        expect(response).to have_http_status :ok
+      end
+
+      context "when the container id does not exist" do
+
+        let(:request_radar_template_container_id) { -1 }
+
+        it "returns status not found" do
+          expect(subject).to have_http_status :not_found
+        end
+      end
+
+      context "when one of the selected user id does not exist" do
+
+        let(:request_user_id) { -1 }
+
+        it "returns status not found" do
+          expect(subject).to have_http_status :not_found
         end
 
       end
 
+      context "when the logged user does not own the container" do
+
+        before do
+          a_radar_template_container.update!(owner: another_user)
+        end
+
+        it "returns status unauthorized" do
+          expect(subject).to have_http_status :not_found
+        end
+
+      end
 
     end
 
-    context 'when requesting to list available containers' do
+    describe '#index' do
       let!(:a_radar_template_container) {create :radar_template_container, owner: logged_user}
 
       subject do
@@ -259,10 +258,7 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
       end
     end
 
-    context 'When requesting to close a radar template container' do
-      let(:radar_template) {create :radar_template, owner: logged_user}
-      let(:a_radar_template_container) { radar_template.radar_template_container }
-
+    describe '#close' do
       before do
         a_radar_template_container.update!(owner: logged_user)
       end
@@ -307,5 +303,91 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
         end
       end
     end
+
+    describe "#clone" do
+
+      before do
+        a_radar_template_container.update!(owner: logged_user)
+      end
+
+      let(:param_name) { "A name" }
+      let(:param_description) { "A description" }
+      let(:param_share) { false }
+      let(:param_container_id) { a_radar_template_container.id }
+
+      def subject
+        post :clone, params: {id: param_container_id, name: param_name,
+                              description: param_description, share: param_share}
+      end
+
+      it 'returns status created' do
+        subject
+        expect(response).to have_http_status :created
+      end
+
+      it "returns the serialized container" do
+        subject
+        expect(RadarTemplateContainer.count).to eq 2
+        cloned_container = RadarTemplateContainer.last
+        expect(JSON.parse(response.body)).to eq serialized_radar_template_container(cloned_container, logged_user)
+      end
+
+      context "if logged user does not own the container" do
+
+        let(:another_user){create :user, name: 'otro pino', provider: 'backoffice'}
+
+        before do
+          allow(JWT).to receive(:decode).and_return [another_user.as_json]
+        end
+
+        it 'returns not found' do
+          subject
+          expect(response).to have_http_status(:not_found)
+        end
+      end
+
+      context "if the container does not exist" do
+
+        let(:param_container_id) { -1 }
+
+        it 'returns not found' do
+          subject
+          expect(response).to have_http_status(:not_found)
+        end
+
+      end
+
+      context "if the name is not passed" do
+
+        let(:param_name) { nil }
+
+        it 'returns bad request' do
+          subject
+          expect(response).to have_http_status(:bad_request)
+        end
+
+        it 'returns an expressive error message' do
+          subject
+          expect(JSON.parse(response.body)).to eq({"errors"=>["param is missing or the value is empty: name"]})
+        end
+
+      end
+
+      context "if the name already exist" do
+        let(:param_name) { a_radar_template_container.name }
+
+        it 'returns bad request' do
+          subject
+          expect(response).to have_http_status(:bad_request)
+        end
+
+        it 'returns an expressive error message' do
+          subject
+          expect(JSON.parse(response.body)).to eq({"errors"=>["has already been taken"]})
+        end
+      end
+
+    end
+
   end
 end

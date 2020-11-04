@@ -27,18 +27,27 @@ class RadarTemplateContainersController < ApplicationController
   end
 
   def share
-    shared_user = User.find(params.require(:user_id))
+    shared_users = params.require(:users_ids)
     radar_template_container_id = params.require(:id)
 
     if_container_present radar_template_container_id do |container|
-      begin
+      shared_users.each do |user|
+        shared_user = User.find(user)
         container.add_user(@logged_user, shared_user)
-        render status: :ok, json: "El constainer se compartio satisfactoriamente"
-      rescue StandardError => error_message
-        render status: :unauthorized, json: error_message
       end
+      render status: :ok, json: {message: "El container se compartio satisfactoriamente"}
     end
+  end
 
+  def clone
+    radar_template_container_id = params.require(:id)
+    name = params.require(:name)
+    rest = params.permit(:description, :share)
+
+    if_container_present radar_template_container_id do |container|
+      cloned_container = container.clone_container!(@logged_user, name, rest["description"], share: rest["share"])
+      render json: cloned_container, logged_user: @logged_user, status: :created
+    end
   end
 
   private

@@ -3,7 +3,8 @@ Rails.application.routes.draw do
     resources :radar_template_containers, only: %i[index show create] do
       member do
         post :close
-        post 'share/:user_id', to: "radar_template_containers#share"
+        post 'share', to: "radar_template_containers#share"
+        post 'clone', to: "radar_template_containers#clone"
       end
       resources :votings, only: [:create]
     end
@@ -28,4 +29,5 @@ Rails.application.routes.draw do
   get 'auth/:provider/callback', to: "omni_auth#callback"
   get 'auth/:provider/redirect', to: "omni_auth#redirect"
   get '/me', to: "session#user"
+  get 'api/users', to: 'users#users'
 end
