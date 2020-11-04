@@ -59,7 +59,7 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
 
   let(:logged_user){create :user}
   let(:another_user){create :user}
-
+  let(:yet_another_user) {create :user}
   let(:radar_template) { create(:radar_template, owner: logged_user)}
   let(:a_radar_template_container) {radar_template.radar_template_container}
   let(:request_radar_template_container_id) { a_radar_template_container.id }
@@ -164,7 +164,7 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
 
         before do
           allow(JWT).to receive(:decode).and_return [logged_user.as_json]
-          post :share, params:{ id: a_radar_template_container.id, user_id: shared_user.id}
+          post :share, params:{ id: a_radar_template_container.id, users_ids: [shared_user.id]}
           allow(JWT).to receive(:decode).and_return [shared_user.as_json]
         end
 
@@ -182,9 +182,11 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
       end
 
       let(:request_user_id) { another_user.id}
+      let(:another_request_user_id) { yet_another_user.id }
+      let(:request_users_ids) { [request_user_id, another_request_user_id] }
 
       subject do
-        post :share, params:{  id: request_radar_template_container_id, user_id: request_user_id}
+        post :share, params:{  id: request_radar_template_container_id, users_ids: request_users_ids}
       end
 
       it 'the request should be successful' do
@@ -201,7 +203,7 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
         end
       end
 
-      context "when the selected user id does not exist" do
+      context "when one of the selected user id does not exist" do
 
         let(:request_user_id) { -1 }
 
@@ -211,7 +213,7 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
 
       end
 
-      context "when the logged ser does not own the container" do
+      context "when the logged user does not own the container" do
 
         before do
           a_radar_template_container.update!(owner: another_user)

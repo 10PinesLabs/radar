@@ -29,4 +29,5 @@ Rails.application.routes.draw do
   get 'auth/:provider/callback', to: "omni_auth#callback"
   get 'auth/:provider/redirect', to: "omni_auth#redirect"
   get '/me', to: "session#user"
+  get 'api/users', to: 'users#users'
 end
