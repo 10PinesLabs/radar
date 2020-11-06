@@ -169,8 +169,9 @@ RSpec.describe VotingsController, type: :controller do
   end
 
   describe "#close" do
+    let(:body_params){{radar_template_container_id: a_radar_template_container.id}}
     subject do
-      put :close, params: {radar_template_container_id: a_radar_template_container.id}
+      put :close, params: body_params
     end
 
     context 'when there are no active votings' do
@@ -179,22 +180,21 @@ RSpec.describe VotingsController, type: :controller do
       end
     end
 
-      context 'when there radar template container is non existent' do
-        subject do
-          put :close, params: {radar_template_container_id: -1}
-        end
+    context 'when the radar template container is non existent' do
+      let(:body_params){{radar_template_container_id: -1}}
 
-        it 'the request returns not found' do
-          expect(subject).to have_http_status :not_found
-        end
+      it 'the request returns not found' do
+        expect(subject).to have_http_status :not_found
       end
+    end
 
-    context 'when the voting is active' do
-      let(:voting) { Voting.generate!(a_radar_template_container, "A name", DateTime.now + 5.days)}
+    context 'when there is an active voting' do
+      let!(:voting) { Voting.generate!(a_radar_template_container, "A name", DateTime.now + 5.days)}
 
       it 'the voting is successfully closed' do
         expect(subject).to have_http_status :ok
-        expect(voting.active?).to eq(false)
+        expect(voting.reload.active?).to eq(false)
+        expect(voting.ends_at).to eq(DateTime.now)
       end
     end
   end
