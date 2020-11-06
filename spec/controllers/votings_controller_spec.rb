@@ -188,13 +188,27 @@ RSpec.describe VotingsController, type: :controller do
       end
     end
 
-    context 'when there is an active voting' do
+    context 'when there is an active voting associated to the container' do
       let!(:voting) { Voting.generate!(a_radar_template_container, "A name", DateTime.now + 5.days)}
+
 
       it 'the voting is successfully closed' do
         expect(subject).to have_http_status :ok
         expect(voting.reload.active?).to eq(false)
         expect(voting.ends_at).to eq(DateTime.now)
+      end
+    end
+
+    context 'when the user doesn\'t know the container' do
+      let!(:voting) { Voting.generate!(a_radar_template_container, "A name", ends_at)}
+      before do
+        allow(JWT).to receive(:decode).and_return [another_user.as_json]
+      end
+
+      it 'the request should be unsuccessful with a not found status' do
+        expect(subject).to have_http_status :not_found
+        expect(voting.reload.active?).to eq(true)
+        expect(voting.ends_at).to eq(ends_at)
       end
     end
   end
