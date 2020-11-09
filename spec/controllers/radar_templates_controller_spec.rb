@@ -281,36 +281,6 @@ RSpec.describe RadarTemplatesController, type: :controller do
       end
     end
 
-    xcontext 'When requesting to close a radar' do
-
-      def request_close_radar
-        post :close, params: {id: a_radar.id}
-      end
-
-      let!(:a_radar) {create :radar}
-
-      context 'and the radar is active' do
-        before :each do
-          request_close_radar
-          a_radar.reload
-        end
-
-        it 'should respond the request with an ok status' do
-          expect(response).to have_http_status :ok
-        end
-        it 'the radar should not be active' do
-          expect(a_radar).not_to be_active
-        end
-
-        context 'and you request to close it again' do
-          it 'should return unprocessable entity' do
-            request_close_radar
-            expect(response).to have_http_status :unprocessable_entity
-          end
-        end
-      end
-    end
-
     describe '#delete' do
       let!(:a_radar_template) {create :radar_template, owner: logged_user}
 

@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
   scope path: '/api' do
-    resources :radar_template_containers, only: %i[index show create] do
+    resources :radar_template_containers, only: %i[index show create destroy] do
       member do
-        post :close
         post 'share', to: "radar_template_containers#share"
         post 'clone', to: "radar_template_containers#clone"
       end

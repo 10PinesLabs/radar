@@ -264,7 +264,7 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
       end
 
       def subject
-        post :close, params: {id: a_radar_template_container.id}
+        delete :destroy, params: {id: a_radar_template_container.id }
       end
 
       context 'and the container is active' do

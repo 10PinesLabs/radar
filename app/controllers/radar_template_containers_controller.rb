@@ -20,7 +20,7 @@ class RadarTemplateContainersController < ApplicationController
     render json: radar_template_container, logged_user: @logged_user, status: :created
   end
 
-  def close
+  def destroy
     radar_template_container = RadarTemplateContainer.find(params.require(:id))
     radar_template_container.close @logged_user
     render json: radar_template_container, logged_user: @logged_user, status: :ok
