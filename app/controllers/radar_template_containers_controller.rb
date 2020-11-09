@@ -3,7 +3,9 @@ class RadarTemplateContainersController < ApplicationController
   before_action :ensure_authenticated!
 
   def index
-    render json: @logged_user.accessible_radar_template_containers, logged_user: @logged_user , status: :ok
+    radar_template_containers = @logged_user.accessible_radar_template_containers
+    radar_template_containers = radar_template_containers.select {|container| container.active}
+    render json: radar_template_containers, logged_user: @logged_user , status: :ok
   end
 
   def show

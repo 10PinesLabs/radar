@@ -256,6 +256,14 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
           expect(JSON.parse(response.body)).to contain_exactly(serialized_radar_template_container(a_radar_template_container, logged_user))
         end
       end
+
+      context 'if a container is inactive' do
+        let!(:a_radar_template_container) {create :radar_template_container, owner: logged_user, active: false}
+        it 'that container is not shown' do
+          subject
+          expect(JSON.parse(response.body)).to eq([])
+        end
+      end
     end
 
     describe '#close' do
