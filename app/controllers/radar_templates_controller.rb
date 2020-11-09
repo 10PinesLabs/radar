@@ -3,9 +3,15 @@ class RadarTemplatesController < ApplicationController
   before_action :ensure_authenticated!
 
   def destroy
-    radar_template = RadarTemplate.find(params.require(:id))
-    radar_template.close @logged_user
-    render status: :ok, json: {message: 'Tu Radar Template se borró con éxito'}
+    radar_template_id = params.require(:id)
+    if_radar_present radar_template_id do |radar_template|
+      begin
+        radar_template.close @logged_user
+        render status: :ok, json: {message: 'Tu Radar Template se borró con éxito'}
+      rescue StandardError => error_message
+        render status: :not_found, json: {message: 'No se encontro el radar template'}
+      end
+    end
   end
 
   def create

@@ -91,4 +91,11 @@ RSpec.describe RadarTemplate, type: :model do
     end
 
   end
+
+  describe '#close' do
+    it 'closes the radar template' do
+      radar_template.close owner
+      expect(radar_template.active).to be_falsey
+    end
+  end
 end

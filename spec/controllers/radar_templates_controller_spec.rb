@@ -283,9 +283,9 @@ RSpec.describe RadarTemplatesController, type: :controller do
 
     describe '#delete' do
       let!(:a_radar_template) {create :radar_template, owner: logged_user}
-
+      let(:radar_template_id) {a_radar_template.id}
       subject do
-        delete :destroy, params: {id: a_radar_template.id}
+        delete :destroy, params: {id: radar_template_id}
       end
 
       it 'returns ok' do
@@ -293,10 +293,13 @@ RSpec.describe RadarTemplatesController, type: :controller do
         expect(subject).to have_http_status :ok
       end
 
-      it 'removes radar template from active ones' do
-        subject
-        a_radar_template.reload
-        expect(a_radar_template.active).to be_falsey
+      context 'when the radar template does not exist' do
+        let!(:a_radar_template) {create :radar_template, owner: logged_user}
+        let(:radar_template_id) {-1}
+        it 'returns not found' do
+          subject
+          expect(subject).to have_http_status :not_found
+        end
       end
     end
   end
