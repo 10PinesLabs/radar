@@ -310,5 +310,24 @@ RSpec.describe RadarTemplatesController, type: :controller do
         end
       end
     end
+
+    describe '#delete' do
+      let!(:a_radar_template) {create :radar_template, owner: logged_user}
+
+      subject do
+        delete :destroy, params: {id: a_radar_template.id}
+      end
+
+      it 'returns ok' do
+        subject
+        expect(subject).to have_http_status :ok
+      end
+
+      it 'removes radar template from active ones' do
+        subject
+        a_radar_template.reload
+        expect(a_radar_template.active).to be_falsey
+      end
+    end
   end
 end

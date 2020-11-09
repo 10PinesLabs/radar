@@ -2,6 +2,12 @@ class RadarTemplatesController < ApplicationController
 
   before_action :ensure_authenticated!
 
+  def destroy
+    radar_template = RadarTemplate.find(params.require(:id))
+    radar_template.close @logged_user
+    render status: :ok, json: {message: 'Tu Radar Template se borró con éxito'}
+  end
+
   def create
     container = RadarTemplateContainer.find(params.require(:radar_template_container_id))
     axes = params.require(:axes).map { |axis| create_axis(axis) }

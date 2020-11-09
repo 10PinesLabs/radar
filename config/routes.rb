@@ -9,7 +9,7 @@ Rails.application.routes.draw do
       resources :votings, only: [:create]
     end
 
-    resources :radar_templates, only: %i[create show index share] do
+    resources :radar_templates, only: %i[create show destroy index share] do
       resources :votes, only: [:create]
       member do
         post 'share/:user_id', to: "radar_templates#share"
