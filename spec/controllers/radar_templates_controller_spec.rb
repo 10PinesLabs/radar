@@ -281,7 +281,7 @@ RSpec.describe RadarTemplatesController, type: :controller do
       end
     end
 
-    describe '#delete' do
+    describe '#destroy' do
       let!(:a_radar_template) {create :radar_template, owner: logged_user}
 
       subject do
