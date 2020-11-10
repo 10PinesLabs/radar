@@ -15,4 +15,8 @@ class RadarTemplateContainerSerializer < ActiveModel::Serializer
   def users
     object.users
   end
+
+  def radar_templates
+    object.radar_templates.select {|radar_template| radar_template.active}
+  end
 end
