@@ -15,6 +15,10 @@ RSpec.describe RadarTemplateContainer, type: :model do
   let!(:radar_template) { create :radar_template, radar_template_container: radar_template_container}
   let!(:another_radar_template) { create :radar_template, radar_template_container: radar_template_container}
 
+  def filter_axes_attrs(axes)
+    return axes.map {|axis| axis.attributes.except("id", "updated_at", "created_at", "radar_template_id")}
+  end
+
   describe '#clone_container!' do
 
     subject do
@@ -53,11 +57,11 @@ RSpec.describe RadarTemplateContainer, type: :model do
 
         expect(first_cloned_template.name).to eq radar_template.name
         expect(first_cloned_template.description).to eq radar_template.description
-        expect(first_cloned_template.axes).to match_array(radar_template.axes.to_a)
+        expect(filter_axes_attrs(first_cloned_template.axes)).to match_array(filter_axes_attrs(radar_template.axes))
 
         expect(second_cloned_template.name).to eq another_radar_template.name
         expect(second_cloned_template.description).to eq another_radar_template.description
-        expect(second_cloned_template.axes).to match_array(another_radar_template.axes.to_a)
+        expect(filter_axes_attrs(second_cloned_template.axes)).to match_array(filter_axes_attrs(another_radar_template.axes))
       end
 
       it "the cloned templates will have the owner of cloned container as owner" do
