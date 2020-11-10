@@ -48,6 +48,10 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
         'name' => radar_template_container.name,
         'description' => radar_template_container.description,
         'is_owner' => radar_template_container.is_owned_by?(user),
+        'owner' => {'id'=> radar_template_container.owner.id,
+                    'name' => radar_template_container.owner.name,
+                    'email' => radar_template_container.owner.email},
+        'users' => serialize_users(radar_template_container.users),
         'radar_templates' => radar_template_container
                                  .radar_templates
                                  .map {|radar_template| serialized_radar_template(radar_template, user)},
@@ -55,6 +59,10 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
         'created_at' => radar_template_container.created_at.as_json,
         'active_voting_code' => radar_template_container.active_voting_code
     }
+  end
+
+  def serialize_users(users)
+    users.map{ |user| {"id" => user.id, "name" => user.name, "email" => user.email}}
   end
 
   let(:logged_user){create :user}
