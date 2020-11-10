@@ -181,6 +181,15 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
         end
       end
 
+      context 'with an inactive a container radar template' do
+        let(:radar_template) { create(:radar_template, owner: logged_user, active: false)}
+
+        it 'that radar template is not returned with the container' do
+          subject
+          expect(JSON.parse(response.body)["radar_templates"]).to eq([])
+        end
+      end
+
     end
 
     describe '#share' do
