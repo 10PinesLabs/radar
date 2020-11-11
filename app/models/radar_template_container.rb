@@ -1,5 +1,7 @@
 class RadarTemplateContainer < ApplicationRecord
   CANNOT_HAVE_MORE_THAN_ONE_ACTIVE_VOTING_ERROR_MESSAGE = "No puede haber mas de una votación activa al mismo tiempo"
+  NO_ACTIVE_VOTING = 'No se encontró ninguna votación abierta'
+  CONTAINER_NOT_FOUND_ERROR = 'No se encontró el radar template container'
 
   include Ownerable
   has_many :radar_templates, -> { order(created_at: :asc) }
@@ -41,5 +43,13 @@ class RadarTemplateContainer < ApplicationRecord
     validate_ownership! owner
     update!(active: false)
     radar_templates.each { |rt| rt.close owner }
+  end
+
+  def close_active_voting(logged_user)
+    raise ActiveRecord::RecordNotFound.new(CONTAINER_NOT_FOUND_ERROR) unless is_known_by?(logged_user)
+    voting = active_voting
+    raise ActiveRecord::RecordNotFound.new(NO_ACTIVE_VOTING) unless voting.present?
+    voting.update!(ends_at: DateTime.now)
+    voting
   end
 end
