@@ -53,7 +53,8 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
                                  .map {|radar_template| serialized_radar_template(radar_template, user)},
         'active' => radar_template_container.active,
         'created_at' => radar_template_container.created_at.as_json,
-        'active_voting_code' => radar_template_container.active_voting_code
+        'active_voting_code' => radar_template_container.active_voting_code,
+        'pinned'=> radar_template_container.pinned
     }
   end
 
@@ -389,5 +390,42 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
 
     end
 
+    describe "#pin" do
+
+      before do
+        a_radar_template_container.update!(owner: logged_user)
+      end
+
+      def subject
+        get :pin, params: {id: request_radar_template_container_id,
+                           pin: pin}
+      end
+
+      context 'when request to pin the container' do
+        let(:pin){true}
+
+        it 'should return 204' do
+          expect(subject).to have_http_status 204
+        end
+
+        it 'should be pinned' do
+          subject
+          expect(a_radar_template_container.reload.pinned).to eq true
+        end
+      end
+
+      context 'when request to unpin the container' do
+        let(:pin){false}
+
+        it 'should return 204' do
+          expect(subject).to have_http_status 204
+        end
+
+        it 'should be unpinned' do
+          subject
+          expect(a_radar_template_container.reload.pinned).to eq false
+        end
+      end
+    end
   end
 end
