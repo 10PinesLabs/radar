@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe RadarTemplateContainer, type: :model do
-  include ActiveSupport::Testing::TimeHelpers
 
   let(:radar_template_container){create :radar_template_container, owner: owner}
   let(:owner){create :user}
