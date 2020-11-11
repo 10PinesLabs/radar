@@ -420,7 +420,7 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
           expect(subject).to have_http_status 204
         end
 
-        it 'should be pinned' do
+        it 'should be unpinned' do
           subject
           expect(a_radar_template_container.reload.pinned).to eq false
         end
