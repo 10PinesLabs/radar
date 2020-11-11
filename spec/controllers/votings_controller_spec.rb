@@ -72,7 +72,8 @@ RSpec.describe VotingsController, type: :controller do
                                  .map {|radar_template| serialized_radar_template(radar_template, user)},
         'active' => radar_template_container.active,
         'created_at' => radar_template_container.created_at.as_json,
-        'active_voting_code' => radar_template_container.active_voting_code
+        'active_voting_code' => radar_template_container.active_voting_code,
+        'pinned'=> radar_template_container.pinned
     }
   end
 
@@ -128,6 +129,14 @@ RSpec.describe VotingsController, type: :controller do
 
       it 'returns not found status' do
         expect(subject).to have_http_status :not_found
+      end
+    end
+
+    #este test verifica que se permitan crear votings  que como fecha de ends_at tienen el día actual
+    context 'when the voting\'s ends_at date is today, the voting is created successfully' do
+      let(:ends_at) { DateTime.now }
+      it 'the request succeeds with created status' do
+        expect(subject).to have_http_status :created
       end
     end
   end

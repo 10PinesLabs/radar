@@ -6,7 +6,7 @@ class VotingsController < ApplicationController
     radar_template_container = RadarTemplateContainer.find(params.require(:radar_template_container_id))
     if radar_template_container && radar_template_container.is_known_by?(@logged_user)
       name = params.permit(:name)['name']
-      ends_at = DateTime.parse(params.require(:ends_at))
+      ends_at = DateTime.parse(params.require(:ends_at)).end_of_day
 
       voting = Voting.generate!(radar_template_container, name, ends_at)
       render json: voting, logged_user: @logged_user, status: :created

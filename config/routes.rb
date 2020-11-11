@@ -5,6 +5,7 @@ Rails.application.routes.draw do
         post :close
         post 'share', to: "radar_template_containers#share"
         post 'clone', to: "radar_template_containers#clone"
+        post 'pin', to: "radar_template_containers#pin"
       end
       resources :votings, only: [:create]
     end

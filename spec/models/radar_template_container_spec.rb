@@ -111,6 +111,16 @@ RSpec.describe RadarTemplateContainer, type: :model do
         end
       end
 
+      context  "when the cloned container is pinned" do
+        before do
+          radar_template_container.update!(pinned: true)
+        end
+
+        it 'the cloned container should not be pinned' do
+          cloned_container = subject
+          expect(cloned_container.pinned).to eq false
+        end
+      end
     end
 
     context "if the passed user does not own the container" do
