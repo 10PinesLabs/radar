@@ -389,33 +389,6 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
 
     end
 
-    describe "#is_pnned" do
-      before do
-        a_radar_template_container.update!(owner: logged_user)
-      end
-
-      def subject
-        get :is_pinned, params: {id: request_radar_template_container_id}
-      end
-
-      it 'should not be pinned and return false' do
-        subject
-        expect(response.body).to eq("false")
-      end
-
-      context 'when the container is pinned' do
-
-        before do
-          a_radar_template_container.update!(pinned: true)
-        end
-
-        it 'should return true' do
-          subject
-          expect(response.body).to eq("true")
-        end
-      end
-    end
-
     describe "#pin" do
 
       before do

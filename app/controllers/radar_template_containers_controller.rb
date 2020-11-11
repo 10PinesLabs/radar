@@ -50,12 +50,6 @@ class RadarTemplateContainersController < ApplicationController
     end
   end
 
-  def is_pinned
-    if_container_present params.require(:id) do |container|
-      render json: container.pinned, status: :ok
-    end
-  end
-
   def pin
     pin = params.require(:pin)
     if_container_present params.require(:id) do |container|
