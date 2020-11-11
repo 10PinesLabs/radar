@@ -130,6 +130,14 @@ RSpec.describe VotingsController, type: :controller do
         expect(subject).to have_http_status :not_found
       end
     end
+
+    #este test verifica que se permitan crear votings  que como fecha de ends_at tienen el día actual
+    context 'when the voting\'s ends_at date is today, the voting is created successfully' do
+      let(:ends_at) { DateTime.now }
+      it 'the request succeeds with created status' do
+        expect(subject).to have_http_status :created
+      end
+    end
   end
 
   describe "#show_by_code" do
