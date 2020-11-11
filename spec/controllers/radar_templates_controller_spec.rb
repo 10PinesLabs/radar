@@ -289,7 +289,6 @@ RSpec.describe RadarTemplatesController, type: :controller do
       end
 
       it 'returns ok' do
-        subject
         expect(subject).to have_http_status :ok
       end
 
@@ -297,7 +296,6 @@ RSpec.describe RadarTemplatesController, type: :controller do
         let!(:a_radar_template) {create :radar_template, owner: logged_user}
         let(:radar_template_id) {-1}
         it 'returns not found' do
-          subject
           expect(subject).to have_http_status :not_found
         end
       end
