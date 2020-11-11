@@ -53,7 +53,8 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
                                  .map {|radar_template| serialized_radar_template(radar_template, user)},
         'active' => radar_template_container.active,
         'created_at' => radar_template_container.created_at.as_json,
-        'active_voting_code' => radar_template_container.active_voting_code
+        'active_voting_code' => radar_template_container.active_voting_code,
+        'pinned'=> radar_template_container.pinned
     }
   end
 
