@@ -111,6 +111,16 @@ RSpec.describe RadarTemplateContainer, type: :model do
         end
       end
 
+      context  "when the cloned container is pinned" do
+        before do
+          radar_template_container.update!(pinned: true)
+        end
+
+        it 'the cloned container should not be pinned' do
+          cloned_container = subject
+          expect(cloned_container.pinned).to eq false
+        end
+      end
     end
 
     context "if the passed user does not own the container" do
@@ -153,5 +163,40 @@ RSpec.describe RadarTemplateContainer, type: :model do
       end
     end
 
+  end
+
+  describe '#close_active_voting' do
+    let(:user){owner}
+    let(:ends_at) {DateTime.now + 5.days}
+    subject do
+      radar_template_container.close_active_voting(user)
+    end
+
+    context 'when there are no active votings' do
+      it 'raises an error with the appropiate message' do
+        expect{ subject }.to raise_error ActiveRecord::RecordNotFound, RadarTemplateContainer::NO_ACTIVE_VOTING
+      end
+    end
+
+    context 'when there is an active voting associated to the container' do
+      let!(:voting) { Voting.generate!(radar_template_container, "A name", ends_at)}
+
+      it 'the voting is successfully closed' do
+        expect(subject.active?).to eq(false)
+      end
+    end
+
+    context 'when the user doesn\'t know the container' do
+      let!(:voting) { Voting.generate!(radar_template_container, "A name", ends_at)}
+      let(:user){another_user}
+      before do
+        allow(JWT).to receive(:decode).and_return [another_user.as_json]
+      end
+
+      it 'the request should be unsuccessful with a not found status' do
+        expect{ subject }.to raise_error ActiveRecord::RecordNotFound, RadarTemplateContainer::CONTAINER_NOT_FOUND_ERROR
+        expect(voting.reload.active?).to eq(true)
+      end
+    end
   end
 end

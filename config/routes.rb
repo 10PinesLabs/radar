@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       member do
         post 'share', to: "radar_template_containers#share"
         post 'clone', to: "radar_template_containers#clone"
+        post 'pin', to: "radar_template_containers#pin"
       end
       resources :votings, only: [:create]
     end
@@ -24,6 +25,7 @@ Rails.application.routes.draw do
   end
 
   get 'api/votings', to: "votings#show_by_code"
+  put 'api/votings/:radar_template_container_id', to: "votings#close"
 
   get 'auth/:provider/callback', to: "omni_auth#callback"
   get 'auth/:provider/redirect', to: "omni_auth#redirect"

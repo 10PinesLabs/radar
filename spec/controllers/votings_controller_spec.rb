@@ -72,7 +72,8 @@ RSpec.describe VotingsController, type: :controller do
                                  .map {|radar_template| serialized_radar_template(radar_template)},
         'active' => radar_template_container.active,
         'created_at' => radar_template_container.created_at.as_json,
-        'active_voting_code' => radar_template_container.active_voting_code
+        'active_voting_code' => radar_template_container.active_voting_code,
+        'pinned'=> radar_template_container.pinned
     }
   end
 
@@ -139,6 +140,14 @@ RSpec.describe VotingsController, type: :controller do
         expect(subject).to have_http_status :not_found
       end
     end
+
+    #este test verifica que se permitan crear votings  que como fecha de ends_at tienen el día actual
+    context 'when the voting\'s ends_at date is today, the voting is created successfully' do
+      let(:ends_at) { DateTime.now }
+      it 'the request succeeds with created status' do
+        expect(subject).to have_http_status :created
+      end
+    end
   end
 
   describe "#show_by_code" do
@@ -175,6 +184,46 @@ RSpec.describe VotingsController, type: :controller do
 
     end
 
+  end
+
+  describe "#close" do
+    let(:body_params){{radar_template_container_id: a_radar_template_container.id}}
+    subject do
+      put :close, params: body_params
+    end
+
+    context 'when there are no active votings' do
+      it 'the request returns not found' do
+        expect(subject).to have_http_status :not_found
+      end
+    end
+
+    context 'when the radar template container is non existent' do
+      let(:body_params){{radar_template_container_id: -1}}
+
+      it 'the request returns not found' do
+        expect(subject).to have_http_status :not_found
+      end
+    end
+
+    context 'when the user doesn\'t know the container' do
+      let!(:voting) { Voting.generate!(a_radar_template_container, "A name", ends_at)}
+      before do
+        allow(JWT).to receive(:decode).and_return [another_user.as_json]
+      end
+
+      it 'the request should be unsuccessful with a not found status' do
+        expect(subject).to have_http_status :not_found
+      end
+    end
+
+    context 'when there is an active voting associated to the container' do
+      let!(:voting) { Voting.generate!(a_radar_template_container, "A name", DateTime.now + 5.days)}
+
+      it 'the voting is successfully closed' do
+        expect(subject).to have_http_status :ok
+      end
+    end
   end
 
 
