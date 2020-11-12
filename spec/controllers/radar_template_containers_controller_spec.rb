@@ -29,7 +29,7 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
     }
   end
 
-  def serialized_radar_template(radar_template, user)
+  def serialized_radar_template(radar_template)
     {
         'id' => radar_template.id,
         'radars' => radar_template.radars.map {|axis| serialized_radar(axis)},
@@ -37,24 +37,22 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
         'name' => radar_template.name,
         'description' => radar_template.description,
         'active' => radar_template.active,
-        'created_at' => radar_template.created_at.as_json,
-        'is_owner' => radar_template.is_owned_by?(user)
+        'created_at' => radar_template.created_at.as_json
     }
   end
 
-  def serialized_radar_template_container(radar_template_container, user)
+  def serialized_radar_template_container(radar_template_container)
     {
         'id' => radar_template_container.id,
         'name' => radar_template_container.name,
         'description' => radar_template_container.description,
-        'is_owner' => radar_template_container.is_owned_by?(user),
         'owner' => {'id'=> radar_template_container.owner.id,
                     'name' => radar_template_container.owner.name,
                     'email' => radar_template_container.owner.email},
         'users' => serialize_users(radar_template_container.users),
         'radar_templates' => radar_template_container
                                  .radar_templates
-                                 .map {|radar_template| serialized_radar_template(radar_template, user)},
+                                 .map {|radar_template| serialized_radar_template(radar_template)},
         'active' => radar_template_container.active,
         'created_at' => radar_template_container.created_at.as_json,
         'active_voting_code' => radar_template_container.active_voting_code
@@ -150,7 +148,7 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
 
         it 'should return the container with all the radar templates information' do
           subject
-          expect(JSON.parse(response.body)).to eq serialized_radar_template_container(a_radar_template_container, logged_user)
+          expect(JSON.parse(response.body)).to eq serialized_radar_template_container(a_radar_template_container)
         end
       end
 
@@ -257,7 +255,7 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
 
       it 'returns owned radar template containers' do
         subject
-        expect(JSON.parse(response.body)).to contain_exactly(serialized_radar_template_container(a_radar_template_container, logged_user))
+        expect(JSON.parse(response.body)).to contain_exactly(serialized_radar_template_container(a_radar_template_container))
       end
 
       context 'if another user has shared radar templates with the logged user' do
@@ -270,7 +268,7 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
 
         it 'includes those radar templates in the response' do
           subject
-          expect(JSON.parse(response.body)).to contain_exactly(serialized_radar_template_container(a_radar_template_container, logged_user))
+          expect(JSON.parse(response.body)).to contain_exactly(serialized_radar_template_container(a_radar_template_container))
         end
       end
 
@@ -354,7 +352,7 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
         subject
         expect(RadarTemplateContainer.count).to eq 2
         cloned_container = RadarTemplateContainer.last
-        expect(JSON.parse(response.body)).to eq serialized_radar_template_container(cloned_container, logged_user)
+        expect(JSON.parse(response.body)).to eq serialized_radar_template_container(cloned_container)
       end
 
       context "if logged user does not own the container" do
