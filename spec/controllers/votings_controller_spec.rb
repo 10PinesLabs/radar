@@ -48,7 +48,7 @@ RSpec.describe VotingsController, type: :controller do
     }
   end
 
-  def serialized_radar_template(radar_template, user)
+  def serialized_radar_template(radar_template)
     {
         'id' => radar_template.id,
         'radars' => radar_template.radars.map {|axis| serialized_radar(axis)},
@@ -56,20 +56,20 @@ RSpec.describe VotingsController, type: :controller do
         'name' => radar_template.name,
         'description' => radar_template.description,
         'active' => radar_template.active,
-        'created_at' => radar_template.created_at.as_json,
-        'is_owner' => radar_template.is_owned_by?(user),
+        'created_at' => radar_template.created_at.as_json
     }
   end
 
-  def serialized_radar_template_container(radar_template_container, user)
+  def serialized_radar_template_container(radar_template_container)
     {
         'id' => radar_template_container.id,
         'name' => radar_template_container.name,
         'description' => radar_template_container.description,
-        'is_owner' => radar_template_container.is_owned_by?(user),
+        'owner' => serialized_user(radar_template_container.owner),
+        'users' => radar_template_container.users.map {|shared_user| serialized_user shared_user},
         'radar_templates' => radar_template_container
                                  .radar_templates
-                                 .map {|radar_template| serialized_radar_template(radar_template, user)},
+                                 .map {|radar_template| serialized_radar_template(radar_template)},
         'active' => radar_template_container.active,
         'created_at' => radar_template_container.created_at.as_json,
         'active_voting_code' => radar_template_container.active_voting_code,
@@ -77,12 +77,21 @@ RSpec.describe VotingsController, type: :controller do
     }
   end
 
-  def serialized_voting(voting, user)
+  def serialized_user(user)
+    user.blank? ? {} :
+        {
+            'id' => user.id,
+            'name' => user.name,
+            'email' => user.email
+        }
+  end
+
+  def serialized_voting(voting)
     {
         'id' => voting.id,
         'code' => voting.code,
         'ends_at' => voting.ends_at.as_json,
-        'radar_template_container' => serialized_radar_template_container(voting.radar_template_container, user)
+        'radar_template_container' => serialized_radar_template_container(voting.radar_template_container)
     }
   end
 
@@ -104,7 +113,7 @@ RSpec.describe VotingsController, type: :controller do
 
       it 'the response contains the code, id and ends_at date of the voting, plus its radar template container' do
         subject
-        expect(JSON.parse(response.body)).to eq(serialized_voting(Voting.first, logged_user))
+        expect(JSON.parse(response.body)).to eq(serialized_voting(Voting.first))
       end
 
     end
@@ -158,7 +167,7 @@ RSpec.describe VotingsController, type: :controller do
 
       it 'the response contains the code, id and ends_at date of the voting, plus its radar template container' do
         subject
-        expect(JSON.parse(response.body)).to eq(serialized_voting(Voting.first, nil))
+        expect(JSON.parse(response.body)).to eq(serialized_voting(Voting.first))
       end
 
     end

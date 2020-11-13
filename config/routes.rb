@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
   scope path: '/api' do
-    resources :radar_template_containers, only: %i[index show create] do
+    resources :radar_template_containers, only: %i[index show create destroy] do
       member do
-        post :close
         post 'share', to: "radar_template_containers#share"
         post 'clone', to: "radar_template_containers#clone"
         post 'pin', to: "radar_template_containers#pin"
@@ -10,7 +9,7 @@ Rails.application.routes.draw do
       resources :votings, only: [:create]
     end
 
-    resources :radar_templates, only: %i[create show index share] do
+    resources :radar_templates, only: %i[create show destroy index share] do
       resources :votes, only: [:create]
       member do
         post 'share/:user_id', to: "radar_templates#share"
