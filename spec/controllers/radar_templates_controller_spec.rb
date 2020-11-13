@@ -29,7 +29,7 @@ RSpec.describe RadarTemplatesController, type: :controller do
     }
   end
 
-  def serialized_radar_template(radar_template, user)
+  def serialized_radar_template(radar_template)
     {
         'id' => radar_template.id,
         'radars' => radar_template.radars.map {|axis| serialized_radar(axis)},
@@ -38,7 +38,6 @@ RSpec.describe RadarTemplatesController, type: :controller do
         'description' => radar_template.description,
         'active' => radar_template.active,
         'created_at' => radar_template.created_at.as_json,
-        'is_owner' => radar_template.is_owned_by?(user)
     }
   end
 
@@ -178,7 +177,7 @@ RSpec.describe RadarTemplatesController, type: :controller do
 
         it 'should return the radar' do
           subject
-          expect(JSON.parse(response.body)).to eq serialized_radar_template(a_radar_template, logged_user)
+          expect(JSON.parse(response.body)).to eq serialized_radar_template(a_radar_template)
         end
       end
 
@@ -263,7 +262,7 @@ RSpec.describe RadarTemplatesController, type: :controller do
 
       it 'returns owned templates' do
         subject
-        expect(JSON.parse(response.body)).to contain_exactly(serialized_radar_template(a_radar_template, logged_user))
+        expect(JSON.parse(response.body)).to contain_exactly(serialized_radar_template(a_radar_template))
       end
 
       context 'if another user has shared radar templates with the logged user' do
@@ -276,37 +275,27 @@ RSpec.describe RadarTemplatesController, type: :controller do
 
         it 'includes those radar templates in the response' do
           subject
-          expect(JSON.parse(response.body)).to contain_exactly(serialized_radar_template(a_radar_template, logged_user))
+          expect(JSON.parse(response.body)).to contain_exactly(serialized_radar_template(a_radar_template))
         end
       end
     end
 
-    xcontext 'When requesting to close a radar' do
-
-      def request_close_radar
-        post :close, params: {id: a_radar.id}
+    describe '#destroy' do
+      let!(:a_radar_template) {create :radar_template, owner: logged_user}
+      let(:radar_template_id) {a_radar_template.id}
+      subject do
+        delete :destroy, params: {id: radar_template_id}
       end
 
-      let!(:a_radar) {create :radar}
+      it 'returns ok' do
+        expect(subject).to have_http_status :ok
+      end
 
-      context 'and the radar is active' do
-        before :each do
-          request_close_radar
-          a_radar.reload
-        end
-
-        it 'should respond the request with an ok status' do
-          expect(response).to have_http_status :ok
-        end
-        it 'the radar should not be active' do
-          expect(a_radar).not_to be_active
-        end
-
-        context 'and you request to close it again' do
-          it 'should return unprocessable entity' do
-            request_close_radar
-            expect(response).to have_http_status :unprocessable_entity
-          end
+      context 'when the radar template does not exist' do
+        let!(:a_radar_template) {create :radar_template, owner: logged_user}
+        let(:radar_template_id) {-1}
+        it 'returns not found' do
+          expect(subject).to have_http_status :not_found
         end
       end
     end
