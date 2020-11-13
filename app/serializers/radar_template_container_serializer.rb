@@ -1,5 +1,5 @@
 class RadarTemplateContainerSerializer < ActiveModel::Serializer
-  attributes :id, :active, :name, :description, :created_at, :is_owner, :pinned
+  attributes :id, :active, :name, :description, :created_at, :owner, :pinned
   has_many :radar_templates
   has_one :active_voting_code
   has_many :users
