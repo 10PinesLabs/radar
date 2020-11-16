@@ -60,6 +60,11 @@ class RadarTemplateContainersController < ApplicationController
     head :no_content
   end
 
+  def edit
+    if_container_present params.require(:id) do |container|
+      container.update!(name: params.require(:name))
+    end
+  end
   private
 
   #TODO: Delete duplicated code (see RadarTemplateController)
