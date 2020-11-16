@@ -463,6 +463,11 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
         put :edit, params: radar_template_container_params
       end
 
+      it 'should return an ok status' do
+        subject
+        expect(response).to have_http_status :ok
+      end
+
       it 'updates radar template container name' do
         subject
         container = RadarTemplateContainer.find(a_radar_template_container.id)

@@ -63,6 +63,7 @@ class RadarTemplateContainersController < ApplicationController
   def edit
     if_container_present params.require(:id) do |container|
       container.update!(name: params.require(:name))
+      render json: container, logged_user: @logged_user, status: :ok
     end
   end
   private
