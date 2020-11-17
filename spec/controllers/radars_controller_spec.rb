@@ -25,7 +25,8 @@ RSpec.describe RadarsController, type: :controller do
       'name' => radar.name,
       'description' => radar.description,
       'active' => radar.active,
-      'created_at' => radar.created_at.as_json
+      'created_at' => radar.created_at.as_json,
+      'global_average' => radar.global_average
     }
   end
 

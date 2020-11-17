@@ -1,5 +1,5 @@
 class RadarSerializer < ActiveModel::Serializer
-  attributes :id, :active, :name, :description, :created_at, :axes
+  attributes :id, :active, :name, :description, :created_at, :axes, :global_average
 
   def axes
     object.axes.map do |axis|
@@ -7,4 +7,9 @@ class RadarSerializer < ActiveModel::Serializer
       AxisSerializer.new(axis).as_json.merge({answers: answers})
     end
   end
+
+  def global_average
+    object.global_average
+  end
+
 end

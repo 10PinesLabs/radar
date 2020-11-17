@@ -29,6 +29,15 @@ class Radar < ApplicationRecord
     active
   end
 
+  def global_average
+    points = answers.map { |answer| answer.points}
+    total_sum = points.inject(:+)
+    num_points = points.length
+    global_average = 0
+    global_average = total_sum.to_f / num_points unless num_points == 0
+    global_average
+  end
+
   private
 
   def assert_active_radar
