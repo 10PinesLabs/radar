@@ -14,7 +14,7 @@ class RadarTemplate < ApplicationRecord
   def close owner
     validate_ownership! owner
     update!(active: false)
-    radars.each {|r| r.close owner}
+    radars.each {|r| r.close}
   end
 
 
