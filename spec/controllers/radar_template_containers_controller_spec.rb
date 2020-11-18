@@ -64,6 +64,14 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
     users.map{ |user| {"id" => user.id, "name" => user.name, "email" => user.email}}
   end
 
+  def all_radars_to_be_inactive(container)
+    container.radar_templates.all? do |radar_template|
+      radar_template.radars.all? do |radar|
+        !radar.active
+      end
+    end
+  end
+
   let(:logged_user){create :user}
   let(:another_user){create :user}
   let(:yet_another_user) {create :user}
@@ -308,6 +316,15 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
           expect(a_radar_template_container.radar_templates.all?{|rt| rt.active?}).to be true
           subject
           expect(a_radar_template_container.reload.radar_templates.any?{|rt| rt.active?}).to be false
+        end
+
+        context 'and there are active radars' do
+          let!(:active_radar) {create(:radar, radar_template: radar_template)}
+
+          it 'closes all its associated radars' do
+            subject
+            expect(all_radars_to_be_inactive(a_radar_template_container.reload)).to be_truthy
+          end
         end
       end
 
