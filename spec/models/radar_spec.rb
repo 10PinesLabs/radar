@@ -17,11 +17,12 @@ RSpec.describe Radar, type: :model do
     end
 
     #TODO: Move this context to radar template when creating radars from there
-    xcontext 'and you add an axis to that radar' do
-      let(:an_axis) { Axis.new }
-      before do
-        subject.add(an_axis)
-      end
+    xcontext 'from a radar_template' do
+      let(:radar_template) { create :radar_template }
+
+      subject {
+        Radar.create!(radar_template_id: radar_template.id, name: 'un radar', description: 'una descripcion')
+      }
 
       it 'should not be empty' do
         is_expected.not_to be_empty
@@ -29,6 +30,10 @@ RSpec.describe Radar, type: :model do
 
       it 'should be active' do
         is_expected.to be_active
+      end
+
+      it 'should have zero value as global average where there are no answers' do
+        expect(subject.global_average).to eq 0
       end
 
       context 'and you close the radar' do
@@ -55,6 +60,20 @@ RSpec.describe Radar, type: :model do
           expect(error).to be_a(ActiveRecord::RecordInvalid)
           expect(error.record.errors[:radar_template]).to be_include Radar::ERROR_MESSAGE_FOR_RADAR_TEMPLATE_MISSING
         end
+      end
+    end
+
+    context 'with answers' do
+      let!(:a_radar) {create :radar}
+
+      subject {
+        vote = Vote.create!(answers: a_radar.axes.map {|axis| Answer.new(axis: axis, points: 1, radar: a_radar)})
+        a_radar.update!(answers: vote.answers)
+      }
+
+      it 'should have the averaged answers\' points as global average' do
+        subject
+        expect(a_radar.reload.global_average). to eq 1
       end
     end
   end
