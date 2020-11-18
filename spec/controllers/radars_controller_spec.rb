@@ -151,9 +151,9 @@ RSpec.describe RadarsController, type: :controller do
         end
 
         context 'and you request to close it again' do
-          it 'should return unprocessable entity' do
+          it 'should be idempotent by not returning any errors' do
             request_close_radar
-            expect(response).to have_http_status :unprocessable_entity
+            expect(response).to have_http_status :ok
           end
         end
       end

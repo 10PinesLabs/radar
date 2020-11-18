@@ -21,8 +21,7 @@ class Radar < ApplicationRecord
   end
 
   def close
-    assert_active_radar
-    self.active= false
+    update!(active: false)
   end
 
   def active?
@@ -40,7 +39,4 @@ class Radar < ApplicationRecord
 
   private
 
-  def assert_active_radar
-    raise AlreadyClosedRadarException, ERROR_MESSAGE_FOR_ALREADY_CLOSED unless active?
-  end
 end
