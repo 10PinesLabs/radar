@@ -17,7 +17,7 @@ class RadarTemplateContainersController < ApplicationController
 
   def create
     name = params.require(:name)
-    description = params.require(:description)
+    description = params.fetch(:description)
     radar_template_container = RadarTemplateContainer.create!(name: name, description: description, owner_id: @logged_user.id)
     render json: radar_template_container, logged_user: @logged_user, status: :created
   end
