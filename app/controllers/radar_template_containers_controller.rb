@@ -16,6 +16,11 @@ class RadarTemplateContainersController < ApplicationController
   end
 
   def create
+    unless @logged_user.can_create_new_container?
+      render json: "Ya has llegado a tu maximo de contianers", status: :forbidden
+      return
+    end
+
     name = params.require(:name)
     description = params.fetch(:description)
     radar_template_container = RadarTemplateContainer.create!(name: name, description: description, owner_id: @logged_user.id)
