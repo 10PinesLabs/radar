@@ -117,7 +117,7 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
 
           it 'should the contianer should not be created' do
             subject
-            expect(RadarTemplateContainer.count).to eq 0
+            expect(logged_user.owned_radar_template_containers.count).to eq 0
           end
 
           it 'should return forbriden with the correct message' do
