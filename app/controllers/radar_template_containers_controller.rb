@@ -4,7 +4,9 @@ class RadarTemplateContainersController < ApplicationController
 
   def index
     radar_template_containers = @logged_user.accessible_radar_template_containers
-    radar_template_containers = radar_template_containers.select {|container| container.active}
+    if !params[:include_inactive]
+      radar_template_containers = radar_template_containers.select {|container| container.active}
+    end
     render json: radar_template_containers, logged_user: @logged_user , status: :ok
   end
 
