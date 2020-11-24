@@ -68,6 +68,13 @@ class RadarTemplateContainersController < ApplicationController
       render json: container, logged_user: @logged_user, status: :ok
     end
   end
+
+  def open
+    radar_template_container = RadarTemplateContainer.find(params.require(:id))
+    radar_template_container.activate @logged_user
+    render json: radar_template_container, logged_user: @logged_user, status: :ok
+  end
+
   private
 
   #TODO: Delete duplicated code (see RadarTemplateController)

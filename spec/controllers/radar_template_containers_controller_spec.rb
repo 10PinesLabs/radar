@@ -64,10 +64,10 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
     users.map { |user| {"id" => user.id, "name" => user.name, "email" => user.email} }
   end
 
-  def all_radars_to_be_inactive(container)
+  def radar_template_status(container, should_be_active)
     container.radar_templates.all? do |radar_template|
       radar_template.radars.all? do |radar|
-        !radar.active
+        should_be_active ? radar.active : !radar.active
       end
     end
   end
@@ -334,7 +334,7 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
 
         it 'closes all its associated radars' do
           subject
-          expect(all_radars_to_be_inactive(a_radar_template_container.reload)).to be_truthy
+          expect(radar_template_status(a_radar_template_container.reload, false)).to be_truthy
         end
       end
     end
@@ -353,6 +353,33 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
       it 'does not change inactive status' do
         expect { subject }.to_not change { a_radar_template_container.active? }
       end
+    end
+  end
+
+  describe "#open" do
+    before do
+      a_radar_template_container.update!(owner: logged_user)
+      a_radar_template_container.close(logged_user)
+    end
+
+    subject do
+      put :open, params: {id: a_radar_template_container.id}
+    end
+
+    it 'returns status ok' do
+      subject
+      expect(response).to have_http_status :ok
+    end
+
+    it 'the container ends up active' do
+      expect(a_radar_template_container.active?).to be_falsey
+      subject
+      expect(a_radar_template_container.reload.active?).to be_truthy
+    end
+
+    it 'opens all its associated radar templates' do
+      subject
+      expect(radar_template_status(a_radar_template_container.reload, true)).to be_truthy
     end
   end
 
