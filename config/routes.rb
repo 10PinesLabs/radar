@@ -6,7 +6,6 @@ Rails.application.routes.draw do
         post 'clone', to: "radar_template_containers#clone"
         post 'pin', to: "radar_template_containers#pin"
         put 'edit', to: "radar_template_containers#edit"
-        put 'open', to: "radar_template_containers#open"
       end
       resources :votings, only: [:create]
     end

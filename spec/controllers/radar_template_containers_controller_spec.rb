@@ -363,7 +363,7 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
     end
 
     subject do
-      put :open, params: {id: a_radar_template_container.id}
+      put :edit, params: {id: a_radar_template_container.id, active: true}
     end
 
     it 'returns status ok' do

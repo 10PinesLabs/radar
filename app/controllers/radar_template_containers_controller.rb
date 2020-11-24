@@ -64,7 +64,7 @@ class RadarTemplateContainersController < ApplicationController
 
   def edit
     if_container_present params.require(:id) do |container|
-      container.update!(name: params.require(:name))
+      container.update!(editable_params(params))
       render json: container, logged_user: @logged_user, status: :ok
     end
   end
@@ -81,6 +81,10 @@ class RadarTemplateContainersController < ApplicationController
   def if_container_present(container_id)
     radar_template_container = RadarTemplateContainer.find(container_id)
     radar_template_container.is_known_by?(@logged_user) ? yield(radar_template_container) : render_not_found
+  end
+
+  def editable_params(params)
+    {name: params.permit(:name)[:name], active: params.permit(:active)[:active]}.compact
   end
 
   def render_not_found
