@@ -24,11 +24,14 @@ RSpec.describe SessionController, type: :controller do
       end
 
       it 'should return the user in the body' do
-        expect(eval(subject.body)[:id]).to eq logged_user['id']
-        expect(eval(subject.body)[:uid]).to eq logged_user['uid']
-        expect(eval(subject.body)[:name]).to eq logged_user['name']
-        expect(eval(subject.body)[:email]).to eq logged_user['email']
-        expect(eval(subject.body)[:provider]).to eq logged_user['provider']
+        subject
+        deserialized_response = JSON.parse(response.body)
+
+        expect(deserialized_response['id']).to eq logged_user['id']
+        expect(deserialized_response['uid']).to eq logged_user['uid']
+        expect(deserialized_response['name']).to eq logged_user['name']
+        expect(deserialized_response['email']).to eq logged_user['email']
+        expect(deserialized_response['provider']).to eq logged_user['provider']
       end
     end
   end

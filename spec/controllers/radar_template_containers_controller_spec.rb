@@ -115,14 +115,14 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
             logged_user.update!(max_containers: 0)
           end
 
-          it 'should the contianer should not be created' do
+          it 'should not create the container' do
             subject
             expect(logged_user.owned_radar_template_containers.count).to eq 0
           end
 
-          it 'should return forbriden with the correct message' do
+          it 'should return forbidden with the correct message' do
             expect(subject).to have_http_status :forbidden
-            expect(response.body).to eq "Ya has llegado a tu maximo de contianers"
+            expect(response.body).to eq "Ya has llegado a tu máximo de containers"
 
           end
 

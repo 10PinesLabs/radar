@@ -17,7 +17,7 @@ class RadarTemplateContainersController < ApplicationController
 
   def create
     unless @logged_user.can_create_new_container?
-      render json: "Ya has llegado a tu maximo de contianers", status: :forbidden
+      render json: "Ya has llegado a tu máximo de containers", status: :forbidden
       return
     end
 
