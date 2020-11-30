@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201113180322) do
+ActiveRecord::Schema.define(version: 20201119151531) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,9 +87,10 @@ ActiveRecord::Schema.define(version: 20201113180322) do
     t.string   "uid"
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string   "provider",   null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.string   "provider",       null: false
+    t.bigint   "max_containers"
     t.index ["uid"], name: "index_users_on_uid", using: :btree
   end
 

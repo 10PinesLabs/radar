@@ -7,6 +7,14 @@ class User < ActiveRecord::Base
   end
 
   def accessible_radar_template_containers
-    RadarTemplateContainer.where(owner: self) + radar_template_containers
+    owned_radar_template_containers + radar_template_containers
+  end
+
+  def owned_radar_template_containers
+    RadarTemplateContainer.where(owner: self )
+  end
+
+  def can_create_new_container?
+    max_containers.nil? ? true : owned_radar_template_containers.where(active: true).count < max_containers
   end
 end
