@@ -56,8 +56,17 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
         'active' => radar_template_container.active,
         'created_at' => radar_template_container.created_at.as_json,
         'active_voting_code' => radar_template_container.active_voting_code,
+        'active_voting' => serialize_radar_template_container_voting(radar_template_container.active_voting),
         'pinned' => radar_template_container.pinned
     }
+  end
+
+  def serialize_radar_template_container_voting(voting)
+    !!voting ? {
+        'id' => voting.id,
+        'code' => voting.code,
+        'ends_at' => voting.ends_at
+    } : {}
   end
 
   def serialize_users(users)
