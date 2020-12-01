@@ -11,11 +11,15 @@ class RadarTemplate < ApplicationRecord
     axes.count
   end
 
-  def close owner
+  def close(owner)
     validate_ownership! owner
     update!(active: false)
-    radars.each {|r| r.close}
+    radars.each { |r| r.close }
   end
 
+  def activate(owner)
+    validate_ownership! owner
+    update!(active: true)
+  end
 
 end

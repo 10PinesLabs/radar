@@ -45,6 +45,12 @@ class RadarTemplateContainer < ApplicationRecord
     radar_templates.each { |rt| rt.close owner }
   end
 
+  def activate(owner)
+    validate_ownership! owner
+    update!(active: true)
+    radar_templates.each { |rt| rt.activate owner }
+  end
+
   def close_active_voting(logged_user)
     raise ActiveRecord::RecordNotFound.new(CONTAINER_NOT_FOUND_ERROR) unless is_known_by?(logged_user)
     voting = active_voting

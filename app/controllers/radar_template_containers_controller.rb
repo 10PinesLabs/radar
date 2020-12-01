@@ -4,7 +4,9 @@ class RadarTemplateContainersController < ApplicationController
 
   def index
     radar_template_containers = @logged_user.accessible_radar_template_containers
-    radar_template_containers = radar_template_containers.select {|container| container.active}
+    if !params[:include_inactive]
+      radar_template_containers = radar_template_containers.select {|container| container.active}
+    end
     render json: radar_template_containers, logged_user: @logged_user , status: :ok
   end
 
@@ -67,16 +69,27 @@ class RadarTemplateContainersController < ApplicationController
 
   def edit
     if_container_present params.require(:id) do |container|
-      container.update!(name: params.require(:name))
+      container.update!(editable_params(params))
       render json: container, logged_user: @logged_user, status: :ok
     end
   end
+
+  def open
+    radar_template_container = RadarTemplateContainer.find(params.require(:id))
+    radar_template_container.activate @logged_user
+    render json: radar_template_container, logged_user: @logged_user, status: :ok
+  end
+
   private
 
   #TODO: Delete duplicated code (see RadarTemplateController)
   def if_container_present(container_id)
     radar_template_container = RadarTemplateContainer.find(container_id)
     radar_template_container.is_known_by?(@logged_user) ? yield(radar_template_container) : render_not_found
+  end
+
+  def editable_params(params)
+    {name: params.permit(:name)[:name], active: params.permit(:active)[:active]}.compact
   end
 
   def render_not_found
