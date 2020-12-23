@@ -1,6 +1,8 @@
 class RadarTemplateContainerSerializer < ActiveModel::Serializer
   attributes :id, :active, :name, :description, :created_at, :owner, :pinned
-  has_many :radar_templates
+  has_many :radar_templates do
+    object.radar_templates.select {|radar_template| radar_template.active}.sort{|rt| rt.created_at}
+  end
   has_one :active_voting_code
   has_many :users
 
@@ -12,7 +14,4 @@ class RadarTemplateContainerSerializer < ActiveModel::Serializer
     object.users
   end
 
-  def radar_templates
-    object.radar_templates.select {|radar_template| radar_template.active}
-  end
 end
