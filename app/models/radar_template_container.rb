@@ -10,7 +10,7 @@ class RadarTemplateContainer < ApplicationRecord
   validates_uniqueness_of :name
 
   def clone_container!(owner, name, description, share: false)
-    validate_ownership! owner
+    validate_access! owner
     transaction do
       cloned_container = RadarTemplateContainer.create!(owner: owner, description: description,
                                                         name: name, users: share ? users : [])
