@@ -1,5 +1,6 @@
 module Ownerable
   OWNER_ERROR = 'No puede agregar un usuario si no le pertenece'
+  ACCESS_ERROR = 'No puede agregar un usuario si no tiene acceso'
   extend ActiveSupport::Concern
 
   included do
@@ -13,6 +14,10 @@ module Ownerable
 
   def validate_ownership! owner
     raise OWNER_ERROR unless is_owned_by? owner
+  end
+
+  def validate_access! user
+    raise ACCESS_ERROR unless is_known_by? user
   end
 
   def is_known_by? user

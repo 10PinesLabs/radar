@@ -10,11 +10,11 @@ class RadarTemplateContainer < ApplicationRecord
   validates_uniqueness_of :name
 
   def clone_container!(owner, name, description, share: false)
-    validate_ownership! owner
+    validate_access! owner
     transaction do
       cloned_container = RadarTemplateContainer.create!(owner: owner, description: description,
                                                         name: name, users: share ? users : [])
-      radar_templates.each do |radar_template|
+      sorted_radar_templates.each do |radar_template|
         # Clones template
         cloned_template = RadarTemplate.create!(radar_template_container: cloned_container, name: radar_template.name, owner: owner,
                               description: radar_template.description)
@@ -25,6 +25,10 @@ class RadarTemplateContainer < ApplicationRecord
       end
       cloned_container
     end
+  end
+
+  def sorted_radar_templates
+    radar_templates.select {|radar_template| radar_template.active}.sort{|rt| rt.created_at}
   end
 
   def active_voting

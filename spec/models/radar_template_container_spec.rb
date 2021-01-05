@@ -52,8 +52,8 @@ RSpec.describe RadarTemplateContainer, type: :model do
       it "the cloned templates have the same data as the original ones" do
         cloned_container = subject
 
-        first_cloned_template = cloned_container.radar_templates.first
-        second_cloned_template = cloned_container.radar_templates.second
+        first_cloned_template = cloned_container.sorted_radar_templates.first
+        second_cloned_template = cloned_container.sorted_radar_templates.second
 
         expect(first_cloned_template.name).to eq radar_template.name
         expect(first_cloned_template.description).to eq radar_template.description
@@ -123,12 +123,12 @@ RSpec.describe RadarTemplateContainer, type: :model do
       end
     end
 
-    context "if the passed user does not own the container" do
+    context "if the passed user does not own the container nor is shared with him/her" do
 
       let(:received_user) { another_user }
 
       it "fails with the expected error" do
-        expect{subject}.to raise_error(RuntimeError, Ownerable::OWNER_ERROR)
+        expect{subject}.to raise_error(RuntimeError, Ownerable::ACCESS_ERROR)
       end
 
       it "does not clone the container" do
@@ -140,6 +140,25 @@ RSpec.describe RadarTemplateContainer, type: :model do
       rescue RuntimeError
         expect(RadarTemplateContainer.count).to eq 1
         expect(RadarTemplate.count).to eq 2
+      end
+    end
+
+    context "if the user does not own the container but it has already been shared with him/her" do
+
+      before do
+        radar_template_container.add_user owner, another_user
+      end
+
+      let(:received_user) { another_user }
+
+      it "clones the container and the owner is the one that is cloning it" do
+        expect(RadarTemplateContainer.count).to eq 1
+        cloned_container = subject
+        expect(RadarTemplateContainer.count).to eq 2
+        expect(cloned_container.name).to eq new_name
+        expect(cloned_container.description).to eq new_description
+        expect(cloned_container.owner).to eq another_user
+        expect(cloned_container.users.to_a).to contain_exactly()
       end
     end
 
