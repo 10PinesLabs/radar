@@ -52,8 +52,8 @@ RSpec.describe RadarTemplateContainer, type: :model do
       it "the cloned templates have the same data as the original ones" do
         cloned_container = subject
 
-        first_cloned_template = cloned_container.radar_templates.first
-        second_cloned_template = cloned_container.radar_templates.second
+        first_cloned_template = cloned_container.sorted_radar_templates.first
+        second_cloned_template = cloned_container.sorted_radar_templates.second
 
         expect(first_cloned_template.name).to eq radar_template.name
         expect(first_cloned_template.description).to eq radar_template.description
