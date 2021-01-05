@@ -171,6 +171,16 @@ RSpec.describe VotingsController, type: :controller do
         expect(JSON.parse(response.body)).to eq(serialized_voting(Voting.first))
       end
 
+      context "but the voting is closed" do
+        before do
+          voting.update!(ends_at: ends_at - 1.day)
+        end
+
+        it 'the request returns not found' do
+          expect(subject).to have_http_status :not_found
+        end
+      end
+
     end
 
 
