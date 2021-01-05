@@ -17,8 +17,11 @@ class VotingsController < ApplicationController
 
   def show_by_code
     voting = Voting.find_by_code!(params.require(:code))
-    render json: voting, logged_user: @logged_user, status: :ok
-
+    if(voting.active?)
+      render json: voting, logged_user: @logged_user, status: :ok
+    else
+      render_error(["La votación ha finalizado"], :not_found)
+    end
     rescue ActiveRecord::RecordNotFound => error
       render_error([error.message], :not_found)
   end
