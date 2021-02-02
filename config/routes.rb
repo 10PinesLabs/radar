@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   end
 
   get 'api/votings', to: "votings#show_by_code"
+  delete 'api/votings', to: "votings#destroy"
   put 'api/votings/:radar_template_container_id', to: "votings#close"
 
   get 'auth/:provider/callback', to: "omni_auth#callback"
