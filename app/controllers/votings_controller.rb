@@ -4,8 +4,10 @@ class VotingsController < ApplicationController
 
   def destroy
     voting = Voting.find(params.require(:id))
-    voting.soft_delete!
+    voting.soft_delete! @logged_user
     render json: voting, status: :ok
+  rescue Voting::VotingAccessError => e
+    render_error([e.message], :forbidden)
   end
 
   def create

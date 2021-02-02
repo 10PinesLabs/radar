@@ -1,6 +1,8 @@
 module Ownerable
   OWNER_ERROR = 'No puede agregar un usuario si no le pertenece'
   ACCESS_ERROR = 'No puede agregar un usuario si no tiene acceso'
+  DELETE_ACCESS_ERROR = 'El usuario no tiene acceso para eliminar'
+
   extend ActiveSupport::Concern
 
   included do

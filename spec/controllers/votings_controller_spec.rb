@@ -199,7 +199,7 @@ RSpec.describe VotingsController, type: :controller do
     context "when the voting is already deleted" do
 
       before do
-        voting.soft_delete!
+        voting.soft_delete! logged_user
         allow(DateTime).to receive(:now).and_return(now + 3.days)
       end
 
@@ -209,6 +209,23 @@ RSpec.describe VotingsController, type: :controller do
 
       it "does not change the record date" do
         expect{subject}.to_not change{voting.deleted_at}
+      end
+    end
+
+    context "when the logged user does not have access to the associated container" do
+
+      before do
+        allow(JWT).to receive(:decode).and_return [another_user.as_json]
+      end
+
+      it "returns http status forbidden" do
+        expect(subject).to have_http_status :forbidden
+      end
+
+      it "does not deletes the voting" do
+        expect(voting.reload.deleted_at).to be_nil
+        subject
+        expect(voting.reload.deleted_at).to be_nil
       end
     end
 
