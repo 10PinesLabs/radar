@@ -11,6 +11,10 @@ class Voting < ApplicationRecord
     DateTime.now < ends_at
   end
 
+  def soft_delete!
+    update!(deleted_at: DateTime.now) unless deleted_at
+  end
+
   def self.generate!(radar_template_container, name, ends_at)
     transaction do
       self.validate_ending_date!(ends_at)

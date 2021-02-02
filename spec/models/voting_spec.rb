@@ -1,10 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe Voting, type: :model do
+  include ActiveSupport::Testing::TimeHelpers
 
   let(:radar_template_container) { create :radar_template_container }
   let(:ends_at) { DateTime.now + 5.days }
   let(:name) { "A voting name" }
+  let(:now) { DateTime.now }
+
+  def freeze_time
+    travel_to(Time.now)
+  end
+
+  before(:each) do
+    freeze_time
+  end
 
   describe "#generate_and_save_code" do
 
@@ -48,7 +58,7 @@ RSpec.describe Voting, type: :model do
 
   end
 
-  describe "#generate!" do
+  describe ".generate!" do
 
     subject do
       Voting.generate!(radar_template_container, name, ends_at)
@@ -137,6 +147,32 @@ RSpec.describe Voting, type: :model do
       rescue RuntimeError
         expect(Voting.count).to eq(previous_voting_count)
       end
+    end
+
+  end
+
+  describe "#soft_delete!" do
+    let(:voting) { Voting.create!(radar_template_container: radar_template_container, ends_at: ends_at)}
+
+    subject do
+      voting.soft_delete!
+    end
+
+    it "updates the 'deleted_at' field to the current date" do
+      expect{subject}.to change{voting.deleted_at}.from(nil).to(now)
+    end
+
+    context "when the voting is already deleted" do
+
+      before do
+        voting.soft_delete!
+        allow(DateTime).to receive(:now).and_return(now + 3.days)
+      end
+
+      it "does not do anything" do
+        expect{subject}.to_not change{voting.deleted_at}
+      end
+
     end
 
   end
