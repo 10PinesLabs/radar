@@ -38,7 +38,8 @@ RSpec.describe VotingsController, type: :controller do
         'description' => radar.description,
         'active' => radar.active,
         'created_at' => radar.created_at.as_json,
-        'global_average' => radar.global_average
+        'global_average' => radar.global_average,
+        'voting_id' => radar.voting.id
     }
   end
 
@@ -257,6 +258,16 @@ RSpec.describe VotingsController, type: :controller do
         end
 
         it 'the request returns not found' do
+          expect(subject).to have_http_status :not_found
+        end
+      end
+
+      context "but the voting is deleted" do
+        before do
+          voting.soft_delete! logged_user
+        end
+
+        it "the request returns not found" do
           expect(subject).to have_http_status :not_found
         end
       end

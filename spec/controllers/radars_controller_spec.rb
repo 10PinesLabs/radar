@@ -26,69 +26,14 @@ RSpec.describe RadarsController, type: :controller do
       'description' => radar.description,
       'active' => radar.active,
       'created_at' => radar.created_at.as_json,
-      'global_average' => radar.global_average
+      'global_average' => radar.global_average,
+      'voting_id' => radar.voting_id
     }
   end
 
   context 'When logged in as a valid user' do
     before do
       allow(controller).to receive(:ensure_authenticated!) { true }
-    end
-    context 'When requesting to create a new radar' do
-      subject do
-        post :create, params: radar_params
-      end
-
-      let(:radar_template) { create :radar_template }
-      let(:radar_template_id) { radar_template.id }
-
-      context 'with axes' do
-        let(:radar_params) {
-          { name: 'New Radar', description: 'Radar 2015', radar_template_id: radar_template_id}
-        }
-
-        it 'the request should succeed' do
-          expect(subject).to have_http_status :created
-        end
-
-        it 'a non empty radar should be created' do
-          subject
-          expect(Radar.count).to eq 1
-        end
-
-        it 'the radar should have the same amount of radar template axes' do
-          subject
-          expect(Radar.last.axes.count).to eq radar_template.axes.count
-        end
-      end
-
-      context 'without a name' do
-        let(:radar_params) {
-          {description: 'Radar 2015'}
-        }
-
-        it 'should be a bad request' do
-          expect(subject).to have_http_status :bad_request
-        end
-      end
-
-      context 'with name' do
-        context 'with nil as name' do
-          let(:radar_params) {
-            {name: nil, description: 'Radar 2015'}
-          }
-
-          it {expect(subject).to have_http_status :bad_request}
-        end
-
-        context 'with empty string as name' do
-          let(:radar_params) {
-            {name: '', description: 'Radar 2015'}
-          }
-
-          it {expect(subject).to have_http_status :bad_request}
-        end
-      end
     end
 
     context 'When requesting to get the results of a radar' do

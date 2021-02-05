@@ -1,5 +1,5 @@
 class RadarSerializer < ActiveModel::Serializer
-  attributes :id, :active, :name, :description, :created_at, :axes, :global_average
+  attributes :id, :active, :name, :description, :created_at, :axes, :global_average, :voting_id
 
   def axes
     object.axes.map do |axis|
@@ -10,6 +10,10 @@ class RadarSerializer < ActiveModel::Serializer
 
   def global_average
     object.global_average
+  end
+
+  def voting_id
+    object.voting.id
   end
 
 end

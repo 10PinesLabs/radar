@@ -10,7 +10,15 @@ class Voting < ApplicationRecord
   has_many :radars
 
   def active?
-    DateTime.now < ends_at
+    !deleted? && !closed? 
+  end
+
+  def deleted?
+    deleted_at
+  end
+
+  def closed?
+     !(DateTime.now < ends_at)
   end
 
   def soft_delete! user
