@@ -1,0 +1,2 @@
+[{axis_id: 1031, votes: [0, 0, 4, 10, 5]}, {axis_id: 1030, votes: [0, 1, 6, 10, 2]}, {axis_id: 1029, votes: [0, 0, 2, 5, 12]}, {axis_id: 1032, votes: [0, 0, 0, 3, 16]}, {axis_id: 1033, votes: [0, 1, 8, 5, 5]}, {axis_id: 1027, votes: [0, 1, 5, 11, 2]}, {axis_id: 1034, votes: [0, 5, 2, 11, 1]}, {axis_id: 1028, votes: [0, 0, 0, 4, 15]}]
+
