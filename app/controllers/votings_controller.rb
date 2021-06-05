@@ -2,6 +2,14 @@ class VotingsController < ApplicationController
 
   before_action :ensure_authenticated!, except: [:show_by_code]
 
+  def destroy
+    voting = Voting.find(params.require(:id))
+    voting.soft_delete! @logged_user
+    render json: voting, status: :ok
+  rescue Voting::VotingAccessError => e
+    render_error([e.message], :forbidden)
+  end
+
   def create
     radar_template_container = RadarTemplateContainer.find(params.require(:radar_template_container_id))
     if radar_template_container && radar_template_container.is_known_by?(@logged_user)

@@ -17,7 +17,9 @@ RSpec.describe RadarTemplatesController, type: :controller do
         'name' => radar.name,
         'description' => radar.description,
         'active' => radar.active,
-        'created_at' => radar.created_at.as_json
+        'created_at' => radar.created_at.as_json,
+        'voting_id' => radar.voting.id,
+        'global_average' => radar.global_average
     }
   end
 
@@ -32,7 +34,7 @@ RSpec.describe RadarTemplatesController, type: :controller do
   def serialized_radar_template(radar_template)
     {
         'id' => radar_template.id,
-        'radars' => radar_template.radars.map {|axis| serialized_radar(axis)},
+        'radars' => radar_template.active_radars.map {|radar| serialized_radar(radar)},
         'axes' => radar_template.axes.map {|axis| short_axis_serialization(axis)},
         'name' => radar_template.name,
         'description' => radar_template.description,
@@ -155,7 +157,9 @@ RSpec.describe RadarTemplatesController, type: :controller do
     end
 
     context 'When requesting to show a radar' do
-      let(:a_radar_template) {create :radar_template, owner: logged_user}
+      let(:radar) {create :radar}
+      let(:another_radar) {create :radar}
+      let(:a_radar_template) {create :radar_template, owner: logged_user, radars: [radar, another_radar] }
 
       subject do
         get :show, params: {id: a_radar_template.id}
@@ -170,15 +174,35 @@ RSpec.describe RadarTemplatesController, type: :controller do
 
       context 'with a user that owns the radar template' do
 
-        it 'should return an ok status' do
+        it 'returns ok status' do
           subject
           expect(response).to have_http_status :ok
         end
 
-        it 'should return the radar' do
+        it 'returns the radar template' do
           subject
           expect(JSON.parse(response.body)).to eq serialized_radar_template(a_radar_template)
         end
+
+        it "returns associated radars" do
+          subject
+          returned_radars = JSON.parse(response.body)["radars"]
+          
+          expect(returned_radars).to eq [serialized_radar(radar), serialized_radar(another_radar)]
+        end
+
+        context "when there is a deleted radar for the radar template" do
+
+          let(:another_radar) {create :deleted_radar}
+          
+          it "excludes it from the response" do
+            subject
+            expect(JSON.parse(response.body)["radars"]).to eq [serialized_radar(radar)]
+          end
+
+        end
+
+
       end
 
       context 'with a user that do not owns the radar template' do

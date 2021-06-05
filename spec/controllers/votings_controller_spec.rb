@@ -6,9 +6,10 @@ RSpec.describe VotingsController, type: :controller do
   let(:another_user){create :user, name: 'otro pino', provider: 'backoffice'}
 
   let(:name){ 'Un nuevo voting'}
-  let(:ends_at) { DateTime.now + 1.day}
+  let(:ends_at) { now + 1.day}
   let(:radar_template) { create(:radar_template, owner: logged_user)}
   let(:a_radar_template_container) {radar_template.radar_template_container}
+  let(:now) {DateTime.now}
 
   def freeze_time
     travel_to(Time.now)
@@ -37,7 +38,8 @@ RSpec.describe VotingsController, type: :controller do
         'description' => radar.description,
         'active' => radar.active,
         'created_at' => radar.created_at.as_json,
-        'global_average' => radar.global_average
+        'global_average' => radar.global_average,
+        'voting_id' => radar.voting.id
     }
   end
 
@@ -151,6 +153,85 @@ RSpec.describe VotingsController, type: :controller do
     end
   end
 
+  describe "#delete" do
+    let(:voting) { Voting.create!(radar_template_container: a_radar_template_container, ends_at: ends_at)}
+    let(:request_voting_id) { voting.id }
+    subject do
+      delete :destroy, params: {id: request_voting_id}
+    end
+
+    context "when the voting is active" do
+
+      it "returns http status ok" do
+        expect(subject).to have_http_status :ok
+      end
+
+      it "updates the deleted_at field" do
+        expect{subject}.to change{voting.reload.deleted_at}.from(nil).to(now)
+      end
+
+    end
+
+    context "when the voting is closed" do
+
+      before do
+        voting.update!(ends_at: DateTime.now)
+      end
+
+      it "returns http status ok" do
+        expect(subject).to have_http_status :ok
+      end
+
+      it "updates the deleted_at field as well" do
+        expect{subject}.to change{voting.reload.deleted_at}.from(nil).to(now)
+      end
+
+    end
+
+    context "when the voting does not exist" do
+      let(:request_voting_id) { -1 }
+
+      it "returns http status not found" do
+        expect(subject).to have_http_status :not_found
+      end
+
+    end
+
+    context "when the voting is already deleted" do
+
+      before do
+        voting.soft_delete! logged_user
+        allow(DateTime).to receive(:now).and_return(now + 3.days)
+      end
+
+      it "returns http status ok" do
+        expect(subject).to have_http_status :ok
+      end
+
+      it "does not change the record date" do
+        expect{subject}.to_not change{voting.deleted_at}
+      end
+    end
+
+    context "when the logged user does not have access to the associated container" do
+
+      before do
+        allow(JWT).to receive(:decode).and_return [another_user.as_json]
+      end
+
+      it "returns http status forbidden" do
+        expect(subject).to have_http_status :forbidden
+      end
+
+      it "does not deletes the voting" do
+        expect(voting.reload.deleted_at).to be_nil
+        subject
+        expect(voting.reload.deleted_at).to be_nil
+      end
+    end
+
+  end
+
   describe "#show_by_code" do
 
     subject do
@@ -177,6 +258,16 @@ RSpec.describe VotingsController, type: :controller do
         end
 
         it 'the request returns not found' do
+          expect(subject).to have_http_status :not_found
+        end
+      end
+
+      context "but the voting is deleted" do
+        before do
+          voting.soft_delete! logged_user
+        end
+
+        it "the request returns not found" do
           expect(subject).to have_http_status :not_found
         end
       end

@@ -1,4 +1,6 @@
 class Voting < ApplicationRecord
+  class VotingAccessError < RuntimeError; end
+
   CODE_LENGTH = 4
   CANNOT_CREATE_A_VOTING_FROM_A_PAST_DATE = 'No se puede crear una votación para una fecha pasada'
 
@@ -8,7 +10,20 @@ class Voting < ApplicationRecord
   has_many :radars
 
   def active?
-    DateTime.now < ends_at
+    !deleted? && !closed? 
+  end
+
+  def deleted?
+    deleted_at
+  end
+
+  def closed?
+     !(DateTime.now < ends_at)
+  end
+
+  def soft_delete! user
+    raise VotingAccessError.new(Ownerable::DELETE_ACCESS_ERROR) unless radar_template_container.is_known_by?(user)
+    update!(deleted_at: DateTime.now) unless deleted_at
   end
 
   def self.generate!(radar_template_container, name, ends_at)

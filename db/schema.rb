@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201119151531) do
+ActiveRecord::Schema.define(version: 20210202174619) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,7 +41,6 @@ ActiveRecord::Schema.define(version: 20201119151531) do
     t.datetime "updated_at",                  null: false
     t.boolean  "active",      default: true,  null: false
     t.integer  "owner_id"
-    t.string   "show_code"
     t.boolean  "pinned",      default: false
     t.index ["owner_id"], name: "index_radar_template_containers_on_owner_id", using: :btree
   end
@@ -105,6 +104,7 @@ ActiveRecord::Schema.define(version: 20201119151531) do
     t.datetime "updated_at",                  null: false
     t.datetime "ends_at"
     t.string   "code"
+    t.datetime "deleted_at"
     t.index ["radar_template_container_id"], name: "index_votings_on_radar_template_container_id", using: :btree
   end
 

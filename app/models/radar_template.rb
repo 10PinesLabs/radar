@@ -17,5 +17,10 @@ class RadarTemplate < ApplicationRecord
     radars.each {|r| r.close}
   end
 
+  def active_radars
+    #TODO: refactor this to move the query to the database
+    radars.all.select{|radar| !radar.voting.deleted? }
+  end
+
 
 end
