@@ -16,6 +16,10 @@ class Radar < ApplicationRecord
   delegate :empty?, to: :axes
   delegate :axes, to: :radar_template
 
+  def max_points
+    radar_template.max_points
+  end
+
   def times_completed
     Vote.count_for(self)
   end

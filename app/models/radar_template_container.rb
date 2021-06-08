@@ -2,12 +2,22 @@ class RadarTemplateContainer < ApplicationRecord
   CANNOT_HAVE_MORE_THAN_ONE_ACTIVE_VOTING_ERROR_MESSAGE = "No puede haber mas de una votación activa al mismo tiempo"
   NO_ACTIVE_VOTING = 'No se encontró ninguna votación abierta'
   CONTAINER_NOT_FOUND_ERROR = 'No se encontró el radar template container'
+  MAX_POINTS_OUT_OF_RANGE_ERROR_MESSAGE = "La cantidad máxima de puntos tiene que ser mayor a 2 y menor a 10"
+  DEFAULT_MAX_POINTS = 5
+  MAXIMUM_MAX_POINTS = 10
 
   include Ownerable
   has_many :radar_templates, -> { order(created_at: :asc) }
   belongs_to :owner, :class_name => 'User', :foreign_key => 'owner_id', :validate => true
   has_many :votings
+
+  before_validation :default_max_points
   validates_uniqueness_of :name
+  validates :max_points, :inclusion => {:in => 2..RadarTemplateContainer::MAXIMUM_MAX_POINTS, message: MAX_POINTS_OUT_OF_RANGE_ERROR_MESSAGE}
+
+  def default_max_points
+    self.max_points ||= DEFAULT_MAX_POINTS
+  end
 
   def clone_container!(owner, name, description, share: false)
     validate_access! owner

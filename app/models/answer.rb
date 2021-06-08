@@ -9,8 +9,12 @@ class Answer < ApplicationRecord
 
   validates :radar, presence: {message: ERROR_MESSAGE_FOR_NO_RADAR}
   validates :axis, presence: {message: ERROR_MESSAGE_FOR_NO_AXIS}
-  validates :points, :inclusion => {:in => 1..5, message: ERROR_MESSAGE_FOR_OUT_OF_RANGE_POINT}
+  validate :points_are_in_permitted_range
   validates :vote, presence: true
+
+  def points_are_in_permitted_range
+    errors.add(:points, ERROR_MESSAGE_FOR_OUT_OF_RANGE_POINT) unless points >= 1 && points <= radar.max_points
+  end
 
   def is_for?(an_axis)
     axis == an_axis
