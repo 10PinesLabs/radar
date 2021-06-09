@@ -22,8 +22,9 @@ class RadarTemplateContainersController < ApplicationController
     end
 
     name = params.require(:name)
-    description = params.fetch(:description)
-    radar_template_container = RadarTemplateContainer.create!(name: name, description: description, owner_id: @logged_user.id)
+    permitted_params = params.permit(:description, :max_points)
+    radar_template_container = RadarTemplateContainer.create!(name: name, description:
+      permitted_params["description"], owner_id: @logged_user.id, max_points: permitted_params["max_points"])
     render json: radar_template_container, logged_user: @logged_user, status: :created
   end
 

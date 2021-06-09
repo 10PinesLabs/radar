@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20201119151531) do
+ActiveRecord::Schema.define(version: 20210608211804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,21 @@ ActiveRecord::Schema.define(version: 20201119151531) do
     t.index ["radar_template_id"], name: "index_axes_on_radar_template_id", using: :btree
   end
 
+  create_table "demographic_answers", force: :cascade do |t|
+    t.string   "selected_answer"
+    t.integer  "vote_id"
+    t.integer  "demographic_question_id"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.index ["demographic_question_id"], name: "index_demographic_answers_on_demographic_question_id", using: :btree
+    t.index ["vote_id"], name: "index_demographic_answers_on_vote_id", using: :btree
+  end
+
+  create_table "demographic_questions", force: :cascade do |t|
+    t.string "question"
+    t.text   "possible_answers", default: [], array: true
+  end
+
   create_table "radar_template_containers", force: :cascade do |t|
     t.text     "description"
     t.text     "name",                        null: false
@@ -41,8 +56,8 @@ ActiveRecord::Schema.define(version: 20201119151531) do
     t.datetime "updated_at",                  null: false
     t.boolean  "active",      default: true,  null: false
     t.integer  "owner_id"
-    t.string   "show_code"
     t.boolean  "pinned",      default: false
+    t.integer  "max_points",  default: 5,     null: false
     t.index ["owner_id"], name: "index_radar_template_containers_on_owner_id", using: :btree
   end
 
@@ -62,6 +77,13 @@ ActiveRecord::Schema.define(version: 20201119151531) do
     t.integer  "radar_template_container_id"
     t.index ["owner_id"], name: "index_radar_templates_on_owner_id", using: :btree
     t.index ["radar_template_container_id"], name: "index_radar_templates_on_radar_template_container_id", using: :btree
+  end
+
+  create_table "radar_templates_demographics", force: :cascade do |t|
+    t.integer "radar_template_id"
+    t.integer "demographic_question_id"
+    t.index ["demographic_question_id"], name: "index_radar_templates_demographics_on_demographic_question_id", using: :btree
+    t.index ["radar_template_id"], name: "index_radar_templates_demographics_on_radar_template_id", using: :btree
   end
 
   create_table "radar_templates_users", id: false, force: :cascade do |t|
@@ -105,6 +127,7 @@ ActiveRecord::Schema.define(version: 20201119151531) do
     t.datetime "updated_at",                  null: false
     t.datetime "ends_at"
     t.string   "code"
+    t.datetime "deleted_at"
     t.index ["radar_template_container_id"], name: "index_votings_on_radar_template_container_id", using: :btree
   end
 

@@ -19,6 +19,35 @@ RSpec.describe RadarTemplateContainer, type: :model do
     return axes.map {|axis| axis.attributes.except("id", "updated_at", "created_at", "radar_template_id")}
   end
 
+  describe '#max_points' do
+
+    subject do
+      RadarTemplateContainer.create!(max_points: max_points)
+    end
+
+    it "if value is less than 2" do
+      expect { RadarTemplateContainer.create!(max_points: 1) }.to raise_error do |error|
+        expect(error).to be_a(ActiveRecord::RecordInvalid)
+        expect(error.record.errors[:max_points]).to be_include RadarTemplateContainer::MAX_POINTS_OUT_OF_RANGE_ERROR_MESSAGE
+      end
+    end
+
+    it "if value is greater than 10" do
+      expect { RadarTemplateContainer.create!(max_points: 11) }.to raise_error do |error|
+        expect(error).to be_a(ActiveRecord::RecordInvalid)
+        expect(error.record.errors[:max_points]).to be_include RadarTemplateContainer::MAX_POINTS_OUT_OF_RANGE_ERROR_MESSAGE
+      end
+    end
+
+    it "if value is between 2 and 10" do
+      expect{RadarTemplateContainer.create!(name: "asd", max_points: 5)}.to change { RadarTemplateContainer.count }.from(1).to(2)
+    end
+
+    it "if the value is not passed" do
+      expect(RadarTemplateContainer.create!(name: "asd", max_points: nil).max_points).to eq RadarTemplateContainer::DEFAULT_MAX_POINTS
+    end
+  end
+
   describe '#clone_container!' do
 
     subject do

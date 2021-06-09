@@ -74,7 +74,8 @@ RSpec.describe VotingsController, type: :controller do
         'active' => radar_template_container.active,
         'created_at' => radar_template_container.created_at.as_json,
         'active_voting_code' => radar_template_container.active_voting_code,
-        'pinned'=> radar_template_container.pinned
+        'pinned'=> radar_template_container.pinned,
+        'max_points' => radar_template_container.max_points
     }
   end
 

@@ -7,6 +7,10 @@ class RadarTemplate < ApplicationRecord
   belongs_to :owner, :class_name => 'User', :foreign_key => 'owner_id', :validate => true
   default_scope { order(created_at: :desc) }
 
+  def max_points
+    radar_template_container.max_points
+  end
+
   def amount_of_axes
     axes.count
   end

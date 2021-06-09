@@ -1,5 +1,5 @@
 class RadarTemplateContainerSerializer < ActiveModel::Serializer
-  attributes :id, :active, :name, :description, :created_at, :owner, :pinned
+  attributes :id, :active, :name, :description, :created_at, :owner, :pinned, :max_points
   has_many :radar_templates do
     object.sorted_radar_templates
   end

@@ -56,7 +56,8 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
         'active' => radar_template_container.active,
         'created_at' => radar_template_container.created_at.as_json,
         'active_voting_code' => radar_template_container.active_voting_code,
-        'pinned'=> radar_template_container.pinned
+        'pinned'=> radar_template_container.pinned,
+        'max_points' => radar_template_container.max_points
     }
   end
 
@@ -78,7 +79,7 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
   let(:radar_template) { create(:radar_template, owner: logged_user)}
   let(:a_radar_template_container) {radar_template.radar_template_container}
   let(:request_radar_template_container_id) { a_radar_template_container.id }
-
+  let(:max_points) { 10 }
   context 'When logged in as a valid user' do
 
     before do
@@ -110,6 +111,39 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
           expect(RadarTemplateContainer.last.owner_id).to eq logged_user.id
         end
 
+        context "regarding max_points setting" do
+          context "if no max_points setting is passed" do
+            let(:max_points) { nil }
+            it "defaults to 5" do
+              subject
+              expect(RadarTemplateContainer.first.max_points).to eq 5
+            end
+          end
+
+          context "if the setting is passed" do
+            let(:radar_template_container_params) {
+              {
+                name: 'New Radar Template', description: 'Radar 2015', max_points: max_points
+              }
+            }
+
+            context "if a valid value is passed" do
+              let(:max_points) {9}
+              it "stores it in the RadarTemplateContainer" do
+                subject
+                expect(RadarTemplateContainer.first.max_points).to eq max_points
+              end
+            end
+
+            context "if an invalid value is passed" do
+              let(:max_points){11}
+              it "returns bad request" do
+                expect(subject).to have_http_status :bad_request
+              end
+            end
+          end
+        end
+
         context 'when the user has reached the limit of containers' do
           before do
             logged_user.update!(max_containers: 0)
@@ -123,7 +157,6 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
           it 'should return forbidden with the correct message' do
             expect(subject).to have_http_status :forbidden
             expect(response.body).to eq "Ya has llegado a tu máximo de containers"
-
           end
 
         end
