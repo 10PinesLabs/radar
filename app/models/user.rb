@@ -17,4 +17,9 @@ class User < ActiveRecord::Base
   def can_create_new_container?
     max_containers.nil? ? true : owned_radar_template_containers.where(active: true).count < max_containers
   end
+
+  def remaining_containers
+    max_containers.nil? ? nil : max_containers - owned_radar_template_containers.where(active: true).count
+  end
+
 end

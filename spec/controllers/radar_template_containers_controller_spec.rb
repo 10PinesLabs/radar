@@ -48,7 +48,8 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
         'description' => radar_template_container.description,
         'owner' => {'id'=> radar_template_container.owner.id,
                     'name' => radar_template_container.owner.name,
-                    'email' => radar_template_container.owner.email},
+                    'email' => radar_template_container.owner.email,
+                    'remaining_containers' => radar_template_container.owner.remaining_containers},
         'users' => serialize_users(radar_template_container.users),
         'radar_templates' => radar_template_container
                                  .radar_templates
@@ -62,7 +63,9 @@ RSpec.describe RadarTemplateContainersController, type: :controller do
   end
 
   def serialize_users(users)
-    users.map{ |user| {"id" => user.id, "name" => user.name, "email" => user.email}}
+    users.map do |user| {"id" => user.id, "name" => user.name, "email" => user.email,
+                         'remaining_containers' => user.remaining_containers }
+    end
   end
 
   def all_radars_to_be_inactive(container)

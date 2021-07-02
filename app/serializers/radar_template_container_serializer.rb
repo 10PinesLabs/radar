@@ -7,7 +7,7 @@ class RadarTemplateContainerSerializer < ActiveModel::Serializer
   has_many :users
 
   def owner
-    {id: object.owner.id, name: object.owner.name, email: object.owner.email}
+    {id: object.owner.id, name: object.owner.name, email: object.owner.email, remaining_containers: object.owner.remaining_containers}
   end
 
   def users

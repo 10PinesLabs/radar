@@ -8,12 +8,14 @@ RSpec.describe UsersController, type: :controller do
         {
             'id' => another_user.id,
             'name' => another_user.name,
-            'email' => another_user.email
+            'email' => another_user.email,
+            'remaining_containers' => nil
         },
         {
             'id' => logged_user.id,
             'name' => logged_user.name,
-            'email' => logged_user.email
+            'email' => logged_user.email,
+            'remaining_containers' => nil
         }
     ]
   }

@@ -84,7 +84,8 @@ RSpec.describe VotingsController, type: :controller do
         {
             'id' => user.id,
             'name' => user.name,
-            'email' => user.email
+            'email' => user.email,
+            'remaining_containers' => user.remaining_containers,
         }
   end
 
